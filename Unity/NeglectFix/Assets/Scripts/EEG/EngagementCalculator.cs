@@ -265,6 +265,29 @@ namespace NeglectFix.EEG
         public float GetThreshold() => engagementThreshold;
         public float GetSuccessRate() => totalSamples > 0 ? (float)successCount / totalSamples : 0f;
 
+        // Simulator support
+        public void UpdateSimulatedValues(float alpha, float beta, float theta, float gamma, float engagement)
+        {
+            // Update histories
+            alphaHistory.Clear();
+            betaHistory.Clear();
+            thetaHistory.Clear();
+
+            alphaHistory.Enqueue(alpha);
+            betaHistory.Enqueue(beta);
+            thetaHistory.Enqueue(theta);
+
+            // Use provided engagement or calculate
+            if (engagement > 0)
+            {
+                currentEngagement = engagement;
+            }
+            else
+            {
+                CalculateEngagement();
+            }
+        }
+
         void OnDestroy()
         {
             if (museReceiver != null)
