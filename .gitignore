@@ -6,16 +6,21 @@
 # Claude
 .claude/
 
-# Unity
-Unity/Library/
-Unity/Temp/
-Unity/Obj/
-Unity/Build/
-Unity/Builds/
-Unity/Logs/
-Unity/MemoryCaptures/
-Unity/UserSettings/
-Unity/.vs/
+# Unity - ignore generated folders
+**/Library/
+**/Temp/
+**/Obj/
+**/Build/
+**/Builds/
+**/Logs/
+**/MemoryCaptures/
+**/UserSettings/
+**/.vs/
+**/.vscode/
+
+# Unity solution files (regenerated)
+*.sln
+*.csproj
 
 # Unity3D generated meta files
 *.pidb.meta

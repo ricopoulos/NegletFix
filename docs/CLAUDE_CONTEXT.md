@@ -20,13 +20,42 @@ NeglectFix is a personal VR neurorehabilitation system for **left homonymous hem
 ### V0 (Complete) - EEG Neurofeedback System
 - Muse EEG headband → Mind Monitor → Unity via OSC
 - Tracks beta/alpha engagement ratio at TP10 (right parietal)
-- 7 C# scripts for closed-loop neurofeedback
+- 7 fully-implemented C# scripts (~1,729 LOC total)
 - See `/Unity/NeglectFix/Assets/Scripts/`
 
-### V1 (In Development) - Cross-Modal Audiovisual Rehabilitation
+**V0 Scripts (all production-ready)**:
+| Script | LOC | Purpose |
+|--------|-----|---------|
+| `EEG/MuseOSCReceiver.cs` | 167 | OSC parsing, TP10 channel events |
+| `EEG/EngagementCalculator.cs` | 315 | Beta/alpha ratio, adaptive threshold |
+| `EEG/EEGSimulator.cs` | 145 | Testing without Muse hardware |
+| `Utils/DataLogger.cs` | 281 | CSV session logging at 10Hz |
+| `Utils/GazeDetector.cs` | 164 | VR head tracking, left-gaze detection |
+| `Utils/RewardController.cs` | 332 | Visual/audio rewards, EEG+gaze trigger |
+| `Tasks/TaskManager.cs` | 325 | Abstract base for rehabilitation tasks |
+
+### V1 (Not Started) - Cross-Modal Audiovisual Rehabilitation
 Building on V0, adding validated audiovisual training that leverages the **superior colliculus pathway**.
 
 **Key scientific insight**: The retino-collicular pathway is preserved in hemianopia. Spatiotemporally congruent sound+visual stimuli produce supra-additive responses in SC neurons, enabling detection of stimuli that would otherwise be below threshold.
+
+**V1 Scripts (planned, not yet implemented)**:
+
+*Core AV Rehabilitation:*
+- `AudioVisualStimulusController.cs` - Synchronized AV presentation
+- `LoomingSoundGenerator.cs` - 400Hz triangular wave, exponential rise
+- `StimulusPositioner.cs` - Place stimuli at validated eccentricities
+- `AdaptiveStaircaseController.cs` - Up-down difficulty adjustment
+- `ContrastEnhancementManager.cs` - URP post-processing control
+- `SessionManager.cs` - 3-block session structure
+
+*Assessment Module (baseline/progress tracking) - WORKING:*
+- `Assessment/ContrastSensitivityTest.cs` (~620 LOC) - Pelli-Robson style hemifield contrast test **[TESTED 2025-12-13]**
+- `Assessment/ContrastTestInput.cs` (~260 LOC) - VR controller + keyboard input handling **[TESTED]**
+- `Assessment/ContrastResultsUI.cs` (349 LOC) - Results display, history, interpretation (not yet wired)
+- `Integration/CalibrationManager.cs` - Pre-training calibration workflow (planned)
+
+**Test Scene**: `ContrastTestScene.unity` - Working scene with Canvas UI for testing
 
 ## Critical Implementation Parameters
 
@@ -62,14 +91,33 @@ These values come from validated clinical research - don't change without discus
 
 ## Key References
 
-- `/docs/research/` - Detailed scientific foundation
-- `NeglectFix_V1_Knowledge_Document.docx` - Comprehensive V1 specs
-- `NeglectFix_V1_QuickRef.md` - Quick reference with code snippets
+- `/docs/research/scientific_foundation.md` - SC pathway, multisensory integration
+- `/docs/research/contrast_sensitivity_module.md` - Assessment system design with draft code
+- `/docs/decisions/v1_architecture.md` - Hardware, audio, timing decisions
+
+## Unity Project
+
+**Location**: `/Unity/NeglectFix/` (single folder, cleaned up Dec 2025)
+**Unity Version**: 6.2 (6000.2.8f1) with VR template
+**Re-add to Unity Hub**: Add → browse to `/Unity/NeglectFix/`
 
 ## Communication Style
 
 Eric is technical and understands both the neuroscience and the Unity/C# implementation. He's motivated, researching extensively, and wants evidence-based approaches. Direct technical communication works best.
 
+## Current Status (2025-12-13)
+
+**Contrast Sensitivity Test**: First working version complete
+- Full test sequence runs (Central → Right → Left)
+- Alpha-transparency based letter fading works well
+- Keyboard input functional (Sloan letters + Backspace for "can't see")
+- Calibration needs refinement - test may be too easy at start
+
+**Next Priority**:
+1. Calibrate contrast curve to match clinical Pelli-Robson
+2. Test Left vs Right hemifield to measure asymmetry
+3. Wire up results display UI
+
 ---
 
-*Last updated: 2024-12-05*
+*Last updated: 2025-12-13*

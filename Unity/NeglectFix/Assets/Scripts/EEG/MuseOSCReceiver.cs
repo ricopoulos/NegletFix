@@ -1,14 +1,21 @@
 using UnityEngine;
 using System;
-// Note: This requires extOSC package - install from: https://github.com/Iam1337/extOSC
-// Or use OscCore: https://github.com/stella3d/OscCore
+
+// Uncomment the line below when extOSC is installed:
+// #define EXTOSC_INSTALLED
+
+#if EXTOSC_INSTALLED
 using extOSC;
+#endif
 
 namespace NeglectFix.EEG
 {
     /// <summary>
     /// Receives OSC packets from Mind Monitor app streaming Muse EEG data.
     /// Parses band power data and exposes events for other systems.
+    ///
+    /// SETUP: Install extOSC package from https://github.com/Iam1337/extOSC
+    /// Then uncomment #define EXTOSC_INSTALLED at top of this file.
     ///
     /// Mind Monitor OSC Address Format:
     /// /muse/elements/alpha_absolute - [TP9, AF7, AF8, TP10]
@@ -25,8 +32,10 @@ namespace NeglectFix.EEG
         public bool isReceiving = false;
         public float lastPacketTime = 0f;
 
-        // OSC Receiver
+#if EXTOSC_INSTALLED
+        // OSC Receiver (only available when extOSC is installed)
         private OSCReceiver receiver;
+#endif
 
         // Latest band power data (4 channels: TP9, AF7, AF8, TP10)
         private float[] alphaAbsolute = new float[4];
@@ -47,9 +56,15 @@ namespace NeglectFix.EEG
 
         void Start()
         {
+#if EXTOSC_INSTALLED
             InitializeOSCReceiver();
+#else
+            Debug.LogWarning("[MuseOSC] extOSC not installed. Using EEGSimulator for testing.");
+            Debug.LogWarning("[MuseOSC] To enable real EEG: Install extOSC and uncomment #define EXTOSC_INSTALLED");
+#endif
         }
 
+#if EXTOSC_INSTALLED
         void InitializeOSCReceiver()
         {
             // Create OSC receiver
@@ -113,6 +128,7 @@ namespace NeglectFix.EEG
                 UpdateReceiveStatus();
             }
         }
+#endif
 
         private void UpdateReceiveStatus()
         {
@@ -143,12 +159,27 @@ namespace NeglectFix.EEG
         public float[] GetAllBeta() => betaAbsolute;
         public float[] GetAllTheta() => thetaAbsolute;
 
+        // For simulator to inject values
+        public void SetSimulatedValues(float alpha, float beta, float theta)
+        {
+            alphaAbsolute[TP10] = alpha;
+            betaAbsolute[TP10] = beta;
+            thetaAbsolute[TP10] = theta;
+
+            OnTP10AlphaReceived?.Invoke(alpha);
+            OnTP10BetaReceived?.Invoke(beta);
+            OnTP10ThetaReceived?.Invoke(theta);
+            OnBandPowerReceived?.Invoke(alphaAbsolute, betaAbsolute, thetaAbsolute);
+        }
+
         void OnDestroy()
         {
+#if EXTOSC_INSTALLED
             if (receiver != null)
             {
                 receiver.Close();
             }
+#endif
         }
 
         // Debug visualization in Inspector

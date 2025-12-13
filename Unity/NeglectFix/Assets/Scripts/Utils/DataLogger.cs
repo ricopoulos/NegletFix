@@ -264,6 +264,89 @@ namespace NeglectFix.Utils
         public int GetSamplesLogged() => samplesLogged;
         public string GetCurrentSessionFile() => currentSessionFile;
 
+        #region Contrast Sensitivity Logging
+
+        /// <summary>
+        /// Log contrast sensitivity test results to dedicated assessment file
+        /// </summary>
+        public void LogContrastSensitivityResults(NeglectFix.Assessment.ContrastSensitivityResults results)
+        {
+            // Create assessments folder
+            string assessmentsPath = Path.Combine(Application.persistentDataPath, "assessments");
+            if (!Directory.Exists(assessmentsPath))
+            {
+                Directory.CreateDirectory(assessmentsPath);
+            }
+
+            // Trial-level data file
+            string trialFilename = $"contrast_trials_{results.testDate:yyyy-MM-dd_HH-mm}.csv";
+            string trialPath = Path.Combine(assessmentsPath, trialFilename);
+
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(trialPath, false))
+                {
+                    // Header
+                    writer.WriteLine("timestamp,logCS,letter_presented,letter_response,correct,hemifield,reaction_ms,triplet,letter_index");
+
+                    // Trial data
+                    foreach (var trial in results.trialHistory)
+                    {
+                        writer.WriteLine($"{trial.timestamp:O},{trial.logCS:F2},{trial.presentedLetter}," +
+                            $"{trial.responseLetter},{trial.correct},{trial.hemifield},{trial.reactionTimeMs:F0}," +
+                            $"{trial.tripletNumber},{trial.letterInTriplet}");
+                    }
+                }
+                Debug.Log($"[DataLogger] Contrast trials saved: {trialPath}");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[DataLogger] Failed to save contrast trials: {e.Message}");
+            }
+
+            // Append to summary file (tracks progress over time)
+            string summaryPath = Path.Combine(assessmentsPath, "contrast_summary.csv");
+            bool writeHeader = !File.Exists(summaryPath);
+
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(summaryPath, append: true))
+                {
+                    if (writeHeader)
+                    {
+                        writer.WriteLine("date,time,central_logcs,left_logcs,right_logcs,asymmetry,avg_rt_ms,total_trials");
+                    }
+
+                    float avgRT = results.GetAverageReactionTime();
+                    writer.WriteLine($"{results.testDate:yyyy-MM-dd},{results.testDate:HH:mm}," +
+                        $"{results.centralLogCS:F2},{results.leftHemifieldLogCS:F2}," +
+                        $"{results.rightHemifieldLogCS:F2},{results.asymmetry:F2}," +
+                        $"{avgRT:F0},{results.trialHistory.Count}");
+                }
+                Debug.Log($"[DataLogger] Contrast summary updated: {summaryPath}");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[DataLogger] Failed to update contrast summary: {e.Message}");
+            }
+
+            // Also log event if session logging is active
+            if (isLogging)
+            {
+                LogEvent($"contrast_test_complete_L{results.leftHemifieldLogCS:F2}_R{results.rightHemifieldLogCS:F2}");
+            }
+        }
+
+        /// <summary>
+        /// Get path to assessments folder
+        /// </summary>
+        public string GetAssessmentsPath()
+        {
+            return Path.Combine(Application.persistentDataPath, "assessments");
+        }
+
+        #endregion
+
         // Debug UI
         void OnGUI()
         {
