@@ -101,11 +101,53 @@ These values come from validated clinical research - don't change without discus
 **Unity Version**: 6.2 (6000.2.8f1) with VR template
 **Re-add to Unity Hub**: Add → browse to `/Unity/NeglectFix/`
 
+## Unity MCP Integration (NEW - 2025-12-13)
+
+**Claude Code can now directly interact with Unity Editor!**
+
+This is critical for accessibility - Eric is visually impaired and struggles with Unity's interface. Claude is now his "eyes and hands" inside the editor.
+
+### Available Capabilities
+
+| Tool | What It Does |
+|------|--------------|
+| `manage_scene` | Read hierarchy, create/load scenes, take screenshots |
+| `manage_gameobject` | Create, modify, delete GameObjects and components |
+| `manage_script` | Create and edit C# scripts |
+| `manage_material` | Create materials, set properties |
+| `read_console` | View errors, warnings, and logs |
+| `execute_menu_item` | Run any Unity menu command |
+
+### How to Start a Session
+
+1. **Open Unity** with NegletFix project
+2. **Start MCP**: Window → MCP For Unity → Toggle MCP Window → Start Session
+3. **Verify green indicator** = connected
+4. **Start Claude Code** - Unity tools are automatically available
+
+### MCP Server Management
+
+```bash
+# Verify connection
+claude mcp list
+
+# Remove if needed
+claude mcp remove UnityMCP
+
+# Re-add
+claude mcp add --transport stdio UnityMCP -- "/Users/ericlespagnon/.local/bin/uvx" --from "git+https://github.com/CoplayDev/unity-mcp@v8.2.3#subdirectory=Server" mcp-for-unity
+```
+
 ## Communication Style
 
 Eric is technical and understands both the neuroscience and the Unity/C# implementation. He's motivated, researching extensively, and wants evidence-based approaches. Direct technical communication works best.
 
 ## Current Status (2025-12-13)
+
+**Unity MCP Integration**: COMPLETE
+- Claude Code can now directly interact with Unity Editor
+- Reads scene hierarchy, creates GameObjects, writes scripts
+- Critical accessibility improvement for visually impaired developer
 
 **Contrast Sensitivity Test**: First working version complete
 - Full test sequence runs (Central → Right → Left)
@@ -113,10 +155,15 @@ Eric is technical and understands both the neuroscience and the Unity/C# impleme
 - Keyboard input functional (Sloan letters + Backspace for "can't see")
 - Calibration needs refinement - test may be too easy at start
 
+**Console Warnings** (minor, to fix later):
+- 5 deprecation warnings: `FindObjectOfType` → `FindFirstObjectByType`
+- Files: ContrastResultsUI.cs, ContrastTestInput.cs, EngagementCalculator.cs, RewardController.cs
+
 **Next Priority**:
 1. Calibrate contrast curve to match clinical Pelli-Robson
 2. Test Left vs Right hemifield to measure asymmetry
 3. Wire up results display UI
+4. Build V1 audiovisual rehabilitation system (now faster with Unity MCP!)
 
 ---
 
