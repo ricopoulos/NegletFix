@@ -8,19 +8,51 @@
 
 ---
 
-## The Story
+## Why this exists
 
-In July 2021, I had a stroke. Right posterior cerebral artery. Hemorrhagic transformation. The MRIs show a large area of encephalomalacia in my right occipital lobe - the part of your brain that processes vision.
+In July 2021, I had a stroke.
 
-The result: **left homonymous hemianopia**. My entire left visual field is gone. Not dark, not blurry - just *absent*. Plus this persistent "gray overlay" that makes everything feel dimmer than it should be.
+Right posterior cerebral artery.
+Hemorrhagic transformation.
+Large occipital lesion. The kind of sentence doctors say while looking at scans instead of you.
 
-I'm 52. I run a windsurfing business. I'm not ready to just accept this.
+What it means in real life is simpler:
 
-So I'm building my own rehabilitation system.
+**The left half of the world disappeared.**
 
-**NeglectFix** combines consumer VR (Meta Quest), EEG neurofeedback (Muse headband), and evidence-based audiovisual training protocols to try something the medical system doesn't offer: targeted, daily, closed-loop brain training designed specifically for my deficit.
+Not black.
+Not blurry.
+Just… not there.
 
-I'm both the developer and the patient. Every line of code is personal.
+Faces slide away. Text vanishes. Objects exist until they don't. There's also this permanent gray veil over everything, like someone turned the contrast knob down and lost it.
+
+Four years later, I'm still here. Still curious. Still annoyed.
+
+And I'm not very good at *accepting* things.
+
+So instead of waiting politely for my brain to behave, I decided to poke it.
+
+This repository is that poke.
+
+---
+
+## What this is (and what it isn't)
+
+This is **not** a medical device.
+It's **not** a startup pitch.
+It's **not** a miracle cure.
+
+It *is* a personal, open, slightly obsessive experiment:
+
+Using consumer VR, EEG neurofeedback, and published neurorehab research to build a **daily, targeted, closed-loop training system** for my own condition.
+
+I'm the patient.
+I'm the developer.
+I'm the test subject.
+
+Every line of code is written with my own blind side in mind.
+
+The project is called **NeglectFix**, because at some point you have to name the thing you're fighting.
 
 ---
 
