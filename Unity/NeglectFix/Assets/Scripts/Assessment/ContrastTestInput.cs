@@ -154,8 +154,8 @@ namespace NeglectFix.Assessment
                 }
             }
 
-            // Backspace or Escape - "Can't see"
-            if (Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Escape))
+            // Backspace - "Can't see"
+            if (Input.GetKeyDown(KeyCode.Backspace))
             {
                 lastInputTime = Time.time;
 
@@ -164,6 +164,20 @@ namespace NeglectFix.Assessment
                     OnCantSeePressed?.Invoke();
                     contrastTest.OnUserResponse(' ');
                 }
+            }
+
+            // Tab - Enter calibration mode (only when test not running)
+            if (Input.GetKeyDown(KeyCode.Tab) && !contrastTest.IsTestInProgress)
+            {
+                lastInputTime = Time.time;
+                Debug.Log("[ContrastTestInput] Entering calibration mode...");
+                contrastTest.StartCalibrationMode();
+            }
+
+            // F1 - Show calibration info
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                contrastTest.ShowCalibrationInfo();
             }
         }
 

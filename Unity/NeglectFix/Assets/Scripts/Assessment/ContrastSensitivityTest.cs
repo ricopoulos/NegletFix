@@ -36,15 +36,28 @@ namespace NeglectFix.Assessment
         [Tooltip("Eccentricity for hemifield testing (degrees from center)")]
         [SerializeField] private float hemifieldEccentricity = 10f;
 
+        [Tooltip("UI offset in pixels for hemifield testing (based on typical viewing distance)")]
+        [SerializeField] private float hemifieldUIOffset = 300f;
+
         [Header("Pelli-Robson Parameters")]
         [Tooltip("Starting contrast (0.0 = 100% contrast, higher = harder)")]
-        [SerializeField] private float startingLogCS = 0.5f; // Start at 31% contrast (easier to see)
+        [SerializeField] private float startingLogCS = 0.0f; // Start at 100% contrast (easiest)
 
         [Tooltip("Contrast step size (standard = 0.15)")]
         [SerializeField] private float logCSStep = 0.15f;
 
-        [Tooltip("Maximum testable LogCS (2.0 = 1% contrast, very hard)")]
-        [SerializeField] private float maxLogCS = 2.0f;
+        [Tooltip("Maximum testable LogCS (2.25 = 0.56% contrast, near threshold)")]
+        [SerializeField] private float maxLogCS = 2.25f;
+
+        [Header("Display Calibration")]
+        [Tooltip("Monitor gamma (typical: 2.2 for most displays)")]
+        [SerializeField] private float displayGamma = 2.2f;
+
+        [Tooltip("Background luminance in cd/m² (Pelli-Robson standard: 85)")]
+        [SerializeField] private float targetBackgroundLuminance = 85f;
+
+        [Tooltip("Enable gamma correction for accurate contrast")]
+        [SerializeField] private bool useGammaCorrection = true;
 
         [Tooltip("Letters per contrast level")]
         [SerializeField] private int lettersPerTriplet = 3;
@@ -58,6 +71,12 @@ namespace NeglectFix.Assessment
         [SerializeField] private TextMeshProUGUI statusText;
         [SerializeField] private Image backgroundPanel;
         [SerializeField] private Transform letterTransform;
+
+        [Header("Fixation Cross (for hemifield testing)")]
+        [Tooltip("Fixation cross shown during hemifield tests - user must keep eyes on this")]
+        [SerializeField] private TextMeshProUGUI fixationCross;
+        [SerializeField] private Color fixationColor = Color.red;
+        [SerializeField] private int fixationFontSize = 80;
 
         [Header("Audio Feedback")]
         [SerializeField] private AudioClip correctSound;
@@ -135,7 +154,40 @@ namespace NeglectFix.Assessment
 
         void Start()
         {
+            CreateFixationCrossIfNeeded();
             InitializeTest();
+        }
+
+        /// <summary>
+        /// Creates a fixation cross dynamically if not assigned in the inspector.
+        /// The fixation cross is essential for valid hemifield testing.
+        /// </summary>
+        private void CreateFixationCrossIfNeeded()
+        {
+            if (fixationCross == null && letterDisplay != null)
+            {
+                // Create fixation cross as sibling of letter display
+                GameObject fixationObj = new GameObject("FixationCross");
+                fixationObj.transform.SetParent(letterDisplay.transform.parent, false);
+
+                fixationCross = fixationObj.AddComponent<TextMeshProUGUI>();
+                fixationCross.text = "+";
+                fixationCross.fontSize = fixationFontSize;
+                fixationCross.color = fixationColor;
+                fixationCross.alignment = TextAlignmentOptions.Center;
+
+                var rectTransform = fixationCross.GetComponent<RectTransform>();
+                rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+                rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+                rectTransform.anchoredPosition = Vector2.zero;
+                rectTransform.sizeDelta = new Vector2(100, 100);
+
+                Debug.Log("[ContrastTest] Created fixation cross for hemifield testing");
+            }
+
+            // Hide initially
+            if (fixationCross != null)
+                fixationCross.gameObject.SetActive(false);
         }
 
         public void InitializeTest()
@@ -154,11 +206,14 @@ namespace NeglectFix.Assessment
             if (letterDisplay != null)
                 letterDisplay.text = "";
 
-            UpdateInstructions("Contrast Sensitivity Test\n\n" +
-                "You will see letters at decreasing contrast.\n" +
-                "Say or select the letter you see.\n" +
-                "Press B if you cannot see the letter.\n\n" +
-                "Press TRIGGER to begin.");
+            // Hide fixation cross during initialization
+            if (fixationCross != null)
+                fixationCross.gameObject.SetActive(false);
+
+            UpdateInstructions("CONTRAST SENSITIVITY TEST\n\n" +
+                "Type the letter you see.\n" +
+                "Press BACKSPACE if you can't see it.\n\n" +
+                "Press SPACE to start");
         }
 
         /// <summary>
@@ -266,37 +321,51 @@ namespace NeglectFix.Assessment
                 letterTransform.localPosition = GetHemifieldPosition(currentHemifield);
             }
 
-            // Display letter
+            // Display letter - BIG and CENTERED
             if (letterDisplay != null)
             {
                 letterDisplay.text = currentLetter.ToString();
-                letterDisplay.color = letterColor; // Use calculated contrast color
-                letterDisplay.fontSize = 300; // Large font for visibility
+                letterDisplay.color = letterColor;
+                letterDisplay.fontSize = 400; // Very large for visibility
+                letterDisplay.alignment = TMPro.TextAlignmentOptions.Center;
 
-                // Center the letter display
+                // Position letter based on hemifield and ensure it renders on top
                 var rectTransform = letterDisplay.GetComponent<RectTransform>();
                 if (rectTransform != null)
                 {
-                    rectTransform.anchoredPosition = new Vector2(0, 100); // Center-ish, slightly above middle
+                    rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+                    rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+
+                    // Apply hemifield offset for visual field testing
+                    float xOffset = GetHemifieldUIOffset(currentHemifield);
+                    rectTransform.anchoredPosition = new Vector2(xOffset, 0);
+
+                    rectTransform.sizeDelta = new Vector2(500, 500);
+                    rectTransform.SetAsLastSibling(); // Render on top of other UI
                 }
 
-                Debug.Log($"[ContrastTest] Showing letter: {currentLetter} at LogCS {currentLogCS:F2}, contrast: {contrast:F3}");
+                Debug.Log($"[ContrastTest] [{currentHemifield}] Letter: {currentLetter}, LogCS: {currentLogCS:F2}, Contrast: {contrast:P1}, Gray: {letterColor.r:F3}");
             }
 
-            // Move instructions below the letter
+            // Hide instructions completely during letter display
             if (instructionText != null)
             {
-                instructionText.text = $"Type the letter you see (or Backspace if you can't)";
-
-                var rectTransform = instructionText.GetComponent<RectTransform>();
-                if (rectTransform != null)
-                {
-                    rectTransform.anchoredPosition = new Vector2(0, -200); // Below center
-                }
+                instructionText.gameObject.SetActive(false);
             }
 
-            // Update status
-            UpdateStatus($"LogCS: {currentLogCS:F2} | Letter {currentTripletIndex + 1}/{lettersPerTriplet}");
+            // Show fixation cross during hemifield tests (user must keep eyes on center)
+            if (fixationCross != null)
+            {
+                bool showFixation = (currentHemifield == HemifieldMode.LeftHemifield ||
+                                     currentHemifield == HemifieldMode.RightHemifield);
+                fixationCross.gameObject.SetActive(showFixation);
+
+                if (showFixation)
+                {
+                    // Ensure fixation cross renders below the letter
+                    fixationCross.transform.SetAsFirstSibling();
+                }
+            }
 
             awaitingResponse = true;
             letterOnsetTime = Time.time;
@@ -319,32 +388,56 @@ namespace NeglectFix.Assessment
 
         /// <summary>
         /// Convert LogCS to Weber contrast (0-1 range)
-        /// LogCS = log10(1/threshold)
+        /// LogCS = log10(1/contrast_threshold)
         /// LogCS 0.0 = 100% contrast (black on gray)
-        /// LogCS 2.25 = 0.56% contrast (barely visible)
+        /// LogCS 1.0 = 10% contrast
+        /// LogCS 2.0 = 1% contrast
+        /// LogCS 2.25 = 0.56% contrast (near threshold for normal vision)
         /// </summary>
         private float LogCSToContrast(float logCS)
         {
-            // More aggressive contrast reduction for testing
-            // LogCS 0.0 = 100% contrast
-            // LogCS 1.0 = 10% contrast
-            // LogCS 2.0 = 1% contrast
-            float threshold = Mathf.Pow(10f, -logCS);
-            return Mathf.Clamp01(threshold); // Changed: threshold IS the contrast now
+            // Convert log contrast sensitivity to linear contrast
+            // LogCS = log10(1/C) where C is the Weber contrast threshold
+            // So C = 10^(-logCS)
+            float contrast = Mathf.Pow(10f, -logCS);
+            return Mathf.Clamp01(contrast);
         }
 
+        /// <summary>
+        /// Calculate letter luminance using Weber contrast formula.
+        /// Weber contrast: C = (L_background - L_letter) / L_background
+        /// Solving for L_letter: L_letter = L_background * (1 - C)
+        /// </summary>
         private Color GetLetterColor(float contrast)
         {
-            // Use alpha channel for contrast instead of luminance
-            // This works regardless of background color
-            // contrast = 1.0 → fully opaque (black)
-            // contrast = 0.0 → fully transparent (invisible)
+            // Background is 50% gray (linear luminance 0.5 before gamma)
+            float backgroundLinear = 0.5f;
 
-            float alpha = Mathf.Clamp01(contrast * 3f); // Multiply by 3 to make low contrast disappear faster
+            // Weber contrast formula: C = (Lb - Ll) / Lb
+            // Solve for letter luminance: Ll = Lb * (1 - C)
+            float letterLinear = backgroundLinear * (1f - contrast);
 
-            Debug.Log($"[ContrastTest] Contrast: {contrast:F4}, Alpha: {alpha:F4}");
+            // Clamp to valid range
+            letterLinear = Mathf.Clamp01(letterLinear);
 
-            return new Color(0f, 0f, 0f, alpha); // Black letter with varying transparency
+            // Apply gamma correction if enabled
+            // To display a target linear luminance, we need to apply inverse gamma
+            // displayValue = linearValue^(1/gamma)
+            float letterValue;
+            if (useGammaCorrection)
+            {
+                letterValue = Mathf.Pow(letterLinear, 1f / displayGamma);
+            }
+            else
+            {
+                letterValue = letterLinear;
+            }
+
+            Debug.Log($"[ContrastTest] LogCS: {currentLogCS:F2}, Contrast: {contrast:P1}, " +
+                      $"Linear: {letterLinear:F4}, Display: {letterValue:F4}");
+
+            // Return solid color (no alpha) - luminance-based contrast
+            return new Color(letterValue, letterValue, letterValue, 1f);
         }
 
         private Vector3 GetHemifieldPosition(HemifieldMode hemifield)
@@ -362,6 +455,27 @@ namespace NeglectFix.Assessment
                 case HemifieldMode.Binocular:
                 default:
                     return Vector3.zero;
+            }
+        }
+
+        /// <summary>
+        /// Get UI pixel offset for hemifield testing.
+        /// Left hemifield = negative X (letter appears on left side of screen)
+        /// Right hemifield = positive X (letter appears on right side of screen)
+        /// User must keep eyes fixated on center while letters appear in peripheral vision.
+        /// </summary>
+        private float GetHemifieldUIOffset(HemifieldMode hemifield)
+        {
+            switch (hemifield)
+            {
+                case HemifieldMode.LeftHemifield:
+                    return -hemifieldUIOffset; // Letter appears on LEFT side of screen
+                case HemifieldMode.RightHemifield:
+                    return hemifieldUIOffset;  // Letter appears on RIGHT side of screen
+                case HemifieldMode.Central:
+                case HemifieldMode.Binocular:
+                default:
+                    return 0f; // Letter appears at CENTER
             }
         }
 
@@ -386,6 +500,8 @@ namespace NeglectFix.Assessment
 
             float reactionTime = (Time.time - letterOnsetTime) * 1000f;
             bool correct = (char.ToUpper(responseLetter) == currentLetter);
+
+            Debug.Log($"[ContrastTest] Response: '{responseLetter}' vs Expected: '{currentLetter}' = {(correct ? "CORRECT" : "WRONG")} (triplet {currentTripletIndex+1}/{lettersPerTriplet}, score {correctInTriplet + (correct ? 1 : 0)}/{currentTripletIndex+1})");
 
             // Record trial
             var trial = new TrialResult
@@ -433,6 +549,8 @@ namespace NeglectFix.Assessment
 
         private void EvaluateTriplet()
         {
+            Debug.Log($"[ContrastTest] Evaluating triplet: {correctInTriplet}/{lettersPerTriplet} correct, need {correctToPass} to pass");
+
             if (correctInTriplet >= correctToPass)
             {
                 // Passed - increase difficulty
@@ -505,7 +623,15 @@ namespace NeglectFix.Assessment
         private void UpdateInstructions(string text)
         {
             if (instructionText != null)
+            {
+                instructionText.gameObject.SetActive(true); // Re-enable if hidden
                 instructionText.text = text;
+            }
+            // Clear letter display when showing instructions
+            if (letterDisplay != null)
+            {
+                letterDisplay.text = "";
+            }
         }
 
         private void UpdateStatus(string text)
@@ -558,6 +684,124 @@ namespace NeglectFix.Assessment
         public bool IsAwaitingResponse => awaitingResponse;
         public float CurrentLogCS => currentLogCS;
         public HemifieldMode CurrentHemifield => currentHemifield;
+
+        #region Calibration & Debug Methods
+
+        /// <summary>
+        /// Preview a specific LogCS level (for calibration)
+        /// </summary>
+        public void PreviewContrastLevel(float logCS)
+        {
+            float contrast = LogCSToContrast(logCS);
+            Color letterColor = GetLetterColor(contrast);
+
+            if (letterDisplay != null)
+            {
+                letterDisplay.text = "H"; // Standard test letter
+                letterDisplay.color = letterColor;
+            }
+
+            UpdateStatus($"Preview: LogCS {logCS:F2} = {contrast:P1} contrast");
+            Debug.Log($"[Calibration] LogCS {logCS:F2}: Contrast={contrast:P2}, RGB=({letterColor.r:F3}, {letterColor.g:F3}, {letterColor.b:F3})");
+        }
+
+        /// <summary>
+        /// Show calibration strip with all standard Pelli-Robson levels
+        /// Call this to verify your display is properly calibrated
+        /// </summary>
+        public void ShowCalibrationInfo()
+        {
+            string info = "Pelli-Robson Contrast Levels:\n";
+            info += "══════════════════════════════════════\n";
+            info += "LogCS  | Contrast | Letter Gray Value\n";
+            info += "──────────────────────────────────────\n";
+
+            float[] standardLevels = { 0.0f, 0.15f, 0.30f, 0.45f, 0.60f, 0.75f, 0.90f, 1.05f, 1.20f, 1.35f, 1.50f, 1.65f, 1.80f, 1.95f, 2.10f, 2.25f };
+
+            foreach (float logCS in standardLevels)
+            {
+                float contrast = LogCSToContrast(logCS);
+                float letterLinear = 0.5f * (1f - contrast);
+                float displayValue = useGammaCorrection ? Mathf.Pow(letterLinear, 1f / displayGamma) : letterLinear;
+
+                info += $"{logCS:F2}   | {contrast,7:P1} | {displayValue:F3} ({(int)(displayValue * 255)})\n";
+            }
+
+            info += "══════════════════════════════════════\n";
+            info += $"Gamma correction: {(useGammaCorrection ? $"ON (γ={displayGamma})" : "OFF")}\n";
+            info += "Normal threshold: 1.65-1.95 LogCS";
+
+            Debug.Log(info);
+            UpdateInstructions(info);
+        }
+
+        /// <summary>
+        /// Cycle through contrast levels for visual verification (press keys 0-9)
+        /// </summary>
+        public void StartCalibrationMode()
+        {
+            testInProgress = false;
+            StartCoroutine(CalibrationModeLoop());
+        }
+
+        private IEnumerator CalibrationModeLoop()
+        {
+            UpdateInstructions("CALIBRATION MODE\n\n" +
+                "Press UP/DOWN arrows to adjust contrast\n" +
+                "Press G to toggle gamma correction\n" +
+                "Press C to show all levels\n" +
+                "Press ESCAPE to exit\n\n" +
+                "Verify letters disappear at ~1.8-2.0 LogCS for normal vision");
+
+            float previewLogCS = 0f;
+            bool calibrating = true;
+
+            while (calibrating)
+            {
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    previewLogCS = Mathf.Min(previewLogCS + 0.15f, maxLogCS);
+                    PreviewContrastLevel(previewLogCS);
+                }
+                else if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    previewLogCS = Mathf.Max(previewLogCS - 0.15f, 0f);
+                    PreviewContrastLevel(previewLogCS);
+                }
+                else if (Input.GetKeyDown(KeyCode.G))
+                {
+                    useGammaCorrection = !useGammaCorrection;
+                    PreviewContrastLevel(previewLogCS);
+                    Debug.Log($"[Calibration] Gamma correction: {(useGammaCorrection ? "ON" : "OFF")}");
+                }
+                else if (Input.GetKeyDown(KeyCode.C))
+                {
+                    ShowCalibrationInfo();
+                }
+                else if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    calibrating = false;
+                }
+
+                yield return null;
+            }
+
+            InitializeTest();
+        }
+
+        /// <summary>
+        /// Get expected contrast values for a specific LogCS
+        /// Useful for debugging and verification
+        /// </summary>
+        public (float weberContrast, float letterLuminance, float displayGray) GetContrastDetails(float logCS)
+        {
+            float contrast = LogCSToContrast(logCS);
+            float letterLinear = 0.5f * (1f - contrast);
+            float displayGray = useGammaCorrection ? Mathf.Pow(letterLinear, 1f / displayGamma) : letterLinear;
+            return (contrast, letterLinear, displayGray);
+        }
+
+        #endregion
     }
 
     /// <summary>
