@@ -50,20 +50,26 @@ If (brain engaged + looking left) → Reward
 Neuroplastic reinforcement of left-awareness
 ```
 
-### V1: Contrast Sensitivity Assessment (In Progress)
+### V1: Contrast Sensitivity Assessment (Baseline Complete ✓)
 Before training, you need to measure. This module implements a modified Pelli-Robson test with hemifield-specific measurements.
 
 | Script | Lines | Status |
 |--------|-------|--------|
-| `Assessment/ContrastSensitivityTest.cs` | ~620 | **Tested Dec 13, 2025** |
+| `Assessment/ContrastSensitivityTest.cs` | ~650 | **Baseline recorded Dec 15, 2025** |
 | `Assessment/ContrastTestInput.cs` | ~260 | Working |
 | `Assessment/ContrastResultsUI.cs` | 349 | Ready to wire |
 
-**First test run (Dec 13, 2025):**
-- Central vision threshold: ~1.95 LogCS
-- Test sequence working: Central → Right → Left hemifields
-- Letters fade properly with alpha transparency
-- Next: calibrate against clinical Pelli-Robson, test hemifield asymmetry
+**First Validated Baseline (Dec 15, 2025):**
+
+| Visual Field | LogCS Score | Contrast | Result |
+|--------------|-------------|----------|--------|
+| Central | ~1.05+ | ~9% | Good |
+| Right (intact) | **2.25** | 0.56% | Maxed the test |
+| Left (affected) | **0.00** | 100% | Total failure |
+
+**Asymmetry: 2.25 LogCS** - Clinically significant threshold is ≥0.30
+
+This confirms the left homonymous hemianopia and establishes a measurable baseline for tracking rehabilitation progress. Target improvement: +0.31 to +0.54 LogCS based on Daibert-Nido 2021 study.
 
 ### Coming Next: Cross-Modal Audiovisual Training
 The science is clear: spatiotemporally synchronized sound + visual stimuli can activate the preserved retino-collicular pathway (superior colliculus) in hemianopia patients. The brain can learn to "see" in the blind field when given the right training.
@@ -114,11 +120,15 @@ See [RESEARCH_SUMMARY.md](RESEARCH_SUMMARY.md) for complete bibliography.
 ```
 NeglectFix/
 ├── README.md                 ← You are here
+├── CLAUDE.md                 ← Project context for AI assistance
+├── .brain/                   ← Agent Brain memory system
+│   ├── index.json            ← Module status, baseline results
+│   ├── cross-cutting.md      ← Patterns, medical context
+│   ├── decisions.md          ← Architecture decisions (the "why")
+│   └── sessions/             ← Session summaries with blog notes
+│
 ├── docs/
-│   ├── CLAUDE_CONTEXT.md     ← Project context for AI assistance
-│   ├── research/             ← Scientific foundation
-│   ├── decisions/            ← Architecture decisions
-│   └── sessions/             ← Development session logs
+│   └── research/             ← Scientific foundation
 │
 ├── Unity/NeglectFix/         ← Unity 6.2 project
 │   └── Assets/Scripts/
@@ -141,7 +151,11 @@ NeglectFix/
 | Oct 2025 | V0 complete: 7 scripts, full EEG pipeline |
 | Dec 5 | Claude Code onboarding, project cleanup |
 | Dec 12 | Contrast Sensitivity module implemented (1,190 LOC) |
-| Dec 13 | **First working test!** Full sequence runs in Unity |
+| Dec 13 | First test sequence runs in Unity |
+| Dec 14 | Bug hunting - discovered hemifield positioning issue |
+| Dec 15 | **Critical fix:** Letters now appear in correct visual fields |
+| Dec 15 | **First validated baseline!** Right: 2.25, Left: 0.00 LogCS |
+| Dec 15 | Agent Brain memory system for progress tracking |
 
 ---
 
@@ -150,18 +164,21 @@ NeglectFix/
 **Working:**
 - Unity 6.2 project compiles and runs
 - EEG simulator (no hardware needed to test)
-- Contrast sensitivity test with progressive letter fading
+- Contrast sensitivity test with hemifield positioning
+- Red fixation cross for valid peripheral vision testing
 - Keyboard input for all Sloan letters
+- **First baseline recorded** - tracking starts now
 
-**In Progress:**
-- Calibrating contrast curve to match clinical Pelli-Robson
-- Testing left vs right hemifield to measure asymmetry
-- Wiring up results display UI
+**Completed:**
+- Hemifield positioning bug fixed (letters appear at correct screen positions)
+- Left vs right hemifield asymmetry measured: 2.25 LogCS difference
+- Agent Brain memory system (`.brain/`) for session tracking
 
 **Next:**
-- Quest VR deployment
+- Audiovisual training module (cross-modal rehabilitation)
+- Weekly contrast sensitivity re-assessments to track progress
+- Quest VR deployment for immersive testing
 - Real Muse EEG integration
-- First audiovisual training task
 
 ---
 
@@ -209,4 +226,4 @@ This is an open research project. Feel free to:
 
 ---
 
-*Last updated: December 13, 2025*
+*Last updated: December 15, 2025*
