@@ -1,5 +1,38 @@
 # NegletFix - Claude Code Context
 
+## **CRITICAL: Read Memory Before Starting**
+
+**STOP. Before doing ANY work, you MUST read these files first:**
+
+```
+.brain/index.json          # Module health, baseline results, active issues
+.brain/sessions/           # What happened in previous sessions
+.brain/crumbs/             # Any mid-session checkpoints
+```
+
+This project uses **Agent Brain** - a persistent memory system. Reading `.brain/` gives you:
+- Current module/component status
+- What was done in previous sessions (including blog-friendly summaries)
+- Known patterns and learnings
+- Unfinished work or blockers
+
+**Only after reading `.brain/` should you proceed with the user's request.**
+
+### Session End Ritual
+
+When user says "let's wrap up", "end session", or similar:
+1. Check `.brain/crumbs/` for any mid-session checkpoints
+2. Generate session summary combining crumbs + final work
+3. Write summary to `.brain/sessions/YYYY-MM-DD.md` (include Blog Notes section!)
+4. Update `.brain/index.json` if module status changed
+5. Commit and push to GitHub
+6. Get user approval
+
+### Available Commands
+- `/crumb` - Save progress checkpoint before context compaction
+
+---
+
 ## Project Overview
 VR-based rehabilitation system for left homonymous hemianopia with contrast/brightness deficits following right PCA stroke. Combines audiovisual stimulation training with EEG neurofeedback using consumer hardware (Meta Quest 2/3 + Muse headband).
 

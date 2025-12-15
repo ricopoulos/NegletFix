@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "project_name": "NegletFix",
+  "description": "VR rehabilitation for left homonymous hemianopia with EEG neurofeedback",
+  "last_updated": "2025-12-15T12:00:00Z",
+  "modules": {
+    "contrast-sensitivity-test": {
+      "status": "operational",
+      "health": "green",
+      "path": "Assets/Scripts/Assessment/ContrastSensitivityTest.cs",
+      "notes": "Hemifield positioning fixed. First baseline recorded."
+    },
+    "eeg-integration": {
+      "status": "planned",
+      "health": "gray",
+      "notes": "Muse headband integration via Mind Monitor OSC - not yet implemented"
+    },
+    "audiovisual-training": {
+      "status": "planned",
+      "health": "gray",
+      "notes": "Cross-modal rehabilitation module - next major feature"
+    }
+  },
+  "baseline_results": {
+    "date": "2025-12-15",
+    "central_logcs": "good",
+    "right_hemifield_logcs": 2.25,
+    "left_hemifield_logcs": 0.00,
+    "asymmetry": 2.25,
+    "notes": "First validated measurement after fixing hemifield bug"
+  },
+  "active_issues": [],
+  "next_actions": [
+    "Implement audiovisual training module",
+    "Weekly contrast sensitivity re-assessments to track progress",
+    "Quest VR deployment for immersive testing"
+  ]
+}
