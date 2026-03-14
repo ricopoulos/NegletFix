@@ -8,28 +8,30 @@
 .brain/index.json          # Module health, baseline results, active issues
 .brain/sessions/           # What happened in previous sessions
 .brain/crumbs/             # Any mid-session checkpoints
+.brain/backlog.md          # Blocked/waiting work items
 ```
 
-This project uses **Agent Brain** - a persistent memory system. Reading `.brain/` gives you:
+This project uses **Agent Brain v1.4** - a persistent memory system. Reading `.brain/` gives you:
 - Current module/component status
-- What was done in previous sessions (including blog-friendly summaries)
+- What was done in previous sessions
 - Known patterns and learnings
 - Unfinished work or blockers
 
 **Only after reading `.brain/` should you proceed with the user's request.**
 
-### Session End Ritual
+### Session Rituals
 
-When user says "let's wrap up", "end session", or similar:
-1. Check `.brain/crumbs/` for any mid-session checkpoints
-2. Generate session summary combining crumbs + final work
-3. Write summary to `.brain/sessions/YYYY-MM-DD.md` (include Blog Notes section!)
-4. Update `.brain/index.json` if module status changed
-5. Commit and push to GitHub
-6. Get user approval
+Use `/start-session` at the beginning and `/end-session` (or "let's wrap up") at the end of each session.
+
+**Start**: git pull → read brain → branch audit → summarize context
+**During**: `/crumb` for progress checkpoints
+**End**: branch hygiene → session summary → approval → commit & push (mandatory)
 
 ### Available Commands
+- `/start-session` - Session start ritual (sync, read brain, branch audit)
+- `/end-session` - Session wrap-up ritual (summary, commit, push)
 - `/crumb` - Save progress checkpoint before context compaction
+- `/branch-audit` - Check for unmerged/unpushed branches
 
 ---
 
