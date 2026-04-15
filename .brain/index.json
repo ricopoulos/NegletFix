@@ -2,7 +2,14 @@
   "schema_version": "1.0",
   "project_name": "NegletFix",
   "description": "VR rehabilitation for left homonymous hemianopia with EEG neurofeedback",
-  "last_updated": "2025-12-15T12:00:00Z",
+  "last_updated": "2026-04-14T00:00:00Z",
+  "wiki": {
+    "path": ".brain/wiki/",
+    "pages": 10,
+    "lines": 1719,
+    "built": "2026-04-14",
+    "notes": "Karpathy ingest pattern — compiled from sessions, research docs, scripts. Load index.md first, pull pages on-demand."
+  },
   "modules": {
     "contrast-sensitivity-test": {
       "status": "operational",
