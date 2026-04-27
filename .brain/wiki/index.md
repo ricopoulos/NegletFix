@@ -14,6 +14,7 @@ Compiled knowledge base for the NegletFix project (VR audiovisual + EEG neurofee
 - **Writing the next training module?** [[audiovisual-training-protocol]] has exact parameters from Daibert-Nido 2021.
 - **Adding a new contrast sensitivity measurement?** Append a row to [[erics-baseline]]#progress-log. Never overwrite.
 - **Verifying a scientific claim?** Every claim cites a paper — follow the citation to [[research-papers-index]] for the full entry.
+- **Curious about adjunctive medications?** [[pharmacological-adjuncts]] catalogs what's been theorized (levodopa, fluoxetine) — neurologist territory only.
 - **Confidence tags** (`[HIGH]`, `[MEDIUM]`, `[LOW]`, `[THEORETICAL]`, `[MEASURED]`) inline in each page indicate reliability per claim.
 
 Cross-links between wiki pages use `[[wikilinks]]`. Code references use `path:line` format (e.g., `ContrastSensitivityTest.cs:347`).
@@ -33,6 +34,7 @@ Cross-links between wiki pages use `[[wikilinks]]`. Code references use `path:li
 | [[rehabilitation-roadmap]] | Honest DONE / NEXT / UNKNOWN progress map — critical path, risks, open questions | 2026-04-14 | MIXED |
 | [[hardware-setup]] | Quest + Muse + Mind Monitor + Mac, OSC port 5000, troubleshooting table, ~$500 total cost | 2026-04-14 | HIGH |
 | [[research-papers-index]] | Every cited paper — full citation, DOI, key finding, NegletFix relevance, confidence rating | 2026-04-14 | MIXED |
+| [[pharmacological-adjuncts]] | Levodopa 100mg + Fluoxetine — theoretical adjuncts to AV training, evidence extrapolated from motor stroke trials, neurologist-only territory | 2026-04-27 | MIXED |
 
 ---
 

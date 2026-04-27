@@ -116,6 +116,12 @@ Required for sideloading NegletFix builds.
 3. Connect Quest to Mac via USB-C cable; inside the headset, accept the "Allow USB Debugging" prompt.
 4. Verify: `adb devices` from a terminal (requires Android Platform Tools) shows the Quest.
 
+> **⚠ Org-membership requirement** *(discovered 2026-04-27, see `sessions/2026-04-27-quest-setup-pharma.md`)*: The Meta account paired to the Quest **must be a member of the developer organization**. If the headset belongs to someone else (e.g., a family member's Quest), neither the headset's owner nor the dev-org owner can toggle Developer Mode — both get *"only the owner can do it."*
+>
+> **Fix**: at https://developers.meta.com/horizon/manage/ → Organization → Members → Add Member, invite the headset's Meta account as **Admin**. After they accept the email invite, Developer Mode toggle will work in their Meta Horizon app.
+>
+> **Alternative**: factory-reset the Quest and re-pair to the dev-org owner's Meta account (loses any account-bound apps/progress on the headset).
+
 ### In-editor VR testing
 - **Meta Quest Link** (formerly Oculus Link): USB-C cable, mirror Quest to PC, play in Unity directly. Most reliable.
 - **Air Link**: same but over WiFi 5 GHz — convenient, adds latency.
@@ -161,6 +167,7 @@ From `.brain/cross-cutting.md:41-46`:
 | Quest not detected by `adb` | Driver (Windows) / USB-C cable | Use the official Quest cable or known-good USB-C 3.0 data cable (not charge-only) |
 | Both Muse and Quest slip during session | Fit conflict | Try Muse S instead of Muse 2; Quest elite strap improves stability |
 | VR motion sickness during AV training | Fatigue or new user | Start 5-10 min sessions, stationary only; no locomotion; 90 Hz refresh minimum |
+| Meta Horizon app: *"only the owner can do it"* when toggling Developer Mode | Headset's paired Meta account isn't a member of the dev organization | Invite that account to your dev org as Admin at developers.meta.com/horizon/manage/, or factory-reset Quest and re-pair to the dev-org owner's account |
 
 ---
 
