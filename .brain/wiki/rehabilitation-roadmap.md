@@ -1,6 +1,6 @@
 ---
 title: Rehabilitation Roadmap
-last_updated: 2026-04-14
+last_updated: 2026-05-14
 confidence: MIXED
 sources:
   - .brain/index.json
@@ -9,6 +9,7 @@ sources:
   - CLAUDE.md
   - PROJECT_SUMMARY.md
   - NEUROFEEDBACK_PROTOCOL.md
+  - 2026-05-14 PubMed-verified audit — see [[research-papers-index]] Recent Additions
 ---
 
 # Rehabilitation Roadmap
@@ -42,13 +43,21 @@ See [[erics-baseline]] for the measured starting point, [[audiovisual-training-p
 
 ### Research synthesis
 - 15+ papers catalogued, evidence graded
-- Daibert-Nido 2021 protocol parameters extracted and documented
+- Daibert-Nido 2021 protocol parameters extracted and documented (since reframed — see below)
 - Ros et al. 2017 neurofeedback target identified (TP10, ↓α ↑β)
 - See [[research-papers-index]], [[scientific-foundation]]
 
 ### Brain v2.0 + Obsidian bridge sync (2026-03-21)
 - Memory system upgraded to v2 methodology
 - Session rituals (`/start-session`, `/end-session`, `/crumb`, `/branch-audit`) operational
+
+### 2026-05-14 — Research audit + literature expansion
+- 4-agent parallel audit + PubMed-verified literature pass identified 20+ new papers and corrected 3 citation errors + 1 misframed anchor
+- Daibert-Nido 2021 downgraded from HIGH "anchor" to LOW–MEDIUM (N=2 pediatric pilot, not adult stroke trial)
+- Strong new evidence for chronic responsiveness: **Namgung 2024/2025** (n=82 RCTs each), **Alharshan/Alwashmi 2026** (n=15 stroke HH, DTI mechanism), **Raffin 2025** (cf-tACS chronic, n=16), **Diana 2025** (AV+tDCS chronic, n=18)
+- Critical reality-check evidence: **Yang/Cavanaugh/Saionz 2023** (only 58% of chronic patients respond, blind-field CS stays ~4× lower than intact), **Saionz 2025 TVST** natural history (chronic VF stable), **Treves 2025 JMIR** consumer-NF meta (null under sham)
+- Hemianopia-vs-neglect category mismatch flagged in [[eeg-neurofeedback]] — EEG-NF layer is now framed as exploratory adjunct
+- See [[research-papers-index]] Recent Additions section for full citations
 
 ---
 
@@ -81,11 +90,15 @@ Per [[contrast-sensitivity-test]] and [[audiovisual-training-protocol]]:
 - See `.brain/index.json:35` — "Quest VR deployment for immersive testing"
 
 ### Audiovisual training program
-Per Daibert-Nido protocol:
-- ~20 sessions over 6-7 weeks
-- 15 min each (3 × 5 min blocks), every 2 days
-- <5 hours total training time
-- Expected outcome: +0.31 to +0.54 LogCS improvement on left hemifield
+Three dose options, picked based on Eric's chronic profile (see [[audiovisual-training-protocol]] §1):
+- **Option A — Daibert-Nido 2021 dose** (~5 hr total over 6-7 weeks): the original pediatric-pilot dose. Probably under-dosed for chronic adult.
+- **Option B — Misawa/Daibert-Nido 2024 dose** (~5.25 hr, Meta Quest at home): same total budget, pediatric Quest validation.
+- **Option C — Alharshan/Alwashmi 2026 dose** (~15 hr, 30 min × 5 days/wk × 6 weeks): **the only direct adult-stroke evidence**. Recommended for Eric.
+
+Expected outcomes (revised 2026-05-14):
+- Primary: ≥+0.30 LogCS at scotoma-border locations in ~50-60% of responders (Yang/Cavanaugh/Saionz 2023, n=12 chronic)
+- Secondary: detection-RT improvements, scanning efficiency, ADL transfer
+- **Not realistic**: closing the left-hemifield 0.00 → right-hemifield 2.25 asymmetry — chronic blind-field CS stays ~4× lower than intact even after training
 
 ### EEG integration (optional, Phase 2)
 Currently `status: planned`, `health: gray` in `.brain/index.json:16-20`:
@@ -98,14 +111,20 @@ Currently `status: planned`, `health: gray` in `.brain/index.json:16-20`:
 
 ## 3. UNKNOWN / AT RISK [LOW — be honest]
 
-### Muse signal quality on Eric specifically
-Ros et al. 2017 used medical-grade EEG. Muse is consumer-grade dry-electrode. The band-power patterns are robust in principle, but Eric's specific head shape, hair, skin, and fit tolerance are unknown. First real Muse session could reveal unusable signal — or could work fine. Need to try. [MEDIUM risk]
+### Potential adjuncts (not currently in the build, worth tracking)
+Added 2026-05-14:
+- **cf-tACS V1↔MT** (Raffin 2025 Brain, n=16 chronic): forward cf-tACS + motion training expanded kinetic field borders faster than typical VPL. **Not actionable for home setup** — tACS hardware separate, expert placement required, no consumer-grade equivalent. But a strong "if we ever get clinic time" option.
+- **Anodal tDCS over ipsilesional occipital cortex** (Diana 2025 Eur J Neurol, n=18 chronic): added value over AV training alone, 2 h/day × 10 days. tDCS hardware ~€500–2000 for consumer/research-grade kits (HeadCap, Soterix). Discuss with Eric's neurologist before any DIY adoption — current is small but non-zero risk.
+- **Pharmacological adjuncts**: see [[pharmacological-adjuncts]] (already separate). Levodopa, fluoxetine, citicoline — all have weak/conflicting evidence for chronic visual rehab; neurologist conversation territory only.
+
+### Muse signal quality on Eric specifically [DOWNGRADED to HIGH risk, 2026-05-14]
+Ros et al. 2017 used medical-grade EEG. Muse is consumer-grade dry-electrode. **Sokolova 2024 + Pavlov 2024 device comparisons rank Muse S last among consumer EEG devices on signal quality** — log-SNR significantly lower than research-grade, weak alpha-spindle detection even eyes-closed. Treves 2025 JMIR meta (16 RCTs, 11 used Muse) showed null cognitive effects under sham control. The combination — weak signal + weak meta-analytic effects — argues for treating EEG-NF as exploratory only. **First session priority**: validate signal quality on Eric's head (visible eyes-open vs eyes-closed alpha modulation) before counting Muse data.
 
 ### Whether Eric is a "neurofeedback responder"
 Not everyone learns EEG self-regulation. The literature on neurofeedback responders vs. non-responders is imperfect. Even for responders, learning curve is 3-10+ sessions (Ros et al. 2017; `NEUROFEEDBACK_PROTOCOL.md:321-326`). If Eric is a non-responder, the project's closed-loop layer adds no value — but the open-loop audiovisual layer (which worked in Daibert-Nido without EEG) still should. [MEDIUM risk — failure mode has a fallback]
 
-### Whether Daibert-Nido gains reproduce in a single patient
-The published range (+0.31 to +0.54 LogCS) is a cohort mean. Individual responders varied. Eric might gain more, less, or not at all. Clinically significant change is ≥0.30 LogCS (Elliott et al. 1990), so even modest gains count. [HIGH risk for magnitude, LOW risk for direction]
+### Whether Daibert-Nido gains reproduce in a chronic adult [revised 2026-05-14]
+The published +0.31 to +0.54 LogCS range was the **cohort mean of N=2 pediatric brain-tumor survivors**, not adult stroke. Yang/Cavanaugh/Saionz 2023 (n=12 chronic adult stroke) found only 58% of patients responded at any trained location and blind-field CS stayed ~4× lower than intact-field after training. Realistic expectation for Eric: **~50-60% chance of any measurable gain; magnitude likely 0.20-0.40 LogCS at scotoma-border locations if responding, not full restoration**. Clinically significant change is still ≥0.30 LogCS (Elliott/Bullimore/Bailey 1991), so a responder outcome still counts as success. [HIGH risk for magnitude, MEDIUM risk for direction (was LOW)]
 
 ### Whether gains transfer to daily-life function
 Contrast sensitivity is an eccentricity-specific, luminance-specific lab number. It may improve on the test without Eric subjectively noticing at dinner. Literature is mixed on transfer; Topics in Stroke Rehab 2020 argues ecological VR helps transfer, but that's indirect evidence. This is the biggest unknown — and the one that matters most to Eric. [HIGH uncertainty]

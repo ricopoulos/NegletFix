@@ -1,7 +1,7 @@
 ---
-title: Audiovisual Training Protocol (Daibert-Nido 2021)
-last_updated: 2026-04-14
-confidence: HIGH
+title: Audiovisual Training Protocol (Daibert-Nido family)
+last_updated: 2026-05-14
+confidence: MIXED
 sources:
   - NEUROFEEDBACK_PROTOCOL.md
   - VR_REHABILITATION_TASKS.md
@@ -9,46 +9,88 @@ sources:
   - docs/research/contrast_sensitivity_module.md
   - CLAUDE.md
   - .brain/backlog.md
+  - 2026-05-14 research audit — see [[research-papers-index]] Recent Additions
 ---
 
 # Audiovisual Training Protocol
 
-The primary intervention in NegletFix. Based on Daibert-Nido et al. (2021), DOI: 10.3389/fneur.2021.680211 — a peer-reviewed home-based VR rehabilitation study that produced +0.31 to +0.54 LogCS contrast sensitivity improvement in hemianopia patients. This is the protocol NegletFix is designed to implement.
+The primary intervention in NegletFix. Originally based on Daibert-Nido et al. (2021), DOI: 10.3389/fneur.2021.680211. **The 2021 paper was an N=2 pediatric brain-tumor pilot, not a powered adult stroke trial.** NegletFix implements a *synthesized protocol* drawing from the Daibert-Nido family + adjacent chronic-stroke work.
 
-**Status**: Specification is complete and peer-reviewed. Unity implementation is PAUSED as `WIP-001` in `.brain/backlog.md` — ready to resume post-baseline.
+**Evidence base for the family** (all verified 2026-05-14):
+- **Daibert-Nido 2021** — N=2 pediatric, 3D-MOT in IVR (~5 hr total). Original anchor.
+- **Misawa/Daibert-Nido 2024 EClinicalMedicine** — N=10 pediatric on **Meta Quest 2/Pro at home**, 6 weeks, 9/10 with clinically meaningful gains, durable at 6 months. Validates Eric's hardware choice for home delivery.
+- **Alharshan/Alwashmi 2026 NeuroImage** — N=15 adult stroke HH, **30 min/day × 5 days/wk × 6 weeks (15 hr total, ~3× Daibert-Nido)**, with DTI evidence of microstructural change. First mechanism paper in stroke.
+- **Diana 2025 Eur J Neurol** — N=18 chronic HVFDs, AV training + tDCS RCT. Adjunct evidence.
+- **Rowland/Bushnell/Duncan/Stein 2023 J Neurosci** — N=2 chronic stroke (≥8 mo), 2-h sessions, "dramatic" recovery throughout blind field. Alternative paradigm.
+- **Yang/Cavanaugh/Saionz/Huxlin 2023 medRxiv** — N=12 chronic V1 stroke, **only 58% responded at any trained location, blind-field CS stayed ~4× lower than intact-field**. Critical reality check.
 
-See [[scientific-foundation]] for the "why," [[erics-baseline]] for the target, [[unity-architecture]] for where to build it.
+See [[research-papers-index]] for full citations.
+
+> **⚠ Reframing (2026-05-14)**: This page previously presented Daibert-Nido 2021 as the "anchor" producing reliable +0.31 to +0.54 LogCS gains, with HIGH confidence. That was overstated. The effect-size range is plausible but **not independently replicated at scale in chronic adult stroke**. Realistic targets for Eric's chronic case: detection-RT improvements, ADL transfer, and modest CS gains at the scotoma border — not a left-field LogCS jump from 0.00 to anywhere near the intact field's 2.25.
+
+**Status**: Specification family is complete; Unity implementation is PAUSED as `WIP-001` in `.brain/backlog.md` — ready to resume post-baseline.
+
+See [[scientific-foundation]] for the "why," [[erics-baseline]] for the starting point, [[unity-architecture]] for where to build it.
 
 ---
 
-## 1. Protocol Parameters [HIGH — exact from Daibert-Nido 2021]
+## 1. Protocol Parameters [MIXED — dose options across the family]
 
+There is **no consensus dose** across the Daibert-Nido protocol family. Three reference points:
+
+### Option A — Original Daibert-Nido 2021 (low dose, pediatric pilot)
 | Parameter | Value | Source |
 |-----------|-------|--------|
-| Session duration | 15 minutes | Daibert-Nido 2021 |
+| Session duration | 15 minutes | Daibert-Nido 2021 (N=2 pediatric) |
 | Blocks per session | 3 × 5 min | Daibert-Nido 2021 |
 | Session frequency | Every 2 days | Daibert-Nido 2021 |
 | Total program | 6-7 weeks (~20 sessions) | Daibert-Nido 2021 |
 | Total training time | < 5 hours | Daibert-Nido 2021 |
-| **Target outcome** | **+0.31 to +0.54 LogCS** | Daibert-Nido 2021 |
-| Secondary outcomes | +7-9 Humphrey points (blind hemifield), +10-22% reading speed | `docs/research/scientific_foundation.md:38-41` |
+
+### Option B — Misawa/Daibert-Nido 2024 (medium dose, pediatric Quest at home)
+| Parameter | Value | Source |
+|-----------|-------|--------|
+| Session duration | 20 minutes | Misawa 2024 (N=10 pediatric, Meta Quest 2/Pro home) |
+| Session frequency | Every other day | Misawa 2024 |
+| Total program | 6 weeks (21 sessions) | Misawa 2024 |
+| Total training time | ~5 h 15 min | Misawa 2024 |
+
+### Option C — Alharshan/Alwashmi 2026 (high dose, adult stroke evidence) ← RECOMMENDED for Eric
+| Parameter | Value | Source |
+|-----------|-------|--------|
+| Session duration | 30 minutes | Alharshan 2026 (N=15 stroke HH) |
+| Session frequency | 5 days/week | Alharshan 2026 |
+| Total program | 6 weeks (30 sessions) | Alharshan 2026 |
+| Total training time | ~15 hours | Alharshan 2026 |
+
+### Expected outcomes (honestly framed)
+| Outcome | Original framing | Revised framing (2026-05-14) |
+|---------|------------------|------------------------------|
+| Primary | +0.31 to +0.54 LogCS (Daibert-Nido 2021) | Plausible but **unreplicated in chronic adult stroke**. Realistic chronic target: ≥+0.30 LogCS at scotoma-border locations in 50-60% of responders (Yang/Cavanaugh/Saionz 2023, n=12 chronic) |
+| Secondary | +7-9 Humphrey points blind hemifield; +10-22% reading speed | Detection-RT improvements, scanning efficiency, ADL transfer — better-supported by chronic-stroke evidence than perimetric field-area expansion |
+
+**Why Option C for Eric**: He is ~5y post-stroke (chronic). Saionz 2020 found chronics need ~93 sessions vs ~16 for subacutes for visual discrimination recovery. The Daibert-Nido pediatric dose is likely under-dosed for an adult chronic case. Alharshan 2026 is the closest direct evidence in Eric's population.
 
 ---
 
-## 2. Stimulus Parameters [HIGH — exact from protocol]
+## 2. Stimulus Parameters [LOW–MEDIUM — partial misattribution flagged 2026-05-14]
 
-### Auditory stimulus
-- **Frequency**: 400 Hz sinusoidal tone
-- **Duration**: 250 ms
-- **Amplitude envelope**: 55 dB → 75 dB (looming — sound "approaches" the listener)
-- **Spatial source**: Co-localized with the visual target (spatial principle of multisensory integration — Stein & Meredith 1993)
+> **⚠ Source-attribution concern**: The parameters listed below (400 Hz / 250 ms / 55→75 dB looming) **do not appear to come from Daibert-Nido 2021**. Daibert-Nido 2021 used a **3D Multiple-Object Tracking (3D-MOT) paradigm in immersive VR with spatially co-localized sound** (15 trials × 20 s × 3 blocks per session). The "400 Hz tone" parameters appear closer to the Wake Forest cat protocol (Stein/Rowland) or a synthesis from older literature. **Re-source or rewrite this section before building.** The cleanest options are: (a) implement 3D-MOT-IVR as in Daibert-Nido / Misawa 2024 / Alharshan 2026, or (b) implement the Wake Forest 500 ms / 45° / 600 trials paradigm cited in [[scientific-foundation]]#wake-forest, with proper attribution.
 
-### Visual stimulus
+### Currently-cited (pending re-attribution)
+
+#### Auditory stimulus
+- **Frequency**: 400 Hz sinusoidal tone — *source: uncertain, NOT Daibert-Nido 2021*
+- **Duration**: 250 ms — *source: uncertain*
+- **Amplitude envelope**: 55 dB → 75 dB (looming) — *source: uncertain*
+- **Spatial source**: Co-localized with the visual target (Stein & Meredith 1993 spatial principle — *this principle is well-sourced; the specific tone parameters are not*)
+
+#### Visual stimulus
 - Personalized contrast from [[erics-baseline]] (starting contrast = 2× affected-hemifield threshold, i.e., easily visible — see `docs/research/contrast_sensitivity_module.md:605-617`)
 - Co-localized with the auditory source in space AND time
 
-### Temporal alignment (critical)
-Audio and visual onsets must be **synchronized within one frame** (~16 ms at 60 Hz) to stay safely inside the perceptual binding window. The SC-level binding window is wider (~100-500 ms, Stein & Meredith 1993) but perceptual binding in humans uses the tighter threshold. See [[scientific-foundation]]#temporal-principle for the source-conflict note.
+#### Temporal alignment
+Audio and visual onsets synchronized within one frame (~16 ms at 60 Hz). **2026-05-14 update**: Bean/Stein/Rowland 2023 (Cereb Cortex) shows multisensory enhancement is **not prerequisite** for recovery — the SC integration window is ~100-500 ms and Wake Forest paradigms use 100 ms pairs successfully. **Strict ~16 ms binding may be over-engineered.** Aim for sub-50 ms sync; don't sweat single-frame precision.
 
 ---
 
@@ -181,16 +223,20 @@ See `NEUROFEEDBACK_PROTOCOL.md:190-208` and `RewardController.cs` in [[unity-arc
 
 ---
 
-## 9. Confidence Summary
+## 9. Confidence Summary (revised 2026-05-14)
 
-| Claim | Confidence |
-|-------|-----------|
-| 400 Hz, 250 ms, 55-75 dB audio params | HIGH (Daibert-Nido 2021) |
-| 15 min × ~20 sessions × 6-7 weeks schedule | HIGH (Daibert-Nido 2021) |
-| +0.31 to +0.54 LogCS expected improvement | HIGH (Daibert-Nido 2021, cohort average) |
-| Eric personally will improve by this magnitude | MEDIUM — individual variability |
+| Claim | Confidence | Note |
+|-------|-----------|------|
+| 400 Hz, 250 ms, 55-75 dB audio params | **LOW** ↓ | Source-attribution uncertain — see §2 callout |
+| 3D-MOT-IVR + co-localized audio paradigm | MEDIUM-HIGH | Validated across Daibert-Nido 2021 / Misawa 2024 / Alharshan 2026 |
+| 15 min × ~20 sessions × 6-7 weeks (Option A) | MEDIUM | Original Daibert-Nido dose; pediatric pilot only |
+| 30 min × 30 sessions × 6 weeks (Option C) | **HIGH** ↑ | Alharshan 2026 in adult stroke HH — closest to Eric's case |
+| +0.31 to +0.54 LogCS expected improvement | **LOW–MEDIUM** ↓ | Cohort range from N=2 pediatric. Yang/Cavanaugh/Saionz 2023 (n=12 chronic) showed ~58% response rate, blind-field CS stays ~4× lower than intact |
+| Eric personally will improve at all | MEDIUM | Chronic responders exist (Saionz lab series); ~50-60% response rate |
+| Eric will hit the cohort-mean Daibert-Nido number | LOW | Pediatric → chronic adult transfer is the weak link |
 | Gain will generalize to central vision / "gray overlay" | THEORETICAL — unvalidated hypothesis, see [[scientific-foundation]] |
-| Adding EEG closed-loop improves outcomes vs. open-loop | MEDIUM — REINVENT 2019 suggests yes in motor rehab; untested for hemianopia AV |
+| Adding EEG closed-loop improves outcomes vs. open-loop | MEDIUM — REINVENT 2019 + Chen 2026 meta-analysis suggest yes for motor; untested for hemianopia AV; Treves 2025 tempers consumer-NF claims |
+| Adding tDCS adjunct improves outcomes (Diana 2025) | MEDIUM-HIGH for chronic HVFD; hardware not part of NegletFix |
 
 ---
 

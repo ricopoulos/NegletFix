@@ -1,7 +1,7 @@
 ---
 title: EEG Neurofeedback (Muse TP10)
-last_updated: 2026-04-14
-confidence: MIXED
+last_updated: 2026-05-14
+confidence: MIXED — see §2 and §10 caveats added 2026-05-14
 sources:
   - NEUROFEEDBACK_PROTOCOL.md
   - RESEARCH_SUMMARY.md
@@ -9,11 +9,14 @@ sources:
   - Unity/NeglectFix/Assets/Scripts/EEG/EngagementCalculator.cs
   - Unity/NeglectFix/Assets/Scripts/EEG/EEGSimulator.cs
   - CLAUDE.md
+  - 2026-05-14 audit — Treves 2025 JMIR consumer-NF meta, Yang/Kastner 2024 PNAS alpha gating, Robineau 2014 (corrected citation), Muse signal-quality 2024 comparisons
 ---
 
 # EEG Neurofeedback
 
-The secondary/optional layer in NegletFix: real-time EEG from Muse → adaptive engagement score → gates the audiovisual reward. Literature-supported for neglect (Ros et al. 2017) but **not yet tested on Eric** — confidence is deliberately MIXED.
+The secondary/optional layer in NegletFix: real-time EEG from Muse → adaptive engagement score → gates the audiovisual reward. **Not yet tested on Eric** — confidence is deliberately MIXED.
+
+> **⚠ Category-mismatch note (added 2026-05-14)**: This protocol leans on neurofeedback literature for **hemispatial neglect** (Ros 2017 n=5, Network Neuroscience 2022). Eric's diagnosis is **left homonymous hemianopia** from PCA stroke — *not* hemispatial neglect (which typically follows MCA stroke). The strongest direct precedent for Eric's exact condition is **Robineau et al. 2014** (Neuropsychologia, real-time fMRI NF in left HH patients) — fMRI, not EEG, and not what NegletFix implements. Treat the EEG-NF layer as **an open hypothesis repurposing neglect protocols for a hemianopia case**, not a validated intervention. See [[research-papers-index]] for the corrected Robineau 2014 citation and the Treves 2025 consumer-NF reality check.
 
 See [[scientific-foundation]]#the-eeg-neurofeedback-rationale for the "why," [[audiovisual-training-protocol]] for the intervention it gates, [[hardware-setup]] for device connection, [[unity-architecture]] for the scripts.
 
@@ -43,16 +46,30 @@ All code paths: see [[unity-architecture]].
 
 ---
 
-## 2. The TP10 Rationale [MEDIUM-HIGH]
+## 2. The TP10 Rationale [MEDIUM — revised 2026-05-14]
 
 Muse 2/S has 4 dry electrodes: **TP9** (left temporal-parietal), **AF7** (left frontal), **AF8** (right frontal), **TP10** (right temporal-parietal).
 
 **TP10 is the primary target** (`MuseOSCReceiver.cs:55`). Why:
-- Overlies right posterior parietal cortex — the spatial-attention hub (Ros et al. 2017)
+- Overlies right posterior parietal cortex — a spatial-attention hub
 - Near the lesion site in many right-hemisphere stroke patients
-- Validated target in the one condition-matched neurofeedback study we have: Ros et al. 2017 trained 5 stroke-neglect patients to down-regulate rPPC alpha over 6 days with 20 min/day
+- Theoretical support from **Yang/Fiebelkorn/Kastner et al. 2024 PNAS** (intracranial ECoG, n=8): alpha is **bidirectional** — desynchronization contralateral to attended hemifield + synchronization ipsilateral both serve attention gating. For Eric (training left-field attention), right-hemisphere alpha desync is the correct direction.
+- Closest condition-matched NF study: **Ros et al. 2017** trained 5 stroke patients with hemispatial neglect to down-regulate rPPC alpha — but Eric has **hemianopia, not neglect** (see top-of-page category-mismatch note).
+- For pure hemianopia, the direct precedent is **Robineau et al. 2014** (Neuropsychologia, n small): real-time fMRI NF in left HH — patients could up-regulate right occipital cortex activity. *Not EEG, not TP10, but same diagnosis.*
 
-**Caveat**: Ros et al. used medical-grade EEG. Muse is consumer-grade with dry electrodes — signal quality is lower, motion artifacts are more prominent, and spatial specificity is coarser (`RESEARCH_SUMMARY.md:283-286`). The approach may still work — the alpha/beta patterns Ros et al. targeted are robust enough to survive lower SNR — but signal quality on Eric's head is untested. [CONFIDENCE: MEDIUM for transfer to consumer hardware]
+> ***Citation correction (2026-05-14)***: The prior wiki described "Ros et al. 2017 trained 5 stroke-neglect patients to down-regulate rPPC alpha over 6 days." That sentence conflated two different papers. Ros 2017 (Neural Plasticity) is the alpha-NF for neglect work; Ros 2014 was a single-session study; Robineau 2017 was healthy-volunteer fMRI; Robineau 2014 was the hemianopia fMRI-NF paper. The above text uses the corrected attributions.
+
+### Consumer-grade EEG signal-quality caveat [DOWNGRADED to LOW–MEDIUM, 2026-05-14]
+
+Two independent 2024 device-comparison papers (Sokolova 2024 Frontiers Neuroscience; Pavlov 2024 Sensors 24:8108) found **Muse S Gen 2 ranks lowest among tested consumer-EEG headbands** when benchmarked against research-grade systems (Brain Products, NVX): poorest log-SNR (p<0.001), weak correlation with research-grade PSD, lower-amplitude alpha spindles even with eyes closed (the easiest case to detect alpha). The TP9/TP10 dry-electrode contact through hair is the documented weak point.
+
+**Practical implication for Eric**: Real-world TP10 alpha/beta band powers may carry more low-frequency artifact than signal. **Plan a signal-validity check session before counting Muse data as the engagement gate** — eyes-open vs eyes-closed alpha modulation must be visibly detectable. If that simple eyes-closed alpha bump isn't there, the NF layer is operating on noise.
+
+### NF replication-crisis context [added 2026-05-14]
+
+**Treves et al. 2025 JMIR meta-analysis** (16 RCTs, n=763, 11/16 used Muse): consumer-grade neurofeedback shows **no benefit on cognition, mindfulness, or physiology** vs control. Modest distress reduction only. Authors suggest effects may rely on "neurosuggestion" (placebo of neurotechnology). Larger sham-controlled trials in adjacent fields (PTSD 2025 fMRI-NF vs sham = -0.05 ns; ADHD blinded RCTs = null) reinforce the pattern: **NF effects shrink or vanish under proper control**.
+
+This argues for treating EEG-NF as an **exploratory adjunct layer** in NegletFix, not a primary mechanism. The audiovisual training has direct evidence (Daibert-Nido family, Diana 2025, Alharshan 2026); the EEG-NF layer is theoretical-with-caveats.
 
 ---
 
@@ -189,16 +206,18 @@ Not everyone learns neurofeedback. Some percentage of users are "non-responders"
 
 ---
 
-## 10. Confidence Summary
+## 10. Confidence Summary (revised 2026-05-14)
 
-| Claim | Confidence |
-|-------|-----------|
-| TP10 is accessible and measurable with Muse | HIGH |
-| Alpha/beta pattern targeted by this protocol matches neglect EEG signature | HIGH |
-| Stroke patients can learn to modulate rPPC alpha via NFB | MEDIUM (Ros et al. 2017, n=5, medical EEG) |
-| Muse (consumer) is adequate for this learning | MEDIUM (plausible, untested) |
-| Eric personally will respond to NFB | UNKNOWN — individual variability |
-| Adding NFB gate improves AV training outcomes | MEDIUM — analogy from REINVENT motor study |
+| Claim | Confidence | Note |
+|-------|-----------|------|
+| TP10 is accessible and measurable with Muse | HIGH | Anatomical placement is correct |
+| Alpha/beta pattern targeted matches neglect EEG signature | HIGH | But Eric has hemianopia, not neglect (category mismatch) |
+| Stroke patients can learn to modulate rPPC alpha via NFB | MEDIUM | Ros 2017 n=5 (neglect, medical EEG); Bagherzadeh 2026 confirms ~50% of healthy adults are NF learners |
+| Muse (consumer) is adequate for this learning | **LOW–MEDIUM** ↓ | Sokolova/Pavlov 2024 — Muse S last among consumer devices on signal quality |
+| Closed-loop consumer-NF improves cognition under sham control | **LOW** | Treves 2025 JMIR meta — null. NF effects shrink under proper control |
+| Eric personally will respond to NFB | UNKNOWN | Individual variability; ~50% non-responder rate even in healthy |
+| Adding NFB gate improves AV training outcomes | MEDIUM | REINVENT 2019 + Chen 2026 meta show BCI+task improves motor stroke; untested for hemianopia AV |
+| Hemianopia (not neglect) is the right target population for this NF protocol | **MEDIUM (DOWNGRADED)** ↓ | Robineau 2014 supports fMRI-NF in HH, but EEG-NF in HH has no direct evidence — open hypothesis |
 
 ---
 

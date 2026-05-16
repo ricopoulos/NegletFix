@@ -1,6 +1,6 @@
 ---
 title: Research Papers Index
-last_updated: 2026-04-14
+last_updated: 2026-05-14
 confidence: MIXED
 sources:
   - RESEARCH_SUMMARY.md
@@ -11,6 +11,7 @@ sources:
   - docs/research/contrast_sensitivity_module.md
   - CLAUDE.md
   - .brain/cross-cutting.md
+  - 2026-05-14 PubMed-verified research audit (see Recent Additions section)
 ---
 
 # Research Papers Index
@@ -23,41 +24,48 @@ Confidence applies to the paper's evidentiary weight for this specific project, 
 
 ## Bolognini et al. (2005)
 
-**Citation**: Bolognini N., Rasi F., Coccia M., Làdavas E. Multisensory Integration in Hemianopia. *Brain*. 2005.
-**DOI**: [CITATION NEEDED — verify] (listed in `docs/research/scientific_foundation.md:63` without DOI)
+**Citation**: Bolognini N, Rasi F, Coccia M, Làdavas E. Visual search improvement in hemianopic patients after audio-visual stimulation. *Brain*. 2005;128(Pt 12):2830–2842.
+**DOI**: 10.1093/brain/awh662 — PMID: 16014652 (verified 2026-05-14)
 **Key finding**: Spatially and temporally aligned audiovisual stimuli enhance visual detection in the blind hemifield of hemianopia patients — clinical evidence that the preserved retinotectal pathway can mediate recovery.
 **Informs**: [[scientific-foundation]], [[audiovisual-training-protocol]] — direct precedent for the audiovisual cross-modal approach targeting Eric's left hemifield.
 **Confidence for NegletFix**: HIGH (peer-reviewed, direct condition match).
 
 ---
 
-## Cuppini et al. (2017)
+## Magosso, Cuppini & Bertini (2017)
 
-**Citation**: Cuppini C. et al. Audiovisual Rehabilitation Model. *Frontiers in Computational Neuroscience*. 2017.
-**DOI**: [CITATION NEEDED — verify] (listed in `docs/research/scientific_foundation.md:64` without DOI)
+**Citation**: Magosso E, Cuppini C, Bertini C. Audiovisual Rehabilitation in Hemianopia: A Model-Based Theoretical Investigation. *Frontiers in Computational Neuroscience*. 2017;11:113.
+**DOI**: 10.3389/fncom.2017.00113 — PMID: 29326578 (verified 2026-05-14)
 **Key finding**: Computational model of how repeated multisensory training strengthens residual SC→extrastriate connections, providing a mechanistic basis for audiovisual rehabilitation protocols.
 **Informs**: [[scientific-foundation]], [[audiovisual-training-protocol]] — the theoretical "why" behind the Daibert-Nido protocol's effectiveness.
 **Confidence for NegletFix**: MEDIUM (modeling paper, mechanistic not outcome evidence).
 
+> *Citation correction (2026-05-14)*: previously cited as "Cuppini et al. 2017" — first author is **Magosso**, not Cuppini.
+
 ---
 
-## Daibert-Nido et al. (2021) — ANCHOR PAPER
+## Daibert-Nido et al. (2021) — pilot, originally framed as anchor
 
-**Citation**: Daibert-Nido M., et al. Home-Based Visual Rehabilitation in Patients With Hemianopia. *Frontiers in Neurology*. 2021.
+**Citation**: Daibert-Nido M, et al. Home-Based Visual Rehabilitation in Patients With Hemianopia. *Frontiers in Neurology*. 2021.
 **DOI**: 10.3389/fneur.2021.680211
-**Key finding**: 20 VR sessions of 15 min (<5 hours total) using spatiotemporally congruent audiovisual stimulation produced +0.31 to +0.54 LogCS contrast sensitivity improvement, +7-9 Humphrey points in the blind hemifield, and +10-22% reading speed in hemianopia patients.
-**Informs**: [[audiovisual-training-protocol]] (entire protocol parameters), [[erics-baseline]] (target improvement magnitude), [[rehabilitation-roadmap]] (timeline).
-**Confidence for NegletFix**: HIGH — peer-reviewed, home-based, exact condition match, provides ready-to-implement parameters.
+**Key finding**: VR audiovisual stimulation (3D-MOT-IVR paradigm) produced contrast-sensitivity, Humphrey-field, and reading-speed improvements.
+**Sample**: **N=2 pediatric brain tumor survivors** (one with hemianopia, one with bitemporal hemianopia) — not a powered adult-stroke trial.
+**Informs**: [[audiovisual-training-protocol]] (paradigm template), [[erics-baseline]] (rough target magnitude only).
+**Confidence for NegletFix**: **DOWNGRADED to LOW–MEDIUM** for chronic adult stroke (verified 2026-05-14). Effect-size range (+0.31–0.54 LogCS) is plausible but **not replicated at scale** in adults with V1 stroke; magnitude likely overstated for chronic case. See Cavanaugh/Yang/Saionz 2023, Alharshan/Alwashmi 2025, and Misawa/Daibert-Nido 2024 entries below for the broader evidence picture.
+
+> *Reframing note (2026-05-14)*: this entry was previously labeled "ANCHOR PAPER" with HIGH confidence. That was overstated — the trial was N=2 pediatric, the stimulus parameters cited elsewhere in the wiki (400 Hz tone) appear misattributed (Daibert-Nido used 3D-MOT in IVR), and the +0.31–0.54 LogCS magnitude has not been independently replicated in adult stroke. The protocol family is real and promising; the original paper is a foundational pilot, not a definitive trial.
 
 ---
 
-## Elliott, Sanderson & Conkey (1990)
+## Elliott, Bullimore & Bailey (1991)
 
-**Citation**: Elliott DB, Sanderson K, Conkey A. The reliability of the Pelli-Robson contrast sensitivity chart. *Ophthalmic and Physiological Optics*. 1990;10(1):21-24.
-**DOI**: [CITATION NEEDED — verify] (no DOI in source files)
+**Citation**: Elliott DB, Bullimore MA, Bailey IL. Improving the reliability of the Pelli-Robson contrast sensitivity test. *Ophthalmic and Physiological Optics*. 1991;11(1):61–65.
+**DOI**: 10.1111/j.1475-1313.1991.tb00368.x — PMID: 2062940 (verified 2026-05-14)
 **Key finding**: Establishes coefficient of repeatability for Pelli-Robson testing at ±0.24 LogCS — the psychometric basis for calling ≥0.30 LogCS a clinically significant change.
 **Informs**: [[contrast-sensitivity-test]], [[erics-baseline]] — the 0.30 LogCS significance threshold used throughout this project.
 **Confidence for NegletFix**: HIGH (standard clinical reference).
+
+> *Citation correction (2026-05-14)*: previously cited as "Elliott, Sanderson & Conkey 1990" — that paper does not appear in PubMed. The Pelli-Robson reliability paper is **Elliott, Bullimore & Bailey 1991**.
 
 ---
 
@@ -82,13 +90,15 @@ Confidence applies to the paper's evidentiary weight for this specific project, 
 
 ---
 
-## Robineau et al. (2017)
+## Robineau et al. (2014) — direct hemianopia precedent
 
-**Citation**: Robineau F., et al. Self-regulation of inter-hemispheric visual cortex balance through real-time fMRI neurofeedback training. 2017. (Cited in CLAUDE.md/notes.)
-**DOI**: [CITATION NEEDED — verify] (no DOI in source files)
-**Key finding**: Healthy participants can voluntarily up/down-regulate inter-hemispheric balance in visual cortex using real-time neurofeedback — proof that cortical excitability can be self-regulated through feedback.
-**Informs**: [[eeg-neurofeedback]] — supports the premise that Eric can learn to modulate his right-hemisphere EEG.
-**Confidence for NegletFix**: MEDIUM (fMRI not EEG; healthy not stroke; mechanistic support).
+**Citation**: Robineau F, Saj A, Neveu R, Van De Ville D, Scharnowski F, Vuilleumier P. Using fMRI neurofeedback to restore right occipital cortex activity in patients with left homonymous hemianopia: proof-of-principle study. *Neuropsychologia*. 2014;62:227–233.
+**DOI**: 10.1016/j.neuropsychologia.2014.07.020 — PMID: 25064604 (verified 2026-05-14)
+**Key finding**: First demonstration that **left-hemianopia patients** can voluntarily up-regulate right occipital cortex activity via real-time fMRI neurofeedback — direct precedent for closed-loop neurofeedback in Eric's exact condition.
+**Informs**: [[eeg-neurofeedback]] — strongest available evidence that neurofeedback in hemianopia is at least feasible.
+**Confidence for NegletFix**: MEDIUM (fMRI not EEG; proof-of-principle, small n; same diagnosis).
+
+> *Citation correction (2026-05-14)*: previously cited as "Robineau 2017 — Self-regulation of inter-hemispheric visual cortex balance" (a healthy-volunteer paper). The hemianopia precedent is the **2014 Neuropsychologia** paper, far more relevant to Eric.
 
 ---
 
@@ -105,11 +115,11 @@ Confidence applies to the paper's evidentiary weight for this specific project, 
 
 ## Sitaram et al. (2017)
 
-**Citation**: Sitaram R., et al. Closed-loop brain training: the science of neurofeedback. *Nature Reviews Neuroscience*. 2017.
-**DOI**: [CITATION NEEDED — verify] (cited in project notes; no DOI in source files)
+**Citation**: Sitaram R, Ros T, Stoeckel L, Haller S, Scharnowski F, Lewis-Peacock J, et al. Closed-loop brain training: the science of neurofeedback. *Nature Reviews Neuroscience*. 2017;18(2):86–100.
+**DOI**: 10.1038/nrn.2016.164 — PMID: 28003656 (verified 2026-05-14)
 **Key finding**: Comprehensive review establishing closed-loop neurofeedback as a legitimate, mechanism-driven intervention paradigm, with best practices for threshold adaptation and session design.
 **Informs**: [[eeg-neurofeedback]] — methodological rationale for the adaptive threshold (40-60% success rate target) in `EngagementCalculator.cs`.
-**Confidence for NegletFix**: HIGH (high-impact review, methodology reference).
+**Confidence for NegletFix**: HIGH (high-impact review, methodology reference). *Note 2026-05-14*: Treves et al. 2025 JMIR meta-analysis tempers consumer-grade NF claims — see new entry below.
 
 ---
 
@@ -184,29 +194,275 @@ Confidence applies to the paper's evidentiary weight for this specific project, 
 **DOI**: N/A (clinical trials, not papers)
 **Key finding**: 500ms stimuli at 45° eccentricity, 600 trials/session; recovery began within 3-5 sessions in the blind hemifield.
 **Informs**: [[audiovisual-training-protocol]] — alternative/complementary parameter set to Daibert-Nido.
-**Confidence for NegletFix**: MEDIUM (ongoing trials, not yet fully published in source materials).
+**Confidence for NegletFix**: MEDIUM (trial status as "ongoing" inherited from earlier sources; verify on ClinicalTrials.gov before re-citing as active). The mechanism work is now confirmed in **Rowland, Bushnell, Duncan & Stein (2023)** — see new entry below — and **Bean, Stein & Rowland (2023)** Cerebral Cortex animal-model paper.
+
+---
+
+# Recent Additions (verified 2026-05-14)
+
+The following entries were added after the deep research audit on 2026-05-14. Each citation has been individually PubMed-verified.
+
+---
+
+## Alharshan, Alwashmi et al. (2026) — first DTI/FC mechanism paper for AV training in stroke HH
+
+**Citation**: Alharshan F, Alwashmi K, Rowe FJ, Meyer G, et al. Functional and structural adaptations following immersive audiovisual training in post-stroke hemianopia: A study of behaviour, DTI, and FC. *NeuroImage*. 2026;325:121669.
+**PMID**: 41421499 (verified 2026-05-14)
+**Key finding**: n=15 post-stroke hemianopia. **30 min/day × 5 days/week × 6 weeks (15 hr total)** immersive VR AV training. Significant reaction-time improvements; FA increases in occipital pole, thalamus, MTG; enhanced FC between medial visual cortex and auditory cortex. **First imaging evidence that AV training induces measurable structural plasticity in stroke HH.**
+**Informs**: [[audiovisual-training-protocol]] (dose), [[scientific-foundation]] (mechanism), [[rehabilitation-roadmap]] (evidence tier).
+**Confidence for NegletFix**: **HIGH** (peer-reviewed, condition match, imaging mechanism). The 15-hour total dose is ~3× the Daibert-Nido budget — suggests chronic stroke needs longer protocols.
+
+---
+
+## Alwashmi et al. (2024) — VR AV training mechanism in healthy subjects
+
+**Citation**: Alwashmi K, Meyer G, Rowe F, Ward R. Enhancing learning outcomes through multisensory integration: A fMRI study of audio-visual training in virtual reality. *NeuroImage*. 2024;285:120483.
+**PMID**: 38048921 (verified 2026-05-14)
+**Key finding**: n=20 healthy. 30 min/day × 4 wk VR AV scanning training. Reaction time 1.63s → 1.23s (p=4×10⁻¹⁶); fMRI changes in thalamus, IPL, cerebellum; transfer to untrained tasks. Methodologically directly portable to NegletFix.
+**Informs**: [[audiovisual-training-protocol]], [[scientific-foundation]].
+**Confidence for NegletFix**: MEDIUM (healthy participants but exact methodological precedent for the 2026 stroke paper).
+
+---
+
+## Bagherzadeh et al. (2026) — closed-loop IAF neurofeedback enhances attention dynamics
+
+**Citation**: Bagherzadeh Y, et al. Successful closed-loop neurofeedback alpha frequency modulation enhances the temporal dynamics of attention. *NeuroImage*. 2026;332:121912.
+**Key finding**: n=108 healthy adults, 5 sessions individualized alpha-frequency (IAF) neurofeedback vs active placebo. Learners (~50% of cohort) showed faster RT and earlier alpha-ERD latency. **Causal evidence that NF can change attention timing**; replicates ~50% non-responder rate.
+**Informs**: [[eeg-neurofeedback]] (closes the "does NF actually work" question for visual attention — yes, in healthy subjects).
+**Confidence for NegletFix**: MEDIUM (healthy, not stroke; supports mechanism only).
+
+---
+
+## Bean, Stein & Rowland (2023) — mechanism update
+
+**Citation**: Bean NL, Stein BE, Rowland BA. Cross-modal exposure restores multisensory enhancement after hemianopia. *Cerebral Cortex*. 2023;33(22):11036–11046.
+**PMID**: 37724427 (verified 2026-05-14)
+**Key finding**: Animal model. Recovery via cross-modal training happens, but **multisensory enhancement is NOT prerequisite** — mechanism is more complex than previously thought. Implication: strict ~16 ms perceptual binding may be less critical than NegletFix currently assumes.
+**Informs**: [[scientific-foundation]] (mechanism revision), [[audiovisual-training-protocol]] (relaxes timing constraint).
+**Confidence for NegletFix**: MEDIUM-HIGH (mechanistic, animal model).
+
+---
+
+## Chen et al. (2026) — BCI meta-analysis in chronic stroke
+
+**Citation**: Chen H, Yun Y, et al. Efficacy of Brain-Computer Interface Therapy for Upper Limb Rehabilitation in Chronic Stroke: Systematic Review and Meta-Analysis of RCTs. *J Med Internet Res*. 2026;28:e79132.
+**Key finding**: 21 RCTs (not 32 — see correction note below), chronic stroke. BCI vs control: FMA-UE MD 2.50 (95% CI 0.60–4.40, p=.01). BCI-FES subgroup: MD 5.00. Optimal protocol: 30-min sessions, 4–5×/week × 2 weeks.
+**Informs**: [[eeg-neurofeedback]] (closest analogous pooled estimate for closed-loop NF + behavioral task).
+**Confidence for NegletFix**: MEDIUM (motor stroke, not visual; supports combined-modality design philosophy).
+
+> *Audit note (2026-05-14)*: An earlier research-agent draft cited "Iturrate 2026 Neurosurg Focus, 32 RCTs n=1187 FMA-UE MD 3.85". That citation could not be verified on PubMed and **was likely hallucinated**. The 21-RCT Chen meta-analysis is the real, verified pooled estimate for chronic stroke BCI.
+
+---
+
+## Diana et al. (2025) — AV training + tDCS RCT in chronic HVFD
+
+**Citation**: Diana L, et al. Enhancing multisensory rehabilitation of visual field defects with transcranial direct current stimulation: A randomized clinical trial. *European Journal of Neurology*. 2025.
+**DOI**: 10.1111/ene.16559 — PMC11625917 (verified 2026-05-14)
+**Key finding**: n=18 chronic HVFDs. 2-week AV compensatory training with ipsilesional occipital OR parietal anodal tDCS (or sham), 2 h/day × 10 days. **Occipital tDCS produced longer-lasting effects on blind-hemifield visual processing.**
+**Informs**: [[audiovisual-training-protocol]] (potential adjunct), [[rehabilitation-roadmap]] (chronic-actionable evidence tier).
+**Confidence for NegletFix**: MEDIUM-HIGH (RCT, chronic, condition-matched). tDCS hardware is separate from Quest/Muse — would require additional kit.
+
+---
+
+## Misawa, Daibert-Nido et al. (2024) — Daibert-Nido follow-up on Meta Quest at home
+
+**Citation**: Misawa M, Yaman Bajin I, Zhang B, Daibert-Nido M, et al. A telerehabilitation program to improve visual perception in children and adolescents with hemianopia consecutive to a brain tumor: a single-arm feasibility and proof-of-concept trial. *EClinicalMedicine*. 2024;78:102955.
+**PMID**: 39687429 (verified 2026-05-14)
+**Key finding**: n=10 pediatric (stable hemianopia). 3D-MOT-IVR on **Meta Quest 2/Pro at home**, 20-min sessions every other day × 6 weeks. **9/10 showed clinically meaningful improvement**; benefits sustained at 6 months. Cybersickness rare.
+**Informs**: [[hardware-setup]] (Quest 2 home delivery validated), [[audiovisual-training-protocol]] (direct extension of Daibert-Nido 2021).
+**Confidence for NegletFix**: HIGH for **feasibility/safety** of the consumer-VR-at-home approach. MEDIUM for effect size in adult stroke (pediatric tumor cohort).
+
+> *Citation note*: agents initially cited this as "Bélanger 2024 EClinicalMedicine" — first author is **Misawa**, with Daibert-Nido as senior author.
+
+---
+
+## Namgung et al. (2024) — VR-VPL multicenter RCT in chronic post-stroke VFD
+
+**Citation**: Namgung E, et al. Digital therapeutics using virtual reality-based visual perceptual learning for visual field defects in stroke: A double-blind randomized trial. *Brain and Behavior*. 2024;14(1):e3525.
+**DOI**: 10.1002/brb3.3525 — PMC11109502 (verified 2026-05-14)
+**Key finding**: Multicenter RCT, **n=82 chronic (>6 mo post-stroke)**, VR-VPL (Nunap Vision, mobile head-mounted display), 5 days/week × 12 weeks. Both target and active-control arms improved (learning-transfer effect, no between-group difference) — **important caveat for trial design**.
+**Informs**: [[rehabilitation-roadmap]] (strongest evidence yet for chronic responsiveness, with control-arm warning).
+**Confidence for NegletFix**: HIGH for chronic responsiveness; MEDIUM caveat — active VR + attention itself drives improvement, not just the targeted training.
+
+---
+
+## Namgung et al. (2025) — personalized VR-VPL JAMA RCT in chronic stroke
+
+**Citation**: Namgung E, et al. Personalized Visual Perceptual Learning Digital Therapy for Visual Field Defects Following Stroke: A Randomized Clinical Trial. *JAMA Network Open*. 2025;8(5):e2511068.
+**DOI**: 10.1001/jamanetworkopen.2025.11068 (verified 2026-05-14)
+**Key finding**: Multicenter RCT, **n=82 chronic post-stroke (>3 mo)**, **personalized** VR visual discrimination tasks via mobile HMD, 5 days/week × 12 weeks. Clinically meaningful field gains (median +72° squared improvement). **Strongest published RCT in Eric's exact population**.
+**Informs**: [[rehabilitation-roadmap]] (chronic evidence tier), [[audiovisual-training-protocol]] (personalization rationale validated).
+**Confidence for NegletFix**: HIGH (largest, most rigorous chronic-stroke VR-VPL trial as of 2026-05).
+
+---
+
+## Raffin et al. (2025) — cf-tACS in chronic hemianopia
+
+**Citation**: Raffin E, Bevilacqua M, et al. Boosting hemianopia recovery: the power of interareal cross-frequency brain stimulation. *Brain*. 2025;148(12):4548–4561.
+**PMID**: 41243213 (verified 2026-05-14)
+**Key finding**: Double-blind crossover RCT, n=16 (median 11 mo post-stroke), forward cf-tACS (α-V1 + γ-MT) vs backward (γ-V1 + α-MT) concurrent with motion training, 10 sessions × ~2 weeks. **Forward cf-tACS produced greater improvements in kinetic visual field boundaries** — first clean tACS-in-hemianopia evidence. Much faster than typical months-long VPL protocols.
+**Informs**: [[rehabilitation-roadmap]] (potential adjunct), [[scientific-foundation]] (V1↔MT pathway as causal target).
+**Confidence for NegletFix**: MEDIUM-HIGH for the result; **not actionable for home setup** (tACS hardware is separate, requires expert placement).
+
+---
+
+## Rowland, Bushnell, Duncan & Stein (2023) — chronic AV training in adult stroke
+
+**Citation**: Rowland BA, Bushnell CD, Duncan PW, Stein BE. Ameliorating Hemianopia with Multisensory Training. *Journal of Neuroscience*. 2023;43(6):1018–1026.
+**PMID**: 36604169 (verified 2026-05-14)
+**Key finding**: **n=2 chronic stroke patients (≥8 months post-stroke)**, 2-hour sessions of repeated congruent visual-auditory stimulation in blind hemifield over weeks. Both patients recovered detection, localization, identification within blind field. Strongest pure-AV chronic-stroke result published.
+**Informs**: [[audiovisual-training-protocol]] (alternative Wake Forest paradigm), [[scientific-foundation]].
+**Confidence for NegletFix**: MEDIUM (n=2 case report, but chronic adult stroke and dramatic effect sizes).
+
+> *Citation note*: agents initially cited this as "Grasso/Dundon 2023" — actual first author is **Rowland**.
+
+---
+
+## Saionz et al. (2025) — natural-history baseline for occipital stroke VF
+
+**Citation**: Saionz EL, Cavanaugh MR, Johnson BA, Harrington D, Aguirre GK, Huxlin KR. Evolution of Visual Field Defects After Occipital Stroke: A Quantitative Analysis. *Translational Vision Science & Technology*. 2025.
+**PMID**: 40478590 (verified 2026-05-14)
+**Key finding**: Retrospective chart review, n=532 (73 longitudinal). >77% of patients improve spontaneously in subacute window (<6 mo). **In chronic phase (>6 mo), VF is stable overall — about half show ±1 dB drift, which is test-retest noise, not real change.** Defines the no-treatment null comparator for any chronic rehab claim.
+**Informs**: [[rehabilitation-roadmap]] (sets honest expectations), [[contrast-sensitivity-test]] (test-retest noise floor for chronic patients).
+**Confidence for NegletFix**: HIGH (large retrospective sample, clear quantification of natural history).
+
+> *Citation note*: agents initially cited this as "Rossi 2025" — actual first author is **Saionz** (Huxlin lab).
+
+---
+
+## Saionz et al. (2020) — the subacute >> chronic finding
+
+**Citation**: Saionz EL, Tadin D, Melnick MD, Huxlin KR. Functional preservation and enhanced capacity for visual restoration in subacute occipital stroke. *Brain*. 2020;143(6):1857–1872.
+**PMID**: 32428211 — DOI 10.1093/brain/awaa145 (verified 2026-05-14)
+**Key finding**: Subacute patients needed ~16 sessions to achieve what chronic patients needed ~93 sessions for. **Subacute training is ~6× more efficient than chronic** for global motion discrimination recovery.
+**Informs**: [[rehabilitation-roadmap]] (Eric is chronic, expectations should match), [[scientific-foundation]].
+**Confidence for NegletFix**: HIGH (referenced repeatedly across the wiki; finally with verified citation).
+
+---
+
+## Yang, Cavanaugh, Saionz, Huxlin et al. (2023) — chronic CS reality check
+
+**Citation**: Yang J, Saionz EL, Cavanaugh MR, Fahrenthold BK, Melnick MD, Tadin D, Briggs F, Carrasco M, Huxlin KR. Contrast sensitivity: a fundamental limit to vision restoration after V1 damage. *medRxiv preprint*. 2023.
+**PMC**: PMC10491352 (verified 2026-05-14 — **preprint, not yet peer-reviewed**)
+**Key finding**: n=12 chronic (mean 28±33 months post-V1-stroke). Training improved CS in only 7/12 (58%) at 10/22 trained locations (45%). **Post-training CS remained ~4× lower than intact-field** even at trained locations. *Eric's 2.25 LogCS asymmetry will not fully close.*
+**Informs**: [[erics-baseline]] (sets honest expectations), [[audiovisual-training-protocol]] (downgrades the +0.31–0.54 LogCS framing).
+**Confidence for NegletFix**: MEDIUM (preprint, but the most directly relevant chronic-CS data point we have).
+
+> *Citation note*: agents initially cited this as "Cavanaugh/Saionz/Huxlin 2023" — first author is **Yang**; Cavanaugh and Saionz are co-authors.
+
+---
+
+## Yang, Fiebelkorn, Jensen, Knight & Kastner (2024) — alpha gating mechanism
+
+**Citation**: Yang X, Fiebelkorn IC, Jensen O, Knight RT, Kastner S. Differential neural mechanisms underlie cortical gating of visual spatial attention mediated by alpha-band oscillations. *PNAS*. 2024;121(45):e2313304121.
+**Key finding**: ECoG study in 8 epilepsy patients during Eriksen Flanker task. Shows alpha is **bidirectional** — desynchronization contralateral to attended hemifield AND synchronization ipsilateral — both contribute to attention gating.
+**Informs**: [[eeg-neurofeedback]] (modern mechanistic basis for ↓alpha at TP10 for left-attention training).
+**Confidence for NegletFix**: HIGH (intracranial, mechanistic). Strengthens the rationale for TP10 targeting.
+
+---
+
+## Treves et al. (2025) — consumer-grade neurofeedback reality check
+
+**Citation**: Treves IN, et al. Consumer-Grade Neurofeedback With Mindfulness Meditation: Meta-Analysis. *Journal of Medical Internet Research*. 2025;27:e68204.
+**PMID**: 40246295 — PMC12046271 (verified 2026-05-14)
+**Key finding**: Meta-analysis of 16 RCTs (n=763) + 5 within-participant designs. 11/16 RCTs used Muse. **No evidence for cognition, mindfulness, or physiological improvements; only modest distress reduction.** Authors suggest effects "may rely on neurosuggestion."
+**Informs**: [[eeg-neurofeedback]] (critical counterweight — consumer NF claims should be tempered).
+**Confidence for NegletFix**: HIGH for the meta-analytic null result.
+
+> *Citation note*: agents initially cited this as "Hardy 2025 JMIR" — first author is **Treves**.
+
+---
+
+## ESO 2025 — European Stroke Organisation guideline on visual impairment in stroke
+
+**Citation**: Rowe FJ, Hepworth LR, Coco-Martín MB, Gillebert CR, Leal-Vega L, Palmowski-Wolfe A, Papageorgiou E, Ryan SJ, Skorkovska K, Aamodt AH. European Stroke Organisation (ESO) guideline on visual impairment in stroke. *European Stroke Journal*. 2025;10(4):1087.
+**PMID**: 40401755 — DOI 10.1177/23969873251314693 (verified 2026-05-14)
+**Key finding**: First international consensus guideline on post-stroke visual impairment. Evidence for VPL strongest in <12-month window; chronic gains modest but real. Visual impairment affects ~75% of stroke survivors.
+**Informs**: [[rehabilitation-roadmap]] (clinical context), [[scientific-foundation]].
+**Confidence for NegletFix**: HIGH (authoritative consensus).
+
+---
+
+## Laver et al. (2025) — Cochrane VR for stroke rehabilitation
+
+**Citation**: Laver KE, Lange B, George S, Deutsch JE, Saposnik G, Crotty M. Virtual reality for stroke rehabilitation. *Cochrane Database of Systematic Reviews*. 2025;6:CD008349.pub5.
+**DOI**: 10.1002/14651858.CD008349.pub5 — PMID: 40537150 (verified 2026-05-14)
+**Key finding**: Latest Cochrane update; supersedes the 2017 pub4 commonly cited in stroke-VR literature.
+**Informs**: [[rehabilitation-roadmap]] (general VR-stroke evidence base).
+**Confidence for NegletFix**: HIGH (Cochrane).
+
+---
+
+## Scheidtmann et al. (2001) — Levodopa motor-stroke anchor (DOI fill-in)
+
+**Citation**: Scheidtmann K, Fries W, Müller F, Koenig E. Effect of levodopa in combination with physiotherapy on functional motor recovery after stroke: a prospective, randomised, double-blind study. *Lancet*. 2001;358(9284):787–790.
+**DOI**: 10.1016/S0140-6736(01)05456-X — PMID: 11476841 (verified 2026-05-14)
+**Key finding**: Original positive levodopa + physiotherapy trial in motor stroke (n=53). Establishes the dopaminergic-adjunct hypothesis that NegletFix's [[pharmacological-adjuncts]] page references.
+**Informs**: [[pharmacological-adjuncts]] (fills missing DOI).
+**Confidence for NegletFix**: MEDIUM (motor stroke, not visual; pre-replication-failure era).
+
+---
+
+## Schneider et al. (2023) — FLUORESCE fluoxetine pilot (cross-ref)
+
+**Citation**: Schneider CL, Prentiss EK, Busza A, Williams ZR, Mahon BZ, Sahin B. FLUORESCE: A Pilot Randomized Clinical Trial of Fluoxetine for Vision Recovery After Acute Ischemic Stroke. *Journal of Neuro-Ophthalmology*. 2023;43(2):237–242.
+**PMID**: 36166771 (verified 2026-05-14)
+**Key finding**: Pilot RCT, n=12 completers. 64.4% vs 26.0% perimetry improvement (p=0.06, NS trend). **Acute-only enrollment** (<10 d post-stroke).
+**Informs**: [[pharmacological-adjuncts]] (already cited there in full; cross-listed here).
+**Confidence for NegletFix**: LOW for chronic transfer (acute window only).
 
 ---
 
 ## Summary Table
 
-| Paper | Year | DOI Status | Confidence | Primary Use |
-|-------|------|------------|------------|-------------|
-| Daibert-Nido et al. | 2021 | VERIFIED | HIGH | Audiovisual protocol (anchor) |
-| Ros et al. | 2017 | DERIVED from URL | MEDIUM-HIGH | EEG neurofeedback protocol |
-| Stein & Meredith | 1993 | N/A (book) | HIGH | Multisensory theory |
-| Pelli et al. | 1988 | Pre-DOI | HIGH | Contrast test method |
-| Elliott et al. | 1990 | NEEDED | HIGH | CS test reliability |
-| Bolognini et al. | 2005 | NEEDED | HIGH | Hemianopia multisensory |
-| Cuppini et al. | 2017 | NEEDED | MEDIUM | Computational mechanism |
-| REINVENT (Spicer) | 2019 | DERIVED | MEDIUM | Closed-loop VR-BCI precedent |
-| Robineau et al. | 2017 | NEEDED | MEDIUM | Self-regulation proof |
-| Sitaram et al. | 2017 | NEEDED | HIGH | Neurofeedback methodology |
-| VR-VET | 2023 | DERIVED | MEDIUM | VR for neglect (adjacent) |
-| Arch PM&R meta | 2024 | NEEDED | MEDIUM | VR stroke rehab breadth |
-| Topics Stroke Rehab | 2020 | DERIVED | MEDIUM | Ecological VR |
-| J NeuroEng Rehab | 2025 | VERIFIED | MEDIUM | Multisensory home delivery |
-| Network Neuroscience | 2022 | NEEDED | MEDIUM | EEG spectral signature |
-| Wake Forest trials | ongoing | N/A | MEDIUM | Alternative AV parameters |
+Refreshed 2026-05-14 — all "[CITATION NEEDED]" rows resolved via PubMed verification.
 
-**Follow-up**: The DOIs flagged `[CITATION NEEDED — verify]` should be confirmed from primary sources before this wiki is used in any clinical or publication context.
+### Foundational / pre-audit
+| Paper | Year | DOI | Confidence | Primary Use |
+|-------|------|------|------------|-------------|
+| Daibert-Nido et al. | 2021 | 10.3389/fneur.2021.680211 | **LOW–MEDIUM** ↓ | AV protocol family origin (N=2 pediatric pilot) |
+| Ros et al. | 2017 | 10.1155/2017/7407241 | MEDIUM-HIGH | EEG NF protocol (neglect, n=5) |
+| Stein & Meredith | 1993 | N/A (book) | HIGH | Multisensory theory |
+| Pelli, Robson & Wilkins | 1988 | Pre-DOI | HIGH | Contrast test method |
+| Elliott, Bullimore & Bailey ✱ | 1991 | 10.1111/j.1475-1313.1991.tb00368.x | HIGH | CS test reliability |
+| Bolognini et al. | 2005 | 10.1093/brain/awh662 | HIGH | Hemianopia AV facilitation |
+| Magosso, Cuppini & Bertini ✱ | 2017 | 10.3389/fncom.2017.00113 | MEDIUM | Computational mechanism |
+| REINVENT (Spicer) | 2019 | 10.3389/fnhum.2019.00210 | MEDIUM | Closed-loop VR-BCI precedent (motor) |
+| Robineau et al. ✱ | 2014 | 10.1016/j.neuropsychologia.2014.07.020 | MEDIUM | fMRI NF in left HH (direct precedent) |
+| Sitaram et al. | 2017 | 10.1038/nrn.2016.164 | HIGH | NF methodology canon |
+| VR-VET feasibility | 2023 | 10.3389/fnins.2023.1142663 | MEDIUM | VR for neglect (adjacent) |
+| Arch PM&R meta | 2024 | (article ID S0003-9993(24)01311-X) | MEDIUM | VR stroke breadth |
+| Topics Stroke Rehab | 2020 | 10.1080/10749357.2020.1716531 | MEDIUM | Ecological VR |
+| Network Neuroscience | 2022 | (MIT direct/netn/6/1/69) | MEDIUM | EEG spectral signature in neglect |
+| Wake Forest trials | ongoing | N/A | MEDIUM (status unverified — see entry) | Alternative AV parameters |
+
+### Added in 2026-05-14 audit
+| Paper | Year | DOI / PMID | Confidence | Primary Use |
+|-------|------|-----------|------------|-------------|
+| Alharshan/Alwashmi et al. | 2026 | PMID 41421499 | HIGH | DTI mechanism — stroke HH (n=15) |
+| Alwashmi et al. | 2024 | PMID 38048921 | MEDIUM | VR AV training mechanism (healthy) |
+| Bagherzadeh et al. | 2026 | NeuroImage 332:121912 | MEDIUM | Closed-loop IAF-NF causal evidence |
+| Bean, Stein & Rowland | 2023 | PMID 37724427 | MEDIUM-HIGH | Mechanism revision (animal) |
+| Chen et al. (BCI chronic stroke) | 2026 | JMIR 28:e79132 | MEDIUM | BCI meta-analysis (21 RCTs) |
+| Diana et al. | 2025 | 10.1111/ene.16559 | MEDIUM-HIGH | AV+tDCS RCT in chronic HVFD (n=18) |
+| ESO Guideline (Rowe et al.) | 2025 | PMID 40401755 | HIGH | Authoritative consensus |
+| Laver et al. (Cochrane) | 2025 | 10.1002/14651858.CD008349.pub5 | HIGH | Cochrane VR for stroke |
+| Misawa/Daibert-Nido et al. | 2024 | PMID 39687429 | HIGH (feasibility) | Quest 2/Pro home delivery validation |
+| Namgung et al. | 2024 | 10.1002/brb3.3525 | HIGH | Chronic VR-VPL multicenter RCT (n=82) |
+| Namgung et al. | 2025 | 10.1001/jamanetworkopen.2025.11068 | HIGH | Personalized chronic VR-VPL RCT (n=82) |
+| Raffin et al. | 2025 | PMID 41243213 | MEDIUM-HIGH | cf-tACS in chronic hemianopia (n=16) |
+| Rowland/Bushnell/Duncan/Stein | 2023 | PMID 36604169 | MEDIUM | Chronic AV training in adult stroke (n=2) |
+| Saionz et al. (chronic VF natural hx) | 2025 | PMID 40478590 | HIGH | Natural-history baseline |
+| Saionz et al. (subacute >> chronic) | 2020 | 10.1093/brain/awaa145 | HIGH | The chronic-vs-subacute finding |
+| Scheidtmann et al. (levodopa) | 2001 | PMID 11476841 | MEDIUM | Pharm adjunct anchor |
+| Schneider et al. (FLUORESCE) | 2023 | PMID 36166771 | LOW (acute only) | Fluoxetine pilot (xref) |
+| Treves et al. (consumer NF meta) | 2025 | PMID 40246295 | HIGH (null result) | Consumer-NF reality check |
+| Yang/Cavanaugh/Saionz et al. | 2023 | PMC10491352 (preprint) | MEDIUM | Chronic CS reality check |
+| Yang/Fiebelkorn/Kastner et al. | 2024 | PNAS 121(45):e2313304121 | HIGH | Alpha-gating mechanism (ECoG) |
+
+✱ = citation corrected in 2026-05-14 audit. Previous entries had wrong first author or year.
+
+**Follow-up open items**:
+- Verify status of Wake Forest trials (NCT04963075, NCT05894434) on ClinicalTrials.gov — last referenced as "ongoing" but unverified since 2022.
+- Watch for larger FLUORESCE follow-up trial registration (Schneider/Mahon/Sahin group, Rochester).
+- Watch for adult-stroke replication of the Daibert-Nido 3D-MOT-IVR paradigm at adequate power.

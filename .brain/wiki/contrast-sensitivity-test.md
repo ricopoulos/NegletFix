@@ -1,13 +1,14 @@
 ---
 title: Contrast Sensitivity Test (The Measurement Instrument)
-last_updated: 2026-04-14
-confidence: HIGH
+last_updated: 2026-05-14
+confidence: HIGH (within-instrument tracking); MEDIUM (cross-instrument comparison — see §1 callout)
 sources:
   - Unity/NeglectFix/Assets/Scripts/Assessment/ContrastSensitivityTest.cs
   - Unity/NeglectFix/Assets/Scripts/Assessment/ContrastTestInput.cs
   - docs/research/contrast_sensitivity_module.md
   - CLAUDE.md
   - .brain/sessions/2025-12-15.md
+  - 2026-05-14 audit (Zeri 2018, Dorr 2013, Saionz 2025 — see [[research-papers-index]])
 ---
 
 # Contrast Sensitivity Test
@@ -21,6 +22,14 @@ Implementation: `Unity/NeglectFix/Assets/Scripts/Assessment/ContrastSensitivityT
 ## 1. Clinical Protocol — Modified Pelli-Robson
 
 Based on Pelli, Robson & Wilkins (1988) — the gold-standard chart for peak contrast sensitivity.
+
+> **⚠ LCD-vs-printed-chart caveat (added 2026-05-14)**: Zeri et al. 2018 (PMID 28639086, n=32) measured **±0.10–0.20 LogCS differences (p<0.01)** between LCD-displayed Pelli-Robson and the printed reference chart — and between two different LCD systems. NegletFix runs on an **uncalibrated LCD** (or Quest OLED).
+>
+> **Practical consequence**: Eric's NegletFix LogCS scores are valid for **within-subject longitudinal tracking** (compare session N to session 1 on the same device) but **should NOT be compared in absolute terms** to printed-chart normative tables (e.g., the age table in §2). His "Central ~1.05 LogCS" baseline is not directly comparable to a clinic-printed-chart Pelli-Robson result.
+>
+> Validated tablet/smartphone Pelli-Robson implementations (Optopad-CSF 2024 PMC11241259; K-CS 2024; Peek 2019 PMC6743644) reach ICC>0.93 **only with device gamma/luminance calibration**. NegletFix's contrast pipeline (`ContrastSensitivityTest.cs:411-441`) does inverse-gamma correction assuming gamma=2.2, which is a reasonable default but not actually measured for Eric's display.
+>
+> The 0.30 LogCS clinical-significance threshold (Elliott/Bullimore/Bailey 1991) still works within-instrument — a +0.30 gain at session 10 vs session 1 on the same device is meaningful even if absolute numbers differ from a clinic chart.
 
 | Parameter | Value | Source |
 |-----------|-------|--------|
@@ -49,9 +58,9 @@ The conversion is implemented in `LogCSToContrast()` at `ContrastSensitivityTest
 
 ## 2. Clinical Reference Values
 
-From `docs/research/contrast_sensitivity_module.md:569-575` and Elliott, Sanderson & Conkey (1990):
+From `docs/research/contrast_sensitivity_module.md:569-575` and Elliott, Bullimore & Bailey (1991) — *citation corrected 2026-05-14, previously misattributed to "Elliott, Sanderson & Conkey 1990" which does not exist in PubMed*.
 
-### Pelli-Robson Normative Data by Age
+### Pelli-Robson Normative Data by Age (printed-chart values)
 
 | Age | Mean LogCS | Range |
 |-----|-----------|-------|
@@ -61,11 +70,14 @@ From `docs/research/contrast_sensitivity_module.md:569-575` and Elliott, Sanders
 | 60-70 | 1.70 | 1.50-1.85 |
 | 70+ | 1.55 | 1.35-1.75 |
 
+> **⚠ These are printed-chart values.** Per Zeri et al. 2018 (see §1 callout), LCD readings can differ by ±0.10–0.20 LogCS. Do not interpret Eric's NegletFix scores as absolute deficits relative to this table — only use these to flag rough order-of-magnitude impairment, and rely on within-instrument change for tracking.
+
 ### Significance Thresholds
 
 - **Minimum detectable change**: 0.15 LogCS (one triplet) [HIGH]
-- **Clinically significant improvement**: ≥0.30 LogCS (two triplets) [HIGH, Elliott et al. 1990]
-- **Coefficient of repeatability**: ±0.24 LogCS (Elliott et al. 1990)
+- **Clinically significant improvement**: ≥0.30 LogCS (two triplets) [HIGH, Elliott/Bullimore/Bailey 1991]
+- **Coefficient of repeatability**: ±0.24 LogCS (Elliott/Bullimore/Bailey 1991)
+- **Chronic test-retest noise**: Saionz et al. 2025 (TVST, PMID 40478590, n=73 longitudinal) found ~50% of chronic occipital-stroke patients show ±1 dB Humphrey drift on retest without intervention — a baseline noise floor to subtract from any apparent improvement.
 
 Interpretation (built into `GetScoreInterpretation()` at `ContrastSensitivityTest.cs:597-604`):
 - ≥1.80 → Normal range
@@ -170,8 +182,13 @@ From `.brain/cross-cutting.md:34-38`:
 - **No screen calibration** — viewing distance is assumed 1 m but not enforced; head position affects angular eccentricity
 - **Arbitrary 300px hemifield offset** in desktop mode — represents an approximation, not a calibrated visual angle
 - **Luminance uncalibrated** — the 85 cd/m² target assumes a properly calibrated display; uncalibrated screens introduce unknown error
+- **LCD vs printed-chart drift** (added 2026-05-14): ±0.10–0.20 LogCS per Zeri 2018 — see §1 callout
 
-When the project moves to Quest VR, these become fixable via known FOV and fixed headset distance (`.brain/decisions.md:30-34`).
+When the project moves to Quest VR, the eccentricity issues become fixable via known FOV and fixed headset distance (`.brain/decisions.md:30-34`). Display calibration remains a separate concern; Quest OLED luminance specs are documented but not measured for Eric's unit.
+
+### Potential future upgrade: qCSF
+
+The Pelli-Robson protocol measures a single threshold. The **qCSF (Quick Contrast Sensitivity Function)** method (Lesmes et al.; tablet-validated by Dorr et al. 2013 IOVS, ICC ~0.95) estimates the full CSF curve in ~3 min using Bayesian adaptive trial placement, and is **less sensitive to display calibration** because it estimates curve shape rather than a single absolute threshold. For tracking subtle change at Eric's left-field floor (currently 0.00), qCSF would be more sensitive than Pelli-Robson. Listed as an open enhancement, not a current requirement.
 
 ---
 
