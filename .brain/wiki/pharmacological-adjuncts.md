@@ -1,10 +1,11 @@
 ---
 title: Pharmacological Adjuncts
-last_updated: 2026-04-27
+last_updated: 2026-05-14
 confidence: MIXED
 sources:
   - compass_artifact_wf-f2397be7-2bde-4899-b1f9-271446d4f3e3_text_markdown.md
   - .brain/sessions/2026-04-27-quest-setup-pharma.md
+  - Schneider et al. 2023, J Neuroophthalmol 43(2):237-242 (FLUORESCE / NCT02737930) — PubMed 36166771
 ---
 
 # Pharmacological Adjuncts
@@ -22,7 +23,7 @@ See [[rehabilitation-roadmap]]#unknown--at-risk for where this fits in the proje
 | Compound | Dose cited | Origin trial | Mechanism | Status for visual rehab |
 |----------|-----------|--------------|-----------|------------------------|
 | **Levodopa (L-DOPA)** | 100 mg | Scheidtmann et al. 2001 (Lancet, motor stroke) | Dopaminergic; hypothesized Nogo-A pathway downregulation → enhanced plasticity | No proven visual efficacy. DARS trial 2019 negative for motor. |
-| **Fluoxetine** | (dose unspecified in source) | FLAME trial 2011 (motor stroke); FOCUS / EFFECTS / AFFINITY 2019 negative replication | SSRI; ↑BDNF | Active trial **NCT02737930** investigating visual field recovery. |
+| **Fluoxetine** | 20 mg/day (FLUORESCE) | FLAME trial 2011 (motor stroke); FOCUS / EFFECTS / AFFINITY 2019 negative replication | SSRI; ↑BDNF | **FLUORESCE pilot (NCT02737930) published 2023**: n=12 completers, 64.4% vs 26.0% perimetry improvement, **p=0.06 (trend, NS)**. Acute-only enrollment (<10 d post-stroke). |
 
 Source quote (`compass_artifact_wf-f2397be7-2bde-4899-b1f9-271446d4f3e3_text_markdown.md`):
 
@@ -31,6 +32,14 @@ Source quote (`compass_artifact_wf-f2397be7-2bde-4899-b1f9-271446d4f3e3_text_mar
 And in the recommendation section of the same artifact:
 
 > *"A discussion with the neurologist about adjunctive levodopa (100mg) or fluoxetine during the rehabilitation period may enhance plasticity, though evidence is extrapolated from motor recovery."*
+
+> **📌 NCT02737930 trial update (verified 2026-05-14)**: the compass artifact described this trial as *active* — that was outdated when written. It is the **FLUORESCE pilot** (Schneider et al., *J Neuroophthalmol* 2023; 43(2):237–242, [PubMed 36166771](https://pubmed.ncbi.nlm.nih.gov/36166771/)). Pilot RCT, 17 randomized / 12 completed, fluoxetine 20 mg/day vs placebo started **within 10 days** of ischemic stroke causing isolated homonymous hemianopia, 90-day course, 6-month perimetry endpoint.
+>
+> - ITT primary endpoint: 64.4% mean-deviation improvement (fluoxetine, n=5) vs 26.0% (placebo, n=7), one-tailed **P = 0.06** — non-significant trend.
+> - Complete blind-field recovery: 60% vs 14% (OR = 7.22).
+> - Authors' conclusion: results *"have the potential to inform the design of a larger multicenter trial"* — no larger replication yet as of 2026-05.
+>
+> **Why this doesn't transfer to Eric's case**: enrollment required initiation <10 days post-stroke. Eric is ~5 years post-PCA (chronic). The trial has zero evidence for chronic application, and Saionz 2022's "subacute is ~6× more effective than chronic" pattern argues against extrapolation. The motor-stroke arc — FLAME positive at small-n, three large negatives later — is also a real risk for how a larger visual replication might land.
 
 ---
 
@@ -85,6 +94,7 @@ The audiovisual training itself (Daibert-Nido protocol, see [[audiovisual-traini
 ## 6. Open Items
 
 - [ ] Verify the Scheidtmann 2001 Lancet citation (levodopa + motor rehab) — full DOI
-- [ ] Verify NCT02737930 trial status and read-out date
+- [x] ~~Verify NCT02737930 trial status and read-out date~~ — resolved 2026-05-14: FLUORESCE pilot, published *J Neuroophthalmol* 2023; 43(2):237–242, [PubMed 36166771](https://pubmed.ncbi.nlm.nih.gov/36166771/). Trend (p=0.06), acute-only window — see Section 1 callout.
+- [ ] Watch for larger multicenter FLUORESCE follow-up (Schneider/Mahon/Sahin group, Rochester); none registered as of 2026-05
 - [ ] Decide whether to file the compass artifacts under `docs/research/` with proper names
 - [ ] If interested clinically: prepare a one-page summary for Dr. Jacquemin (the medical brief in `docs/Eric Files/` is a starting template)
