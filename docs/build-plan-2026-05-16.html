@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NegletFix Build Plan — 2026-05-16</title>
+<style>
+  :root {
+    --bg: #fafaf9;
+    --bg-card: #ffffff;
+    --bg-elev: #f5f5f4;
+    --text: #1c1917;
+    --text-muted: #57534e;
+    --text-faint: #78716c;
+    --accent: #0891b2;
+    --accent-soft: #cffafe;
+    --accent-dark: #155e75;
+    --warn: #b45309;
+    --warn-soft: #fef3c7;
+    --good: #15803d;
+    --good-soft: #dcfce7;
+    --danger: #b91c1c;
+    --danger-soft: #fee2e2;
+    --border: #e7e5e4;
+    --code-bg: #292524;
+    --code-text: #e7e5e4;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  .wrap {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 64px 32px 96px;
+  }
+  header {
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .eyebrow {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 36px;
+    line-height: 1.15;
+    margin: 0 0 12px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .subtitle {
+    font-size: 18px;
+    color: var(--text-muted);
+    margin: 0 0 24px;
+    font-weight: 400;
+  }
+  .meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: var(--text-faint);
+  }
+  .meta span strong { color: var(--text); font-weight: 600; }
+  h2 {
+    font-size: 24px;
+    margin: 56px 0 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-size: 18px;
+    margin: 32px 0 12px;
+    font-weight: 600;
+  }
+  h4 {
+    font-size: 15px;
+    margin: 20px 0 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+  }
+  p { margin: 0 0 16px; }
+  strong { color: var(--text); font-weight: 600; }
+  em { font-style: italic; }
+  ul, ol { padding-left: 24px; margin: 0 0 16px; }
+  li { margin-bottom: 8px; }
+  li > ul, li > ol { margin-top: 8px; }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 24px 0;
+  }
+
+  .decision-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 16px 0 24px;
+  }
+  .decision {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--good);
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .decision-num {
+    background: var(--good-soft);
+    color: var(--good);
+    font-weight: 700;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+  .decision-body { flex: 1; }
+  .decision-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .decision-detail {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .callout {
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .callout.recommend {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    color: var(--accent-dark);
+  }
+  .callout.warn {
+    background: var(--warn-soft);
+    border-left: 3px solid var(--warn);
+    color: var(--warn);
+  }
+  .callout.note {
+    background: var(--bg-elev);
+    border-left: 3px solid var(--text-faint);
+    color: var(--text-muted);
+  }
+  .callout strong { color: inherit; }
+  .callout .label {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 14px;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  th {
+    background: var(--bg-elev);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+  }
+  tr:last-child td { border-bottom: none; }
+  td.center { text-align: center; }
+
+  .phase {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    position: relative;
+  }
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .phase-tag {
+    background: var(--accent-soft);
+    color: var(--accent-dark);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .phase-tag.deferred {
+    background: var(--bg-elev);
+    color: var(--text-faint);
+  }
+  .phase-title {
+    font-size: 17px;
+    font-weight: 600;
+    flex: 1;
+  }
+  .phase-meta {
+    font-size: 13px;
+    color: var(--text-faint);
+  }
+  .phase ul {
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  code {
+    font-family: "SF Mono", ui-monospace, "Menlo", Consolas, monospace;
+    background: var(--bg-elev);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: var(--accent-dark);
+  }
+  pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 16px 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 16px 0;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  pre code {
+    background: transparent;
+    color: inherit;
+    padding: 0;
+  }
+
+  footer {
+    margin-top: 96px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-faint);
+  }
+  footer p { margin: 4px 0; }
+  .pill {
+    display: inline-block;
+    background: var(--bg-elev);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-right: 6px;
+  }
+
+  @media (max-width: 640px) {
+    .wrap { padding: 32px 20px 64px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 20px; }
+    .meta { flex-direction: column; gap: 8px; }
+  }
+  @media print {
+    body { background: white; }
+    .wrap { padding: 20px; max-width: none; }
+    .phase, .card, .decision { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">NegletFix · Build Plan</div>
+  <h1>Where the project goes from here</h1>
+  <p class="subtitle">Translating the 2026-05-14 research audit into a concrete development sequence. Your decisions from today are locked in; the build sequence and the alternating-paradigm question are addressed below.</p>
+  <div class="meta">
+    <span><strong>Date</strong> · 2026-05-16</span>
+    <span><strong>Patient</strong> · Eric Lespagnon (chronic, 5y post-PCA)</span>
+    <span><strong>Hardware</strong> · Quest 2 (daughter's, interim) → Quest 3 (when budget)</span>
+    <span><strong>Status</strong> · WIP-001 ready to resume</span>
+  </div>
+</header>
+
+<h2>Your decisions today</h2>
+
+<div class="decision-grid">
+  <div class="decision">
+    <div class="decision-num">1</div>
+    <div class="decision-body">
+      <div class="decision-title">Both Paradigm A (3D-MOT-IVR) and Paradigm B (congruent-pair) — alternating</div>
+      <div class="decision-detail">Use both validated paradigms rather than picking one. The "how to alternate" question is answered in detail below — short version: sequential blocks, not session-by-session.</div>
+    </div>
+  </div>
+  <div class="decision">
+    <div class="decision-num">2</div>
+    <div class="decision-body">
+      <div class="decision-title">Skip EEG layer for v1</div>
+      <div class="decision-detail">Muse 2 fit conflicts with Quest headstrap; Muse S (softer band) may work better when acquired later. AV training runs open-loop. EEG pipeline code stays in the project for future use but is not in the critical path.</div>
+    </div>
+  </div>
+  <div class="decision">
+    <div class="decision-num">3</div>
+    <div class="decision-body">
+      <div class="decision-title">Re-measurement cadence — decide at the time</div>
+      <div class="decision-detail">Default to "every 5 sessions, quick CS check on affected hemifield only." Adjust based on what the data shows mid-program.</div>
+    </div>
+  </div>
+</div>
+
+<h2>Can you really alternate A and B? — honest answer</h2>
+
+<p>Yes, with caveats. There's no published trial that combines the two paradigms, so we're in <em>extrapolation</em> territory. But the underlying mechanisms are different enough that a combined approach is defensible — they likely train complementary capacities rather than competing for the same neural substrate.</p>
+
+<table>
+<thead>
+<tr>
+  <th style="width:35%">Aspect</th>
+  <th>Paradigm A — 3D-MOT-IVR<br><span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-faint)">Daibert-Nido / Misawa / Alharshan</span></th>
+  <th>Paradigm B — Congruent-Pair<br><span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--text-faint)">Wake Forest / Rowland 2023</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>What you do</strong></td>
+  <td>Track N moving 3D spheres among M distractors in a 360° VR sphere; each tracked sphere emits co-localized 3D audio</td>
+  <td>Stationary AV pairs fire at peripheral positions in your blind hemifield; you detect / orient toward them</td>
+</tr>
+<tr>
+  <td><strong>What it trains</strong></td>
+  <td>Sustained attention, peripheral tracking, multisensory integration during motion</td>
+  <td>Detection threshold at scotoma border, orienting reflex, SC pathway sensitization</td>
+</tr>
+<tr>
+  <td><strong>Strongest evidence</strong></td>
+  <td>Alharshan 2026 (n=15 adult stroke HH, DTI mechanism); Misawa 2024 (n=10 pediatric Quest at home, 9/10 responded)</td>
+  <td>Rowland 2023 (n=2 chronic adult stroke, dramatic recovery); animal work from Wake Forest decades-long</td>
+</tr>
+<tr>
+  <td><strong>Build cost in Unity</strong></td>
+  <td>High — 3D physics, target selection, distractor logic, adaptive difficulty via N targets + speed</td>
+  <td>Moderate — stimulus placement at eccentricity, AV co-onset, detection input</td>
+</tr>
+<tr>
+  <td><strong>Best for</strong></td>
+  <td>Already-responsive patients who can extract attention to peripheral motion</td>
+  <td>Severe baseline deficit (your case, Left 0.00) — gets the SC pathway warmed up first</td>
+</tr>
+</tbody>
+</table>
+
+<h3>Two ways to alternate — pick one</h3>
+
+<h4>Option 1: Session-by-session (A-B-A-B-A-B)</h4>
+<p>30 sessions over 6 weeks, alternating paradigms each day. Pro: maximum mechanism diversity per week. Con: <strong>both paradigms must be built before session 1</strong> — that's significant dev cost up front, and you can't ship anything testable until both are done. Also: if it works, you can't easily attribute which paradigm drove the gain.</p>
+
+<h4>Option 2: Sequential blocks (B first, then A)</h4>
+<p>Phase 1 = 30 sessions of Paradigm B over 6 weeks. Re-measure. Phase 2 = 30 sessions of Paradigm A over 6 weeks. Re-measure. Total: 12 weeks, ~30 hours.</p>
+<p>Pro: build B first (faster ship date, you start training sooner), see if you respond at all before investing in the harder build, clearer attribution. Con: each paradigm gets a full 6-week block which is the right dose anyway, so this is mostly upside.</p>
+
+<div class="callout recommend">
+  <span class="label">Recommendation</span>
+  <strong>Go sequential.</strong> Build Paradigm B first because (a) you have severe baseline deficit and B's scotoma-border detection training is the right entry point per Yang/Cavanaugh/Saionz 2023, (b) build cost is ~3× lower so you actually start training in weeks not months, (c) if you're a non-responder to B, that's important information before investing in the harder A build, (d) clean attribution if either phase produces gains.
+</div>
+
+<div class="callout note">
+  <span class="label">Important — within-instrument tracking only</span>
+  All comparisons across phases must be on the same headset with the same display calibration. If you upgrade Quest 2 → Quest 3 between phases, you'll need to re-baseline because of the Zeri 2018 LCD-vs-printed effect. Best timing: acquire the Quest 3 <em>before</em> Phase 1 starts so the entire program runs on one device.
+</div>
+
+<h2>Recommended build sequence</h2>
+
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-tag">Phase 0</span>
+    <span class="phase-title">Hardware + account unblocking</span>
+    <span class="phase-meta">~1–2 weeks, mostly waiting</span>
+  </div>
+  <ul>
+    <li>Quest 3 acquisition (used ~€350–400 with warranty via Back Market, or FB Marketplace with full video-call verification per our earlier conversation)</li>
+    <li>Pair Quest 3 to <strong>your</strong> Meta account (sidesteps daughter's-Q2 dev mode blocker entirely — your dev org is already verified)</li>
+    <li>Toggle Developer Mode in Meta Horizon → confirm <code>adb devices</code> sees the headset</li>
+    <li>Install Meta XR SDK + OpenXR plugin in Unity project (currently missing — see <code>Unity/NeglectFix/Packages/manifest.json</code>)</li>
+  </ul>
+</div>
+
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-tag">Phase 1</span>
+    <span class="phase-title">Build Paradigm B (congruent-pair detection)</span>
+    <span class="phase-meta">~2–3 weeks dev time</span>
+  </div>
+  <ul>
+    <li>Create <code>Tasks/AudioVisualTraining.cs</code> implementing congruent AV pair presentation at progressive eccentricities, starting near scotoma border (driven by <code>ConfigureFromContrastResults()</code>)</li>
+    <li>Create <code>Tasks/ProgramScheduler.cs</code> — tracks session count, last-session timestamp, next-due date, mid-program re-measurement triggers</li>
+    <li>Adaptive staircase: 2-up/1-down weighted, converging on ~70.7% correct (standard psychophysics rehab)</li>
+    <li>Audio-visual sync: target sub-50 ms (relaxed from the old "one frame" requirement per Bean/Stein/Rowland 2023)</li>
+    <li>Extend <code>DataLogger.cs</code> to capture per-trial: stimulus onset, response onset, RT, hit/miss, eccentricity, contrast, device firmware, display gamma</li>
+    <li>Quest 3 sideload + smoke-test 5-minute mini-session before committing to real Phase 2</li>
+  </ul>
+</div>
+
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-tag">Phase 2</span>
+    <span class="phase-title">Run Paradigm B — 30 sessions over 6 weeks</span>
+    <span class="phase-meta">30 min/day × 5 days/week (Alharshan 2026 dose)</span>
+  </div>
+  <ul>
+    <li>Pre-session: brief signal-quality check; verify fixation on red cross before starting</li>
+    <li>Quick CS check (Central + Left only) at sessions 5, 10, 15, 20, 25</li>
+    <li>Full 3-hemifield CS reassessment at session 30 → append to <code>erics-baseline.md</code> progress log</li>
+    <li>Decision gate at session 30: gains ≥ +0.30 LogCS at any trained location → proceed to Phase 3; no detectable gain → revisit protocol design before Phase 3</li>
+  </ul>
+</div>
+
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-tag">Phase 3</span>
+    <span class="phase-title">Build Paradigm A (3D-MOT-IVR)</span>
+    <span class="phase-meta">~4–6 weeks dev time</span>
+  </div>
+  <ul>
+    <li>Significantly more Unity work: 360° spherical environment, 3D physics for target spheres, distractor generation, target-selection input (gaze pointer or controller pointer), adaptive difficulty via N targets + sphere velocity</li>
+    <li>Reuse <code>ProgramScheduler.cs</code> and <code>DataLogger.cs</code> from Phase 1 — same plumbing, different stimulus presentation</li>
+    <li>Consider whether to start Phase 3 dev work in <em>parallel</em> with Phase 2 training, or sequentially after Phase 2 results</li>
+  </ul>
+</div>
+
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-tag">Phase 4</span>
+    <span class="phase-title">Run Paradigm A — 30 sessions over 6 weeks</span>
+    <span class="phase-meta">30 min/day × 5 days/week</span>
+  </div>
+  <ul>
+    <li>Same dose structure as Phase 2 for direct comparability</li>
+    <li>Same mid-program CS checks at sessions 5/10/15/20/25</li>
+    <li>Full 3-hemifield reassessment at end → compare to Phase 2 endpoint and original 2025-12-15 baseline</li>
+  </ul>
+</div>
+
+<div class="phase">
+  <div class="phase-header">
+    <span class="phase-tag deferred">Deferred</span>
+    <span class="phase-title">EEG closed-loop layer (was Phase 2 in old plan)</span>
+    <span class="phase-meta">Only if Muse S acquired and signal-quality validated</span>
+  </div>
+  <ul>
+    <li>Until then: <code>EngagementCalculator</code> can log passively for retrospective analysis (does engagement correlate with response?), but it does NOT gate AV rewards</li>
+    <li>If Muse S works well with Quest 3 + you want to try closed-loop in v2: revisit after Phase 4 results</li>
+    <li>The Treves 2025 JMIR meta-analysis null finding for consumer-grade NF is the load-bearing reason this is deferred, not just hardware fit</li>
+  </ul>
+</div>
+
+<h2>What gets built in the next 2–3 weeks</h2>
+
+<p>Concrete code-level work for Phase 1, in dependency order:</p>
+
+<ol>
+  <li><strong>Unity project setup</strong> — install Meta XR SDK + OpenXR + XR Plugin Management packages in <code>Packages/manifest.json</code> (currently only base Unity XR modules)</li>
+  <li><strong><code>ProgramScheduler.cs</code></strong> — session count, last-session timestamp persistence (local JSON), next-due-date calculation, re-measurement trigger flags</li>
+  <li><strong><code>Tasks/AudioVisualTraining.cs</code></strong> — main training task implementing congruent-pair paradigm; subscribes to <code>ContrastSensitivityResults</code> for personalization; runs 3 × 10-minute blocks per 30-min session</li>
+  <li><strong><code>Tasks/EccentricityProgression.cs</code></strong> (small helper) — progression logic driven by per-hemifield CS asymmetry; for Eric: start at ~5° from scotoma border in left field, expand outward over sessions</li>
+  <li><strong>Extended <code>DataLogger.cs</code></strong> — add per-trial RT, hit/miss, device-metadata fields</li>
+  <li><strong>Decouple <code>RewardController</code> from <code>EngagementCalculator</code></strong> — reward fires on detection/time, not on EEG threshold</li>
+  <li><strong>Update <code>audiovisual-training-protocol.md</code> wiki</strong> with the chosen paradigm (B), the chosen dose (Alharshan), and the sequential-block plan</li>
+</ol>
+
+<h2>What's open / decisions still pending</h2>
+
+<ul>
+  <li><strong>Quest 3 acquisition timing</strong> — budget-dependent. Phase 0 doesn't unblock until you have your own device paired to your account. In the meantime, Phase 1 dev work can proceed in the Unity Editor using the existing simulator path.</li>
+  <li><strong>Daughter's Meta account status</strong> — separate thread we crumb'd. If you decide to do Phase 1 dev work on her Quest 2 (to start sooner), the dev mode toggle question from the earlier session needs resolving first.</li>
+  <li><strong>Re-measurement cadence</strong> — defaulting to every 5 sessions; defer fine-tuning until you see what Phase 2 data looks like.</li>
+  <li><strong>Phase 3 timing</strong> — start Phase 3 dev in parallel with Phase 2 training (faster overall), or sequentially after Phase 2 results (clearer decision-making)? Lean parallel if you have dev bandwidth, sequential if Phase 2 results might change Phase 3 design.</li>
+</ul>
+
+<h2>The honest expectation map</h2>
+
+<div class="callout warn">
+  <span class="label">Set expectations realistically</span>
+  Based on Yang/Cavanaugh/Saionz 2023 (n=12 chronic V1-stroke patients) and Saionz 2020/2025:
+  <ul style="margin-top:8px;margin-bottom:0">
+    <li>~50–60% chance of <em>any</em> measurable gain at trained locations (you might be a non-responder)</li>
+    <li>If you respond: realistic magnitude is +0.20 to +0.40 LogCS at scotoma-border, not full restoration</li>
+    <li>Blind-field CS will likely remain ~4× lower than intact-field even after training</li>
+    <li>Functional outcomes (RT improvements, scanning efficiency, ADL transfer) may be more meaningful than perimetric field-area gains</li>
+    <li>Your 2.25 LogCS left-right asymmetry will not fully close — this is a fundamental limit of V1-damaged tissue, not a protocol failure</li>
+  </ul>
+</div>
+
+<p>What "success" looks like for this program: a measurable +0.30 LogCS gain at one or more scotoma-border locations, sustained between Phase 2 and Phase 4 endpoints, with corresponding RT improvements visible in the DataLogger trials. That's clinically significant by the Elliott/Bullimore/Bailey 1991 threshold, and it would put you in the responder subgroup of chronic-stroke patients per the Huxlin lab data.</p>
+
+<p>What "doesn't work" looks like, also honestly: 30 sessions of Phase 2 with no detectable shift in any of (Left LogCS at trained locations, mean RT to peripheral stimuli, fixation accuracy). If that happens, Phase 3 (3D-MOT-IVR) is still worth trying because it engages different mechanisms — but expectations should adjust downward.</p>
+
+<footer>
+  <p><strong>NegletFix Build Plan</strong> · Generated 2026-05-16 from the 2026-05-14 research audit</p>
+  <p>Related: <span class="pill">.brain/wiki/audiovisual-training-protocol.md</span> <span class="pill">.brain/wiki/research-papers-index.md</span> <span class="pill">.brain/wiki/rehabilitation-roadmap.md</span></p>
+  <p>Git: most recent commits <span class="pill">070df2d</span> (Quest dev mode crumb) · <span class="pill">cce2cca</span> (2026-05-14 research audit) · <span class="pill">aeb89a8</span> (FLUORESCE correction)</p>
+</footer>
+
+</div>
+</body>
+</html>

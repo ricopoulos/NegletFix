@@ -133,56 +133,62 @@ Three phases per session (`NEUROFEEDBACK_PROTOCOL.md:109-127`):
 
 ---
 
-## 5. What to Build in Unity
+## 5. What's Built in Unity (Phase 1 — 2026-05-16)
 
-Target location: `Unity/NeglectFix/Assets/Scripts/Tasks/` (extend `TaskManager.cs` — see [[unity-architecture]]).
+Implementation is now scaffolded on disk. v1 ships **Paradigm B (congruent-pair)** open-loop, per the 2026-05-16 build plan. Files:
 
-### Audio source configuration
-```
-- AudioSource component
-- Clip: generated 400 Hz sine wave, 250 ms, 55→75 dB linear envelope
-- Spatial blend: 1.0 (fully 3D)
-- Min/max distance tuned so perceived loudness matches 55-75 dB at Quest audio level
-- Dopple-level: 0 (no pitch shift)
-- Attach to the visual stimulus GameObject so spatial position = visual position
-```
+| File | Role | Status |
+|------|------|--------|
+| `Assets/Scripts/Tasks/AudioVisualTraining.cs` | Main task. Extends `TaskManager`. Trial loop, 3×10-min blocks, 2-up/1-down weighted staircase, sub-50ms AV sync, baseline-driven personalization. | ✓ Scaffolded |
+| `Assets/Scripts/Tasks/ProgramScheduler.cs` | Session count + timestamp + re-measurement triggers, persisted as JSON in `Application.persistentDataPath/program_state.json`. | ✓ Scaffolded |
+| `Assets/Scripts/Tasks/EccentricityProgression.cs` | Computes per-session eccentricity ladder from baseline CS asymmetry. Severe/Moderate/Mild classification → ladder selection → in-session progression. | ✓ Scaffolded |
+| `Assets/Scripts/Utils/DataLogger.cs` | Extended with `LogTrainingTrial()` + per-session trial CSV in `Application.persistentDataPath/training_trials/`. | ✓ Extended |
+| `Assets/Scripts/Utils/RewardController.cs` | Added `RewardMode` enum. v1 default = `OpenLoop` (task triggers rewards directly, EEG NOT a gate). `EegGated` mode preserved for v2. | ✓ Decoupled |
+| `Packages/manifest.json` | Added `com.unity.xr.management 4.5.0`, `com.unity.xr.openxr 1.14.0`, `com.unity.xr.interaction.toolkit 3.0.7`. | ✓ Updated |
 
-### Visual stimulus
-```
-- Quad or simple primitive (e.g., bright disk or Gabor patch)
-- Contrast configurable via ConfigureFromContrastResults(ContrastSensitivityResults)
-  (signature already sketched in docs/research/contrast_sensitivity_module.md:605)
-- Position driven by eccentricity stage + hemifield (left-affected)
-- Onset synchronized to audio: coroutine pattern,
-    audioSource.Play();
-    visualRenderer.enabled = true;
-  in the same frame; do NOT yield between them
-```
+### Trial loop (real, from AudioVisualTraining.cs)
 
-### Trial loop (pseudo)
 ```
-for each block (3):
-    for 5 minutes:
-        pick eccentricity from current stage
-        place stimulus in LEFT hemifield at that eccentricity
-        wait random ISI (e.g., 2-5s)
-        fire coincident audio+visual onset
-        optionally check EEG engagement during window
-        log trial (timestamp, eccentricity, response, engagement)
+for each block (1..3):
+  for blockDurationSec (default 600s = 10 min):
+    wait random ISI (2-5s)
+    eccentricity = progression.GetEccentricitiesForSession(N)[random]
+    eccentricity = progression.ApplyHemifieldDirection(eccentricity)  // -left, +right
+    position = ComputeStimulusPosition(eccentricity, distance)
+    spawn visual stimulus at position
+    play co-localized 400Hz tone (procedural fallback) or assigned clip
+    wait responseWindowSec (default 1.5s) for SPACE/Submit/trigger button
+    log TrainingTrial { ..., RT, hit, av_delta_ms }
+    if hit && rewardController: TriggerReward()  // open-loop, not EEG-gated
+    update staircase (2-up/1-down, 0.15 LogCS step)
+    destroy stimulus
+  rest interBlockRestSec (default 30s)
 ```
 
-### Personalization hook
-From `docs/research/contrast_sensitivity_module.md:605-635`:
-```csharp
-public void ConfigureFromContrastResults(ContrastSensitivityResults results) {
-    float affectedThreshold = results.leftHemifieldLogCS;
-    float startingLogCS = Mathf.Max(0, affectedThreshold - 0.30f);
-    // ... set stimulus contrast, choose eccentricity array based on asymmetry
-}
+### Personalization wiring
+
+`AudioVisualTraining.cs` takes a `ContrastSensitivityResults` in the inspector or auto-loads at start. From it:
+- `EccentricityProgression` classifies severity (Severe/Moderate/Mild) from `|right − left|` LogCS asymmetry
+- For Eric's case (Left 0.00, Right 2.25, asymmetry 2.25): severity = **Severe** → ladder `[5, 8, 12, 16, 20]°` starting near scotoma border (per Yang/Cavanaugh/Saionz 2023)
+- Starting contrast = baseline affected hemifield LogCS + 0.30 (easier than threshold to build engagement before staircase tightens)
+
+### Trial CSV schema
+
+`Application.persistentDataPath/training_trials/av_training_{timestamp}.csv`:
+
+```
+timestamp_ms, session_index, block_index, trial_index, eccentricity_deg, hemifield,
+contrast_logcs, stimulus_onset_ms, audio_onset_ms, response_onset_ms, rt_ms, hit, av_delta_ms
 ```
 
-### Logging
-Extend `DataLogger.cs` ([[unity-architecture]]) with per-trial records: timestamp, block, eccentricity, stimulus contrast, audio onset delay (ms), visual onset delay (ms), EEG engagement at onset, head yaw at onset, response (if any).
+`av_delta_ms` is audio onset relative to visual onset — target sub-50ms per Bean/Stein/Rowland 2023; the old "single-frame" strictness has been relaxed.
+
+### Open work in Phase 1 (not yet done)
+
+- **Quest XR setup inside Unity Editor**: Edit → Project Settings → XR Plugin Management → enable OpenXR for Android → in OpenXR settings, enable **Meta Quest Support** feature + Meta Touch Controllers interaction profile. (Manifest packages are in, but the project-settings toggles are inspector-only and not yet flipped.)
+- **Input wiring**: the `DetectResponse()` method currently falls back to keyboard SPACE/Return and the legacy `"Submit"` axis. For Quest controllers, this needs an `XRController` binding via the new Input System. Acceptable as scaffolding; promote to InputSystem Action when running on-headset.
+- **Visual stimulus prefab**: the fallback creates a programmatic Sphere with grayscale-coded contrast. A proper prefab (Gabor patch or high-contrast disk) is a polish step.
+- **Audio**: procedural 400 Hz tone with Hann window is built in as a fallback; an assigned AudioClip is preferable for final fit.
 
 ---
 

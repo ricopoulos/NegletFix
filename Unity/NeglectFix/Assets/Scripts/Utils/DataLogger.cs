@@ -252,11 +252,13 @@ namespace NeglectFix.Utils
         {
             // Ensure logging stops cleanly
             StopLogging();
+            CloseTrialFile();
         }
 
         void OnDestroy()
         {
             StopLogging();
+            CloseTrialFile();
         }
 
         // Public API
@@ -344,6 +346,106 @@ namespace NeglectFix.Utils
         {
             return Path.Combine(Application.persistentDataPath, "assessments");
         }
+
+        #endregion
+
+        #region AV Training Trial Logging
+
+        // Per-session trial CSV writer (separate from the 10Hz neurofeedback CSV)
+        private StreamWriter trialWriter;
+        private string currentTrialFile = "";
+        private int trainingTrialsLogged = 0;
+
+        private const string TRIAL_CSV_HEADER =
+            "timestamp_ms,session_index,block_index,trial_index,eccentricity_deg,hemifield," +
+            "contrast_logcs,stimulus_onset_ms,audio_onset_ms,response_onset_ms,rt_ms,hit,av_delta_ms";
+
+        /// <summary>
+        /// Log a single AV training trial. Lazily opens a per-program-session trial file the first time
+        /// it's called per session. Trial files live in Application.persistentDataPath/training_trials/.
+        ///
+        /// Schema: see TRIAL_CSV_HEADER. RT in ms (negative if miss). av_delta_ms is audio onset
+        /// relative to visual onset (target sub-50ms per Bean/Stein/Rowland 2023).
+        /// </summary>
+        public void LogTrainingTrial(NeglectFix.Tasks.AudioVisualTraining.TrainingTrial trial)
+        {
+            if (trialWriter == null)
+            {
+                OpenTrialFile();
+            }
+
+            if (trialWriter == null) return;
+
+            try
+            {
+                float timestampMs = (Time.time - sessionStartTime) * 1000f;
+                string line =
+                    $"{timestampMs:F0}," +
+                    $"{trial.sessionIndex},{trial.blockIndex},{trial.trialIndex}," +
+                    $"{trial.eccentricityDeg:F2},{trial.hemifield}," +
+                    $"{trial.contrastLogCS:F3}," +
+                    $"{trial.stimulusOnsetMs:F0},{trial.audioOnsetMs:F0}," +
+                    $"{trial.responseOnsetMs:F0},{trial.rtMs:F0}," +
+                    $"{(trial.hit ? 1 : 0)}," +
+                    $"{trial.avDeltaMs:F2}";
+
+                trialWriter.WriteLine(line);
+                trainingTrialsLogged++;
+
+                if (trainingTrialsLogged % 20 == 0)
+                    trialWriter.Flush();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[DataLogger] LogTrainingTrial failed: {e.Message}");
+            }
+        }
+
+        private void OpenTrialFile()
+        {
+            string trialsPath = Path.Combine(Application.persistentDataPath, "training_trials");
+            if (!Directory.Exists(trialsPath))
+                Directory.CreateDirectory(trialsPath);
+
+            string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+            currentTrialFile = Path.Combine(trialsPath, $"av_training_{timestamp}.csv");
+
+            try
+            {
+                trialWriter = new StreamWriter(currentTrialFile, false);
+                // Metadata header
+                trialWriter.WriteLine($"# AV Training Trials");
+                trialWriter.WriteLine($"# Session started: {DateTime.Now:O}");
+                trialWriter.WriteLine($"# Unity: {Application.unityVersion}");
+                trialWriter.WriteLine($"# Device: {SystemInfo.deviceModel} / {SystemInfo.operatingSystem}");
+                trialWriter.WriteLine($"# Scene: {UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}");
+                trialWriter.WriteLine(TRIAL_CSV_HEADER);
+                Debug.Log($"[DataLogger] Trial logging opened: {currentTrialFile}");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[DataLogger] Failed to open trial file: {e.Message}");
+                trialWriter = null;
+            }
+        }
+
+        private void CloseTrialFile()
+        {
+            if (trialWriter != null)
+            {
+                try
+                {
+                    trialWriter.Flush();
+                    trialWriter.Close();
+                }
+                catch { }
+                trialWriter = null;
+                Debug.Log($"[DataLogger] Trial log closed: {currentTrialFile} ({trainingTrialsLogged} trials).");
+            }
+        }
+
+        public string GetCurrentTrialFile() => currentTrialFile;
+        public int GetTrainingTrialsLogged() => trainingTrialsLogged;
 
         #endregion
 

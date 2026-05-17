@@ -6,8 +6,17 @@ using System;
 namespace NeglectFix.Utils
 {
     /// <summary>
-    /// Controls visual and audio rewards when neurofeedback triggers.
-    /// Integrates EEG engagement + left-gaze for closed-loop feedback.
+    /// Controls visual and audio rewards.
+    ///
+    /// Two modes:
+    /// - OpenLoop (v1 default): rewards are triggered directly by the task (e.g.,
+    ///   <see cref="NeglectFix.Tasks.AudioVisualTraining"/> calls <see cref="TriggerReward"/>
+    ///   on a hit). EEG engagement is NOT used as a gate.
+    /// - EegGated (v2 / future): reward fires when EEG engagement crosses threshold
+    ///   AND gaze is in the affected hemifield. Requires real Muse signal validation first;
+    ///   per Treves 2025 (JMIR meta-analysis, 16 RCTs, 11/16 used Muse) consumer-NF shows
+    ///   no benefit on cognition under sham. Keep this mode off until you have evidence
+    ///   the gate is helping on Eric's data.
     ///
     /// Reward types:
     /// - Visual: Brighten, glow, highlight objects
@@ -16,7 +25,17 @@ namespace NeglectFix.Utils
     /// </summary>
     public class RewardController : MonoBehaviour
     {
-        [Header("Dependencies")]
+        public enum RewardMode
+        {
+            OpenLoop,    // v1 default: task triggers rewards directly on detection
+            EegGated     // v2: rewards gated by EngagementCalculator + GazeDetector
+        }
+
+        [Header("Mode")]
+        [Tooltip("OpenLoop: task calls TriggerReward() directly on detection (v1 default). EegGated: requires EEG engagement + left-gaze (v2 only).")]
+        public RewardMode mode = RewardMode.OpenLoop;
+
+        [Header("Dependencies (only used in EegGated mode)")]
         public NeglectFix.EEG.EngagementCalculator engagementCalculator;
         public GazeDetector gazeDetector;
 
@@ -61,30 +80,37 @@ namespace NeglectFix.Utils
 
         void Start()
         {
-            // Find dependencies if not assigned
-            if (engagementCalculator == null)
-                engagementCalculator = FindObjectOfType<NeglectFix.EEG.EngagementCalculator>();
-
-            if (gazeDetector == null)
-                gazeDetector = FindObjectOfType<GazeDetector>();
-
-            // Subscribe to engagement events
-            if (engagementCalculator != null)
-            {
-                engagementCalculator.OnEngagementThresholdExceeded += CheckRewardTrigger;
-            }
-            else
-            {
-                Debug.LogWarning("[RewardController] EngagementCalculator not found!");
-            }
-
-            // Setup audio
+            // Setup audio (used in both modes)
             audioSource = gameObject.AddComponent<AudioSource>();
             audioSource.playOnAwake = false;
             audioSource.volume = audioVolume;
             audioSource.spatialBlend = useSpatialAudio ? 1f : 0f;
 
-            Debug.Log("[RewardController] Initialized. Waiting for EEG engagement + left-gaze...");
+            if (mode == RewardMode.EegGated)
+            {
+                // Find EEG dependencies if not assigned
+                if (engagementCalculator == null)
+                    engagementCalculator = FindObjectOfType<NeglectFix.EEG.EngagementCalculator>();
+
+                if (gazeDetector == null)
+                    gazeDetector = FindObjectOfType<GazeDetector>();
+
+                // Subscribe to engagement events
+                if (engagementCalculator != null)
+                {
+                    engagementCalculator.OnEngagementThresholdExceeded += CheckRewardTrigger;
+                    Debug.Log("[RewardController] Initialized in EegGated mode. Waiting for EEG engagement + left-gaze...");
+                }
+                else
+                {
+                    Debug.LogWarning("[RewardController] EegGated mode requested but EngagementCalculator not found. Reverting to OpenLoop.");
+                    mode = RewardMode.OpenLoop;
+                }
+            }
+            else
+            {
+                Debug.Log("[RewardController] Initialized in OpenLoop mode. Tasks must call TriggerReward() directly on detection.");
+            }
         }
 
         private void CheckRewardTrigger()
@@ -240,7 +266,7 @@ namespace NeglectFix.Utils
 
         void OnDestroy()
         {
-            if (engagementCalculator != null)
+            if (mode == RewardMode.EegGated && engagementCalculator != null)
             {
                 engagementCalculator.OnEngagementThresholdExceeded -= CheckRewardTrigger;
             }
