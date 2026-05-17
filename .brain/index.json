@@ -2,44 +2,58 @@
   "schema_version": "1.0",
   "project_name": "NegletFix",
   "description": "VR rehabilitation for left homonymous hemianopia with EEG neurofeedback",
-  "last_updated": "2026-04-14T00:00:00Z",
+  "last_updated": "2026-05-16T23:35:00Z",
   "wiki": {
     "path": ".brain/wiki/",
-    "pages": 10,
-    "lines": 1719,
+    "pages": 11,
+    "lines": 2400,
     "built": "2026-04-14",
-    "notes": "Karpathy ingest pattern — compiled from sessions, research docs, scripts. Load index.md first, pull pages on-demand."
+    "last_substantive_update": "2026-05-16",
+    "notes": "Karpathy ingest pattern — compiled from sessions, research docs, scripts. Load index.md first, pull pages on-demand. 2026-05-14 research audit added 20+ verified citations + 3 citation corrections. 2026-05-16 Phase 1 scaffold session updated unity-architecture, rehabilitation-roadmap, audiovisual-training-protocol, hardware-setup."
   },
   "modules": {
     "contrast-sensitivity-test": {
       "status": "operational",
       "health": "green",
       "path": "Assets/Scripts/Assessment/ContrastSensitivityTest.cs",
-      "notes": "Hemifield positioning fixed. First baseline recorded."
+      "notes": "Hemifield positioning fixed. First baseline recorded 2025-12-15. LCD-vs-printed Zeri 2018 caveat added to wiki 2026-05-14: results valid for within-instrument tracking only."
     },
     "eeg-integration": {
       "status": "planned",
       "health": "gray",
-      "notes": "Muse headband integration via Mind Monitor OSC - not yet implemented"
+      "notes": "Muse headband integration via Mind Monitor OSC - decoupled from v1 critical path. RewardController.RewardMode.OpenLoop is default; EegGated reserved for v2 after Muse signal-quality validation per Treves 2025 JMIR meta-analysis."
     },
     "audiovisual-training": {
-      "status": "planned",
-      "health": "gray",
-      "notes": "Cross-modal rehabilitation module - next major feature"
+      "status": "scaffolded",
+      "health": "yellow",
+      "path": "Assets/Scripts/Tasks/AudioVisualTraining.cs",
+      "notes": "Phase 1 scaffold complete 2026-05-16 (commits ecf327f + 7ea389c + 24a3075 on main). Paradigm B (congruent-pair), Alharshan 2026 dose (30 min × 5×/week × 6 weeks = 15hr). Compiles clean in Unity 6.2, zero errors. Smoke test in Editor pending — fresh-head task next session."
+    },
+    "quest-dev-mode": {
+      "status": "operational",
+      "health": "green",
+      "notes": "Quest 2 paired to Eric's Meta account 2026-05-16. April 27 blocker resolved: factory reset + re-pair (not org-membership invite as previously theorized). adb authorized, serial 1WMHH831TR1047, Android 14."
+    },
+    "xr-plugin-management": {
+      "status": "operational",
+      "health": "yellow",
+      "notes": "OpenXR + Meta Quest Support + Oculus Touch profile configured 2026-05-16. Project Validation 14/15 passing. SSAO renderer feature is the remaining warning — defer to deployment optimization pass."
     }
   },
   "baseline_results": {
     "date": "2025-12-15",
-    "central_logcs": "good",
+    "central_logcs": "good (~1.05)",
     "right_hemifield_logcs": 2.25,
     "left_hemifield_logcs": 0.00,
     "asymmetry": 2.25,
-    "notes": "First validated measurement after fixing hemifield bug"
+    "notes": "First validated measurement after fixing hemifield bug. LogCS values valid for within-instrument tracking only (Zeri 2018 LCD caveat). Expected outcome ranges revised per Yang/Cavanaugh/Saionz 2023: ~50-60% response rate at trained locations, blind-field CS stays ~4x lower than intact even with training."
   },
   "active_issues": [],
   "next_actions": [
-    "Implement audiovisual training module",
-    "Weekly contrast sensitivity re-assessments to track progress",
-    "Quest VR deployment for immersive testing"
+    "Fresh-head smoke test of AV training in Unity Editor",
+    "Quest controller input binding via InputSystem (replaces keyboard fallback)",
+    "Disable SSAO in URP renderer for Quest performance (polish)",
+    "Quest 3 acquisition when budget allows (used via Back Market ~€350-450)",
+    "Phase 2 launch: 30-session Paradigm B program with mid-program CS checks"
   ]
 }

@@ -308,16 +308,27 @@
 <div class="wrap">
 
 <header>
-  <div class="eyebrow">NegletFix · Build Plan</div>
+  <div class="eyebrow">NegletFix · Build Plan · EOD UPDATE</div>
   <h1>Where the project goes from here</h1>
-  <p class="subtitle">Translating the 2026-05-14 research audit into a concrete development sequence. Your decisions from today are locked in; the build sequence and the alternating-paradigm question are addressed below.</p>
+  <p class="subtitle">Translating the 2026-05-14 research audit into a concrete development sequence. <strong>End-of-day update (23:30):</strong> Phase 0 + Phase 1 are both DONE — same day the plan was drafted. Quest 2 dev mode resolved, Phase 1 code scaffolded and committed, Unity import clean, XR Plug-in Management configured.</p>
   <div class="meta">
-    <span><strong>Date</strong> · 2026-05-16</span>
+    <span><strong>Date</strong> · 2026-05-16 (created morning, updated EOD)</span>
     <span><strong>Patient</strong> · Eric Lespagnon (chronic, 5y post-PCA)</span>
-    <span><strong>Hardware</strong> · Quest 2 (daughter's, interim) → Quest 3 (when budget)</span>
-    <span><strong>Status</strong> · WIP-001 ready to resume</span>
+    <span><strong>Hardware</strong> · Quest 2 paired to Eric's account, dev mode ON</span>
+    <span><strong>Status</strong> · Phase 0 ✅ Phase 1 ✅ — Phase 2 (smoke test + Phase 2 sessions) next</span>
   </div>
 </header>
+
+<div class="callout recommend">
+  <span class="label">📈 Same-day delivery — EOD 2026-05-16</span>
+  Today went unexpectedly fast. What was scoped as "next 2–3 weeks of dev work" in the morning plan got mostly done in one session:
+  <ul style="margin-top:8px;margin-bottom:0">
+    <li><strong>Phase 0 (Hardware + account unblocking)</strong> ✅ — Quest 2 unpaired from daughter, factory reset, re-paired to your Meta account, dev mode toggled, <code>adb devices</code> shows the headset authorized. April 27 blocker fully retired.</li>
+    <li><strong>Phase 1 (Build Paradigm B)</strong> ✅ — three new <code>Tasks/</code> scripts written: <code>AudioVisualTraining.cs</code> (trial loop, 2-up/1-down staircase, sub-50ms AV sync), <code>ProgramScheduler.cs</code> (session state JSON), <code>EccentricityProgression.cs</code> (severity-classified ladder). <code>DataLogger.cs</code> extended with per-trial CSV. <code>RewardController.cs</code> decoupled with <code>RewardMode</code> enum (OpenLoop default). XR Plug-in Management configured (OpenXR + Meta Quest Support + Oculus Touch profile). Unity 6.2 imported the project clean — zero errors, zero warnings.</li>
+    <li><strong>6 commits pushed</strong> to <code>main</code>: <code>cce2cca</code> (research audit) → <code>a4a0121</code> (hardware-setup) → <code>070df2d</code> (crumb) → <code>ecf327f</code> (Phase 1 scaffold) → <code>7ea389c</code> (post-import sync) → <code>24a3075</code> (XR config).</li>
+    <li><strong>Still open</strong>: smoke-test the AV training in Editor (15-min task, fresh head), Quest controller input binding (replaces keyboard SPACE fallback), Quest 3 acquisition (budget-dependent), SSAO disable for Quest performance (polish).</li>
+  </ul>
+</div>
 
 <h2>Your decisions today</h2>
 

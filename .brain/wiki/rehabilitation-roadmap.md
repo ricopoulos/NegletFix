@@ -59,6 +59,28 @@ See [[erics-baseline]] for the measured starting point, [[audiovisual-training-p
 - Hemianopia-vs-neglect category mismatch flagged in [[eeg-neurofeedback]] — EEG-NF layer is now framed as exploratory adjunct
 - See [[research-papers-index]] Recent Additions section for full citations
 
+### 2026-05-16 — Quest dev mode resolved + Phase 1 Unity scaffold built
+**Quest 2 dev mode** (April 27 blocker, finally closed):
+- Verified the "only the owner can do it" error refers to the headset's primary Meta account, not the dev org owner (April 27 misdiagnosis retired)
+- Working fix: previous owner unpaired from her Meta Horizon app → factory reset Quest 2 → re-paired to Eric's Meta account → dev mode toggled → adb authorized
+- Quest 2 serial `1WMHH831TR1047`, Android 14, current firmware
+
+**Phase 1 Unity scaffold built** (commits `ecf327f` + `7ea389c` + `24a3075` on `main`):
+- New scripts in `Tasks/`: `AudioVisualTraining.cs` (Paradigm B main task), `ProgramScheduler.cs` (session state JSON), `EccentricityProgression.cs` (baseline-driven ladder)
+- `DataLogger.cs` extended with `LogTrainingTrial()` + per-session AV trial CSV
+- `RewardController.cs` decoupled from EEG — `RewardMode` enum with `OpenLoop` (v1 default) and `EegGated` (v2 reserved)
+- `Packages/manifest.json` — added XR Management 4.5.0, OpenXR 1.14.0, Interaction Toolkit 3.0.7
+- XR Plug-in Management configured: OpenXR enabled for Android, Oculus Touch Controller Profile, Meta Quest Support feature enabled
+- Project Validation: 14/15 checks passing (SSAO is a deferred polish item)
+- Unity 6.2 imported the project on first open with **zero errors, zero warnings**
+
+**Build plan deliverable**: `docs/build-plan-2026-05-16.html` — styled HTML build plan capturing the paradigm decision (Both A+B sequential), the EEG deferral, the 5-phase build sequence, and honest expectations.
+
+**Open from 2026-05-16**:
+- Smoke test the AV training in Editor (fresh-head task — deferred to next session)
+- Quest controller input binding via InputSystem (replaces keyboard SPACE fallback in `DetectResponse()`)
+- Quest 3 acquisition (budget-dependent)
+
 ---
 
 ## 2. NEXT — Planned, Ready to Build [MEDIUM]

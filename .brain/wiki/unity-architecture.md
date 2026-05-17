@@ -1,16 +1,17 @@
 ---
 title: Unity Architecture
-last_updated: 2026-04-14
+last_updated: 2026-05-16
 confidence: HIGH
 sources:
   - Unity/NeglectFix/Assets/Scripts/**/*.cs
   - PROJECT_SUMMARY.md
   - CLAUDE.md
+  - 2026-05-16 Phase 1 scaffold + XR config session
 ---
 
 # Unity Architecture
 
-Developer reference for the NegletFix Unity codebase. 10 C# scripts, ~3,340 LOC total, organized in 4 subsystems: Assessment, EEG, Tasks, Utils. Target platform: Meta Quest 2/3 (Android ARM64) via OpenXR; currently developed and tested in Unity Editor on macOS.
+Developer reference for the NegletFix Unity codebase. **13 C# scripts** (10 original + 3 added in Phase 1, 2026-05-16), ~4,300 LOC total, organized in 4 subsystems: Assessment, EEG, Tasks, Utils. Target platform: Meta Quest 2/3 (Android ARM64) via OpenXR; OpenXR + Meta Quest Support enabled as of 2026-05-16.
 
 **Unity version**: 6.2 (6000.2.8f1) with VR template (`.brain/cross-cutting.md:43`).
 **Project path**: `Unity/NeglectFix/` (note the casing: directory is `NeglectFix`, git repo is `NegletFix`).
@@ -44,16 +45,21 @@ All paths relative to `Unity/NeglectFix/Assets/Scripts/`.
 | Script | LOC | Responsibility |
 |--------|-----|---------------|
 | `Utils/GazeDetector.cs` | 164 | Quest head-yaw tracking. Fires `OnStartLookingLeft` / `OnStopLookingLeft` when yaw crosses ±15° threshold (configurable). Optional rotation smoothing. |
-| `Utils/RewardController.cs` | 332 | Closed-loop gatekeeper. Fires visual/audio/haptic rewards only when (engagement > threshold) AND (looking left). Handles cooldown (default 1s), reward duration (default 2s), glow effects on registered `rewardObjects`. |
-| `Utils/DataLogger.cs` | 364 | CSV export at 10 Hz. Columns: `timestamp_ms, tp10_alpha, tp10_beta, tp10_theta, engagement_score, threshold, head_yaw, head_pitch, left_gaze, reward_triggered, event`. Timestamped session files + event log. Has hook for contrast sensitivity result export. |
+| `Utils/RewardController.cs` ✱ | ~350 | Visual/audio/haptic rewards. **Two modes** (2026-05-16 refactor): `OpenLoop` (v1 default — task triggers reward directly on detection, no EEG gating) and `EegGated` (v2 — gates on engagement + gaze, preserved for future use after Muse signal-quality validation per Treves 2025 caveat). Handles cooldown (default 1s), reward duration (default 2s), glow effects. |
+| `Utils/DataLogger.cs` ✱ | ~470 | CSV export at 10 Hz for the neurofeedback CSV. **2026-05-16 extension**: added `LogTrainingTrial()` method + per-session AV training trial CSV writer (`Application.persistentDataPath/training_trials/av_training_{timestamp}.csv`). Trial schema: `timestamp_ms, session_index, block_index, trial_index, eccentricity_deg, hemifield, contrast_logcs, stimulus_onset_ms, audio_onset_ms, response_onset_ms, rt_ms, hit, av_delta_ms`. Device metadata in CSV header. |
 
 ### Tasks/ — Rehabilitation task framework
 
 | Script | LOC | Responsibility |
 |--------|-----|---------------|
-| `Tasks/TaskManager.cs` | 325 | Abstract base class. Session phases (`NotStarted` → `Baseline` → `Training` → `Cooldown` → `Completed`), default durations (120s / 900s / 180s per Daibert-Nido). Concrete tasks (KitchenDiscovery, etc.) inherit. Hooks for `dataLogger`, `engagementCalculator`, `rewardController`. |
+| `Tasks/TaskManager.cs` | 325 | Abstract base class. Session phases (`NotStarted` → `Baseline` → `Training` → `Cooldown` → `Completed`), default durations overridable by concrete tasks. Hooks for `dataLogger`, `engagementCalculator`, `rewardController`. |
+| `Tasks/AudioVisualTraining.cs` ★ | ~320 | **Paradigm B** main task, congruent-pair detection. Extends `TaskManager`. Trial loop with random ISI (2-5s), 3×10-min blocks, 2-up/1-down weighted staircase converging on ~70.7%, sub-50ms AV sync, baseline-driven personalization. Procedural 400Hz tone with Hann window as audio fallback. Reward triggered directly on hit (open-loop, not EEG-gated). |
+| `Tasks/ProgramScheduler.cs` ★ | ~200 | Program state machine — session count, last-session timestamp, paradigm choice, re-measurement triggers. Persisted as JSON to `Application.persistentDataPath/program_state.json`. Supports paradigm switching for Phase 3. |
+| `Tasks/EccentricityProgression.cs` ★ | ~110 | Classifies CS asymmetry severity (Severe/Moderate/Mild), selects appropriate eccentricity ladder, progresses across sessions. Eric's case (asymmetry 2.25) → Severe → ladder `[5,8,12,16,20]°` starting at scotoma border per Yang/Cavanaugh/Saionz 2023. |
 
-**Total**: 10 scripts, 3,339 lines.
+★ = added 2026-05-16 (Phase 1 scaffold).
+
+**Total**: 13 scripts, ~4,300 lines.
 
 ---
 
@@ -137,8 +143,10 @@ Cross-namespace references use fully qualified names (e.g., `NeglectFix.EEG.Enga
 
 ## 4. Dependencies
 
-### Required Unity packages
-- **XR Plugin Management** — with OpenXR + Meta Quest Support enabled
+### Required Unity packages (installed 2026-05-16 in `Packages/manifest.json`)
+- **`com.unity.xr.management 4.5.0`** — XR Plugin Management
+- **`com.unity.xr.openxr 1.14.0`** — OpenXR Plugin (with Meta Quest Support feature enabled)
+- **`com.unity.xr.interaction.toolkit 3.0.7`** — XR Interaction Toolkit
 - **TextMeshPro** — letter rendering in contrast test (`using TMPro` in `ContrastSensitivityTest.cs:3`)
 
 ### Required third-party
@@ -164,19 +172,22 @@ See [[hardware-setup]] for Muse/Mind Monitor/OSC wiring.
 
 ---
 
-## 6. Where to Extend for the Audiovisual Module
+## 6. AV Training Module (built 2026-05-16) — What Exists Now
 
-From [[audiovisual-training-protocol]], the missing piece is an audiovisual training task. Build it as:
+The audiovisual training module is **built and committed** as of 2026-05-16 (Phase 1 scaffold, commits `ecf327f` + `7ea389c` + `24a3075` on `main`). Implements Paradigm B (congruent-pair detection, Wake Forest / Rowland 2023 lineage) at the Alharshan/Alwashmi 2026 dose for chronic adult stroke.
 
-1. **New script**: `Tasks/AudioVisualTraining.cs` inheriting from `TaskManager`
-2. **New prefab**: `AVStimulus` — child of Quest camera rig with:
-   - `AudioSource` (spatial, 400 Hz 250ms 55-75 dB clip, generated at runtime)
-   - `MeshRenderer` on a simple quad for the visual target
-3. **Configuration method**: `ConfigureFromContrastResults(ContrastSensitivityResults)` — sketched in `docs/research/contrast_sensitivity_module.md:605-637`
-4. **Trial loop**: position stimulus at progressive eccentricity (8° → 24° → 56°), fire coincident audio+visual pulse, optionally gate by `engagementCalculator.IsEngaged()`
-5. **Logging**: extend `DataLogger` with per-trial records (eccentricity, onset delays, engagement at onset)
+Files (see Section 1 for details):
+- `Tasks/AudioVisualTraining.cs` — main task with trial loop, staircase, AV pair presentation
+- `Tasks/ProgramScheduler.cs` — program state JSON persistence
+- `Tasks/EccentricityProgression.cs` — baseline-driven eccentricity ladder
 
-Integrate via existing hooks — `TaskManager` already wires `dataLogger`, `engagementCalculator`, `rewardController`.
+What's still on the to-do list:
+- **Smoke test in Editor** — create a scene with the components wired up, hit Play, watch trials populate CSV. Deferred to a fresh-head session.
+- **Quest controller input** — `DetectResponse()` currently falls back to keyboard SPACE/Return and legacy `Input.GetAxis("Submit")`. For real Quest deployment, this needs an `InputSystem.InputAction` binding to the Quest controller trigger.
+- **Visual stimulus prefab** — fallback creates a programmatic Sphere; a proper Gabor patch or high-contrast disk prefab is a polish step.
+- **Phase 3 — Paradigm A (3D-MOT-IVR)** — significantly larger build; deferred until Phase 2 (30 sessions of Paradigm B) is run and shows responder data.
+
+Integration: `TaskManager` already wires `dataLogger`, `engagementCalculator`, `rewardController`. The new `AudioVisualTraining` inherits this plumbing and adds `programScheduler` + `trialLogger` (defaults to `dataLogger`). See [[audiovisual-training-protocol]] §5 for the build spec and runtime trial-loop pseudocode.
 
 ---
 
