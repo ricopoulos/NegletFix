@@ -1,6 +1,6 @@
 ---
 title: Hardware Setup
-last_updated: 2026-04-14
+last_updated: 2026-05-16
 confidence: HIGH
 sources:
   - CLAUDE.md
@@ -8,6 +8,7 @@ sources:
   - PROJECT_SUMMARY.md
   - RESEARCH_SUMMARY.md
   - .brain/cross-cutting.md
+  - 2026-05-14 research audit + 2026-05-16 working fix for Quest dev mode (see §6 + §9)
 ---
 
 # Hardware Setup
@@ -116,11 +117,18 @@ Required for sideloading NegletFix builds.
 3. Connect Quest to Mac via USB-C cable; inside the headset, accept the "Allow USB Debugging" prompt.
 4. Verify: `adb devices` from a terminal (requires Android Platform Tools) shows the Quest.
 
-> **⚠ Org-membership requirement** *(discovered 2026-04-27, see `sessions/2026-04-27-quest-setup-pharma.md`)*: The Meta account paired to the Quest **must be a member of the developer organization**. If the headset belongs to someone else (e.g., a family member's Quest), neither the headset's owner nor the dev-org owner can toggle Developer Mode — both get *"only the owner can do it."*
+> **⚠ "Only the owner can do it" error — RESOLVED 2026-05-16** *(superseded the April 27 org-membership theory)*
 >
-> **Fix**: at https://developers.meta.com/horizon/manage/ → Organization → Members → Add Member, invite the headset's Meta account as **Admin**. After they accept the email invite, Developer Mode toggle will work in their Meta Horizon app.
+> **Actual cause** (verified via 7-source research pass 2026-05-14 + working fix 2026-05-16): the error refers to the headset's **primary Meta account** — the account that paired the device — not the developer org owner. To toggle dev mode, the primary account must (a) be a registered Meta developer with a verified org, (b) be 18+, (c) have org verification complete (2FA or credit card), AND (d) be the account flipping the toggle in its own Meta Horizon app. The April 27 "invite to org as Admin" theory was incorrect — community thread 1322016 confirms this.
 >
-> **Alternative**: factory-reset the Quest and re-pair to the dev-org owner's Meta account (loses any account-bound apps/progress on the headset).
+> **Working fix (Eric, 2026-05-16)**:
+> 1. On the previous owner's phone: Meta Horizon app → Devices → tap headset → **Remove Device / Unpair** (do this FIRST — otherwise Find My Device lock can demand previous owner's credentials after reset)
+> 2. On the headset: Settings → System → Factory Reset
+> 3. On the new owner's phone (signed into new Meta account with verified dev org): Meta Horizon app → Add Device → Quest → pair
+> 4. Toggle Developer Mode in the new owner's Meta Horizon app → Devices → Quest → Headset Settings → Developer Mode → ON
+> 5. Verify: `adb devices` from terminal shows the headset's serial
+>
+> **Cost of the fix**: previous owner loses access to apps/saves/boundary on this headset (their purchases remain on their Meta account and work on other devices). Acceptable for a shared family Quest being repurposed for dev work.
 
 ### In-editor VR testing
 - **Meta Quest Link** (formerly Oculus Link): USB-C cable, mirror Quest to PC, play in Unity directly. Most reliable.
@@ -167,7 +175,7 @@ From `.brain/cross-cutting.md:41-46`:
 | Quest not detected by `adb` | Driver (Windows) / USB-C cable | Use the official Quest cable or known-good USB-C 3.0 data cable (not charge-only) |
 | Both Muse and Quest slip during session | Fit conflict | Try Muse S instead of Muse 2; Quest elite strap improves stability |
 | VR motion sickness during AV training | Fatigue or new user | Start 5-10 min sessions, stationary only; no locomotion; 90 Hz refresh minimum |
-| Meta Horizon app: *"only the owner can do it"* when toggling Developer Mode | Headset's paired Meta account isn't a member of the dev organization | Invite that account to your dev org as Admin at developers.meta.com/horizon/manage/, or factory-reset Quest and re-pair to the dev-org owner's account |
+| Meta Horizon app: *"only the owner can do it"* when toggling Developer Mode | Headset is primary-paired to a different Meta account than the one with the verified dev org — "owner" means primary device-paired account, NOT org owner | **Verified-working fix (Eric 2026-05-16)**: previous owner unpairs in their Meta app first → factory-reset Quest → re-pair to dev-org owner's account → toggle dev mode in their Meta Horizon app. See §6 for full procedure. The earlier "invite to org as Admin" workaround was based on a wrong diagnosis and is not the fix. |
 
 ---
 
