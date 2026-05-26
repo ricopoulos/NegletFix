@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NegletFix Doctor Brief - 2026-05-26</title>
+  <style type="text/css">
+    :root {
+      --ink: #17212b;
+      --muted: #5a6878;
+      --line: #d8e0e8;
+      --paper: #fbfcfd;
+      --blue: #2458a7;
+      --blue-soft: #eaf2ff;
+      --green: #1f7a55;
+      --green-soft: #e8f6ef;
+      --amber: #a15c08;
+      --amber-soft: #fff4e4;
+      --red: #9b2c2c;
+      --red-soft: #fff1f1;
+      --panel: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #eef3f8;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.52;
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(36, 88, 167, 0.25);
+    }
+
+    a:hover {
+      border-bottom-color: var(--blue);
+    }
+
+    .page {
+      max-width: 1020px;
+      margin: 28px auto;
+      padding: 34px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 55px rgba(24, 36, 49, 0.12);
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: start;
+      padding-bottom: 24px;
+      border-bottom: 3px solid var(--blue);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 750;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: 34px;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 14px 0 0;
+      max-width: 820px;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .datebox {
+      min-width: 210px;
+      padding: 14px 16px;
+      background: var(--blue-soft);
+      border: 1px solid #c9ddfb;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    .datebox strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--blue);
+      font-size: 14px;
+    }
+
+    h2 {
+      margin: 32px 0 12px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      font-size: 23px;
+      line-height: 1.18;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 22px 0 8px;
+      font-size: 17px;
+      line-height: 1.25;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    ul, ol {
+      margin: 8px 0 16px 22px;
+      padding: 0;
+    }
+
+    li {
+      margin: 6px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 20px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      color: #24384e;
+      background: #edf4fb;
+      font-weight: 750;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    code {
+      padding: 2px 5px;
+      background: #f1f5f9;
+      border: 1px solid #d9e2ec;
+      border-radius: 5px;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.92em;
+    }
+
+    .callout {
+      margin: 18px 0;
+      padding: 16px 18px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .callout h3 {
+      margin-top: 0;
+    }
+
+    .blue {
+      background: var(--blue-soft);
+      border-color: #c9ddfb;
+    }
+
+    .green {
+      background: var(--green-soft);
+      border-color: #b9e3cf;
+    }
+
+    .amber {
+      background: var(--amber-soft);
+      border-color: #f1d29d;
+    }
+
+    .red {
+      background: var(--red-soft);
+      border-color: #efc2c2;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 14px 0 20px;
+    }
+
+    .card {
+      padding: 15px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .card h3 {
+      margin: 0 0 7px;
+      color: #24384e;
+      font-size: 15px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .pill {
+      display: inline-block;
+      margin: 2px 5px 2px 0;
+      padding: 3px 8px;
+      color: #24384e;
+      background: #edf4fb;
+      border: 1px solid #d5e2ef;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .metric {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--blue);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .small {
+      font-size: 13px;
+    }
+
+    .source-list li {
+      margin-bottom: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .footer-note {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        margin: 0;
+        padding: 22px;
+        border: 0;
+        box-shadow: none;
+      }
+
+      .topbar {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 27px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 10mm;
+      }
+
+      body {
+        background: white;
+        font-size: 10.2pt;
+        line-height: 1.32;
+      }
+
+      .page {
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        box-shadow: none;
+        background: white;
+      }
+
+      .topbar {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding-bottom: 12px;
+        border-bottom-width: 2px;
+      }
+
+      .eyebrow {
+        margin-bottom: 4px;
+        font-size: 9pt;
+      }
+
+      h1 {
+        max-width: none;
+        font-size: 18pt;
+      }
+
+      .subtitle {
+        margin-top: 8px;
+        font-size: 10.5pt;
+      }
+
+      .datebox {
+        min-width: 170px;
+        padding: 8px 10px;
+        font-size: 9pt;
+      }
+
+      h2 {
+        margin: 16px 0 6px;
+        padding-top: 8px;
+        font-size: 15pt;
+        page-break-after: avoid;
+      }
+
+      h3 {
+        margin: 10px 0 5px;
+        font-size: 11.5pt;
+      }
+
+      p {
+        margin-bottom: 6px;
+      }
+
+      ul, ol {
+        margin: 4px 0 9px 16px;
+      }
+
+      li {
+        margin: 2px 0;
+      }
+
+      table {
+        margin: 6px 0 10px;
+      }
+
+      th, td {
+        padding: 5px 6px;
+        font-size: 8.8pt;
+      }
+
+      .callout {
+        margin: 8px 0;
+        padding: 8px 10px;
+      }
+
+      .grid {
+        gap: 8px;
+        margin: 8px 0 10px;
+      }
+
+      .card {
+        padding: 8px;
+      }
+
+      .card h3 {
+        margin-bottom: 4px;
+        font-size: 10pt;
+      }
+
+      .card p {
+        font-size: 8.8pt;
+      }
+
+      .metric {
+        font-size: 13pt;
+      }
+
+      .pill {
+        padding: 1px 5px;
+        font-size: 8pt;
+      }
+
+      .source-list li {
+        margin-bottom: 3px;
+      }
+
+      .footer-note {
+        margin-top: 12px;
+        padding-top: 8px;
+        font-size: 8pt;
+      }
+
+      a {
+        color: #17447f;
+        border-bottom: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div>
+        <p class="eyebrow">Doctor visit brief</p>
+        <h1>NegletFix: measured VR rehabilitation for chronic left homonymous hemianopia</h1>
+        <p class="subtitle">Prepared for Dr. Thierry Jacquemin. The goal is to explain what Eric is building, what evidence it is based on, how progress will be measured, and what medical feedback would be useful before starting a structured training block.</p>
+      </div>
+      <div class="datebox">
+        <strong>Prepared</strong>
+        May 26, 2026<br>
+        Patient: Eric Lespagnon<br>
+        Project: NegletFix
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <h3>Purpose of the appointment discussion</h3>
+      <p>This is not a request for a prescription or a claim that the system already works. It is a measured rehabilitation project for a chronic visual-field deficit after stroke. I would like the doctor's view on medical safety, useful clinical measurements, and whether the assumptions make sense from a physician's point of view.</p>
+    </div>
+
+    <h2>1. One-Minute Summary</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Condition</h3>
+        <p>Left homonymous hemianopia after a right PCA stroke in July 2021, with persistent left visual-field loss and severe left contrast deficit.</p>
+      </div>
+      <div class="card">
+        <h3>Project</h3>
+        <p>NegletFix uses VR to deliver repeated audiovisual training in the affected left field, while measuring contrast sensitivity and functional change over time.</p>
+      </div>
+      <div class="card">
+        <h3>Doctor Input Needed</h3>
+        <p>Confirm safety, suggest clinical outcome measures, review fatigue/medication/lab issues, and flag any contraindication before disciplined training starts.</p>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <h3>The clean medical framing</h3>
+      <p>NegletFix is best understood as an <strong>N-of-1, measurement-first rehabilitation protocol</strong>. The first goal is not to prove a cure. The first goal is to run a repeatable, low-risk training block and objectively determine whether Eric's left hemifield detection, contrast sensitivity, reaction time, or daily function changes beyond measurement noise.</p>
+    </div>
+
+    <h2>2. Eric's Medical Context</h2>
+    <table summary="Eric medical context">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Current understanding</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Primary diagnosis</td>
+          <td>Left homonymous hemianopia after right posterior cerebral artery stroke, July 2021.</td>
+        </tr>
+        <tr>
+          <td>Imaging history</td>
+          <td>Large area of encephalomalacia in the right occipital lobe.</td>
+        </tr>
+        <tr>
+          <td>Main daily symptoms</td>
+          <td>Complete left visual-field blindness, severe left-side contrast deficit, persistent global dimness / "gray overlay", screen fatigue, and functional difficulty with left-side awareness.</td>
+        </tr>
+        <tr>
+          <td>What this is not</td>
+          <td>It is not only comfort, brightness preference, or a UI problem. The left-field deficit is objective and matches the stroke location.</td>
+        </tr>
+        <tr>
+          <td>Rehabilitation target</td>
+          <td>Improve measurable visual function or daily compensation enough to matter. Full visual-field restoration is not assumed.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3. Baseline Measurement Already Obtained</h2>
+    <p>NegletFix includes a modified Pelli-Robson-style contrast sensitivity test. A critical positioning bug was fixed before the valid baseline below: letters now appear in the intended hemifield while Eric fixates a central cross.</p>
+
+    <table summary="Baseline contrast sensitivity measurement results">
+      <thead>
+        <tr>
+          <th>Hemifield</th>
+          <th>LogCS result</th>
+          <th>Approx. threshold</th>
+          <th>Interpretation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Central</td>
+          <td><span class="metric">~1.05+</span></td>
+          <td>~9 percent contrast</td>
+          <td>Usable central baseline; useful as a display/fatigue calibration check.</td>
+        </tr>
+        <tr>
+          <td>Right / intact field</td>
+          <td><span class="metric">2.25</span></td>
+          <td>~0.6 percent contrast</td>
+          <td>Excellent; maxed out the current test.</td>
+        </tr>
+        <tr>
+          <td>Left / affected field</td>
+          <td><span class="metric">0.00</span></td>
+          <td>100 percent contrast not detected</td>
+          <td>Severe deficit; pure black-on-gray letters were not identified in the affected hemifield.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>Asymmetry:</strong> 2.25 LogCS, far above the usual clinically meaningful change threshold of about 0.30 LogCS. The plan is to compare future results against this baseline, not against population norms from a different instrument.</p>
+
+    <div class="callout amber">
+      <h3>Measurement caveat</h3>
+      <p>The NegletFix contrast test is currently best used for <strong>within-device longitudinal tracking</strong>. LCD/OLED contrast measurements can differ from calibrated printed charts. That is acceptable for this project if the same device, brightness, distance, and fixation rules are kept stable.</p>
+    </div>
+
+    <h2>4. Scientific Rationale</h2>
+    <p>The working hypothesis is that even when the primary visual cortex pathway is damaged, some residual visual processing can be trained through alternate pathways and repeated task practice.</p>
+
+    <table summary="Scientific rationale confidence table">
+      <thead>
+        <tr>
+          <th>Concept</th>
+          <th>Why it matters for NegletFix</th>
+          <th>Confidence</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Two visual pathways</td>
+          <td>The V1/geniculostriate pathway is damaged for the left field, but retinotectal and extrastriate pathways may still support orienting, motion, and partial detection.</td>
+          <td><span class="pill">high anatomy</span></td>
+        </tr>
+        <tr>
+          <td>Audiovisual pairing</td>
+          <td>Spatially and temporally congruent sound plus visual cues can strengthen detection in weak visual fields; this is the core of the training.</td>
+          <td><span class="pill">moderate clinical</span></td>
+        </tr>
+        <tr>
+          <td>Chronic stroke reality</td>
+          <td>Eric is almost 5 years post-stroke. Recovery is still possible in some chronic patients, but effect sizes are expected to be modest and variable.</td>
+          <td><span class="pill">mixed</span></td>
+        </tr>
+        <tr>
+          <td>Daily-function transfer</td>
+          <td>The most important question is whether lab gains transfer to reading, walking, screens, cooking, navigation, and fatigue. This must be tracked directly.</td>
+          <td><span class="pill">unknown</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>5. Research Findings We Are Using</h2>
+    <table summary="Research findings used by NegletFix">
+      <thead>
+        <tr>
+          <th>Evidence branch</th>
+          <th>What it suggests</th>
+          <th>How NegletFix uses it</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Daibert-Nido et al. 2021</td>
+          <td>A small pediatric hemianopia pilot reported visual-field and contrast-sensitivity gains after home immersive audiovisual training.</td>
+          <td>Useful proof-of-concept, but not enough by itself because it was not a powered adult-stroke trial.</td>
+        </tr>
+        <tr>
+          <td>Misawa / Daibert-Nido 2024</td>
+          <td>A home telerehabilitation version using Meta Quest 2/Pro was feasible in pediatric hemianopia.</td>
+          <td>Supports the practical idea that a Quest-based home protocol can be usable, monitored, and repeated.</td>
+        </tr>
+        <tr>
+          <td>Alharshan / Alwashmi 2026</td>
+          <td>Fifteen subacute/chronic stroke patients with HH completed 30 min/day, 5 days/week, for 6 weeks, with behavioral and imaging changes reported.</td>
+          <td>This is the closest direct dose model for Eric: 30 sessions over 6 weeks, about 15 total hours.</td>
+        </tr>
+        <tr>
+          <td>Namgung et al. 2025</td>
+          <td>A randomized clinical trial of digital visual perceptual learning in post-stroke visual field defects found measurable visual-field improvements.</td>
+          <td>Supports the broader premise that structured digital training can produce measurable chronic post-stroke visual gains in some patients.</td>
+        </tr>
+        <tr>
+          <td>Yang / Saionz / Huxlin line</td>
+          <td>Chronic V1-damage patients can improve, but contrast sensitivity remains fundamentally limited and not everyone responds.</td>
+          <td>Sets realistic expectations: a clinically meaningful gain would be valuable, but full normalization is not the target.</td>
+        </tr>
+        <tr>
+          <td>ESO 2025 visual impairment guideline</td>
+          <td>Standardized screening and access to vision rehabilitation after stroke are important; the evidence base is still uneven.</td>
+          <td>Supports asking for formal measurement/referral rather than relying only on self-report.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>6. Planned NegletFix Protocol</h2>
+    <div class="callout blue">
+      <h3>Proposed first real training block</h3>
+      <p><strong>30 minutes per day, 5 days per week, for 6 weeks</strong> if tolerated. This mirrors the closest adult-stroke audiovisual training dose found in the recent literature. Start conservatively if VR fatigue or nausea appears.</p>
+    </div>
+
+    <table summary="Planned NegletFix protocol elements">
+      <thead>
+        <tr>
+          <th>Protocol element</th>
+          <th>Implementation</th>
+          <th>Reason</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Training stimulus</td>
+          <td>Co-localized visual target plus auditory cue in VR, primarily presented toward the affected left field.</td>
+          <td>Uses multisensory pairing to help weak visual signals become behaviorally useful.</td>
+        </tr>
+        <tr>
+          <td>Difficulty progression</td>
+          <td>Starts near the scotoma border and adjusts contrast/eccentricity based on performance.</td>
+          <td>Severe left baseline means starting too far into the blind field would produce only failure and fatigue.</td>
+        </tr>
+        <tr>
+          <td>Feedback</td>
+          <td>Open-loop task feedback first. EEG is not required for the first protocol.</td>
+          <td>Keeps the first training block simpler and testable.</td>
+        </tr>
+        <tr>
+          <td>EEG / Muse layer</td>
+          <td>Exploratory only. Validate signal quality before using it as a training gate.</td>
+          <td>Consumer EEG evidence is mixed; it should not be the foundation of the first medical discussion.</td>
+        </tr>
+        <tr>
+          <td>Data logging</td>
+          <td>Each trial logs eccentricity, hemifield, contrast, reaction time, hit/miss, and audiovisual timing.</td>
+          <td>Allows the project to learn from actual data rather than memory or impression.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>7. What Is Already Built</h2>
+    <table summary="NegletFix components already built">
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Status</th>
+          <th>Doctor relevance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Contrast sensitivity test</td>
+          <td>Operational; valid baseline obtained after bug fix.</td>
+          <td>Gives objective pre/post tracking.</td>
+        </tr>
+        <tr>
+          <td>Audiovisual training module</td>
+          <td>Scaffolded in Unity; Editor smoke test pending.</td>
+          <td>Main rehabilitation method to discuss.</td>
+        </tr>
+        <tr>
+          <td>Quest VR setup</td>
+          <td>Quest 2 developer mode working; OpenXR configured.</td>
+          <td>Home delivery is technically feasible.</td>
+        </tr>
+        <tr>
+          <td>Data logger</td>
+          <td>CSV trial logging wired.</td>
+          <td>Supports objective review and later medical summary.</td>
+        </tr>
+        <tr>
+          <td>Muse / EEG</td>
+          <td>Code exists, real-world signal validation not done.</td>
+          <td>Should remain a future layer, not the clinical core today.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>8. Outcome Measures To Discuss</h2>
+    <table summary="Outcome measures to discuss">
+      <thead>
+        <tr>
+          <th>Measure</th>
+          <th>How to use it</th>
+          <th>Why it matters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>NegletFix contrast sensitivity</td>
+          <td>Central + left quick-check every 5 sessions; full central/right/left reassessment at baseline and post-program.</td>
+          <td>Primary project measurement.</td>
+        </tr>
+        <tr>
+          <td>Formal visual field test</td>
+          <td>Humphrey, Goldmann, or local equivalent if available.</td>
+          <td>Clinically recognizable external anchor for the doctor file.</td>
+        </tr>
+        <tr>
+          <td>Reaction time and hit rate</td>
+          <td>From the VR task logs at specific eccentricities.</td>
+          <td>May improve before conscious contrast detection improves.</td>
+        </tr>
+        <tr>
+          <td>Daily-function tracker</td>
+          <td>Short weekly ratings: screen fatigue, cooking, navigation, left-side collisions/surprises, reading, evening exhaustion.</td>
+          <td>Prevents the project from chasing a lab number that does not help daily life.</td>
+        </tr>
+        <tr>
+          <td>Fatigue / sleep / mood / medication review</td>
+          <td>Review during routine care and prescription renewal.</td>
+          <td>Training requires vigilance; sedation, poor sleep, depression, or uncontrolled vascular risk can bury any signal.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>9. Questions For Dr. Jacquemin</h2>
+    <ol>
+      <li><strong>Does the medical framing make sense?</strong> Chronic left homonymous hemianopia after right PCA stroke, with a measured contrast-sensitivity asymmetry.</li>
+      <li><strong>Is there any reason VR audiovisual training would be unsafe for me?</strong> Especially seizure history, migraines, vestibular symptoms, severe fatigue, blood pressure, or photosensitivity.</li>
+      <li><strong>Should I get formal visual-field testing before the training block?</strong> If yes, what test and through whom: ophthalmology, neuro-ophthalmology, orthoptist, or rehabilitation clinic?</li>
+      <li><strong>Should we distinguish hemianopia from neglect more formally?</strong> NegletFix started from "neglect" language, but my documented problem is homonymous hemianopia. If attention/neglect is also present, that changes the interpretation.</li>
+      <li><strong>What blood work or prescription review matters for training?</strong> Lipids, HbA1c/glucose, CBC, CMP/electrolytes, B12, vitamin D, TSH, blood pressure, sleep, fatigue, and medication side effects may affect rehabilitation capacity.</li>
+      <li><strong>Would you be willing to review pre/post results later?</strong> The useful doctor role may be to sanity-check whether the data look meaningful or only noise.</li>
+      <li><strong>Do you see any specialist referral that would make this safer or more rigorous?</strong> Neuro-ophthalmology, OT/orthoptics, stroke rehab, or visual rehabilitation specialist.</li>
+    </ol>
+
+    <h2>10. Safety Boundaries</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Not a substitute</h3>
+        <p>This does not replace medical care, vascular prevention, eye exams, formal rehab, or physician-directed treatment.</p>
+      </div>
+      <div class="card">
+        <h3>Not driving clearance</h3>
+        <p>Any functional improvement in VR is not permission to drive. Driving decisions require formal legal and medical assessment.</p>
+      </div>
+      <div class="card">
+        <h3>Stop rules</h3>
+        <p>Pause training if it provokes major headache, vertigo, nausea, unusual neurological symptoms, visual distress, or marked fatigue.</p>
+      </div>
+    </div>
+
+    <h2>11. Side Question: Hyperbaric Oxygen</h2>
+    <div class="callout amber">
+      <h3>Why this is only a side note</h3>
+      <p>Eric remembered hyperbaric oxygen therapy from a recovery podcast and noticed that the practice may have a hyperbaric module. After a quick evidence check, this does <strong>not</strong> look like the main NegletFix topic.</p>
+      <p>HBOT is real medicine, but stroke recovery is not a standard accepted indication. Acute ischemic stroke guidelines do not recommend HBOT except for stroke caused by air embolization. Chronic-stroke studies exist, but I did not find strong direct evidence for chronic post-PCA homonymous hemianopia or left-field contrast restoration.</p>
+      <p>If Dr. Jacquemin thinks HBOT is relevant anyway, the safe framing would be: off-label adjunct, clear contraindication screening, and pre/post measurement. It should not replace the core NegletFix protocol.</p>
+    </div>
+
+    <table summary="Hyperbaric oxygen side question">
+      <thead>
+        <tr>
+          <th>HBOT discussion point</th>
+          <th>Question for doctor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Relevance</td>
+          <td>Do you see any plausible role in my chronic visual-field condition, or would you consider it unrelated/unproven?</td>
+        </tr>
+        <tr>
+          <td>Safety</td>
+          <td>Any contraindications in my history: ears/sinuses, lungs, seizure risk, eye history, glucose, medications, blood pressure?</td>
+        </tr>
+        <tr>
+          <td>Measurement</td>
+          <td>If ever considered, should it wait until after a clean baseline NegletFix block so we do not confuse what caused any change?</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>12. Suggested Way To Explain It Out Loud</h2>
+    <div class="callout green">
+      <p>"I built this project because my left visual field is still functionally blind after the right PCA stroke. We now have a measured baseline: right field is excellent, left field is at the floor. The idea is to run a controlled VR audiovisual training block, not as a miracle cure, but as a measurable rehab experiment. I want your opinion on whether it is safe, what clinical measurements would make it more serious, and whether anything in my prescriptions, fatigue, blood work, or stroke prevention plan could affect the training."</p>
+    </div>
+
+    <h2>13. Sources Checked</h2>
+    <ul class="source-list">
+      <li>Daibert-Nido et al. 2021, audiovisual 3D immersive stimulation in hemianopia, PubMed: <a href="https://pubmed.ncbi.nlm.nih.gov/34106907/">https://pubmed.ncbi.nlm.nih.gov/34106907/</a></li>
+      <li>Daibert-Nido et al. 2021, full Frontiers article: <a href="https://www.frontiersin.org/articles/10.3389/fneur.2021.680211/full">https://www.frontiersin.org/articles/10.3389/fneur.2021.680211/full</a></li>
+      <li>Misawa et al. 2024, EClinicalMedicine telerehabilitation feasibility trial, PubMed: <a href="https://pubmed.ncbi.nlm.nih.gov/39687429/">https://pubmed.ncbi.nlm.nih.gov/39687429/</a></li>
+      <li>Alharshan / Alwashmi et al. 2026, immersive audiovisual training in post-stroke hemianopia, PubMed: <a href="https://pubmed.ncbi.nlm.nih.gov/41421499/">https://pubmed.ncbi.nlm.nih.gov/41421499/</a></li>
+      <li>Alharshan / Alwashmi et al. 2026, NeuroImage article: <a href="https://www.sciencedirect.com/science/article/pii/S105381192500672X">https://www.sciencedirect.com/science/article/pii/S105381192500672X</a></li>
+      <li>Namgung et al. 2025, JAMA Network Open randomized clinical trial of digital visual perceptual learning: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12090032/">https://pmc.ncbi.nlm.nih.gov/articles/PMC12090032/</a></li>
+      <li>European Stroke Organisation 2025 guideline on visual impairment in stroke: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12098360/">https://pmc.ncbi.nlm.nih.gov/articles/PMC12098360/</a></li>
+      <li>Yang et al. 2023, contrast sensitivity after V1 damage: <a href="https://www.medrxiv.org/content/10.1101/2023.08.31.23294827v1">https://www.medrxiv.org/content/10.1101/2023.08.31.23294827v1</a></li>
+      <li>Treves et al. 2025, consumer-grade neurofeedback meta-analysis: <a href="https://pubmed.ncbi.nlm.nih.gov/40246295/">https://pubmed.ncbi.nlm.nih.gov/40246295/</a></li>
+      <li>AHA/ASA acute ischemic stroke guideline slide set, HBOT recommendation context: <a href="https://professional.heart.org/en/-/media/PHD-Files-2/Science-News/2/2019/2019-Guidelines-for-the-Early-Management-of-Patients-with-Acute-Ischemic-Stroke-Slide-Set.pdf?sc_lang=en">https://professional.heart.org/</a></li>
+      <li>Cochrane evidence summary on HBOT for acute ischemic stroke: <a href="https://www.cochrane.org/evidence/CD004954_hyperbaric-oxygen-therapy-treating-people-acute-ischaemic-stroke">https://www.cochrane.org/evidence/CD004954_hyperbaric-oxygen-therapy-treating-people-acute-ischaemic-stroke</a></li>
+      <li>UHMS accepted hyperbaric oxygen indications: <a href="https://www.uhms.org/resources/featured-resources/hbo-indications.html">https://www.uhms.org/resources/featured-resources/hbo-indications.html</a></li>
+    </ul>
+
+    <p class="footer-note">This document is a physician discussion aid. It does not recommend starting, stopping, or changing medication; it does not recommend HBOT; and it does not claim NegletFix is clinically proven for Eric. The intended next step is medical review plus a cautious, measured training block.</p>
+  </div>
+</body>
+</html>

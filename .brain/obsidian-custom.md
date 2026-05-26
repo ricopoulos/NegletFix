@@ -1,11 +1,15 @@
 ## Mobile HTML Reports
 
 - [[Projects/NegletFix/brain/artifacts/research-session-wrapup-2026-05-26.html|Research Sprint Wrap-Up - 2026-05-26]]
+- [[Projects/NegletFix/brain/artifacts/doctor-brief-negletfix-2026-05-26.html|Doctor Brief - NegletFix - 2026-05-26]]
+- [[Projects/NegletFix/brain/artifacts/doctor-brief-negletfix-2026-05-26.pdf|Doctor Brief PDF - NegletFix - 2026-05-26]]
 
 ## Research Outputs
 
 | Report | Repo path |
 |--------|-----------|
+| Doctor brief for Dr. Jacquemin | `docs/research/doctor-brief-negletfix-2026-05-26.html` |
+| Doctor brief PDF | `docs/research/doctor-brief-negletfix-2026-05-26.pdf` |
 | Source queue | `docs/research/source-queue-2026-05-25.html` |
 | Research compass | `docs/research/research-compass-2026-05-25.html` |
 | YouTube triage | `docs/research/youtube-recovery-after-stroke-triage-2026-05-25.html` |
