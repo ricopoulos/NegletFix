@@ -46,6 +46,8 @@
 
 ### Obsidian mobile output
 - Created `docs/research/research-session-wrapup-2026-05-26.html`.
+- Added durable brain artifact copy:
+  - `.brain/artifacts/research-session-wrapup-2026-05-26.html`
 - Copied it into the Obsidian vault at:
   - `Projects/NegletFix/brain/artifacts/research-session-wrapup-2026-05-26.html`
 - Added `.brain/obsidian-custom.md` so the Obsidian project note exposes the mobile HTML report after bridge populate.
@@ -71,6 +73,7 @@
 
 ### Brain / wiki updates
 - `.brain/index.json`
+- `.brain/artifacts/research-session-wrapup-2026-05-26.html`
 - `.brain/obsidian-custom.md`
 - `.brain/wiki/index.md`
 - `.brain/wiki/pharmacological-adjuncts.md`

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NegletFix Research Sprint Wrap-Up - 2026-05-26</title>
+<style type="text/css">
+  :root {
+    --bg: #0c0b09;
+    --bg-soft: #12100d;
+    --card: #1a1814;
+    --card-2: #211e19;
+    --text: #eee8db;
+    --soft: #aaa399;
+    --mute: #706a61;
+    --border: #2c2822;
+    --amber: #e2b978;
+    --green: #9fbd96;
+    --red: #ea725b;
+    --blue: #8fb4d8;
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(900px 520px at 50% -10%, rgba(226,185,120,.14), transparent 65%),
+      linear-gradient(180deg, #100e0b, var(--bg));
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  a { color: var(--blue); }
+  strong { color: var(--text); }
+  p { margin: 0 0 1rem; color: var(--soft); }
+  ul, ol { margin: .7rem 0 0; padding-left: 1.25rem; }
+  li { margin: .45rem 0; color: var(--soft); }
+
+  .page-header, .main-content { width: min(1040px, calc(100% - 40px)); margin: 0 auto; }
+  .page-header {
+    min-height: 78vh;
+    display: grid;
+    align-content: center;
+    padding: 8vh 0 6vh;
+  }
+
+  .eyebrow {
+    color: var(--amber);
+    font: 700 .78rem/1.2 var(--mono);
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    margin-bottom: 1.7rem;
+  }
+
+  h1 {
+    margin: 0 0 1.4rem;
+    max-width: 900px;
+    font-family: var(--serif);
+    font-size: clamp(3rem, 8vw, 6.4rem);
+    font-weight: 400;
+    line-height: .95;
+    letter-spacing: 0;
+  }
+
+  h1 em { color: var(--amber); font-style: italic; }
+
+  .subtitle {
+    max-width: 780px;
+    margin: 0 0 2.2rem;
+    color: var(--soft);
+    font-family: var(--serif);
+    font-size: clamp(1.15rem, 2vw, 1.55rem);
+    font-style: italic;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem 1.4rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid var(--border);
+    color: var(--mute);
+    font: .82rem/1.4 var(--mono);
+  }
+
+  .section { padding: 7vh 0 1vh; }
+  .kicker {
+    color: var(--amber);
+    font: 700 .74rem/1.2 var(--mono);
+    letter-spacing: .19em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    margin: 0 0 1rem;
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4.5vw, 3.3rem);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: 0;
+  }
+
+  h3 {
+    margin: 0 0 .55rem;
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  .lede { max-width: 800px; font-size: 1.05rem; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    border: 1px solid var(--border);
+    background: var(--border);
+    margin-top: 2rem;
+  }
+
+  .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  .cell {
+    background: var(--card);
+    padding: 1.25rem;
+    min-height: 145px;
+  }
+
+  .cell.alt { background: var(--card-2); }
+
+  .number {
+    display: block;
+    margin-bottom: .55rem;
+    color: var(--amber);
+    font-family: var(--serif);
+    font-size: clamp(2.3rem, 5vw, 4.1rem);
+    line-height: 1;
+  }
+
+  .label {
+    display: block;
+    margin-bottom: .35rem;
+    color: var(--text);
+    font-weight: 750;
+  }
+
+  .note { color: var(--soft); font-size: .94rem; line-height: 1.45; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: .45rem; margin: .85rem 0 0; }
+  .pill {
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--soft);
+    background: #14120f;
+    padding: .22rem .55rem;
+    font: .72rem/1.25 var(--mono);
+  }
+
+  .pill.good { color: var(--green); border-color: rgba(159,189,150,.35); }
+  .pill.warn { color: var(--amber); border-color: rgba(226,185,120,.35); }
+  .pill.bad { color: var(--red); border-color: rgba(234,114,91,.35); }
+  .pill.info { color: var(--blue); border-color: rgba(143,180,216,.35); }
+
+  .block {
+    border: 1px solid var(--border);
+    background: var(--card);
+    padding: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  .block.alt { background: var(--card-2); }
+  .block.good { border-left: 4px solid var(--green); }
+  .block.warn { border-left: 4px solid var(--amber); }
+  .block.bad { border-left: 4px solid var(--red); }
+  .block.info { border-left: 4px solid var(--blue); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.2rem;
+    border: 1px solid var(--border);
+    background: var(--card);
+    font-size: .94rem;
+  }
+
+  th, td {
+    border-bottom: 1px solid var(--border);
+    padding: .85rem;
+    vertical-align: top;
+    text-align: left;
+  }
+
+  th {
+    color: var(--amber);
+    font: 700 .72rem/1.2 var(--mono);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    background: var(--card-2);
+  }
+
+  td { color: var(--soft); }
+
+  .footer {
+    padding: 7vh 0 6vh;
+    color: var(--mute);
+    font: .86rem/1.45 var(--mono);
+  }
+
+  @media (max-width: 760px) {
+    body { font-size: 17px; }
+    .page-header, .main-content { width: min(100% - 28px, 1040px); }
+    .page-header { min-height: auto; padding-top: 9vh; }
+    .grid, .grid.three { grid-template-columns: 1fr; }
+    table { display: block; overflow-x: auto; }
+    .cell { min-height: auto; }
+  }
+</style>
+</head>
+<body>
+  <div class="page-header">
+    <div class="eyebrow">NegletFix research session</div>
+    <h1>Discovery became a <em>system</em>.</h1>
+    <p class="subtitle">YouTube, X, medical indexes, clinical trials, and project measurements now have a clear validation ladder instead of becoming a pile of interesting tabs.</p>
+    <div class="meta">
+      <span><strong>Date:</strong> 2026-05-26</span>
+      <span><strong>Scope:</strong> research operations, source triage, doctor brief</span>
+      <span><strong>Clinical target:</strong> chronic left HH after right PCA stroke</span>
+      <span><strong>Status:</strong> complete, watchlists created</span>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="section">
+      <div class="kicker">Outcome</div>
+      <h2>What changed</h2>
+      <p class="lede">Before this session, outside research was useful but scattered. After this session, NegletFix has a repeatable method: capture leads from YouTube or X, extract claims, validate against papers/guidelines/trials, then either promote, watch, park, or reject.</p>
+
+      <div class="grid three">
+        <div class="cell">
+          <span class="number">18</span>
+          <span class="label">Seed sources organized</span>
+          <span class="note">A source queue now tracks YouTube, X queries, medical references, and next actions.</span>
+        </div>
+        <div class="cell alt">
+          <span class="number">11</span>
+          <span class="label">Items completed</span>
+          <span class="note">Sprints 1-5 processed the most useful and risky leads first.</span>
+        </div>
+        <div class="cell">
+          <span class="number">6</span>
+          <span class="label">Reusable X searches</span>
+          <span class="note">X is now a paper/trial/name discovery channel, not an evidence source.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="kicker">Decision rules</div>
+      <h2>The validation ladder</h2>
+      <div class="block good">
+        <h3>Promote</h3>
+        <p>A lead becomes NegletFix knowledge only when supported by a peer-reviewed paper, guideline, clinical trial registry, reputable medical organization, or Eric's own measurement data.</p>
+      </div>
+      <div class="block warn">
+        <h3>Watch</h3>
+        <p>Interesting but incomplete topics stay on watchlists: QEEG/tPBM, medication adjuncts, active trials, named researchers, or technologies that need replication.</p>
+      </div>
+      <div class="block bad">
+        <h3>Park or reject</h3>
+        <p>Anecdotes, miracle claims, commercial protocols, and generic neuroplasticity language do not change the Unity protocol or the clinical plan.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="kicker">Sprint map</div>
+      <h2>What each sprint produced</h2>
+      <table summary="Summary of NegletFix research sprints">
+        <thead>
+          <tr>
+            <th>Sprint</th>
+            <th>Focus</th>
+            <th>Core result</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Medical grounding</td>
+            <td>NANOS became the clean patient-facing condition source. FLUORESCE/fluoxetine is real but acute-only and neurologist-only.</td>
+            <td><span class="pill good">Promote + park</span></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Function + mobility</td>
+            <td>Alex Bowers' walking/driving material became functional metrics: blind-side detection, head scanning, reaction time, mobility confidence.</td>
+            <td><span class="pill good">Promote</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Daily function tracker</td>
+            <td>Recovery After Stroke episodes 274 and 156 became a practical tracker for glare, dimness, screen tolerance, reading effort, clutter, mobility, and fatigue.</td>
+            <td><span class="pill good">Promote</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Paper + author discovery</td>
+            <td>X was converted into a traceable discovery method. Key labs and trials were captured: Rowe, Huxlin, Bowers, Wake Forest, Bolognini/Diana, Raffin/Guggisberg.</td>
+            <td><span class="pill info">Watch monthly</span></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>QEEG + tPBM</td>
+            <td>tPBM is a real but mixed research area. QEEG-guided laser targeting for chronic HH has no strong direct evidence and stays watchlist-only.</td>
+            <td><span class="pill warn">Watch only</span></td>
+          </tr>
+          <tr>
+            <td>Bonus</td>
+            <td>Medication + neuroplasticity</td>
+            <td>No proven medication enhancer for chronic HH. The strongest doctor ask is medication cleanup and symptom-barrier management, not a generic plasticity booster.</td>
+            <td><span class="pill warn">Doctor brief</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="kicker">Clinical boundary</div>
+      <h2>What should not change yet</h2>
+      <div class="block info">
+        <h3>Unity protocol</h3>
+        <p>The audiovisual training plan remains the main path. The research sprints did not create a reason to change WIP-001 before the Editor smoke test.</p>
+      </div>
+      <div class="block info">
+        <h3>QEEG and Muse</h3>
+        <p>QEEG is clinical EEG analysis, not a magic target map. Muse remains an exploratory feedback layer, not a clinical QEEG system.</p>
+      </div>
+      <div class="block info">
+        <h3>Medication</h3>
+        <p>Medication is a physician conversation only. The most useful question is whether any current or new medication can safely improve training tolerance by addressing fatigue, sleep, mood, or side effects.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="kicker">Doctor conversation</div>
+      <h2>Medication takeaways</h2>
+      <div class="grid">
+        <div class="cell">
+          <span class="label">Fluoxetine</span>
+          <p class="note">Only direct visual-field drug lead, but FLUORESCE was tiny and acute-only. Large fluoxetine stroke-recovery evidence does not support routine use for recovery.</p>
+          <div class="pill-row"><span class="pill warn">Ask as literature, not request</span></div>
+        </div>
+        <div class="cell alt">
+          <span class="label">Levodopa</span>
+          <p class="note">Older motor-stroke rationale is now weakened by DARS and ESTREL. No direct chronic-HH evidence found.</p>
+          <div class="pill-row"><span class="pill bad">Low priority</span></div>
+        </div>
+        <div class="cell">
+          <span class="label">Modafinil</span>
+          <p class="note">Possibly relevant only if neuro-fatigue blocks training. It is not a visual recovery drug.</p>
+          <div class="pill-row"><span class="pill warn">Symptom support only</span></div>
+        </div>
+        <div class="cell alt">
+          <span class="label">Methylphenidate / rotigotine</span>
+          <p class="note">Only makes sense if a clinician confirms neglect or attention/arousal impairment distinct from HH.</p>
+          <div class="pill-row"><span class="pill warn">Requires diagnosis</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="kicker">Next move</div>
+      <h2>Back to the actual rehab build</h2>
+      <ol>
+        <li>Run the fresh-head Unity Editor smoke test for the audiovisual training scaffold.</li>
+        <li>Verify trials log cleanly to CSV and that the task loop is usable.</li>
+        <li>Add Quest controller input binding after the Editor test passes.</li>
+        <li>Run a clean no-medication training block before considering any adjunct. This protects measurement attribution.</li>
+        <li>Use the daily function tracker alongside contrast sensitivity, because lived function may improve before a field map looks impressive.</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <div class="kicker">Artifacts</div>
+      <h2>Files produced</h2>
+      <table summary="Generated NegletFix research artifacts">
+        <thead>
+          <tr>
+            <th>Artifact</th>
+            <th>Purpose</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>source-queue-2026-05-25.html / .csv</td>
+            <td>Master queue for YouTube, X, medical sources, and validation status.</td>
+          </tr>
+          <tr>
+            <td>sprint-1-medical-grounding-2026-05-25.html</td>
+            <td>NANOS condition grounding and FLUORESCE caution.</td>
+          </tr>
+          <tr>
+            <td>sprint-2-function-mobility-2026-05-25.html</td>
+            <td>Function and mobility metrics from HH research.</td>
+          </tr>
+          <tr>
+            <td>sprint-3-daily-function-tracker-2026-05-25.html / tracker CSV</td>
+            <td>Daily lived-function tracking template.</td>
+          </tr>
+          <tr>
+            <td>sprint-4-paper-author-discovery-2026-05-25.html / .csv</td>
+            <td>Paper, trial, author, and lab discovery map.</td>
+          </tr>
+          <tr>
+            <td>sprint-5-qeeg-tpbm-evidence-2026-05-25.html / .csv</td>
+            <td>QEEG/tPBM evidence boundary and watchlist.</td>
+          </tr>
+          <tr>
+            <td>medication-neuroplasticity-doctor-brief-2026-05-26.html / .csv</td>
+            <td>Doctor-facing medication and neuroplasticity discussion aid.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="kicker">Core sources</div>
+      <h2>Evidence anchors</h2>
+      <ul>
+        <li><a href="https://www.nanosweb.org/hemianopia/">NANOS: Homonymous Hemianopia</a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/36166771/">FLUORESCE fluoxetine pilot, PMID 36166771</a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/40083185/">SEARCH visual scanning RCT, PMID 40083185</a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/42140549/">Bowers Lab head-scanning paper, PMID 42140549</a></li>
+        <li><a href="https://www.acns.org/practice/guidelines/quantitative-eeg">ACNS QEEG guideline page</a></li>
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11653948/">tPBM stroke review</a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/40982270/">ESTREL levodopa trial, PMID 40982270</a></li>
+        <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11298115/">Fluoxetine individual-patient data meta-analysis</a></li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      Obsidian mobile copy target: Projects/NegletFix/brain/artifacts/research-session-wrapup-2026-05-26.html<br>
+      Repo source: docs/research/research-session-wrapup-2026-05-26.html<br>
+      This document is a research organization artifact, not medical advice.
+    </div>
+  </div>
+</body>
+</html>
