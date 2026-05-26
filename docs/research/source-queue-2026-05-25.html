@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NegletFix Research Source Queue — 2026-05-25</title>
+<style>
+  :root {
+    --bg: #fbfbf8;
+    --paper: #ffffff;
+    --ink: #1d1b18;
+    --muted: #5b554d;
+    --faint: #81786d;
+    --line: #e6e0d8;
+    --soft: #f3f0eb;
+    --blue: #0e7490;
+    --blue-soft: #dff6fb;
+    --green: #166534;
+    --green-soft: #dcfce7;
+    --amber: #92400e;
+    --amber-soft: #fef3c7;
+    --red: #991b1b;
+    --red-soft: #fee2e2;
+    --violet: #6d28d9;
+    --violet-soft: #ede9fe;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  p { margin: 0 0 14px; }
+  strong { font-weight: 750; }
+  code {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 0.92em;
+  }
+
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 56px 28px 88px;
+  }
+
+  header {
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+  }
+
+  .eyebrow {
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: clamp(32px, 5vw, 46px);
+    line-height: 1.08;
+    margin: 0 0 14px;
+    letter-spacing: 0;
+  }
+
+  .subtitle {
+    max-width: 820px;
+    color: var(--muted);
+    font-size: 19px;
+    margin: 0;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .pill {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    border-radius: 999px;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: 650;
+  }
+
+  h2 {
+    font-size: 25px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    margin: 46px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  h3 {
+    font-size: 18px;
+    line-height: 1.25;
+    margin: 0 0 8px;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+  }
+
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+  }
+
+  .metric {
+    font-size: 34px;
+    font-weight: 850;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .muted { color: var(--muted); }
+
+  .callout {
+    border-radius: 8px;
+    margin: 18px 0;
+    padding: 16px 18px;
+    font-size: 15px;
+  }
+
+  .callout.blue { background: var(--blue-soft); color: #155e75; border-left: 4px solid var(--blue); }
+  .callout.green { background: var(--green-soft); color: var(--green); border-left: 4px solid var(--green); }
+  .callout.amber { background: var(--amber-soft); color: var(--amber); border-left: 4px solid var(--amber); }
+  .callout.red { background: var(--red-soft); color: var(--red); border-left: 4px solid var(--red); }
+
+  .label {
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 14px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  th,
+  td {
+    border-bottom: 1px solid var(--line);
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+  }
+
+  th {
+    background: var(--soft);
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  tr:last-child td { border-bottom: 0; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 3px 9px;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .high { background: var(--green-soft); color: var(--green); }
+  .medium { background: var(--blue-soft); color: #155e75; }
+  .watch { background: var(--amber-soft); color: var(--amber); }
+  .park { background: var(--red-soft); color: var(--red); }
+  .lead { background: var(--soft); color: var(--muted); }
+  .x { background: var(--violet-soft); color: var(--violet); }
+
+  .queue-table td:nth-child(1),
+  .queue-table td:nth-child(2),
+  .queue-table td:nth-child(3) {
+    white-space: nowrap;
+  }
+
+  .query-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  .query {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+  }
+
+  .query code {
+    display: block;
+    margin: 8px 0 10px;
+    padding: 8px 10px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .step {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--blue);
+    border-radius: 8px;
+    padding: 14px;
+  }
+
+  .footer-note {
+    margin-top: 44px;
+    color: var(--faint);
+    font-size: 14px;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+
+  @media (max-width: 920px) {
+    .wrap { padding: 36px 18px 64px; }
+    .cards,
+    .query-grid,
+    .steps { grid-template-columns: 1fr; }
+    table { display: block; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="eyebrow">NegletFix research operations</div>
+    <h1>Source Queue</h1>
+    <p class="subtitle">A working queue for turning YouTube, X, and web leads into verified medical facts, project decisions, or parked curiosities.</p>
+    <div class="meta">
+      <span class="pill">Created 2026-05-25</span>
+      <span class="pill">Status: live working queue</span>
+      <span class="pill">YouTube search + playlist triage seeded</span>
+      <span class="pill">X query plan included</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>1. Queue Summary</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="metric">18</div>
+        <p class="muted">seed sources in the queue.</p>
+      </div>
+      <div class="card">
+        <div class="metric">11</div>
+        <p class="muted">items completed across sprints 1-5.</p>
+      </div>
+      <div class="card">
+        <div class="metric">6</div>
+        <p class="muted">reusable X search queries.</p>
+      </div>
+      <div class="card">
+        <div class="metric">5</div>
+        <p class="muted">validation ladder stages.</p>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <div class="label">Operating rule</div>
+      YouTube and X are discovery tools. A lead only becomes NegletFix knowledge after it is traced to a paper, guideline, clinical trial, medical organization, or direct measurement in Eric's app.
+    </div>
+
+    <div class="callout green">
+      <div class="label">Sprint 1 complete</div>
+      YT-002 and YT-003 have been processed. Read the sprint report: <a href="sprint-1-medical-grounding-2026-05-25.html">Sprint 1 Medical Grounding</a>.
+    </div>
+
+    <div class="callout green">
+      <div class="label">Sprint 2 complete</div>
+      YT-007 has been processed. Read the sprint report: <a href="sprint-2-function-mobility-2026-05-25.html">Sprint 2 Function + Mobility</a>.
+    </div>
+
+    <div class="callout green">
+      <div class="label">Sprint 3 complete</div>
+      YT-010 and YT-011 have been processed. Read the sprint report: <a href="sprint-3-daily-function-tracker-2026-05-25.html">Sprint 3 Daily Function Tracker</a>.
+    </div>
+
+    <div class="callout green">
+      <div class="label">Sprint 4 complete</div>
+      X-001 and X-002 have been processed as traceable paper/trial discovery prompts. Read the sprint report: <a href="sprint-4-paper-author-discovery-2026-05-25.html">Sprint 4 Paper + Author Discovery</a>.
+    </div>
+
+    <div class="callout green">
+      <div class="label">Sprint 5 complete</div>
+      YT-012, YT-013, YT-014, and X-003 have been processed. Read the sprint report: <a href="sprint-5-qeeg-tpbm-evidence-2026-05-25.html">Sprint 5 QEEG + tPBM Evidence</a>.
+    </div>
+
+    <div class="callout amber">
+      <div class="label">Bonus medication search complete</div>
+      The pharmacological-adjunct lead has been refreshed as a doctor-facing brief. Read it here: <a href="medication-neuroplasticity-doctor-brief-2026-05-26.html">Medication + Neuroplasticity Doctor Brief</a>.
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Validation Ladder</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>Lead</h3>
+        <p>Interesting mention, video, post, or claim. Not trusted yet.</p>
+      </div>
+      <div class="step">
+        <h3>Traceable</h3>
+        <p>Has DOI, PMID, trial ID, guideline, named lab, or clinician source.</p>
+      </div>
+      <div class="step">
+        <h3>Relevant</h3>
+        <p>Matches Eric's condition or a clearly labeled adjacent mechanism.</p>
+      </div>
+      <div class="step">
+        <h3>Actionable</h3>
+        <p>Changes protocol, metric, hardware, clinician question, or research watchlist.</p>
+      </div>
+      <div class="step">
+        <h3>Parked</h3>
+        <p>Too speculative, commercial, generic, or not tied to hemianopia/stroke vision rehab.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. Source Queue</h2>
+    <table class="queue-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Priority</th>
+          <th>Track</th>
+          <th>Source</th>
+          <th>Why It Is In Queue</th>
+          <th>Verification Target</th>
+          <th>Next Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>YT-001</td>
+          <td><span class="badge high">High</span></td>
+          <td>Core</td>
+          <td><a href="https://www.youtube.com/watch?v=Y0SsvSV0vpI">RNIB: Hemianopia associated with stroke</a></td>
+          <td>Short, direct, reputable patient-facing explanation of hemianopia after stroke.</td>
+          <td>Compare against neuro-ophthalmology / stroke-vision guidelines.</td>
+          <td>Transcript + extract patient-language summary.</td>
+        </tr>
+        <tr>
+          <td>YT-002</td>
+          <td><span class="badge high">High</span></td>
+          <td>Core</td>
+          <td><a href="https://www.youtube.com/watch?v=XietRxh6UWE">NANOS: Understanding Homonymous Hemianopia</a></td>
+          <td>Verified in sprint 1 for diagnosis basics and patient-facing explanation.</td>
+          <td>NANOS patient materials, American Stroke Association, StatPearls, ESO guideline.</td>
+          <td>Complete. Use as clean condition explainer. <a href="sprint-1-medical-grounding-2026-05-25.html">Read sprint report</a>.</td>
+        </tr>
+        <tr>
+          <td>YT-003</td>
+          <td><span class="badge high">High</span></td>
+          <td>Core</td>
+          <td><a href="https://www.youtube.com/watch?v=FpQiA7xudWc">Dr Andrew Lee: New hope for visual field loss from stroke</a></td>
+          <td>Verified in sprint 1 as a discussion of the FLUORESCE fluoxetine pilot trial.</td>
+          <td>Journal of Neuro-Ophthalmology FLUORESCE paper.</td>
+          <td>Complete but parked: acute-stroke, medication, clinician-only. <a href="sprint-1-medical-grounding-2026-05-25.html">Read sprint report</a>.</td>
+        </tr>
+        <tr>
+          <td>YT-004</td>
+          <td><span class="badge medium">Medium</span></td>
+          <td>Core</td>
+          <td><a href="https://www.youtube.com/watch?v=VFRsHc8JR4Y">Dr Andrew Lee: Occipital cortex stroke</a></td>
+          <td>Eric's lesion is right occipital/PCA territory; useful for plain-language lesion framing.</td>
+          <td>Neuroanatomy and stroke visual pathway references.</td>
+          <td>Extract for condition-summary page.</td>
+        </tr>
+        <tr>
+          <td>YT-005</td>
+          <td><span class="badge high">High</span></td>
+          <td>Rehab</td>
+          <td><a href="https://www.youtube.com/watch?v=OwCEobuxQOY">Helen Hayes Hospital: Stroke therapy for impaired vision</a></td>
+          <td>Rehab-hospital source; may bridge clinical rehab practice and home tasks.</td>
+          <td>Hospital program details, occupational therapy evidence, vision rehab guidelines.</td>
+          <td>Transcript + extract therapy categories.</td>
+        </tr>
+        <tr>
+          <td>YT-006</td>
+          <td><span class="badge medium">Medium</span></td>
+          <td>Rehab</td>
+          <td><a href="https://www.youtube.com/watch?v=UgjQPG1rrAg">American Stroke Foundation: Visual changes and home exercises</a></td>
+          <td>May contain practical home exercises. Need caution because exercises may be compensatory, not restorative.</td>
+          <td>OT / low-vision rehab sources; distinguish scanning from field restoration.</td>
+          <td>Extract exercises and classify: compensation vs rehabilitation.</td>
+        </tr>
+        <tr>
+          <td>YT-007</td>
+          <td><span class="badge high">High</span></td>
+          <td>Function</td>
+          <td><a href="https://www.youtube.com/watch?v=Nor2ejJ1JAs">Alex Bowers, PhD: Walking and Driving With Homonymous Hemianopia</a></td>
+          <td>Verified in sprint 2 for navigation, scanning, obstacle detection, prism compensation, and driving-safety guardrails.</td>
+          <td>Bowers/Peli driving-simulator and peripheral-prism literature.</td>
+          <td>Complete. Promote as functional-measurement branch, not driving clearance. <a href="sprint-2-function-mobility-2026-05-25.html">Read sprint report</a>.</td>
+        </tr>
+        <tr>
+          <td>YT-008</td>
+          <td><span class="badge medium">Medium</span></td>
+          <td>Clinical</td>
+          <td><a href="https://www.youtube.com/watch?v=YkMQQj3R_Pk">Central East Stroke Network: Vision & Stroke</a></td>
+          <td>Long clinical education source; may cover patient pathway and rehab referral.</td>
+          <td>Stroke network materials, guideline citations inside talk.</td>
+          <td>Transcript-score before spending time.</td>
+        </tr>
+        <tr>
+          <td>YT-009</td>
+          <td><span class="badge medium">Medium</span></td>
+          <td>Clinical</td>
+          <td><a href="https://www.youtube.com/watch?v=ehbue4dK0hE">Vision and Stroke with Dr Eugene May</a></td>
+          <td>Podcast/interview likely useful for clinician-pathway language.</td>
+          <td>Any specific recommendation should be checked against guidelines.</td>
+          <td>Transcript-score for neuro-ophthalmology, rehab, prism, visual field terms.</td>
+        </tr>
+        <tr>
+          <td>YT-010</td>
+          <td><span class="badge high">High</span></td>
+          <td>Lived Function</td>
+          <td><a href="https://www.youtube.com/watch?v=Jgg3ANVV4xw">Recovery After Stroke 274: Vision Loss and Stroke</a></td>
+          <td>Verified in sprint 3 for glare/dimness, sensory load, screen intolerance, car-travel load, fatigue, and neuro-vision referral language.</td>
+          <td>American Stroke Association, RNIB, Cleveland Clinic, NCBI/NICE, ESO guideline.</td>
+          <td>Complete. Promoted into daily-function tracker. <a href="sprint-3-daily-function-tracker-2026-05-25.html">Read sprint report</a>.</td>
+        </tr>
+        <tr>
+          <td>YT-011</td>
+          <td><span class="badge high">High</span></td>
+          <td>Lived Function</td>
+          <td><a href="https://www.youtube.com/watch?v=hrwA3CpFU7I">Recovery After Stroke 156: Adapting To Vision Problems</a></td>
+          <td>Verified in sprint 3 for reading effort, visual processing, figure-ground, midline, clutter/search, computer accommodations, and neurological fatigue.</td>
+          <td>American Stroke Association, RNIB, NCBI/NICE, neurovisual rehab pathways, Eye-Search, SEARCH trial.</td>
+          <td>Complete. Promoted into daily-function tracker. <a href="sprint-3-daily-function-tracker-2026-05-25.html">Read sprint report</a>.</td>
+        </tr>
+        <tr>
+          <td>YT-012</td>
+          <td><span class="badge watch">Watch</span></td>
+          <td>QEEG / tPBM</td>
+          <td><a href="https://www.youtube.com/watch?v=JJOZjfpJaZs">Recovery After Stroke 404: QEEG-guided laser story</a></td>
+          <td>Processed in sprint 5. Useful vocabulary source, but the dramatic QEEG-guided laser claim remains anecdotal.</td>
+          <td>ACNS QEEG guidance, tPBM stroke reviews, clinical trials, Naeser publications.</td>
+          <td>Complete. Park treatment claim; watch only. <a href="sprint-5-qeeg-tpbm-evidence-2026-05-25.html">Read sprint report</a>.</td>
+        </tr>
+        <tr>
+          <td>YT-013</td>
+          <td><span class="badge watch">Watch</span></td>
+          <td>QEEG / tPBM</td>
+          <td><a href="https://www.youtube.com/watch?v=PhO5YKgu_jg">tPBM & qEEG: Guided Photobiomodulation Protocol for Stroke Rehabilitation</a></td>
+          <td>Processed in sprint 5. Directly matches Eric's QEEG curiosity, but evidence is case-level / technical presentation.</td>
+          <td>Published tPBM stroke studies; no strong independent validation found for QEEG-guided HH targeting.</td>
+          <td>Complete. Watch as question generator only. <a href="sprint-5-qeeg-tpbm-evidence-2026-05-25.html">Read sprint report</a>.</td>
+        </tr>
+        <tr>
+          <td>YT-014</td>
+          <td><span class="badge watch">Watch</span></td>
+          <td>QEEG / tPBM</td>
+          <td><a href="https://www.youtube.com/watch?v=ZOigoWyAOYo">Interview with Dr Margaret Naeser on brain photobiomodulation</a></td>
+          <td>Processed in sprint 5. Naeser is a real PBM researcher, but evidence is mainly TBI/cognition/aphasia, not HH restoration.</td>
+          <td>Naeser publications on TBI, chronic aphasia, and tPBM mechanisms.</td>
+          <td>Complete. Keep as adjacent PBM watchlist. <a href="sprint-5-qeeg-tpbm-evidence-2026-05-25.html">Read sprint report</a>.</td>
+        </tr>
+        <tr>
+          <td>YT-015</td>
+          <td><span class="badge lead">Lead</span></td>
+          <td>Prisms</td>
+          <td><a href="https://www.youtube.com/watch?v=AopcTHDIVow">Understanding Peli Prisms</a></td>
+          <td>Relevant to compensation, mobility, and safety; not NegletFix's restorative target.</td>
+          <td>Alex Bowers / Peli prism literature.</td>
+          <td>Park for clinician / accommodation pathway.</td>
+        </tr>
+        <tr>
+          <td>X-001</td>
+          <td><span class="badge x">X</span></td>
+          <td>Paper Discovery</td>
+          <td><a href="https://x.com/search?q=%22homonymous%20hemianopia%22%20stroke%20filter%3Alinks&src=typed_query&f=live">"homonymous hemianopia" stroke filter:links</a></td>
+          <td>Completed in sprint 4 as a paper/trial/author discovery prompt.</td>
+          <td>PubMed, ClinicalTrials.gov, author labs, and institutional pages only.</td>
+          <td>Complete. Use monthly as a live discovery query. <a href="sprint-4-paper-author-discovery-2026-05-25.html">Read sprint report</a>.</td>
+        </tr>
+        <tr>
+          <td>X-002</td>
+          <td><span class="badge x">X</span></td>
+          <td>Paper Discovery</td>
+          <td><a href="https://x.com/search?q=%22visual%20field%20defect%22%20stroke%20rehabilitation%20filter%3Alinks&src=typed_query&f=live">"visual field defect" stroke rehabilitation filter:links</a></td>
+          <td>Completed in sprint 4 as a broader stroke-vision rehab discovery prompt.</td>
+          <td>DOI, PMID, trial registry, institutional source, lab page.</td>
+          <td>Complete. Use monthly to catch broader rehab and technology leads. <a href="sprint-4-paper-author-discovery-2026-05-25.html">Read sprint report</a>.</td>
+        </tr>
+        <tr>
+          <td>X-003</td>
+          <td><span class="badge x">X</span></td>
+          <td>QEEG / tPBM</td>
+          <td><a href="https://x.com/search?q=%22QEEG%22%20%22photobiomodulation%22%20stroke%20filter%3Alinks&src=typed_query&f=live">"QEEG" "photobiomodulation" stroke filter:links</a></td>
+          <td>Completed in sprint 5 as QEEG/tPBM discovery prompt.</td>
+          <td>Peer-reviewed tPBM/QEEG literature, clinical trials, ACNS guidance; device claims parked unless traceable.</td>
+          <td>Complete. Use monthly for traceable links only. <a href="sprint-5-qeeg-tpbm-evidence-2026-05-25.html">Read sprint report</a>.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>4. X Search Queries</h2>
+    <div class="callout amber">
+      <div class="label">X method</div>
+      Use X for links and researcher discovery. Prefer posts with links, recent dates, named labs, DOI/PMID/trial IDs, or conference abstracts. Avoid using likes/reposts as evidence quality.
+    </div>
+
+    <div class="query-grid">
+      <div class="query">
+        <h3>Exact diagnosis</h3>
+        <code>"homonymous hemianopia" stroke filter:links</code>
+        <p><a href="https://x.com/search?q=%22homonymous%20hemianopia%22%20stroke%20filter%3Alinks&src=typed_query&f=live">Open X search</a></p>
+      </div>
+      <div class="query">
+        <h3>Broader visual field defect</h3>
+        <code>"visual field defect" stroke rehabilitation filter:links</code>
+        <p><a href="https://x.com/search?q=%22visual%20field%20defect%22%20stroke%20rehabilitation%20filter%3Alinks&src=typed_query&f=live">Open X search</a></p>
+      </div>
+      <div class="query">
+        <h3>Visual perceptual learning</h3>
+        <code>"visual perceptual learning" hemianopia filter:links</code>
+        <p><a href="https://x.com/search?q=%22visual%20perceptual%20learning%22%20hemianopia%20filter%3Alinks&src=typed_query&f=live">Open X search</a></p>
+      </div>
+      <div class="query">
+        <h3>Neuro-ophthalmology</h3>
+        <code>"neuro-ophthalmology" stroke vision filter:links</code>
+        <p><a href="https://x.com/search?q=%22neuro-ophthalmology%22%20stroke%20vision%20filter%3Alinks&src=typed_query&f=live">Open X search</a></p>
+      </div>
+      <div class="query">
+        <h3>QEEG branch</h3>
+        <code>"QEEG" "photobiomodulation" stroke filter:links</code>
+        <p><a href="https://x.com/search?q=%22QEEG%22%20%22photobiomodulation%22%20stroke%20filter%3Alinks&src=typed_query&f=live">Open X search</a></p>
+      </div>
+      <div class="query">
+        <h3>tPBM branch</h3>
+        <code>"transcranial photobiomodulation" stroke filter:links</code>
+        <p><a href="https://x.com/search?q=%22transcranial%20photobiomodulation%22%20stroke%20filter%3Alinks&src=typed_query&f=live">Open X search</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. Validation Sprint Order</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Order</th>
+          <th>Target</th>
+          <th>Reason</th>
+          <th>Deliverable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>YT-002 NANOS + YT-003 Dr Andrew Lee</td>
+          <td>Cleanest clinical education sources for diagnosis and visual field loss.</td>
+          <td>Done: <a href="sprint-1-medical-grounding-2026-05-25.html">Sprint 1 Medical Grounding</a>.</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>YT-007 Alex Bowers</td>
+          <td>Long researcher talk likely to connect hemianopia to mobility, scanning, and driving.</td>
+          <td>Done: <a href="sprint-2-function-mobility-2026-05-25.html">Sprint 2 Function + Mobility</a>.</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>YT-010 + YT-011 survivor function episodes</td>
+          <td>Already useful for lived-function metrics.</td>
+          <td>Done: <a href="sprint-3-daily-function-tracker-2026-05-25.html">Sprint 3 Daily Function Tracker</a>.</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>X-001 + X-002</td>
+          <td>Find recent papers and active authors beyond YouTube.</td>
+          <td>Done: <a href="sprint-4-paper-author-discovery-2026-05-25.html">Sprint 4 Paper + Author Discovery</a>.</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>YT-012 to YT-014 + X-003</td>
+          <td>QEEG/tPBM is interesting but speculative for NegletFix.</td>
+          <td>Done: <a href="sprint-5-qeeg-tpbm-evidence-2026-05-25.html">Sprint 5 QEEG + tPBM Evidence</a>.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>6. What Gets Promoted To The Wiki</h2>
+    <div class="callout green">
+      <div class="label">Promotion rule</div>
+      A source queue item should enter `.brain/wiki/` only if it changes a stable fact, evidence confidence, protocol choice, measurement plan, hardware decision, or clinician question list.
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Finding Type</th>
+          <th>Destination</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Diagnosis explainer / patient-facing language</td>
+          <td>`docs/research/` HTML first; wiki only if it improves `erics-baseline` or `scientific-foundation`.</td>
+        </tr>
+        <tr>
+          <td>Verified paper or guideline</td>
+          <td>`.brain/wiki/research-papers-index.md` plus relevant topic page.</td>
+        </tr>
+        <tr>
+          <td>Daily-function metric</td>
+          <td>`docs/research/` tracker draft first; later `rehabilitation-roadmap` if adopted.</td>
+        </tr>
+        <tr>
+          <td>QEEG/tPBM claim</td>
+          <td>Park in source queue until independently verified. Do not modify EEG or AV protocol from YouTube claims.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <p class="footer-note">
+    Search method: YouTube candidates were gathered with focused `yt-dlp` searches on 2026-05-25. X queries are stored as reproducible search links; X Advanced Search supports exact phrases, account filters, link-only filtering, engagement filters, and date ranges, but manual logged-in review is usually required.
+  </p>
+</main>
+</body>
+</html>

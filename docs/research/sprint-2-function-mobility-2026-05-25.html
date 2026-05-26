@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprint 2 Function + Mobility - NegletFix</title>
+<style>
+  :root {
+    --bg: #fbfbf8;
+    --paper: #ffffff;
+    --ink: #1d1b18;
+    --muted: #5b554d;
+    --faint: #81786d;
+    --line: #e6e0d8;
+    --soft: #f3f0eb;
+    --blue: #0e7490;
+    --blue-soft: #dff6fb;
+    --green: #166534;
+    --green-soft: #dcfce7;
+    --amber: #92400e;
+    --amber-soft: #fef3c7;
+    --red: #991b1b;
+    --red-soft: #fee2e2;
+    --violet: #6d28d9;
+    --violet-soft: #ede9fe;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  p { margin: 0 0 14px; }
+  strong { font-weight: 760; }
+  code {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 0.92em;
+  }
+  .wrap {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 56px 28px 88px;
+  }
+  .doc-header {
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+  }
+  .eyebrow {
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: clamp(32px, 5vw, 46px);
+    line-height: 1.08;
+    margin: 0 0 14px;
+    letter-spacing: 0;
+  }
+  .subtitle {
+    max-width: 850px;
+    color: var(--muted);
+    font-size: 19px;
+    margin: 0;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+  .pill {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    border-radius: 999px;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: 650;
+  }
+  h2 {
+    font-size: 25px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    margin: 46px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  h3 {
+    font-size: 18px;
+    line-height: 1.25;
+    margin: 0 0 8px;
+  }
+  ul { margin: 10px 0 0; padding-left: 20px; }
+  li { margin-bottom: 7px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 14px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th, td {
+    border-bottom: 1px solid var(--line);
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+  }
+  th {
+    background: var(--soft);
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  tr:last-child td { border-bottom: 0; }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+  }
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+  }
+  .metric {
+    font-size: 34px;
+    font-weight: 850;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .muted { color: var(--muted); }
+  .callout {
+    border-radius: 8px;
+    margin: 18px 0;
+    padding: 16px 18px;
+    font-size: 15px;
+  }
+  .callout.blue { background: var(--blue-soft); color: #155e75; border-left: 4px solid var(--blue); }
+  .callout.green { background: var(--green-soft); color: var(--green); border-left: 4px solid var(--green); }
+  .callout.amber { background: var(--amber-soft); color: var(--amber); border-left: 4px solid var(--amber); }
+  .callout.red { background: var(--red-soft); color: var(--red); border-left: 4px solid var(--red); }
+  .callout.violet { background: var(--violet-soft); color: var(--violet); border-left: 4px solid var(--violet); }
+  .label {
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 3px 9px;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .verified { background: var(--green-soft); color: var(--green); }
+  .caution { background: var(--amber-soft); color: var(--amber); }
+  .watch { background: var(--violet-soft); color: var(--violet); }
+  .danger { background: var(--red-soft); color: var(--red); }
+  .episode {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    margin: 16px 0;
+    padding: 18px;
+  }
+  .episode-header {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+  }
+  .episode-title {
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin: 0 0 5px;
+  }
+  .timestamp-list {
+    display: grid;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .timestamp {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  .timestamp a {
+    font-weight: 800;
+    margin-right: 8px;
+  }
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .decision-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+  }
+  .decision {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .footer-note {
+    margin-top: 44px;
+    color: var(--faint);
+    font-size: 14px;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+  @media (max-width: 860px) {
+    .wrap { padding: 36px 18px 64px; }
+    .cards,
+    .columns,
+    .decision-grid { grid-template-columns: 1fr; }
+    .episode-header { display: block; }
+    table { display: block; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="doc-header">
+    <div class="eyebrow">NegletFix validation sprint 2</div>
+    <h1>Function + Mobility</h1>
+    <p class="subtitle">Processed Alex Bowers' long talk on walking and driving with homonymous hemianopia, then checked the main claims against Bowers/Peli driving-simulator and prism literature. This sprint turns YouTube into a practical bridge between Eric's hard clinical protocol and daily function.</p>
+    <div class="meta">
+      <span class="pill">Run date: 2026-05-25</span>
+      <span class="pill">Queue item: YT-007</span>
+      <span class="pill">Status: completed</span>
+      <span class="pill">Promote as functional-measurement branch</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>1. Sprint Result</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="metric">1</div>
+        <p class="muted">long researcher talk extracted.</p>
+      </div>
+      <div class="card">
+        <div class="metric">7</div>
+        <p class="muted">medical and research sources checked.</p>
+      </div>
+      <div class="card">
+        <div class="metric">4</div>
+        <p class="muted">new functional metrics promoted.</p>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <div class="label">Sprint 2 conclusion</div>
+      Alex Bowers' material is a strong match for NegletFix's real-life layer: it supports measuring <strong>blind-side scanning, hazard/obstacle detection, reaction time, and navigation confidence</strong>. It should not be treated as a driving-clearance pathway.
+    </div>
+
+    <div class="callout amber">
+      <div class="label">Important boundary</div>
+      Driving is a safety and licensing question. NegletFix can learn from driving-simulator research, but the app must never imply that a training score means Eric is safe or legal to drive. That belongs to clinicians, licensing rules, and specialized on-road or simulator evaluation.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>2. What The Video Adds</h2>
+    <div class="episode">
+      <div class="episode-header">
+        <div>
+          <p class="episode-title"><a href="https://www.youtube.com/watch?v=Nor2ejJ1JAs">Managing Obstacles: Walking and Driving With Homonymous Hemianopia</a></p>
+          <p class="muted">Alex Bowers, PhD. Transcript length: about 66 minutes. This is a researcher talk, not a peer-reviewed paper, so each claim below was checked against published sources before promotion.</p>
+        </div>
+        <span class="badge verified">Extracted</span>
+      </div>
+
+      <div class="timestamp-list">
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Nor2ejJ1JAs&amp;t=123s">2:03</a> Defines homonymous hemianopia as same-side visual-field loss in both eyes; left HH means missing vision on the left side when looking straight ahead.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Nor2ejJ1JAs&amp;t=408s">6:48</a> Connects HH to real activities: walking, driving, and reading. The blind-side problem is not only "vision"; it is missing events unless the person actively samples that side.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Nor2ejJ1JAs&amp;t=536s">8:56</a> Explains that driving rules vary by jurisdiction, using Massachusetts and New Hampshire as contrasting examples.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Nor2ejJ1JAs&amp;t=713s">11:53</a> Introduces the compensatory concept: moving eyes and head into the blind side can reveal otherwise-missed pedestrians or hazards.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Nor2ejJ1JAs&amp;t=863s">14:23</a> Blind-side detection becomes harder for hazards farther away from the travel lane because the needed scan is larger.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Nor2ejJ1JAs&amp;t=1288s">21:28</a> Shows why "scanning" is not enough as a vague advice word: some people scan too rarely or not far enough into the blind side.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Nor2ejJ1JAs&amp;t=1437s">23:57</a> Raises the transfer problem: scanning exercises done on paper or books may not transfer automatically to walking or driving.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Nor2ejJ1JAs&amp;t=1607s">26:47</a> Introduces peripheral prism glasses as field-expansion/early-warning aids rather than field restoration.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Nor2ejJ1JAs&amp;t=1962s">32:42</a> Describes prism glasses as helpful for obstacle detection when walking and for blind-side hazard detection in simulator studies.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Nor2ejJ1JAs&amp;t=2321s">38:41</a> Discusses auditory reminder cues to prompt larger blind-side scans before intersections.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Nor2ejJ1JAs&amp;t=2855s">47:35</a> Summarizes the core lesson: same visual-field loss can produce very different functional risk depending on compensation quality.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>3. Verified Claims</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Claim</th>
+          <th>Verification</th>
+          <th>NegletFix Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>People with HH often miss hazards on the blind side, even in realistic simulator tasks.</td>
+          <td><a href="https://pubmed.ncbi.nlm.nih.gov/24346175/">Driving With Hemianopia III</a> and its <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3900270/">PMC version</a> report blind-side detection deficits for stationary and approaching pedestrians.</td>
+          <td>Eric's app should not measure only contrast sensitivity. It should also log blind-side detection and reaction time in functional scenes.</td>
+        </tr>
+        <tr>
+          <td>Individual variability is large. Field loss alone does not fully predict function.</td>
+          <td>Bowers' <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5012957/">driving review</a> states that conventional visual-field extent does not capture compensatory ability and is not enough to predict practical driving performance.</td>
+          <td>This supports repeated personal measurement. Eric's baseline and progress matter more than generic averages.</td>
+        </tr>
+        <tr>
+          <td>Scanning quality matters: not scanning, scanning late, or scanning too narrowly can cause missed blind-side hazards.</td>
+          <td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3954314/">Driving With Hemianopia IV</a> reports impaired blind-side pedestrian detection at intersections related to absent or insufficient head scanning.</td>
+          <td>NegletFix can safely measure large leftward head turns, left-target detection, and reaction time without making driving claims.</td>
+        </tr>
+        <tr>
+          <td>Head-scan magnitude can be quantified.</td>
+          <td><a href="https://pubmed.ncbi.nlm.nih.gov/33510959/">Driving With Hemianopia VII</a> found blind-side gaze/head scan thresholds predictive of hazard detection, including about 19-27 degrees of head movement depending on the detection target.</td>
+          <td>Quest head tracking makes this directly measurable in VR: scan angle, scan timing, and detection success can become app metrics.</td>
+        </tr>
+        <tr>
+          <td>Auditory reminders may improve proactive blind-side scanning in simulated intersections.</td>
+          <td><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8613694/">Driving With Hemianopia IX</a> found more early large blind-side scans with audio cues and faster responses to hazards in a post hoc simulator analysis.</td>
+          <td>Audio cues are relevant to a VR functional-assessment task, but should remain a training/measurement idea, not a real-road aid.</td>
+        </tr>
+        <tr>
+          <td>Peripheral prisms/Peli prisms are a compensation tool, especially for obstacle avoidance while walking.</td>
+          <td>The <a href="https://pubmed.ncbi.nlm.nih.gov/24201760/">JAMA Ophthalmology randomized crossover trial</a> found real peripheral prisms more helpful than sham for obstacle avoidance when walking. A prior <a href="https://pubmed.ncbi.nlm.nih.gov/18474776/">community-based trial</a> reported continued wear and perceived mobility benefit in a subset.</td>
+          <td>Prisms belong in a clinician/accommodation branch. They do not replace the restorative AV training protocol.</td>
+        </tr>
+        <tr>
+          <td>Driving rules vary by location and should be handled separately from rehab training.</td>
+          <td>Bowers' <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5012957/">review</a> summarizes variable visual-field requirements across jurisdictions. <a href="https://www.nanosweb.org/homonymoushemianopia/">NANOS</a> also warns that driving poses a hazard for many people with HH.</td>
+          <td>NegletFix language should say "functional vision tracking," never "driving readiness."</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>4. What Changes For The Project</h2>
+    <div class="decision-grid">
+      <div class="decision">
+        <h3>Promote: Functional Metrics</h3>
+        <p>Track left-side detection rate, reaction time, scan angle, and whether the scan happened before the target/hazard became urgent.</p>
+      </div>
+      <div class="decision">
+        <h3>Promote: Transfer Questions</h3>
+        <p>Ask whether clinical gains transfer to walking, screen use, room navigation, crowded places, and confidence outside the house.</p>
+      </div>
+      <div class="decision">
+        <h3>Park: Driving Clearance</h3>
+        <p>The app must not produce any driving score. That would be clinically and legally unsafe.</p>
+      </div>
+      <div class="decision">
+        <h3>Park: Prisms As Protocol Core</h3>
+        <p>Peli/prism glasses are interesting for low-vision referral and accommodation, but they are not the AV restoration mechanism we are building.</p>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <div class="label">Design translation</div>
+      Sprint 2 suggests a future Quest task: a low-stress "left-side mobility scan" scene where Eric keeps moving through a virtual corridor or street-like environment, detects left-side events, and the app logs scan angle, scan timing, detection, and reaction time. This would be a measurement/training task, not a road-driving simulator.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>5. Suggested App Metrics</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Why It Matters</th>
+          <th>How To Measure In Quest</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Left blind-side detection rate</td>
+          <td>Directly reflects whether targets/hazards are noticed on the affected side.</td>
+          <td>Spawn targets or motion events at fixed left eccentricities; log hit/miss.</td>
+        </tr>
+        <tr>
+          <td>Reaction time to left targets</td>
+          <td>Function can improve even if field size barely changes; faster detection may be meaningful.</td>
+          <td>Timestamp target onset and controller response; compare left vs right and session-to-session.</td>
+        </tr>
+        <tr>
+          <td>Peak leftward head scan angle</td>
+          <td>Bowers' driving work shows scan magnitude matters. Quest tracking can capture this reliably.</td>
+          <td>Log headset yaw from fixation/forward reference during each trial window.</td>
+        </tr>
+        <tr>
+          <td>Early proactive scan rate</td>
+          <td>Late scanning may detect too late for real function. Early scans are the useful habit.</td>
+          <td>Score whether a scan above threshold occurs before the target appears or before a warning deadline.</td>
+        </tr>
+        <tr>
+          <td>Navigation confidence / collision notes</td>
+          <td>Eric's lived function matters: crowded places, obstacle avoidance, left-side surprise events.</td>
+          <td>Short post-session questionnaire; optional notes after real-world walks.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>6. Watchlist</h2>
+    <div class="columns">
+      <div class="callout violet">
+        <div class="label">Good next research branch</div>
+        Peripheral prisms deserve a small, separate clinician/accommodation note. They may be useful to ask a neuro-ophthalmologist or low-vision specialist about, but they should not be mixed into the AV training outcome claims.
+      </div>
+      <div class="callout amber">
+        <div class="label">Still unknown</div>
+        Whether a VR scanning task will transfer to real walking and crowded environments is a research question. The safe way to handle it is to measure both VR performance and Eric's daily-function notes, then compare over time.
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>7. Sources Used</h2>
+    <ul>
+      <li><a href="https://www.youtube.com/watch?v=Nor2ejJ1JAs">Alex Bowers, PhD: Managing Obstacles: Walking and Driving With Homonymous Hemianopia</a></li>
+      <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5012957/">Bowers AR. Driving with homonymous visual field loss: a review of the literature. Clin Exp Optom. 2016.</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/24346175/">Alberti CF, Peli E, Bowers AR. Driving With Hemianopia III: Detection of Stationary and Approaching Pedestrians in a Simulator. IOVS. 2014.</a></li>
+      <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3954314/">Bowers AR et al. Driving With Hemianopia IV: Head Scanning and Detection at Intersections in a Simulator. IOVS. 2014.</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/33510959/">Swan G et al. Driving With Hemianopia VII: Predicting Hazard Detection With Gaze and Head Scan Magnitude. Transl Vis Sci Technol. 2021.</a></li>
+      <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8613694/">Auditory Reminder Cues to Promote Proactive Scanning on Approach to Intersections in Drivers With Homonymous Hemianopia. JAMA Ophthalmol. 2022.</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/24201760/">Bowers AR, Keeney K, Peli E. Randomized Crossover Clinical Trial of Real and Sham Peripheral Prism Glasses for Hemianopia. JAMA Ophthalmol. 2014.</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/18474776/">Bowers AR, Keeney K, Peli E. Community-Based Trial of a Peripheral Prism Visual Field Expansion Device for Hemianopia. Arch Ophthalmol. 2008.</a></li>
+      <li><a href="https://www.nanosweb.org/homonymoushemianopia/">North American Neuro-Ophthalmology Society: Homonymous Hemianopia patient information</a></li>
+    </ul>
+  </div>
+
+  <p class="footer-note">Prepared as a research triage artifact, not medical advice. Use it to guide questions for clinicians and to shape NegletFix measurement design. Do not use it for driving decisions.</p>
+</div>
+</body>
+</html>

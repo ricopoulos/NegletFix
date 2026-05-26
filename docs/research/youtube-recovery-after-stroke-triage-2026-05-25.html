@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube Research Triage — Recovery After Stroke Playlist</title>
+<style>
+  :root {
+    --bg: #fbfbf8;
+    --paper: #ffffff;
+    --ink: #1d1b18;
+    --muted: #5b554d;
+    --faint: #81786d;
+    --line: #e6e0d8;
+    --soft: #f3f0eb;
+    --blue: #0e7490;
+    --blue-soft: #dff6fb;
+    --green: #166534;
+    --green-soft: #dcfce7;
+    --amber: #92400e;
+    --amber-soft: #fef3c7;
+    --red: #991b1b;
+    --red-soft: #fee2e2;
+    --violet: #6d28d9;
+    --violet-soft: #ede9fe;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 56px 28px 88px;
+  }
+
+  header {
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+  }
+
+  .eyebrow {
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: clamp(32px, 5vw, 46px);
+    line-height: 1.08;
+    margin: 0 0 14px;
+    letter-spacing: 0;
+  }
+
+  .subtitle {
+    max-width: 780px;
+    color: var(--muted);
+    font-size: 19px;
+    margin: 0;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .pill {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    border-radius: 999px;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: 650;
+  }
+
+  h2 {
+    font-size: 25px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    margin: 46px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  h3 {
+    font-size: 18px;
+    line-height: 1.25;
+    margin: 0 0 8px;
+  }
+
+  p { margin: 0 0 14px; }
+  ul { margin: 10px 0 0; padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  strong { font-weight: 750; }
+  code {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 0.92em;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+  }
+
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+  }
+
+  .metric {
+    font-size: 34px;
+    font-weight: 850;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .muted { color: var(--muted); }
+
+  .callout {
+    border-radius: 8px;
+    margin: 18px 0;
+    padding: 16px 18px;
+    font-size: 15px;
+  }
+
+  .callout.blue { background: var(--blue-soft); color: #155e75; border-left: 4px solid var(--blue); }
+  .callout.green { background: var(--green-soft); color: var(--green); border-left: 4px solid var(--green); }
+  .callout.amber { background: var(--amber-soft); color: var(--amber); border-left: 4px solid var(--amber); }
+  .callout.red { background: var(--red-soft); color: var(--red); border-left: 4px solid var(--red); }
+
+  .label {
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 14px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  th,
+  td {
+    border-bottom: 1px solid var(--line);
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+  }
+
+  th {
+    background: var(--soft);
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  tr:last-child td { border-bottom: 0; }
+
+  .priority {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 3px 9px;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .priority.high { background: var(--green-soft); color: var(--green); }
+  .priority.medium { background: var(--blue-soft); color: #155e75; }
+  .priority.watch { background: var(--amber-soft); color: var(--amber); }
+  .priority.low { background: var(--soft); color: var(--muted); }
+
+  .episode {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    margin: 16px 0;
+    padding: 18px;
+  }
+
+  .episode-header {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+  }
+
+  .episode-title {
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin: 0 0 5px;
+  }
+
+  .timestamp-list {
+    display: grid;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .timestamp {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .timestamp a {
+    font-weight: 800;
+    margin-right: 8px;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .tag {
+    border: 1px solid var(--line);
+    background: var(--soft);
+    color: var(--muted);
+    border-radius: 999px;
+    padding: 5px 10px;
+    font-size: 13px;
+    font-weight: 650;
+  }
+
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .footer-note {
+    margin-top: 44px;
+    color: var(--faint);
+    font-size: 14px;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+
+  @media (max-width: 820px) {
+    .wrap { padding: 36px 18px 64px; }
+    .cards,
+    .columns { grid-template-columns: 1fr; }
+    .episode-header { display: block; }
+    table { display: block; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="eyebrow">NegletFix transcript-mining pilot</div>
+    <h1>Recovery After Stroke Playlist Triage</h1>
+    <p class="subtitle">First pass over the YouTube playlist Eric shared. The goal is not to watch everything; it is to find useful timestamps, themes, and leads that can feed the NegletFix research map.</p>
+    <div class="meta">
+      <span class="pill">Created 2026-05-25</span>
+      <span class="pill">Playlist size: 407 videos</span>
+      <span class="pill">Method: yt-dlp title scan + transcript pilot</span>
+      <span class="pill">Status: lead discovery, not medical verification</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>1. What This Playlist Is</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="metric">407</div>
+        <p class="muted">videos detected in the playlist.</p>
+      </div>
+      <div class="card">
+        <div class="metric">39</div>
+        <p class="muted">title matches from NegletFix-relevant keywords.</p>
+      </div>
+      <div class="card">
+        <div class="metric">6</div>
+        <p class="muted">transcripts sampled after adding episode 404.</p>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <div class="label">Initial judgment</div>
+      This is a useful source, but mostly as a lived-experience and lead-discovery archive. It is not a primary medical evidence source. The best NegletFix value is in episodes that discuss visual deficits, neuro-ophthalmology, reading, sensory overload, fatigue, brain imaging, and neurofeedback.
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Best Candidates From Title Scan</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Priority</th>
+          <th>Episode</th>
+          <th>Why It Matters</th>
+          <th>Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="priority high">High</span></td>
+          <td>274. Vision Loss and Stroke: Rachel Miller</td>
+          <td>Direct title match for visual impairment after stroke; transcript produced useful timestamps immediately.</td>
+          <td><a href="https://www.youtube.com/watch?v=Jgg3ANVV4xw">Open</a></td>
+        </tr>
+        <tr>
+          <td><span class="priority high">High</span></td>
+          <td>156. Adapting To Vision Problems After Stroke: Candice Vogel</td>
+          <td>Direct visual-deficit episode; useful for reading, driving, figure-ground, and therapy-access themes.</td>
+          <td><a href="https://www.youtube.com/watch?v=hrwA3CpFU7I">Open</a></td>
+        </tr>
+        <tr>
+          <td><span class="priority medium">Medium</span></td>
+          <td>307. Double Stroke Recovery and Prosopagnosia: Jim Moody</td>
+          <td>Face blindness is not Eric's condition, but it is a cortical visual-processing deficit and may give neuropsychology leads.</td>
+          <td><a href="https://www.youtube.com/watch?v=sQBCGXwp3BM">Open</a></td>
+        </tr>
+        <tr>
+          <td><span class="priority medium">Medium</span></td>
+          <td>269. How Neurofeedback Can Take Recovery To The Next Level</td>
+          <td>Relevant to the optional EEG layer, but all claims require stricter verification because consumer-NF evidence is weak.</td>
+          <td><a href="https://www.youtube.com/watch?v=X12A7y-U6No">Open</a></td>
+        </tr>
+        <tr>
+          <td><span class="priority medium">Medium</span></td>
+          <td>308. How Advanced Brain Imaging May Improve Your Recovery: Dr Ettie Ben-Shabat</td>
+          <td>Useful for thinking about lesion-aware, personalized rehab; not visual-specific from title alone.</td>
+          <td><a href="https://www.youtube.com/watch?v=PqD2h2wNxKk">Open</a></td>
+        </tr>
+        <tr>
+          <td><span class="priority medium">Medium</span></td>
+          <td>404. She Couldn't Recognise Faces for 7 Years. One Session Fixed It.</td>
+          <td>Interesting QEEG-guided transcranial photobiomodulation lead. The title is still a verification red flag, but QEEG is now worth tracking.</td>
+          <td><a href="https://www.youtube.com/watch?v=JJOZjfpJaZs">Open</a></td>
+        </tr>
+        <tr>
+          <td><span class="priority watch">Watch</span></td>
+          <td>383. When the World Blurred, His Purpose Became Clear</td>
+          <td>Possible visual-symptom lead; title alone is ambiguous.</td>
+          <td><a href="https://www.youtube.com/watch?v=JCx1LSuaJkI">Open</a></td>
+        </tr>
+        <tr>
+          <td><span class="priority watch">Watch</span></td>
+          <td>200. Neuroplasticity & Sensory Substitution</td>
+          <td>Sensory substitution may be relevant to compensation strategies, but it is probably adjacent to NegletFix's restorative goal.</td>
+          <td><a href="https://www.youtube.com/watch?v=dds1-AGVDYM">Open</a></td>
+        </tr>
+        <tr>
+          <td><span class="priority watch">Watch</span></td>
+          <td>27. Michael Merzenich on neuroplasticity after stroke</td>
+          <td>Strong general neuroplasticity lead; likely useful for principles, less likely to be specific to hemianopia.</td>
+          <td><a href="https://www.youtube.com/watch?v=LLuhQP3j1D4">Open</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>3. Transcript Pilot Notes</h2>
+    <p>The notes below are paraphrased from transcript search windows. They should be treated as pointers for deeper review, not verified clinical facts.</p>
+
+    <article class="episode">
+      <div class="episode-header">
+        <div>
+          <p class="episode-title">274. Vision Loss and Stroke: Rachel Miller</p>
+          <p class="muted">Highest relevance from the first pass.</p>
+        </div>
+        <span class="priority high">High</span>
+      </div>
+      <p><strong>NegletFix relevance:</strong> Strong lived-experience overlap: neurological vision impairment, normal-looking eyes with brain-origin symptoms, sensory overload, bright-day difficulty, digital avoidance, visual fatigue, and functional consequences.</p>
+      <div class="timestamp-list">
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Jgg3ANVV4xw&t=900s">15:00</a>Discussion moves toward neuro-ophthalmology / neuro-optometry as the right specialist category for brain-origin vision problems.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Jgg3ANVV4xw&t=990s">16:30</a>Sensory overload is linked with crowds, bright sunny days, overcast days, sunglasses, and hats.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Jgg3ANVV4xw&t=1170s">19:30</a>Driving, stimulation, and overdoing it are discussed in relation to vision regression and career impact.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Jgg3ANVV4xw&t=1395s">23:15</a>The episode distinguishes general eye care from clinicians who understand neurological vision issues.</div>
+      </div>
+      <p><strong>Lead terms to search:</strong> neurological vision impairment, visual sensory overload, neuro-ophthalmology stroke, neuro-optometry stroke rehab, visual fatigue after stroke.</p>
+    </article>
+
+    <article class="episode">
+      <div class="episode-header">
+        <div>
+          <p class="episode-title">156. Adapting To Vision Problems After Stroke: Candice Vogel</p>
+          <p class="muted">Strong practical rehabilitation and function episode.</p>
+        </div>
+        <span class="priority high">High</span>
+      </div>
+      <p><strong>NegletFix relevance:</strong> This transcript is especially useful for functional problems: reading, figure-ground perception, visual therapy, midline shift, driving limitations, and the gap between standard stroke discharge and vision-specific rehab.</p>
+      <div class="timestamp-list">
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=hrwA3CpFU7I&t=1935s">32:15</a>Patient describes needing vision therapy but leaving the hospital without clear vision-rehab direction.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=hrwA3CpFU7I&t=2610s">43:30</a>Visual exercises include midline, figure-ground, simple search tasks, mazes, and large-print activities.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=hrwA3CpFU7I&t=2655s">44:15</a>Driving and reading are contrasted; reading remains difficult even when some driving returns.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=hrwA3CpFU7I&t=3915s">1:05:15</a>Reading difficulty is described as slow, effortful, and visually demanding.</div>
+      </div>
+      <p><strong>Lead terms to search:</strong> figure-ground visual rehabilitation stroke, midline shift visual rehab, post-stroke reading visual deficits, occupational therapy visual scanning stroke.</p>
+    </article>
+
+    <article class="episode">
+      <div class="episode-header">
+        <div>
+          <p class="episode-title">307. Double Stroke Recovery and Prosopagnosia: Jim Moody</p>
+          <p class="muted">Adjacent cortical visual-processing lead.</p>
+        </div>
+        <span class="priority medium">Medium</span>
+      </div>
+      <p><strong>NegletFix relevance:</strong> The keyword scan found less direct technical material than expected. Still worth keeping because prosopagnosia is a visual-processing deficit that may lead to neuropsychology tools, compensatory strategies, and cortical visual-network language.</p>
+      <div class="timestamp-list">
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=sQBCGXwp3BM&t=765s">12:45</a>General recovery uncertainty and cognitive disruption appear in the transcript window.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=sQBCGXwp3BM&t=2565s">42:45</a>Long-term recovery and emotional adaptation are discussed, but this is less protocol-specific for NegletFix.</div>
+      </div>
+      <p><strong>Lead terms to search:</strong> prosopagnosia stroke neuropsychology, cortical visual impairment adult stroke, visual agnosia rehabilitation.</p>
+    </article>
+
+    <article class="episode">
+      <div class="episode-header">
+        <div>
+          <p class="episode-title">269. How Neurofeedback Can Take Recovery To The Next Level</p>
+          <p class="muted">Relevant but high skepticism required.</p>
+        </div>
+        <span class="priority medium">Medium</span>
+      </div>
+      <p><strong>NegletFix relevance:</strong> Useful for vocabulary around EEG, neurofeedback, brain states, and electrodes. It does not settle whether Muse-based EEG neurofeedback should gate NegletFix rewards. The project wiki already has a strong caution here: consumer neurofeedback evidence is mixed and often weak under sham control.</p>
+      <div class="timestamp-list">
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=X12A7y-U6No&t=1440s">24:00</a>Explains EEG as a way to observe brainwave activity and brain states.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=X12A7y-U6No&t=2565s">42:45</a>Neurofeedback is defined as training control over brainwave patterns using EEG or fMRI-like feedback.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=X12A7y-U6No&t=2835s">47:15</a>Discussion turns to seeing brainwave changes quickly, with behavioral change as the harder question.</div>
+      </div>
+      <p><strong>Lead terms to verify:</strong> EEG neurofeedback stroke RCT, sham-controlled neurofeedback stroke, consumer EEG neurofeedback Muse, neurofeedback visual attention.</p>
+    </article>
+
+    <article class="episode">
+      <div class="episode-header">
+        <div>
+          <p class="episode-title">308. How Advanced Brain Imaging May Improve Your Recovery: Dr Ettie Ben-Shabat</p>
+          <p class="muted">Useful for personalized rehab framing.</p>
+        </div>
+        <span class="priority medium">Medium</span>
+      </div>
+      <p><strong>NegletFix relevance:</strong> This looks useful for understanding how clinicians can use imaging to personalize rehab. It is not directly about hemianopia from the sampled windows, but the lesion-aware approach fits NegletFix's right-occipital/PCA framing.</p>
+      <div class="timestamp-list">
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=PqD2h2wNxKk&t=90s">1:30</a>Guest background: neurological rehabilitation, brain imaging, and clinical education.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=PqD2h2wNxKk&t=315s">5:15</a>Functional MRI is introduced as a way to look at active brain areas during tasks.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=PqD2h2wNxKk&t=3825s">1:03:45</a>Discussion turns to understanding brain regions and networks to guide treatment choices.</div>
+      </div>
+      <p><strong>Lead terms to search:</strong> lesion-informed stroke rehabilitation, fMRI rehabilitation planning stroke, brain networks visual field recovery.</p>
+    </article>
+
+    <article class="episode">
+      <div class="episode-header">
+        <div>
+          <p class="episode-title">404. She Couldn't Recognise Faces for 7 Years. One Session Fixed It.</p>
+          <p class="muted">QEEG-guided laser / photobiomodulation lead added after Eric's note.</p>
+        </div>
+        <span class="priority medium">Medium</span>
+      </div>
+      <p><strong>NegletFix relevance:</strong> The useful part is not the dramatic "one session" claim. The useful part is the workflow idea: use QEEG as a functional brain map, then use that map to guide where a stimulation or photobiomodulation intervention is aimed. This is adjacent to NegletFix's EEG interest, but it is not the same as Muse TP10 neurofeedback.</p>
+      <div class="timestamp-list">
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=JJOZjfpJaZs&t=60s">1:00</a>Intro frames the topic as QEEG-guided transcranial photobiomodulation using a functional brain map.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=JJOZjfpJaZs&t=600s">10:00</a>The guest describes learning about laser / photobiomodulation and then quantitative EEG as a way to decide where to target it.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=JJOZjfpJaZs&t=690s">11:30</a>Case story: QEEG allegedly guided the first laser treatment, followed by a claimed change in acquired prosopagnosia.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=JJOZjfpJaZs&t=1260s">21:00</a>Targeting is compared to identifying vulnerable brain regions and choosing individualized laser parameters.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=JJOZjfpJaZs&t=1950s">32:30</a>Distinguishes visual inspection of raw EEG traces from computational pattern analysis.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=JJOZjfpJaZs&t=3360s">56:00</a>Guest says QEEG-guided transcranial photobiomodulation is not readily available and would require specialized practitioners.</div>
+      </div>
+      <p><strong>What QEEG appears to mean here:</strong> quantitative EEG: computerized analysis of EEG signals, often summarized as maps of spectral power, frequency, asymmetry, coherence, or other derived measures. It is not a different kind of electrical signal; it is a different way of processing and interpreting EEG.</p>
+      <p><strong>Verification anchors:</strong> <a href="https://www.acns.org/practice/guidelines/quantitative-eeg">ACNS quantitative EEG guideline resources</a>, <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11653948/">2024 review on transcranial photobiomodulation for stroke</a>, and <a href="https://pubmed.ncbi.nlm.nih.gov/32173886/">human transcranial photobiomodulation physiology study</a>.</p>
+      <p><strong>Research status for NegletFix:</strong> add to watchlist. Do not alter the current open-loop AV training plan. The question is whether QEEG could become a better future mapping layer than consumer Muse EEG, not whether it replaces the current 30-session protocol.</p>
+    </article>
+  </section>
+
+  <section>
+    <h2>4. Deep Digest: Episodes 274 and 156</h2>
+    <p>This is the first bridge from survivor interviews to NegletFix design. The point is to identify real-world symptoms and candidate daily metrics that the Unity protocol does not currently capture.</p>
+
+    <div class="columns">
+      <div class="card">
+        <h3>Episode 274: symptom bridge</h3>
+        <ul>
+          <li><strong>Clinician pathway:</strong> the episode repeatedly points toward neuro-ophthalmology / neuro-optometry for brain-origin vision problems when the eye itself appears structurally healthy.</li>
+          <li><strong>Environment triggers:</strong> bright sun, overcast glare, crowds, screens, driving, and high-stimulation events appear as practical triggers.</li>
+          <li><strong>Protective behaviors:</strong> hat, sunglasses, narrowed visual input, soft gaze, reduced digital exposure, and closing eyes during car travel.</li>
+          <li><strong>Fatigue pattern:</strong> overdoing stimulation may worsen deficits; the key distinction is transient next-day settling versus prolonged regression.</li>
+          <li><strong>NegletFix implication:</strong> daily function logs should track bright-day tolerance, screen tolerance, visual fatigue, and recovery after stimulation-heavy days.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Episode 156: function bridge</h3>
+        <ul>
+          <li><strong>Stroke presentation:</strong> sudden visual field loss can be mistaken for an eye problem when classic FAST symptoms are absent.</li>
+          <li><strong>Neurovisual framing:</strong> the guest separates ocular health from brain interpretation of visual information.</li>
+          <li><strong>Rehab gap:</strong> vision-specific therapy may not be automatically prescribed after discharge, unlike PT, OT, speech, or cardiac rehab.</li>
+          <li><strong>Functional domains:</strong> reading, figure-ground perception, visual search, midline, driving, rain/night driving, and large-print tasks all appear.</li>
+          <li><strong>NegletFix implication:</strong> contrast sensitivity alone is not enough. Add simple self-ratings or tasks for reading effort, visual search, figure-ground difficulty, and post-session fatigue.</li>
+        </ul>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Daily-Life Domain</th>
+          <th>Why It Emerged</th>
+          <th>Candidate NegletFix Tracking</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Bright / glare tolerance</td>
+          <td>Episode 274 repeatedly connects symptoms with sunny, overcast, and visually intense environments.</td>
+          <td>0-10 rating before/after training days; note hat/sunglasses use and outdoor exposure.</td>
+        </tr>
+        <tr>
+          <td>Screen tolerance</td>
+          <td>Episode 274 mentions staying away from digital input and slow research due to vision issues.</td>
+          <td>Minutes of comfortable screen use; symptom flare yes/no; recovery time.</td>
+        </tr>
+        <tr>
+          <td>Reading effort</td>
+          <td>Episode 156 describes reading as slow, repetitive, large-print dependent, and visually demanding.</td>
+          <td>Short standardized reading passage: time, errors, subjective effort, and fatigue afterward.</td>
+        </tr>
+        <tr>
+          <td>Visual search / figure-ground</td>
+          <td>Episode 156 mentions difficulty distinguishing objects in cluttered visual scenes.</td>
+          <td>Simple search task in Unity or paper: find targets in clutter; track time and misses.</td>
+        </tr>
+        <tr>
+          <td>Stimulation load</td>
+          <td>Both episodes suggest high-stimulation days can amplify symptoms.</td>
+          <td>Daily stimulation note: low / medium / high, plus next-day visual status.</td>
+        </tr>
+        <tr>
+          <td>Driving / navigation confidence</td>
+          <td>Both episodes touch driving or travel impact, but this is safety-sensitive.</td>
+          <td>Self-report only unless clinician-guided. Do not treat app improvement as driving clearance.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout blue">
+      <div class="label">Design consequence</div>
+      The AV training module should remain scientifically narrow, but the research layer should track lived function. A future session log could add five quick checkboxes after each training day: glare, screen, reading, fatigue, and stimulation load.
+    </div>
+  </section>
+
+  <section>
+    <h2>5. Themes That Matter For NegletFix</h2>
+    <div class="columns">
+      <div class="card">
+        <h3>Strong themes</h3>
+        <ul>
+          <li>Neurological vision problems can be missed if the eye itself appears healthy.</li>
+          <li>Bright light, crowds, screens, motion, and complex environments may be major functional triggers.</li>
+          <li>Reading difficulty is a separate practical outcome from detection or driving.</li>
+          <li>Vision-specific rehab is not always provided automatically after stroke.</li>
+          <li>Patient stories can reveal daily-life outcomes that formal papers may under-describe.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Research cautions</h3>
+        <ul>
+          <li>Most episodes are survivor interviews, not controlled studies.</li>
+          <li>Titles with "fixed it" or treatment breakthroughs should be flagged for verification.</li>
+          <li>Neurofeedback, HBOT, Etanercept, and stem-cell content should not influence the protocol unless independently verified.</li>
+          <li>Vision loss is a broad category; hemianopia, ocular problems, agnosia, reading deficits, and sensory overload are not the same mechanism.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>6. Next Pass</h2>
+    <div class="callout green">
+      <div class="label">Recommended next move</div>
+      Turn the episode 274 / 156 digest into a small daily-function tracking sheet for the 30-session AV program, and separately run a cautious QEEG evidence check before deciding whether QEEG belongs in the future research roadmap.
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Output</th>
+          <th>Decision It Supports</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Build daily-function tracker</td>
+          <td>Five quick post-session ratings: glare, screen tolerance, reading effort, fatigue, and stimulation load.</td>
+          <td>Gives Phase 2 a lived-function layer beside LogCS and trial RT.</td>
+        </tr>
+        <tr>
+          <td>Verify neuro-ophthalmology / neuro-optometry pathway</td>
+          <td>Short medical-source note on who evaluates post-stroke neurological vision issues.</td>
+          <td>Whether to prepare a clinician-facing brief or referral question list.</td>
+        </tr>
+        <tr>
+          <td>Map transcript themes to app metrics</td>
+          <td>Candidate daily-life measures: screen tolerance, reading comfort, bright-day difficulty, fatigue after training.</td>
+          <td>What to log during the 30-session AV training program.</td>
+        </tr>
+        <tr>
+          <td>Park speculative treatment episodes</td>
+          <td>Watchlist only: HBOT, Etanercept, stem cells, one-session claims.</td>
+          <td>Keeps the research system from drifting away from the core rehab build.</td>
+        </tr>
+        <tr>
+          <td>QEEG evidence check</td>
+          <td>Short source-grounded note: what QEEG can measure, clinical limits, and whether QEEG-guided tPBM has stroke/visual evidence.</td>
+          <td>Decides whether QEEG becomes a serious future mapping topic or stays a curiosity.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>7. Search Terms Generated By This Playlist</h2>
+    <div class="tag-list">
+      <span class="tag">neuro-ophthalmology after stroke</span>
+      <span class="tag">neuro-optometry stroke vision rehabilitation</span>
+      <span class="tag">neurological vision impairment</span>
+      <span class="tag">visual sensory overload after stroke</span>
+      <span class="tag">visual fatigue after stroke</span>
+      <span class="tag">figure-ground perception stroke rehab</span>
+      <span class="tag">midline shift visual rehab</span>
+      <span class="tag">post-stroke reading visual deficits</span>
+      <span class="tag">visual scanning occupational therapy stroke</span>
+      <span class="tag">cortical visual impairment adult stroke</span>
+      <span class="tag">EEG neurofeedback stroke sham controlled</span>
+      <span class="tag">lesion-informed stroke rehabilitation</span>
+      <span class="tag">quantitative EEG QEEG stroke</span>
+      <span class="tag">QEEG guided photobiomodulation</span>
+      <span class="tag">transcranial photobiomodulation stroke</span>
+      <span class="tag">photobiomodulation prosopagnosia</span>
+      <span class="tag">QEEG vs EEG clinical utility</span>
+    </div>
+  </section>
+
+  <p class="footer-note">
+    Tooling note: playlist inventory and captions were pulled with <code>yt-dlp</code>. Transcript files were temporary files under <code>/tmp/negletfix-yt</code>, not committed to the project. This page contains paraphrased notes and links, not full transcripts.
+  </p>
+</main>
+</body>
+</html>

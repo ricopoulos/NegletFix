@@ -2,14 +2,14 @@
   "schema_version": "1.0",
   "project_name": "NegletFix",
   "description": "VR rehabilitation for left homonymous hemianopia with EEG neurofeedback",
-  "last_updated": "2026-05-16T23:35:00Z",
+  "last_updated": "2026-05-26T01:29:27Z",
   "wiki": {
     "path": ".brain/wiki/",
     "pages": 11,
     "lines": 2400,
     "built": "2026-04-14",
-    "last_substantive_update": "2026-05-16",
-    "notes": "Karpathy ingest pattern — compiled from sessions, research docs, scripts. Load index.md first, pull pages on-demand. 2026-05-14 research audit added 20+ verified citations + 3 citation corrections. 2026-05-16 Phase 1 scaffold session updated unity-architecture, rehabilitation-roadmap, audiovisual-training-protocol, hardware-setup."
+    "last_substantive_update": "2026-05-26",
+    "notes": "Karpathy ingest pattern — compiled from sessions, research docs, scripts. Load index.md first, pull pages on-demand. 2026-05-14 research audit added 20+ verified citations + 3 citation corrections. 2026-05-16 Phase 1 scaffold session updated unity-architecture, rehabilitation-roadmap, audiovisual-training-protocol, hardware-setup. 2026-05-26 research-ops sprint added source queue, YouTube/X validation ladder, sprint reports, QEEG/tPBM watchlist, medication doctor brief, and Obsidian HTML wrap-up."
   },
   "modules": {
     "contrast-sensitivity-test": {

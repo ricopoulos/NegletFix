@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprint 1 Medical Grounding — NegletFix</title>
+<style>
+  :root {
+    --bg: #fbfbf8;
+    --paper: #ffffff;
+    --ink: #1d1b18;
+    --muted: #5b554d;
+    --faint: #81786d;
+    --line: #e6e0d8;
+    --soft: #f3f0eb;
+    --blue: #0e7490;
+    --blue-soft: #dff6fb;
+    --green: #166534;
+    --green-soft: #dcfce7;
+    --amber: #92400e;
+    --amber-soft: #fef3c7;
+    --red: #991b1b;
+    --red-soft: #fee2e2;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  p { margin: 0 0 14px; }
+  strong { font-weight: 750; }
+  code {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 0.92em;
+  }
+  .wrap {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 56px 28px 88px;
+  }
+  header {
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+  }
+  .eyebrow {
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: clamp(32px, 5vw, 46px);
+    line-height: 1.08;
+    margin: 0 0 14px;
+    letter-spacing: 0;
+  }
+  .subtitle {
+    max-width: 820px;
+    color: var(--muted);
+    font-size: 19px;
+    margin: 0;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+  .pill {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    border-radius: 999px;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: 650;
+  }
+  h2 {
+    font-size: 25px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    margin: 46px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  h3 {
+    font-size: 18px;
+    line-height: 1.25;
+    margin: 0 0 8px;
+  }
+  ul { margin: 10px 0 0; padding-left: 20px; }
+  li { margin-bottom: 7px; }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+  }
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+  }
+  .metric {
+    font-size: 34px;
+    font-weight: 850;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .muted { color: var(--muted); }
+  .callout {
+    border-radius: 8px;
+    margin: 18px 0;
+    padding: 16px 18px;
+    font-size: 15px;
+  }
+  .callout.blue { background: var(--blue-soft); color: #155e75; border-left: 4px solid var(--blue); }
+  .callout.green { background: var(--green-soft); color: var(--green); border-left: 4px solid var(--green); }
+  .callout.amber { background: var(--amber-soft); color: var(--amber); border-left: 4px solid var(--amber); }
+  .callout.red { background: var(--red-soft); color: var(--red); border-left: 4px solid var(--red); }
+  .label {
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 14px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th, td {
+    border-bottom: 1px solid var(--line);
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+  }
+  th {
+    background: var(--soft);
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  tr:last-child td { border-bottom: 0; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 3px 9px;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .verified { background: var(--green-soft); color: var(--green); }
+  .caution { background: var(--amber-soft); color: var(--amber); }
+  .parked { background: var(--red-soft); color: var(--red); }
+  .episode {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    margin: 16px 0;
+    padding: 18px;
+  }
+  .episode-header {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+  }
+  .episode-title {
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin: 0 0 5px;
+  }
+  .timestamp-list {
+    display: grid;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .timestamp {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  .timestamp a {
+    font-weight: 800;
+    margin-right: 8px;
+  }
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .footer-note {
+    margin-top: 44px;
+    color: var(--faint);
+    font-size: 14px;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+  @media (max-width: 820px) {
+    .wrap { padding: 36px 18px 64px; }
+    .cards, .columns { grid-template-columns: 1fr; }
+    .episode-header { display: block; }
+    table { display: block; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="eyebrow">NegletFix validation sprint 1</div>
+    <h1>Medical Grounding</h1>
+    <p class="subtitle">Validated first-pass YouTube leads against neuro-ophthalmology, stroke, and peer-reviewed sources. This sprint gives NegletFix a cleaner patient-facing explanation of Eric's condition and a cautious interpretation of the fluoxetine visual-recovery lead.</p>
+    <div class="meta">
+      <span class="pill">Run date: 2026-05-25</span>
+      <span class="pill">Queue items: YT-002 + YT-003</span>
+      <span class="pill">Status: completed</span>
+      <span class="pill">Promote selectively</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>1. Sprint Result</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="metric">2</div>
+        <p class="muted">videos extracted and checked.</p>
+      </div>
+      <div class="card">
+        <div class="metric">6</div>
+        <p class="muted">medical sources used for verification.</p>
+      </div>
+      <div class="card">
+        <div class="metric">1</div>
+        <p class="muted">new clinical lead parked as clinician-only.</p>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <div class="label">Bottom line</div>
+      YT-002 is clean enough to use as a patient-facing condition explainer. YT-003 is a real peer-reviewed acute-stroke pilot trial, but it is not directly actionable for Eric's chronic case and should stay in the neurologist-only pharmacology lane.
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Verified Condition Explanation</h2>
+    <p>This is the clean version to reuse in future NegletFix pages:</p>
+    <div class="card">
+      <p><strong>Homonymous hemianopia</strong> means loss of vision toward the same side of the visual world in both eyes. For Eric, the right occipital/PCA stroke affects the left side of the visual world. The eyes can be structurally normal because the problem is in the brain's visual pathway, not primarily in the eyeballs.</p>
+      <p>Common daily impacts include missing objects or people on the affected side, difficulty in crowds and crossings, reading problems, mobility hazards, and driving-safety issues. Formal visual field testing and brain imaging are the standard way to identify and localize the problem.</p>
+      <p>Current mainstream management is mostly supportive/rehabilitative: low-vision or vision-rehabilitation specialists, scanning/search training, environmental adaptation, and sometimes prisms. Restorative field recovery after stroke is most likely early and becomes much less likely in the chronic period, which is why NegletFix measures modest change carefully instead of assuming full restoration.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. YT-002: NANOS Homonymous Hemianopia</h2>
+    <article class="episode">
+      <div class="episode-header">
+        <div>
+          <p class="episode-title">Understanding Homonymous Hemianopia</p>
+          <p class="muted">North American Neuro-Ophthalmology Society video.</p>
+        </div>
+        <span class="badge verified">Verified</span>
+      </div>
+      <p><strong>Transcript extraction:</strong> the video gives a concise and medically aligned explanation: same-side field loss in both eyes, opposite-side brain involvement, symptoms with objects/reading, visual field testing, MRI, supportive management, and driving caution.</p>
+      <div class="timestamp-list">
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=XietRxh6UWE&t=0s">0:00</a>Defines homonymous hemianopia as one-sided visual-world loss in both eyes.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=XietRxh6UWE&t=30s">0:30</a>Explains opposite-side brain visual centers and daily object-detection problems.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=XietRxh6UWE&t=60s">1:00</a>Notes reading difficulty, formal visual-field testing, and brain MRI.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=XietRxh6UWE&t=90s">1:30</a>Lists stroke, tumor, trauma, and inflammatory disease as possible causes; treatment is supportive and symptom-targeted.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=XietRxh6UWE&t=120s">2:00</a>Warns that driving may be hazardous and legal requirements vary.</div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Claim</th>
+            <th>Verification</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Same-side field loss occurs in both eyes.</td>
+            <td><a href="https://www.nanosweb.org/homonymoushemianopia/">NANOS</a> and the <a href="https://www.stroke.org/en/help-and-support/resource-library/lets-talk-about-stroke/vision-changes">American Stroke Association</a> both define HH this way.</td>
+            <td><span class="badge verified">Verified</span></td>
+          </tr>
+          <tr>
+            <td>The cause is brain-pathway damage, not an eye-only issue.</td>
+            <td><a href="https://www.nanosweb.org/homonymoushemianopia/">NANOS</a> states the damage is in the brain, and <a href="https://www.ncbi.nlm.nih.gov/books/NBK558929/">StatPearls</a> describes lesion localization and neuroimaging.</td>
+            <td><span class="badge verified">Verified</span></td>
+          </tr>
+          <tr>
+            <td>Formal visual field testing and MRI/brain imaging are appropriate.</td>
+            <td><a href="https://www.nanosweb.org/homonymoushemianopia/">NANOS</a> recommends visual system evaluation, visual field testing, and MRI; <a href="https://www.ncbi.nlm.nih.gov/books/NBK558929/">StatPearls</a> notes confrontation testing has low sensitivity and perimetry provides more detail.</td>
+            <td><span class="badge verified">Verified</span></td>
+          </tr>
+          <tr>
+            <td>Treatment is supportive: reading/environment, rehab, prisms/scanning.</td>
+            <td><a href="https://www.nanosweb.org/homonymoushemianopia/">NANOS</a>, <a href="https://www.stroke.org/en/help-and-support/resource-library/lets-talk-about-stroke/vision-changes">American Stroke Association</a>, and the <a href="https://journals.sagepub.com/doi/10.1177/23969873251314693">2025 ESO guideline</a> support screening and compensatory visual scanning/search for visual field loss after stroke.</td>
+            <td><span class="badge verified">Verified</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+  </section>
+
+  <section>
+    <h2>4. YT-003: Dr Andrew Lee / FLUORESCE</h2>
+    <article class="episode">
+      <div class="episode-header">
+        <div>
+          <p class="episode-title">New hope for visual field loss from stroke</p>
+          <p class="muted">Neuro-ophthalmology discussion of the FLUORESCE pilot trial.</p>
+        </div>
+        <span class="badge caution">Verified, not actionable</span>
+      </div>
+      <p><strong>Transcript extraction:</strong> the video discusses fluoxetine as a possible early post-stroke visual-recovery adjunct. It correctly frames the result as a small pilot with trend-level findings and a need for larger trials.</p>
+      <div class="timestamp-list">
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=FpQiA7xudWc&t=0s">0:00</a>Introduces a pilot randomized controlled trial for visual field loss after stroke.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=FpQiA7xudWc&t=60s">1:00</a>Identifies fluoxetine as the medication being tested for visual recovery after occipital stroke.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=FpQiA7xudWc&t=90s">1:30</a>Notes randomization within 10 days of visual field loss and 6-month visual-field outcome measurement.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=FpQiA7xudWc&t=120s">2:00</a>Emphasizes the small sample and lack of a strong primary-endpoint conclusion.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=FpQiA7xudWc&t=180s">3:00</a>Takeaway: potential signal, but larger and better-controlled cohorts are needed.</div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Claim</th>
+            <th>Verification</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>There was a pilot randomized, placebo-controlled, double-blind trial of fluoxetine for acute ischemic stroke with isolated homonymous hemianopia.</td>
+            <td>The <a href="https://journals.lww.com/jneuro-ophthalmology/fulltext/2023/06000/fluoresce__a_pilot_randomized_clinical_trial_of.15.aspx">Journal of Neuro-Ophthalmology FLUORESCE paper</a> confirms this design.</td>
+            <td><span class="badge verified">Verified</span></td>
+          </tr>
+          <tr>
+            <td>The intervention was fluoxetine 20 mg daily for 90 days, started within 10 days of ischemic stroke.</td>
+            <td>Confirmed in the FLUORESCE methods and protocol text.</td>
+            <td><span class="badge verified">Verified</span></td>
+          </tr>
+          <tr>
+            <td>The primary endpoint showed a trend but was not statistically conclusive.</td>
+            <td>The paper reports nonsignificant benefit on perimetric mean deviation, while concluding the results may inform larger multicenter trial design.</td>
+            <td><span class="badge caution">Caution</span></td>
+          </tr>
+          <tr>
+            <td>This applies to Eric's chronic 2021 stroke.</td>
+            <td>Not directly. FLUORESCE studied acute ischemic stroke within 10 days; Eric is chronic, with hemorrhagic transformation history, and this is medication territory.</td>
+            <td><span class="badge parked">Do not apply</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout amber">
+        <div class="label">Clinical boundary</div>
+        This is a neurologist-only discussion item, not a NegletFix protocol change. It may belong in the pharmacological-adjuncts watchlist, but it should not influence the Unity AV training module.
+      </div>
+    </article>
+  </section>
+
+  <section>
+    <h2>5. What Changes For NegletFix</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Area</th>
+          <th>Decision</th>
+          <th>Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Patient-facing condition summary</td>
+          <td>Use YT-002 + NANOS/ASA language.</td>
+          <td>It is accurate, concise, and matches Eric's right-PCA/left-field presentation.</td>
+        </tr>
+        <tr>
+          <td>Measurement</td>
+          <td>Keep visual field / contrast sensitivity as hard anchors; add daily-function metrics separately.</td>
+          <td>Medical sources emphasize daily difficulties, but objective measurement still needs structured testing.</td>
+        </tr>
+        <tr>
+          <td>Rehab strategy</td>
+          <td>Keep AV training open-loop as planned; do not dilute it with generic "vision therapy" claims.</td>
+          <td>ESO supports compensatory scanning/search for ADL; restorative claims require separate evidence.</td>
+        </tr>
+        <tr>
+          <td>Medication adjuncts</td>
+          <td>Park fluoxetine in clinician-only watchlist.</td>
+          <td>FLUORESCE is acute, small, and not directly applicable to Eric's chronic case.</td>
+        </tr>
+        <tr>
+          <td>Driving / mobility</td>
+          <td>Move to Sprint 2 with Alex Bowers.</td>
+          <td>All sources flag driving/mobility as safety-sensitive; a dedicated function sprint is warranted.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>6. Sources Used</h2>
+    <ul>
+      <li><a href="https://www.youtube.com/watch?v=XietRxh6UWE">YT-002: NANOS — Understanding Homonymous Hemianopia</a></li>
+      <li><a href="https://www.youtube.com/watch?v=FpQiA7xudWc">YT-003: Dr Andrew Lee — New hope for visual field loss from stroke</a></li>
+      <li><a href="https://www.nanosweb.org/homonymoushemianopia/">NANOS Homonymous Hemianopsia patient page</a></li>
+      <li><a href="https://www.stroke.org/en/help-and-support/resource-library/lets-talk-about-stroke/vision-changes">American Stroke Association: Stroke and Vision Changes</a></li>
+      <li><a href="https://www.ncbi.nlm.nih.gov/books/NBK558929/">StatPearls / NCBI Bookshelf: Homonymous Hemianopsia</a></li>
+      <li><a href="https://journals.sagepub.com/doi/10.1177/23969873251314693">European Stroke Organisation 2025 guideline on visual impairment in stroke</a></li>
+      <li><a href="https://journals.lww.com/jneuro-ophthalmology/fulltext/2023/06000/fluoresce__a_pilot_randomized_clinical_trial_of.15.aspx">FLUORESCE pilot randomized clinical trial</a></li>
+    </ul>
+  </section>
+
+  <p class="footer-note">
+    Transcript files were pulled with <code>yt-dlp</code> into <code>/tmp/negletfix-yt</code> and were not committed. This sprint artifact paraphrases short timestamp windows and links back to the original sources.
+  </p>
+</main>
+</body>
+</html>

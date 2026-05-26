@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NegletFix Research Compass — 2026-05-25</title>
+<style>
+  :root {
+    --bg: #fbfbf8;
+    --paper: #ffffff;
+    --ink: #1d1b18;
+    --muted: #5b554d;
+    --faint: #81786d;
+    --line: #e6e0d8;
+    --soft: #f3f0eb;
+    --blue: #0e7490;
+    --blue-soft: #dff6fb;
+    --green: #166534;
+    --green-soft: #dcfce7;
+    --amber: #92400e;
+    --amber-soft: #fef3c7;
+    --red: #991b1b;
+    --red-soft: #fee2e2;
+    --violet: #6d28d9;
+    --violet-soft: #ede9fe;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 56px 28px 88px;
+  }
+
+  header {
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+  }
+
+  .eyebrow {
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.08;
+    margin: 0 0 14px;
+    letter-spacing: 0;
+  }
+
+  .subtitle {
+    max-width: 760px;
+    color: var(--muted);
+    font-size: 19px;
+    margin: 0;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .pill {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    border-radius: 999px;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  h2 {
+    font-size: 25px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    margin: 46px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  h3 {
+    font-size: 18px;
+    line-height: 1.25;
+    margin: 0 0 8px;
+  }
+
+  p { margin: 0 0 14px; }
+  strong { font-weight: 700; }
+
+  .lead-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+    gap: 18px;
+    margin-top: 24px;
+  }
+
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 20px;
+  }
+
+  .condition-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+
+  .condition-table th,
+  .condition-table td {
+    border-bottom: 1px solid var(--line);
+    padding: 10px 0;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .condition-table th {
+    color: var(--faint);
+    font-weight: 700;
+    width: 36%;
+    padding-right: 18px;
+  }
+
+  .condition-table tr:last-child th,
+  .condition-table tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .score-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 12px 0 0;
+  }
+
+  .score {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--soft);
+    padding: 14px;
+  }
+
+  .score .label {
+    color: var(--faint);
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+
+  .score .value {
+    font-size: 25px;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .score .note {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.35;
+    margin-top: 6px;
+  }
+
+  .callout {
+    border-radius: 8px;
+    margin: 18px 0;
+    padding: 16px 18px;
+    font-size: 15px;
+  }
+
+  .callout.blue { background: var(--blue-soft); color: #155e75; border-left: 4px solid var(--blue); }
+  .callout.green { background: var(--green-soft); color: var(--green); border-left: 4px solid var(--green); }
+  .callout.amber { background: var(--amber-soft); color: var(--amber); border-left: 4px solid var(--amber); }
+  .callout.red { background: var(--red-soft); color: var(--red); border-left: 4px solid var(--red); }
+
+  .label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .map {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  .track {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+    min-height: 176px;
+  }
+
+  .track.core { border-top: 4px solid var(--green); }
+  .track.near { border-top: 4px solid var(--blue); }
+  .track.adjunct { border-top: 4px solid var(--violet); }
+  .track.watch { border-top: 4px solid var(--amber); }
+
+  ul {
+    margin: 10px 0 0;
+    padding-left: 20px;
+  }
+
+  li { margin-bottom: 6px; }
+
+  .pipeline {
+    counter-reset: step;
+    display: grid;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .step {
+    position: relative;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px 18px 16px 58px;
+  }
+
+  .step::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 18px;
+    top: 17px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .tag {
+    border: 1px solid var(--line);
+    background: var(--soft);
+    color: var(--muted);
+    border-radius: 999px;
+    padding: 5px 10px;
+    font-size: 13px;
+    font-weight: 650;
+  }
+
+  .source-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 14px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .source-table th,
+  .source-table td {
+    border-bottom: 1px solid var(--line);
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+  }
+
+  .source-table th {
+    background: var(--soft);
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .source-table tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .footer-note {
+    margin-top: 44px;
+    color: var(--faint);
+    font-size: 14px;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+
+  code {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 0.92em;
+  }
+
+  @media (max-width: 760px) {
+    .wrap { padding: 36px 18px 64px; }
+    .lead-grid,
+    .map,
+    .columns,
+    .score-grid {
+      grid-template-columns: 1fr;
+    }
+    .source-table { display: block; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="eyebrow">NegletFix research sidecar</div>
+    <h1>Research Compass</h1>
+    <p class="subtitle">A readable strategy map for monitoring, organizing, and exploring research around Eric's visual rehabilitation project. This complements the Unity / Quest work; it does not replace the wiki as the source of truth.</p>
+    <div class="meta">
+      <span class="pill">Created 2026-05-25</span>
+      <span class="pill">Based on project brain as of 2026-05-16</span>
+      <span class="pill">Not a fresh live literature review</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>1. The Center of the Map</h2>
+    <div class="lead-grid">
+      <div class="card">
+        <h3>Eric's condition, stated precisely</h3>
+        <table class="condition-table">
+          <tr>
+            <th>Primary diagnosis</th>
+            <td>Left homonymous hemianopia.</td>
+          </tr>
+          <tr>
+            <th>Cause</th>
+            <td>Right PCA stroke in July 2021, with a large area of encephalomalacia in the right occipital lobe.</td>
+          </tr>
+          <tr>
+            <th>Main deficit</th>
+            <td>Complete left visual field blindness.</td>
+          </tr>
+          <tr>
+            <th>Important second symptom</th>
+            <td>Bilateral dimness / gray overlay. This is treated as a real rehabilitation target, not a comfort issue.</td>
+          </tr>
+          <tr>
+            <th>Project objective</th>
+            <td>Rehabilitation, measurement, and learning. The app should help test whether targeted audiovisual training can improve measurable function.</td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>Baseline anchor</h3>
+        <p>First validated contrast sensitivity measurement after the hemifield-positioning bug was fixed.</p>
+        <div class="score-grid">
+          <div class="score">
+            <div class="label">Right field</div>
+            <div class="value">2.25</div>
+            <div class="note">Excellent; intact side maxed the test.</div>
+          </div>
+          <div class="score">
+            <div class="label">Left field</div>
+            <div class="value">0.00</div>
+            <div class="note">Could not identify letters even at 100% contrast.</div>
+          </div>
+          <div class="score">
+            <div class="label">Asymmetry</div>
+            <div class="value">2.25</div>
+            <div class="note">Far beyond the 0.30 LogCS clinical-change threshold.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout blue">
+      <div class="label">Working framing</div>
+      The research question is not "can VR help stroke?" in general. The useful question is narrower: can repeated, measured, audiovisual or visual-perceptual training improve detection, reaction time, contrast sensitivity, scanning, or daily function in chronic post-stroke homonymous hemianopia, especially near the left-field scotoma border?
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Research Tracks</h2>
+    <p>Each track should have its own queue, confidence level, and "so what?" decision for NegletFix. This prevents generic neuroscience content from flooding the project.</p>
+
+    <div class="map">
+      <article class="track core">
+        <h3>Core: same condition, same problem</h3>
+        <p>Highest priority. These sources directly affect protocol design, expected outcomes, and measurement.</p>
+        <ul>
+          <li>Post-stroke homonymous hemianopia</li>
+          <li>Visual field defects after PCA / occipital stroke</li>
+          <li>Contrast sensitivity after V1 damage</li>
+          <li>Scotoma-border training</li>
+          <li>Reaction time and functional transfer</li>
+        </ul>
+      </article>
+
+      <article class="track near">
+        <h3>Near: useful mechanisms and delivery</h3>
+        <p>Useful when it informs the training design, but it needs translation back to Eric's case.</p>
+        <ul>
+          <li>Audiovisual / multisensory rehabilitation</li>
+          <li>VR visual rehabilitation</li>
+          <li>Visual perceptual learning</li>
+          <li>Blindsight, superior colliculus, pulvinar, extrastriate routes</li>
+          <li>Home telerehabilitation and adherence</li>
+        </ul>
+      </article>
+
+      <article class="track adjunct">
+        <h3>Adjunct: promising but not the engine</h3>
+        <p>Track carefully, but do not let these replace the evidence-backed audiovisual program.</p>
+        <ul>
+          <li>EEG neurofeedback for stroke and attention</li>
+          <li>Consumer EEG validity, especially Muse TP9 / TP10</li>
+          <li>tDCS / tACS paired with visual training</li>
+          <li>BCI plus rehabilitation task designs</li>
+          <li>Medication adjuncts for clinician discussion only</li>
+        </ul>
+      </article>
+
+      <article class="track watch">
+        <h3>Watchlist: lead sources, not evidence</h3>
+        <p>Good for discovering papers, researchers, talks, or trials. Weak as primary evidence.</p>
+        <ul>
+          <li>YouTube lectures and long interviews</li>
+          <li>X / Twitter posts by labs and clinicians</li>
+          <li>Conference talks and posters</li>
+          <li>Patient stories and rehab-device demos</li>
+          <li>Company claims that need independent verification</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. Questions Worth Hunting</h2>
+    <div class="columns">
+      <div class="card">
+        <h3>Clinical and measurement questions</h3>
+        <ul>
+          <li>What outcomes improve most reliably in chronic hemianopia: contrast sensitivity, reaction time, reading speed, navigation, scanning, or quality of life?</li>
+          <li>How stable is contrast sensitivity over time without training?</li>
+          <li>Which changes exceed test-retest noise and matter in daily life?</li>
+          <li>Does the "gray overlay" map to contrast sensitivity, luminance perception, fatigue, attention, or another visual-processing variable?</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Protocol questions</h3>
+        <ul>
+          <li>Which dose is realistic for chronic stroke: 5 hours, 15 hours, 60 sessions, or more?</li>
+          <li>Should stimuli start near the scotoma border before expanding outward?</li>
+          <li>Do audiovisual pairs need strict synchronization, or is a looser window sufficient?</li>
+          <li>What should we measure every 5 sessions so progress is visible without exhausting Eric?</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Technology questions</h3>
+        <ul>
+          <li>Is Quest 2 good enough for the first 30-session program?</li>
+          <li>Does Quest 3 materially improve contrast, comfort, tracking, or adherence?</li>
+          <li>Can Muse detect a reliable eyes-open vs eyes-closed alpha effect for Eric?</li>
+          <li>If Muse signal quality is weak, should EEG remain informational rather than gating the reward?</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Discovery questions</h3>
+        <ul>
+          <li>Which labs are publishing most actively on hemianopia rehabilitation now?</li>
+          <li>Are there active or upcoming trials that match chronic post-stroke visual field defect?</li>
+          <li>Which YouTube channels or podcasts repeatedly discuss neuroplasticity, visual rehab, BCI, or neuro-ophthalmology?</li>
+          <li>Can long videos reveal useful names, papers, or hypotheses that standard search misses?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Source Pipeline</h2>
+    <p>This is the practical workflow for turning papers, trials, videos, and social posts into organized research instead of scattered bookmarks.</p>
+
+    <div class="pipeline">
+      <div class="step">
+        <h3>Capture</h3>
+        <p>Save the source with URL, title, author / channel, date, source type, and why it looked relevant. Do not summarize yet.</p>
+      </div>
+
+      <div class="step">
+        <h3>Triage</h3>
+        <p>Assign it to one track: core, near, adjunct, or watchlist. If it is generic brain-health content with no clear connection to hemianopia or stroke visual rehab, park it.</p>
+      </div>
+
+      <div class="step">
+        <h3>Extract</h3>
+        <p>Pull only useful claims, timestamps, terms, names, cited papers, protocols, outcome measures, or trial IDs. Long YouTube videos should become timestamped notes, not full prose summaries.</p>
+      </div>
+
+      <div class="step">
+        <h3>Verify</h3>
+        <p>Check medical claims against PubMed, DOI pages, ClinicalTrials.gov, guidelines, or the original paper. X and YouTube can trigger a lead; they should not settle a claim.</p>
+      </div>
+
+      <div class="step">
+        <h3>Organize</h3>
+        <p>Promote verified findings to the wiki if they change project knowledge. Use HTML pages for readable synthesis, diagrams, and decision maps.</p>
+      </div>
+
+      <div class="step">
+        <h3>Decide</h3>
+        <p>Every finding should end with one of four decisions: affects protocol, affects measurement, affects hardware, or interesting but no action yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. YouTube and Transcript Mining</h2>
+    <div class="callout green">
+      <div class="label">Good use case</div>
+      A 9-hour neuroscience video is not a thing to watch linearly. It is a searchable transcript. The goal is to extract timestamps that mention relevant ideas, then use those moments as research leads.
+    </div>
+
+    <div class="columns">
+      <div class="card">
+        <h3>What to extract</h3>
+        <ul>
+          <li>Timestamps where visual field loss, stroke, blindsight, contrast sensitivity, superior colliculus, EEG, neurofeedback, tDCS, tACS, VR rehab, or visual perceptual learning are discussed.</li>
+          <li>Names of researchers, labs, studies, papers, devices, or clinical trials.</li>
+          <li>Claims that are specific enough to verify.</li>
+          <li>Potential new search terms.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>What not to overvalue</h3>
+        <ul>
+          <li>Generic neuroplasticity claims without a paper or population.</li>
+          <li>Motivational recovery stories that do not match chronic occipital stroke.</li>
+          <li>Neurofeedback claims without sham-control evidence.</li>
+          <li>Commercial device claims without independent validation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <table class="source-table">
+      <thead>
+        <tr>
+          <th>Input</th>
+          <th>Process</th>
+          <th>Output</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>YouTube URL with captions</td>
+          <td>Fetch transcript, chunk by timestamp, search using NegletFix terms.</td>
+          <td>Timestamped digest with candidate leads.</td>
+        </tr>
+        <tr>
+          <td>YouTube URL without captions</td>
+          <td>Extract audio, transcribe, then run the same timestamp search.</td>
+          <td>Transcript plus extracted topic moments.</td>
+        </tr>
+        <tr>
+          <td>Interesting timestamp</td>
+          <td>Summarize locally, then verify claims through medical sources.</td>
+          <td>Research note or wiki candidate.</td>
+        </tr>
+        <tr>
+          <td>Channel with many videos</td>
+          <td>Build a queue: title, date, duration, transcript availability, relevance score.</td>
+          <td>Watchlist ranked by likely relevance.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>6. Search Vocabulary</h2>
+    <p>These terms are the seed list for PubMed, Google Scholar, ClinicalTrials.gov, YouTube transcripts, and X account discovery.</p>
+
+    <div class="tag-list">
+      <span class="tag">homonymous hemianopia</span>
+      <span class="tag">post-stroke visual field defect</span>
+      <span class="tag">PCA stroke visual rehabilitation</span>
+      <span class="tag">occipital stroke contrast sensitivity</span>
+      <span class="tag">visual perceptual learning hemianopia</span>
+      <span class="tag">audiovisual training hemianopia</span>
+      <span class="tag">multisensory rehabilitation stroke</span>
+      <span class="tag">blindsight rehabilitation</span>
+      <span class="tag">superior colliculus visual recovery</span>
+      <span class="tag">pulvinar extrastriate pathway</span>
+      <span class="tag">scotoma border training</span>
+      <span class="tag">virtual reality visual field defect</span>
+      <span class="tag">neurofeedback hemianopia</span>
+      <span class="tag">EEG alpha stroke neglect</span>
+      <span class="tag">Muse EEG signal quality</span>
+      <span class="tag">tDCS hemianopia</span>
+      <span class="tag">tACS visual cortex stroke</span>
+      <span class="tag">ClinicalTrials visual field defect stroke</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>7. Organization Model</h2>
+    <table class="source-table">
+      <thead>
+        <tr>
+          <th>Artifact</th>
+          <th>Purpose</th>
+          <th>Where it lives</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Wiki page</td>
+          <td>Stable project knowledge, verified claims, protocol decisions, citations.</td>
+          <td><code>.brain/wiki/</code></td>
+        </tr>
+        <tr>
+          <td>HTML synthesis</td>
+          <td>Readable explanations, strategy maps, diagrams, and decision summaries for Eric.</td>
+          <td><code>docs/research/</code></td>
+        </tr>
+        <tr>
+          <td>Source queue</td>
+          <td>Incoming papers, videos, X leads, trials, channels, and questions waiting for triage.</td>
+          <td>Future file: <code>docs/research/source-queue.md</code> or JSON/CSV.</td>
+        </tr>
+        <tr>
+          <td>Transcript digest</td>
+          <td>Timestamped extraction from long videos or podcasts.</td>
+          <td>Future folder: <code>docs/research/transcripts/</code></td>
+        </tr>
+        <tr>
+          <td>Session note</td>
+          <td>What changed in the project brain after a research pass.</td>
+          <td><code>.brain/sessions/</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>8. Next Useful Moves</h2>
+    <div class="callout amber">
+      <div class="label">Recommended next step</div>
+      Pick one known YouTube channel or one long video that Eric already trusts. Run the transcript pipeline on that single source, produce a timestamped digest, then decide whether the method is worth scaling.
+    </div>
+
+    <div class="columns">
+      <div class="card">
+        <h3>Small first experiment</h3>
+        <ul>
+          <li>Input: one YouTube URL.</li>
+          <li>Output: a compact HTML or markdown digest.</li>
+          <li>Success: at least 3 useful timestamps, names, papers, or search terms.</li>
+          <li>Failure: the source is interesting generally but not useful for NegletFix.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Bigger research pass</h3>
+        <ul>
+          <li>Re-check PubMed and ClinicalTrials.gov for 2025-2026 hemianopia / visual field defect work.</li>
+          <li>Identify active labs and authors, not just papers.</li>
+          <li>Build a watchlist of trials, channels, talks, and X accounts.</li>
+          <li>Promote verified findings into the wiki and readable HTML pages.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>9. Guardrails</h2>
+    <div class="callout red">
+      <div class="label">Medical caution</div>
+      This file is a research organization tool, not medical advice. Protocol, device, medication, stimulation, and clinical decisions should stay grounded in verified evidence and clinician input where appropriate.
+    </div>
+    <ul>
+      <li>Do not let generic neurofeedback content outrank direct hemianopia evidence.</li>
+      <li>Do not treat YouTube, X, or company material as proof.</li>
+      <li>Keep the current Unity path simple: open-loop audiovisual training first, EEG as optional adjunct after signal validation.</li>
+      <li>Separate measured results from hope. The baseline and future contrast sensitivity logs are the anchor.</li>
+    </ul>
+  </section>
+
+  <p class="footer-note">
+    Source context: `.brain/index.json`, `.brain/wiki/erics-baseline.md`, `.brain/wiki/scientific-foundation.md`, `.brain/wiki/audiovisual-training-protocol.md`, `.brain/wiki/eeg-neurofeedback.md`, and the 2026-05-16 session notes. This page should be revised after the first live research or transcript pass.
+  </p>
+</main>
+</body>
+</html>

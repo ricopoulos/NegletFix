@@ -3,7 +3,7 @@
 Compiled knowledge base for the NegletFix project (VR audiovisual + EEG neurofeedback rehabilitation for left homonymous hemianopia). Both a development reference and Eric's personal medical record.
 
 **Last compiled**: 2026-04-14
-**Last research audit**: 2026-05-14 — see [[research-papers-index]] Recent Additions for 20+ new PubMed-verified citations, 3 corrected citation errors, and the Daibert-Nido 2021 reframing.
+**Last research audit**: 2026-05-26 — research-operations sprint added YouTube/X validation ladder, source queue, daily-function tracker, QEEG/tPBM watchlist, and medication doctor brief.
 **Karpathy principle**: *Query, don't load.* Read pages by name as you need them. Do not preload the whole wiki — the whole point is that it lives in files, not in a working-memory dump.
 
 ---
@@ -35,7 +35,7 @@ Cross-links between wiki pages use `[[wikilinks]]`. Code references use `path:li
 | [[rehabilitation-roadmap]] | Honest DONE / NEXT / UNKNOWN progress map; **2026-05-14**: added Namgung 2024/2025 + Raffin 2025 + Diana 2025 to evidence base, downgraded Daibert-Nido expectations | **2026-05-14** | MIXED |
 | [[hardware-setup]] | Quest + Muse + Mind Monitor + Mac, OSC port 5000, troubleshooting table, ~$500 total cost | 2026-04-14 | HIGH |
 | [[research-papers-index]] | Every cited paper — full citation, DOI, key finding, NegletFix relevance; **2026-05-14**: 3 citation corrections (Cuppini→Magosso, Elliott 1990→1991, Robineau 2017→2014) + 20+ new PubMed-verified entries | **2026-05-14** | HIGH (citations now verified) |
-| [[pharmacological-adjuncts]] | Levodopa + Fluoxetine — theoretical adjuncts to AV training; **2026-05-14**: FLUORESCE (NCT02737930) confirmed completed/published 2023, not active | **2026-05-14** | MIXED |
+| [[pharmacological-adjuncts]] | Medication adjuncts and doctor-conversation boundary; **2026-05-26**: refreshed against DARS/ESTREL levodopa evidence and 2024 fluoxetine IPD meta-analysis; no medication promoted for chronic HH recovery | **2026-05-26** | MIXED |
 
 ---
 
@@ -45,7 +45,7 @@ Full entries in [[research-papers-index]]. DOI status:
 - ✓ verified or derived from URL in source files
 - ⚠ flagged `[CITATION NEEDED — verify]` — cited in project without a traceable DOI
 
-Updated 2026-05-14 with PubMed-verified DOIs for previously-`[CITATION NEEDED]` entries and 20+ new papers (see [[research-papers-index]] Recent Additions for the full set).
+Updated 2026-05-26 with medication-adjunct caution entries from the doctor-brief sprint, after the 2026-05-14 PubMed verification audit.
 
 | Author/Year | DOI | Role |
 |-------------|-----|------|
@@ -58,8 +58,11 @@ Updated 2026-05-14 with PubMed-verified DOIs for previously-`[CITATION NEEDED]` 
 | Chen et al. (2026) ★ | JMIR 28:e79132 | BCI meta-analysis, 21 RCTs chronic stroke |
 | Daibert-Nido et al. (2021) | ✓ 10.3389/fneur.2021.680211 | AV home rehab pilot (N=2 pediatric) — *reframed 2026-05-14* |
 | Diana et al. (2025) ★ | ✓ 10.1111/ene.16559 | AV+tDCS RCT chronic HVFD (n=18) |
+| DARS / Ford et al. (2019) | PMID 31122493 | Co-careldopa stroke-rehab caution |
 | Elliott, Bullimore & Bailey (1991) ✱ | ✓ 10.1111/j.1475-1313.1991.tb00368.x | Pelli-Robson reliability (±0.24 LogCS) |
+| ESTREL (2025) | PMID 40982270 | Levodopa stroke-rehab caution |
 | ESO Guideline / Rowe et al. (2025) ★ | PMID 40401755 | First international consensus on post-stroke vision |
+| Fluoxetine IPD meta-analysis (2024) | PMC11298115 | Routine fluoxetine recovery caution |
 | Frontiers (2023) — VR-VET RCT | ✓ 10.3389/fnins.2023.1142663 | VR for neglect (adjacent) |
 | J. NeuroEngineering Rehab (2025) | ✓ 10.1186/s12984-025-01573-4 | Multisensory home telerehab |
 | Laver et al. — Cochrane VR (2025) ★ | ✓ 10.1002/14651858.CD008349.pub5 | Latest Cochrane on VR-stroke |

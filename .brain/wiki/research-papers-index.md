@@ -413,9 +413,39 @@ The following entries were added after the deep research audit on 2026-05-14. Ea
 
 ---
 
+## Fluoxetine Individual Patient Data Meta-analysis (2024) — stroke recovery caution
+
+**Citation**: Individual patient data meta-analysis of the FOCUS, AFFINITY, and EFFECTS randomized trials of fluoxetine after acute stroke.
+**PMCID**: PMC11298115 (added 2026-05-26)
+**Key finding**: Across 5907 recent-stroke patients, fluoxetine did not improve functional recovery and increased adverse events including seizures, fall-injury, fractures, and hyponatremia.
+**Informs**: [[pharmacological-adjuncts]] and `docs/research/medication-neuroplasticity-doctor-brief-2026-05-26.html`.
+**Confidence for NegletFix**: HIGH as a general SSRI recovery caution; LOW for direct HH because the target was broad stroke recovery, not chronic visual field restoration.
+
+---
+
+## DARS Trial (2019) — Co-careldopa stroke rehabilitation caution
+
+**Citation**: Ford GA et al. Safety and efficacy of co-careldopa as an add-on therapy to occupational and physical therapy after stroke (DARS): a randomised, double-blind, placebo-controlled trial.
+**PMID**: 31122493 (added 2026-05-26)
+**Key finding**: Co-careldopa added to rehabilitation did not improve walking recovery versus placebo in a large stroke rehabilitation trial.
+**Informs**: [[pharmacological-adjuncts]].
+**Confidence for NegletFix**: HIGH as motor-stroke adjunct caution; LOW for direct visual transfer.
+
+---
+
+## ESTREL Trial (2025) — Levodopa added to stroke rehabilitation caution
+
+**Citation**: ESTREL randomized clinical trial of levodopa added to stroke rehabilitation.
+**PMID**: 40982270 (added 2026-05-26)
+**Key finding**: Levodopa added to standardized rehabilitation did not reduce the proportion of patients with a modified Rankin Scale score of 3 or more at 90 days and had higher mortality, though not judged treatment-related by investigators.
+**Informs**: [[pharmacological-adjuncts]] and the 2026-05-26 medication doctor brief.
+**Confidence for NegletFix**: HIGH as the latest levodopa rehab caution; LOW for direct visual-field transfer.
+
+---
+
 ## Summary Table
 
-Refreshed 2026-05-14 — all "[CITATION NEEDED]" rows resolved via PubMed verification.
+Refreshed 2026-05-26 — medication-adjunct caution entries added after the doctor-brief sprint; 2026-05-14 audit resolved all prior "[CITATION NEEDED]" rows.
 
 ### Foundational / pre-audit
 | Paper | Year | DOI | Confidence | Primary Use |
@@ -454,6 +484,9 @@ Refreshed 2026-05-14 — all "[CITATION NEEDED]" rows resolved via PubMed verifi
 | Rowland/Bushnell/Duncan/Stein | 2023 | PMID 36604169 | MEDIUM | Chronic AV training in adult stroke (n=2) |
 | Saionz et al. (chronic VF natural hx) | 2025 | PMID 40478590 | HIGH | Natural-history baseline |
 | Saionz et al. (subacute >> chronic) | 2020 | 10.1093/brain/awaa145 | HIGH | The chronic-vs-subacute finding |
+| DARS (co-careldopa) | 2019 | PMID 31122493 | HIGH (caution) | Levodopa adjunct caution |
+| ESTREL (levodopa) | 2025 | PMID 40982270 | HIGH (caution) | Latest levodopa adjunct caution |
+| Fluoxetine IPD meta-analysis | 2024 | PMC11298115 | HIGH (caution) | Routine fluoxetine recovery caution |
 | Scheidtmann et al. (levodopa) | 2001 | PMID 11476841 | MEDIUM | Pharm adjunct anchor |
 | Schneider et al. (FLUORESCE) | 2023 | PMID 36166771 | LOW (acute only) | Fluoxetine pilot (xref) |
 | Treves et al. (consumer NF meta) | 2025 | PMID 40246295 | HIGH (null result) | Consumer-NF reality check |

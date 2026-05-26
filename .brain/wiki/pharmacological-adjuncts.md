@@ -1,11 +1,14 @@
 ---
 title: Pharmacological Adjuncts
-last_updated: 2026-05-14
+last_updated: 2026-05-26
 confidence: MIXED
 sources:
   - compass_artifact_wf-f2397be7-2bde-4899-b1f9-271446d4f3e3_text_markdown.md
   - .brain/sessions/2026-04-27-quest-setup-pharma.md
   - Schneider et al. 2023, J Neuroophthalmol 43(2):237-242 (FLUORESCE / NCT02737930) — PubMed 36166771
+  - docs/research/medication-neuroplasticity-doctor-brief-2026-05-26.html
+  - ESTREL levodopa trial 2025 — PubMed 40982270
+  - Fluoxetine individual patient data meta-analysis — PMC11298115
 ---
 
 # Pharmacological Adjuncts
@@ -22,8 +25,10 @@ See [[rehabilitation-roadmap]]#unknown--at-risk for where this fits in the proje
 
 | Compound | Dose cited | Origin trial | Mechanism | Status for visual rehab |
 |----------|-----------|--------------|-----------|------------------------|
-| **Levodopa (L-DOPA)** | 100 mg | Scheidtmann et al. 2001 (Lancet, motor stroke) | Dopaminergic; hypothesized Nogo-A pathway downregulation → enhanced plasticity | No proven visual efficacy. DARS trial 2019 negative for motor. |
-| **Fluoxetine** | 20 mg/day (FLUORESCE) | FLAME trial 2011 (motor stroke); FOCUS / EFFECTS / AFFINITY 2019 negative replication | SSRI; ↑BDNF | **FLUORESCE pilot (NCT02737930) published 2023**: n=12 completers, 64.4% vs 26.0% perimetry improvement, **p=0.06 (trend, NS)**. Acute-only enrollment (<10 d post-stroke). |
+| **Levodopa (L-DOPA)** | 100 mg in old motor-stroke source material | Scheidtmann et al. 2001 (positive motor trial); DARS 2019 and ESTREL 2025 neutral/negative | Dopaminergic; hypothesized plasticity enhancer | No proven visual efficacy. Newer DARS/ESTREL motor-rehab evidence makes this a low-priority doctor question, not a protocol candidate. |
+| **Fluoxetine** | 20 mg/day (FLUORESCE) | FLAME trial 2011 (motor); FOCUS / EFFECTS / AFFINITY and 2024 IPD meta-analysis negative for routine recovery | SSRI; BDNF/plasticity hypothesis | **FLUORESCE pilot (NCT02737930) published 2023**: n=12 completers, 64.4% vs 26.0% perimetry improvement, **p=0.06 (trend, NS)**. Acute-only enrollment (<10 d post-stroke). Larger general-stroke fluoxetine evidence shows no functional recovery benefit and increased adverse events. |
+
+> **2026-05-26 refresh**: the dedicated doctor-facing brief is now `docs/research/medication-neuroplasticity-doctor-brief-2026-05-26.html`. It reframes the medication conversation away from "neuroplasticity booster" and toward safer clinical questions: medication cleanup, fatigue/sleep/mood barriers, and whether Eric has any true neglect/attention syndrome in addition to homonymous hemianopia.
 
 Source quote (`compass_artifact_wf-f2397be7-2bde-4899-b1f9-271446d4f3e3_text_markdown.md`):
 
@@ -46,7 +51,8 @@ And in the recommendation section of the same artifact:
 ## 2. Why These Are Only Theoretical Here
 
 - **Mechanism is plausible, transfer is not proven.** Both compounds plausibly enhance neuroplasticity. Whether the visual cortex / superior colliculus pathway responds the way M1 does is an open question.
-- **Replication problem.** FLAME (positive for fluoxetine in motor recovery) was followed by three large negative trials (FOCUS, EFFECTS, AFFINITY). The current view is that fluoxetine's stroke-rehab benefit is at best small and condition-specific.
+- **Replication problem.** FLAME (positive for fluoxetine in motor recovery) was followed by three large negative trials (FOCUS, EFFECTS, AFFINITY), and the 2024 individual-patient data meta-analysis found no functional recovery benefit with increased harms. The current view is that fluoxetine should not be treated as a routine stroke-recovery enhancer.
+- **Dopamine caution strengthened.** Scheidtmann 2001 remains the historical levodopa anchor, but DARS 2019 and ESTREL 2025 do not support levodopa/co-careldopa as a reliable rehab enhancer. This weakens the old dopaminergic-adjunct rationale for NegletFix.
 - **Time-window matters.** Scheidtmann's positive levodopa effect was in subacute motor rehab. Eric is **chronic** (>4 years post-stroke as of 2026-04). Saionz et al. 2022 found subacute training is ~6× more effective than chronic — adjunct effects likely scale similarly.
 - **Confound for the project.** If Eric starts an adjunct *and* WIP-001 audiovisual training simultaneously, an eventual LogCS gain can't be attributed to either alone. Sequence matters: train first, measure response, consider adjunct only if plateau is reached.
 
@@ -75,10 +81,10 @@ The audiovisual training itself (Daibert-Nido protocol, see [[audiovisual-traini
 
 **Suggested order if Eric ever wants to try this**:
 
-1. Run the full Daibert-Nido 20-session program first (open-loop, no adjunct)
+1. Run the first full WIP-001 audiovisual training block first (open-loop, no adjunct)
 2. Re-test contrast sensitivity vs. baseline (Left 0.00 LogCS, Right 2.25)
-3. If gains < +0.30 LogCS or plateau hit, *then* discuss with neurologist whether a second 20-session block with levodopa adjunct is reasonable
-4. If trying, single variable change only (don't simultaneously add EEG closed-loop and a drug — can't disentangle)
+3. If gains < +0.30 LogCS or plateau hit, *then* discuss with neurologist whether the issue is fatigue, sleep, mood, medication side effects, or a separate attention/neglect syndrome
+4. If trying any medication change, single variable change only (don't simultaneously add EEG closed-loop and a drug — can't disentangle)
 
 ---
 
@@ -88,13 +94,15 @@ The audiovisual training itself (Daibert-Nido protocol, see [[audiovisual-traini
 - The behavioral protocol any adjunct would augment: [[audiovisual-training-protocol]]
 - Evidence for the Daibert-Nido baseline gains: [[research-papers-index]]
 - Source artifact: `compass_artifact_wf-f2397be7-2bde-4899-b1f9-271446d4f3e3_text_markdown.md` at repo root (untracked, worth filing under `docs/research/`)
+- Doctor-facing brief: `docs/research/medication-neuroplasticity-doctor-brief-2026-05-26.html`
 
 ---
 
 ## 6. Open Items
 
-- [ ] Verify the Scheidtmann 2001 Lancet citation (levodopa + motor rehab) — full DOI
+- [x] ~~Verify the Scheidtmann 2001 Lancet citation (levodopa + motor rehab) — full DOI~~ — resolved 2026-05-14: DOI 10.1016/S0140-6736(01)05456-X, PMID 11476841.
 - [x] ~~Verify NCT02737930 trial status and read-out date~~ — resolved 2026-05-14: FLUORESCE pilot, published *J Neuroophthalmol* 2023; 43(2):237–242, [PubMed 36166771](https://pubmed.ncbi.nlm.nih.gov/36166771/). Trend (p=0.06), acute-only window — see Section 1 callout.
+- [x] ~~Refresh adjunct medication brief against current evidence~~ — resolved 2026-05-26: DARS/ESTREL and 2024 fluoxetine IPD meta-analysis added; doctor-facing HTML brief created.
 - [ ] Watch for larger multicenter FLUORESCE follow-up (Schneider/Mahon/Sahin group, Rochester); none registered as of 2026-05
 - [ ] Decide whether to file the compass artifacts under `docs/research/` with proper names
 - [ ] If interested clinically: prepare a one-page summary for Dr. Jacquemin (the medical brief in `docs/Eric Files/` is a starting template)

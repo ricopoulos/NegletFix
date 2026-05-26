@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprint 4 Paper + Author Discovery - NegletFix</title>
+<style>
+  :root {
+    --bg: #fbfbf8;
+    --paper: #ffffff;
+    --ink: #1d1b18;
+    --muted: #5b554d;
+    --faint: #81786d;
+    --line: #e6e0d8;
+    --soft: #f3f0eb;
+    --blue: #0e7490;
+    --blue-soft: #dff6fb;
+    --green: #166534;
+    --green-soft: #dcfce7;
+    --amber: #92400e;
+    --amber-soft: #fef3c7;
+    --red: #991b1b;
+    --red-soft: #fee2e2;
+    --violet: #6d28d9;
+    --violet-soft: #ede9fe;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  p { margin: 0 0 14px; }
+  strong { font-weight: 760; }
+  code {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 0.92em;
+  }
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 56px 28px 88px;
+  }
+  .doc-header {
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+  }
+  .eyebrow {
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: clamp(32px, 5vw, 46px);
+    line-height: 1.08;
+    margin: 0 0 14px;
+    letter-spacing: 0;
+  }
+  .subtitle {
+    max-width: 880px;
+    color: var(--muted);
+    font-size: 19px;
+    margin: 0;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+  .pill {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    border-radius: 999px;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: 650;
+  }
+  h2 {
+    font-size: 25px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    margin: 46px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  h3 {
+    font-size: 18px;
+    line-height: 1.25;
+    margin: 0 0 8px;
+  }
+  ul { margin: 10px 0 0; padding-left: 20px; }
+  li { margin-bottom: 7px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 14px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th, td {
+    border-bottom: 1px solid var(--line);
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+  }
+  th {
+    background: var(--soft);
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  tr:last-child td { border-bottom: 0; }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+  }
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+  }
+  .metric {
+    font-size: 34px;
+    font-weight: 850;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .muted { color: var(--muted); }
+  .callout {
+    border-radius: 8px;
+    margin: 18px 0;
+    padding: 16px 18px;
+    font-size: 15px;
+  }
+  .callout.blue { background: var(--blue-soft); color: #155e75; border-left: 4px solid var(--blue); }
+  .callout.green { background: var(--green-soft); color: var(--green); border-left: 4px solid var(--green); }
+  .callout.amber { background: var(--amber-soft); color: var(--amber); border-left: 4px solid var(--amber); }
+  .callout.red { background: var(--red-soft); color: var(--red); border-left: 4px solid var(--red); }
+  .callout.violet { background: var(--violet-soft); color: var(--violet); border-left: 4px solid var(--violet); }
+  .label {
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 3px 9px;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .promote { background: var(--green-soft); color: var(--green); }
+  .watch { background: var(--violet-soft); color: var(--violet); }
+  .caution { background: var(--amber-soft); color: var(--amber); }
+  .park { background: var(--red-soft); color: var(--red); }
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .lead-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+  }
+  .lead {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .footer-note {
+    margin-top: 44px;
+    color: var(--faint);
+    font-size: 14px;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+  @media (max-width: 920px) {
+    .wrap { padding: 36px 18px 64px; }
+    .cards, .columns, .lead-grid { grid-template-columns: 1fr; }
+    table { display: block; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="doc-header">
+    <div class="eyebrow">NegletFix validation sprint 4</div>
+    <h1>Paper + Author Discovery</h1>
+    <p class="subtitle">Used the X search topics as discovery prompts, then promoted only traceable papers, clinical trials, author labs, and institutional sources. This sprint updates the research map beyond YouTube.</p>
+    <div class="meta">
+      <span class="pill">Run date: 2026-05-25</span>
+      <span class="pill">Queue items: X-001 + X-002</span>
+      <span class="pill">Status: completed</span>
+      <span class="pill">Traceable links only</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>1. Sprint Result</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="metric">21</div>
+        <p class="muted">traceable paper/trial/lab leads saved.</p>
+      </div>
+      <div class="card">
+        <div class="metric">7</div>
+        <p class="muted">high-priority leads promoted or watched.</p>
+      </div>
+      <div class="card">
+        <div class="metric">5</div>
+        <p class="muted">active or upcoming trials found.</p>
+      </div>
+      <div class="card">
+        <div class="metric">6</div>
+        <p class="muted">research groups to monitor.</p>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <div class="label">Sprint 4 conclusion</div>
+      The research field is active right now. The strongest current branch for NegletFix is still immersive audiovisual training plus careful functional measurement. The newest watch areas are VR/wearable assessment, tDCS/tACS augmentation, head-scan reinforcement, reading questionnaires, and active clinical trials.
+    </div>
+
+    <div class="callout amber">
+      <div class="label">X method result</div>
+      X is useful for finding names, conference posts, and paper links, but posts are not evidence. For Sprint 4, every promoted item has a PubMed, ClinicalTrials.gov, lab, DOI, or institutional link.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>2. The Best New Leads</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Lead</th>
+          <th>Status</th>
+          <th>Why It Matters</th>
+          <th>NegletFix Decision</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://pubmed.ncbi.nlm.nih.gov/41421499/">Alharshan / Alwashmi / Rowe et al. 2026 NeuroImage</a></td>
+          <td><span class="badge promote">Promote</span></td>
+          <td>Directly matches the current direction: immersive AV training in post-stroke HH, 30 min/day, 5 days/week, 6 weeks, n=15, reaction-time improvement plus DTI/functional-connectivity changes.</td>
+          <td>Use as the current strongest direct bridge from protocol to mechanism. Keep expectations modest: RT/plasticity evidence, not full restoration guarantee.</td>
+        </tr>
+        <tr>
+          <td><a href="https://pubmed.ncbi.nlm.nih.gov/41930466/">Fayed et al. 2026 review on post-stroke visual field assessment and emerging tech</a></td>
+          <td><span class="badge promote">Promote</span></td>
+          <td>Fresh review covering perimetry, substitution, eye-movement therapy, restitution, brain stimulation, VR, and wearable technologies.</td>
+          <td>Use as the umbrella roadmap citation for why NegletFix should combine objective testing, VR tasks, and cautious claims.</td>
+        </tr>
+        <tr>
+          <td><a href="https://clinicaltrials.gov/study/NCT07317739">NCT07317739: bedside screening + early multisensory AV rehab</a></td>
+          <td><span class="badge watch">Watch</span></td>
+          <td>Not-yet-recruiting 2026 study on post-stroke visual-field screening and multisensory AV stimulation.</td>
+          <td>Monitor for protocol and outcomes. This is close to NegletFix's AV branch, but earlier-stage stroke.</td>
+        </tr>
+        <tr>
+          <td><a href="https://clinicaltrials.gov/study/NCT07358832">NCT07358832: tDCS + audiovisual training</a></td>
+          <td><span class="badge watch">Watch</span></td>
+          <td>Recruiting 2026-2029 trial combining tDCS and AV training for subacute visual field deficits after stroke.</td>
+          <td>Strong future research watch. Do not add stimulation to home protocol without clinician/research setting.</td>
+        </tr>
+        <tr>
+          <td><a href="https://pubmed.ncbi.nlm.nih.gov/42140549/">Bowers Lab 2026 head-scan reinforcement training</a></td>
+          <td><span class="badge caution">Promote with caution</span></td>
+          <td>Three 1-hour driving-simulator sessions improved proactive blind-side scanning and blind-side hazard detection in a small single-arm study.</td>
+          <td>Useful for future Quest functional scanning tasks. Not driving clearance and not restorative field recovery.</td>
+        </tr>
+        <tr>
+          <td><a href="https://pubmed.ncbi.nlm.nih.gov/40083185/">SEARCH 2025 scanning RCT</a></td>
+          <td><span class="badge caution">Caution anchor</span></td>
+          <td>Large RCT: both visual scanning training and sham groups improved, with no significant between-group difference.</td>
+          <td>Prevents overclaiming generic scanning/search therapy. Measure outcomes; don't assume benefit.</td>
+        </tr>
+        <tr>
+          <td><a href="https://pubmed.ncbi.nlm.nih.gov/39120230/">Hemianopia Reading Questionnaire 2024</a></td>
+          <td><span class="badge promote">Promote</span></td>
+          <td>New self-report tool focused on reading difficulty in homonymous visual field defects.</td>
+          <td>Potential upgrade path for Sprint 3's reading-effort tracker.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>3. Active Trials To Monitor</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Trial</th>
+          <th>Status</th>
+          <th>Dates</th>
+          <th>Relevance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://clinicaltrials.gov/study/NCT07317739">NCT07317739</a> - Screening and Rehabilitation of Visual Field Defects in Post-Stroke Patients</td>
+          <td>Not yet recruiting</td>
+          <td>2026-01 to 2027-03</td>
+          <td>Early multisensory AV stimulation plus bedside visual-field testing.</td>
+        </tr>
+        <tr>
+          <td><a href="https://clinicaltrials.gov/study/NCT07358832">NCT07358832</a> - Neuromodulation Through Multisensory Stimulation</td>
+          <td>Recruiting</td>
+          <td>2026-02 to 2029-01</td>
+          <td>tDCS plus audiovisual training in subacute HH after stroke.</td>
+        </tr>
+        <tr>
+          <td><a href="https://clinicaltrials.gov/study/NCT06578117">NCT06578117</a> - Statistical Learning as a Novel Intervention for Cortical Blindness</td>
+          <td>Enrolling by invitation</td>
+          <td>2024-11 to 2027-10</td>
+          <td>University of Rochester visual learning branch for cortical blindness / occipital stroke.</td>
+        </tr>
+        <tr>
+          <td><a href="https://clinicaltrials.gov/study/NCT07185971">NCT07185971</a> - PAVE VR headset treatment</td>
+          <td>Recruiting</td>
+          <td>2026-03 to 2026-08</td>
+          <td>Commercial/device VR treatment for chronic visual field loss. Watch, but keep separate from NegletFix claims.</td>
+        </tr>
+        <tr>
+          <td><a href="https://clinicaltrials.gov/study/NCT04827147">NCT04827147</a> - Multi-Periscopic Prism Glasses</td>
+          <td>Active, not recruiting</td>
+          <td>2022-10 to 2026-04</td>
+          <td>Prism compensation branch; useful for clinician/accommodation pathway.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>4. Active Authors And Labs</h2>
+    <div class="lead-grid">
+      <div class="lead">
+        <h3><a href="https://www.liverpool.ac.uk/people/fiona-rowe/research">Fiona Rowe / University of Liverpool</a></h3>
+        <p>VISION, IVIS, SEARCH, HABIT, stroke-vision pathway work. High-value source for clinical services, patient impact, and implementation reality.</p>
+      </div>
+      <div class="lead">
+        <h3><a href="https://www.urmc.rochester.edu/eye-institute/research/labs/huxlin">Huxlin Lab / University of Rochester</a></h3>
+        <p>Cortical blindness, occipital stroke, VPL, attention/cueing, persistence of recovery, and active statistical-learning trial.</p>
+      </div>
+      <div class="lead">
+        <h3><a href="https://research.bidmc.org/bowerslab/GetInvolved">Bowers Lab / Schepens</a></h3>
+        <p>Functional mobility and driving-simulator work: hazard detection, scanning, head-scan training, prisms, and visual-field-loss compensation.</p>
+      </div>
+      <div class="lead">
+        <h3><a href="https://pubmed.ncbi.nlm.nih.gov/36604169/">Wake Forest multisensory group</a></h3>
+        <p>Rowland, Bushnell, Duncan, Stein. Core multisensory hemianopia training lineage. Important for AV mechanism and protocol genealogy.</p>
+      </div>
+      <div class="lead">
+        <h3><a href="https://pubmed.ncbi.nlm.nih.gov/39607286/">Bolognini / Diana / Auxologico-Milan line</a></h3>
+        <p>Audio-visual training plus tDCS, with active neuromodulation trial. Strong watchlist branch, but not home-use ready.</p>
+      </div>
+      <div class="lead">
+        <h3><a href="https://pubmed.ncbi.nlm.nih.gov/41243213/">Raffin / Bevilacqua / Guggisberg / Huxlin / Hummel line</a></h3>
+        <p>Advanced cross-frequency brain stimulation plus perceptual training. Scientifically interesting, specialized lab branch.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>5. X Search Workflow</h2>
+    <div class="columns">
+      <div class="card">
+        <h3>Monthly Searches</h3>
+        <ul>
+          <li><a href="https://x.com/search?q=%22homonymous%20hemianopia%22%20stroke%20filter%3Alinks&amp;src=typed_query&amp;f=live">"homonymous hemianopia" stroke filter:links</a></li>
+          <li><a href="https://x.com/search?q=%22visual%20field%20defect%22%20stroke%20rehabilitation%20filter%3Alinks&amp;src=typed_query&amp;f=live">"visual field defect" stroke rehabilitation filter:links</a></li>
+          <li><a href="https://x.com/search?q=%22hemianopia%22%20%22ClinicalTrials.gov%22%20filter%3Alinks&amp;src=typed_query&amp;f=live">"hemianopia" "ClinicalTrials.gov" filter:links</a></li>
+          <li><a href="https://x.com/search?q=%22hemianopia%22%20%22PubMed%22%20filter%3Alinks&amp;src=typed_query&amp;f=live">"hemianopia" "PubMed" filter:links</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Acceptance Rule</h3>
+        <p>Accept a lead only if the post points to a DOI, PMID, ClinicalTrials.gov record, institution, conference abstract, lab page, or guideline. The post itself is a pointer, not evidence.</p>
+        <p>Search author names from this sprint: Fiona Rowe, Krystel Huxlin, Matthew Cavanaugh, Alex Bowers, Nadia Bolognini, Lorenzo Diana, Benjamin Rowland, Kholoud Alwashmi, Fahad Alharshan.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>6. What Changes For NegletFix</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Decision</th>
+          <th>Reason</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Keep AV/VR as the main branch</td>
+          <td>The 2026 NeuroImage study and active 2026 trials reinforce AV/VR as a live research direction.</td>
+          <td>Continue toward Unity smoke test and 30-session AV protocol.</td>
+        </tr>
+        <tr>
+          <td>Add a monthly literature watch</td>
+          <td>The field is moving fast enough that a static wiki will become stale.</td>
+          <td>Run PubMed + ClinicalTrials + X query scan monthly; save only traceable links.</td>
+        </tr>
+        <tr>
+          <td>Use SEARCH as a humility anchor</td>
+          <td>Large sham-controlled scanning RCT was not clearly positive over sham.</td>
+          <td>Avoid broad claims like "scanning training works." Measure Eric's own data.</td>
+        </tr>
+        <tr>
+          <td>Keep stimulation separate</td>
+          <td>tDCS/tACS studies are promising but specialized and clinician/research setting only.</td>
+          <td>Watch, document, and maybe discuss with clinicians; do not build into current home protocol.</td>
+        </tr>
+        <tr>
+          <td>Upgrade Sprint 3 later with HRQ</td>
+          <td>The Hemianopia Reading Questionnaire is a more formal reading-function source.</td>
+          <td>Use HRQ concepts to refine the reading-effort tracker after the first few sessions.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>7. Saved Lead List</h2>
+    <div class="callout blue">
+      <div class="label">CSV output</div>
+      The full lead list is saved as <a href="sprint-4-paper-author-discovery-2026-05-25.csv">sprint-4-paper-author-discovery-2026-05-25.csv</a>.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>8. Sources Used</h2>
+    <ul>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/41930466/">Assessment and Rehabilitation of Post-Stroke Visual Field Impairments: Current Approaches and Emerging Technologies</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/41421499/">Functional and structural adaptations following immersive audiovisual training in post-stroke hemianopia</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/42140549/">Reinforcement-Based Head-Scan Training for Drivers with Homonymous Visual Field Loss</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/40083185/">SEARCH randomized controlled trial</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/39607286/">Enhancing multisensory rehabilitation with tDCS</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/41243213/">Boosting hemianopia recovery with interareal cross-frequency stimulation</a></li>
+      <li><a href="https://clinicaltrials.gov/study/NCT07317739">NCT07317739</a>, <a href="https://clinicaltrials.gov/study/NCT07358832">NCT07358832</a>, <a href="https://clinicaltrials.gov/study/NCT06578117">NCT06578117</a>, <a href="https://clinicaltrials.gov/study/NCT07185971">NCT07185971</a>, <a href="https://clinicaltrials.gov/study/NCT04827147">NCT04827147</a></li>
+      <li><a href="https://www.liverpool.ac.uk/people/fiona-rowe/research">Fiona Rowe research page</a>, <a href="https://www.urmc.rochester.edu/eye-institute/research/labs/huxlin">Huxlin Lab</a>, <a href="https://research.bidmc.org/bowerslab/GetInvolved">Bowers Laboratory</a></li>
+    </ul>
+  </div>
+
+  <p class="footer-note">Prepared as research triage, not medical advice. X is used as a discovery channel only; clinical decisions require clinician review and primary medical sources.</p>
+</div>
+</body>
+</html>

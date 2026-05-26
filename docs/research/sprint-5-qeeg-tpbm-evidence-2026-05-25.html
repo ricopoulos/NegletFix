@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprint 5 QEEG + tPBM Evidence - NegletFix</title>
+<style>
+  :root {
+    --bg: #fbfbf8;
+    --paper: #ffffff;
+    --ink: #1d1b18;
+    --muted: #5b554d;
+    --faint: #81786d;
+    --line: #e6e0d8;
+    --soft: #f3f0eb;
+    --blue: #0e7490;
+    --blue-soft: #dff6fb;
+    --green: #166534;
+    --green-soft: #dcfce7;
+    --amber: #92400e;
+    --amber-soft: #fef3c7;
+    --red: #991b1b;
+    --red-soft: #fee2e2;
+    --violet: #6d28d9;
+    --violet-soft: #ede9fe;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  p { margin: 0 0 14px; }
+  strong { font-weight: 760; }
+  code {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 0.92em;
+  }
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 56px 28px 88px;
+  }
+  .doc-header {
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+  }
+  .eyebrow {
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: clamp(32px, 5vw, 46px);
+    line-height: 1.08;
+    margin: 0 0 14px;
+    letter-spacing: 0;
+  }
+  .subtitle {
+    max-width: 880px;
+    color: var(--muted);
+    font-size: 19px;
+    margin: 0;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+  .pill {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    border-radius: 999px;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: 650;
+  }
+  h2 {
+    font-size: 25px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    margin: 46px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  h3 {
+    font-size: 18px;
+    line-height: 1.25;
+    margin: 0 0 8px;
+  }
+  ul { margin: 10px 0 0; padding-left: 20px; }
+  li { margin-bottom: 7px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 14px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th, td {
+    border-bottom: 1px solid var(--line);
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+  }
+  th {
+    background: var(--soft);
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  tr:last-child td { border-bottom: 0; }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+  }
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+  }
+  .metric {
+    font-size: 34px;
+    font-weight: 850;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .muted { color: var(--muted); }
+  .callout {
+    border-radius: 8px;
+    margin: 18px 0;
+    padding: 16px 18px;
+    font-size: 15px;
+  }
+  .callout.blue { background: var(--blue-soft); color: #155e75; border-left: 4px solid var(--blue); }
+  .callout.green { background: var(--green-soft); color: var(--green); border-left: 4px solid var(--green); }
+  .callout.amber { background: var(--amber-soft); color: var(--amber); border-left: 4px solid var(--amber); }
+  .callout.red { background: var(--red-soft); color: var(--red); border-left: 4px solid var(--red); }
+  .callout.violet { background: var(--violet-soft); color: var(--violet); border-left: 4px solid var(--violet); }
+  .label {
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 3px 9px;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .promote { background: var(--green-soft); color: var(--green); }
+  .watch { background: var(--violet-soft); color: var(--violet); }
+  .caution { background: var(--amber-soft); color: var(--amber); }
+  .park { background: var(--red-soft); color: var(--red); }
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .episode {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    margin: 16px 0;
+    padding: 18px;
+  }
+  .episode-title {
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin: 0 0 5px;
+  }
+  .timestamp-list {
+    display: grid;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .timestamp {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  .timestamp a {
+    font-weight: 800;
+    margin-right: 8px;
+  }
+  .footer-note {
+    margin-top: 44px;
+    color: var(--faint);
+    font-size: 14px;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+  @media (max-width: 920px) {
+    .wrap { padding: 36px 18px 64px; }
+    .cards, .columns { grid-template-columns: 1fr; }
+    table { display: block; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="doc-header">
+    <div class="eyebrow">NegletFix validation sprint 5</div>
+    <h1>QEEG + tPBM Evidence Check</h1>
+    <p class="subtitle">Final sprint for the first research cycle. This checks the QEEG-guided laser idea from episode 404, the qEEG/PBM case-study video, the Margaret Naeser PBM lead, and the X query for traceable evidence.</p>
+    <div class="meta">
+      <span class="pill">Run date: 2026-05-25</span>
+      <span class="pill">Queue items: YT-012 to YT-014 + X-003</span>
+      <span class="pill">Status: completed</span>
+      <span class="pill">Decision: watchlist only</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>1. Sprint Result</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="metric">3</div>
+        <p class="muted">videos extracted for QEEG/tPBM claims.</p>
+      </div>
+      <div class="card">
+        <div class="metric">10</div>
+        <p class="muted">medical sources checked.</p>
+      </div>
+      <div class="card">
+        <div class="metric">1</div>
+        <p class="muted">active stroke-PBM trial found.</p>
+      </div>
+      <div class="card">
+        <div class="metric">0</div>
+        <p class="muted">direct HH QEEG-guided tPBM evidence found.</p>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <div class="label">What is real</div>
+      Transcranial photobiomodulation is a real research area. It has plausible mechanisms, human physiology evidence, stroke reviews, some early clinical trials, and named researchers such as Margaret Naeser.
+    </div>
+
+    <div class="callout red">
+      <div class="label">What is not ready</div>
+      QEEG-guided tPBM targeting for Eric's chronic left homonymous hemianopia is not ready for NegletFix. I found no strong independent evidence that a QEEG map can decide where to point a laser to restore visual field or contrast after right occipital/PCA stroke.
+    </div>
+
+    <div class="callout amber">
+      <div class="label">Decision</div>
+      Keep QEEG/tPBM as a monitored research branch. Do not change the open-loop AV protocol, do not buy a laser device, and do not treat Muse EEG as a QEEG targeting map.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>2. QEEG vs EEG</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Term</th>
+          <th>Meaning</th>
+          <th>NegletFix Interpretation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>EEG</td>
+          <td>Electrical brain activity recorded from electrodes. Clinical EEG starts with raw waveform review, artifact control, and expert interpretation.</td>
+          <td>Muse EEG is a limited consumer signal. Useful for experiments, not clinical mapping.</td>
+        </tr>
+        <tr>
+          <td>QEEG</td>
+          <td>Quantitative EEG: computer analysis of EEG signals, often including spectral power, frequency bands, asymmetry, coherence, topographic maps, or comparisons to normative databases.</td>
+          <td>QEEG is analysis of EEG, not a magical new signal. It can generate maps, but those maps still depend on data quality, artifact removal, assumptions, and expert interpretation.</td>
+        </tr>
+        <tr>
+          <td>QEEG-guided treatment</td>
+          <td>A practitioner uses QEEG-derived patterns to choose a treatment target or protocol.</td>
+          <td>This is the claim that needs evidence. For QEEG-guided tPBM in chronic stroke hemianopia, it stays unproven.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout blue">
+      <div class="label">Guardrail</div>
+      ACNS guidance treats QEEG as a specialized adjunct requiring qualified acquisition and raw EEG review. For NegletFix, QEEG should never be accepted as a standalone diagnosis, a sales report, or a targeting oracle.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>3. Video Findings</h2>
+
+    <div class="episode">
+      <p class="episode-title"><a href="https://www.youtube.com/watch?v=JJOZjfpJaZs">YT-012: Recovery After Stroke 404</a></p>
+      <p class="muted">Good for the question Eric noticed: "EEG vs QEEG to map where to point their laser." Weak as evidence because it is anecdotal and dramatic.</p>
+      <div class="timestamp-list">
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=JJOZjfpJaZs&amp;t=83s">1:23</a> Introduces QEEG-guided transcranial photobiomodulation as laser therapy targeted by a functional brain map.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=JJOZjfpJaZs&amp;t=720s">12:00</a> Guest says QEEG indicated where to point the laser in a facial-blindness case story.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=JJOZjfpJaZs&amp;t=1176s">19:36</a> Describes a 19-site quantitative EEG plus computational analysis.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=JJOZjfpJaZs&amp;t=3389s">56:29</a> Guest says QEEG-guided tPBM is not readily available.</div>
+      </div>
+      <p><strong>Verdict:</strong> park the dramatic treatment claim. Keep the concept question: could a future clinical mapping layer guide stimulation better than consumer EEG?</p>
+    </div>
+
+    <div class="episode">
+      <p class="episode-title"><a href="https://www.youtube.com/watch?v=PhO5YKgu_jg">YT-013: tPBM and qEEG guided protocol for stroke rehabilitation</a></p>
+      <p class="muted">Directly relevant title, but appears to be a case-study / technical presentation rather than independent validation.</p>
+      <div class="timestamp-list">
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=PhO5YKgu_jg&amp;t=46s">0:46</a> Presenter frames the talk as QEEG-guided photobiomodulation for stroke rehabilitation.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=PhO5YKgu_jg&amp;t=529s">8:49</a> Discusses continuous versus pulsed PBM and choosing patient-specific pulse frequencies.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=PhO5YKgu_jg&amp;t=770s">12:50</a> Compares QEEG-guided protocol selection to stimulation protocol selection.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=PhO5YKgu_jg&amp;t=1881s">31:21</a> Shows baseline EEG/QEEG and source-level EEG activation in a stroke case.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=PhO5YKgu_jg&amp;t=2914s">48:34</a> Reports maintained improvement in one presented case after a pause.</div>
+      </div>
+      <p><strong>Verdict:</strong> watch only. This generates clinician/research questions, not protocol changes.</p>
+    </div>
+
+    <div class="episode">
+      <p class="episode-title"><a href="https://www.youtube.com/watch?v=ZOigoWyAOYo">YT-014: Interview with Dr Margaret Naeser on brain photobiomodulation</a></p>
+      <p class="muted">Best of the three for named researcher credibility, but the main evidence is TBI/cognition/aphasia, not hemianopia restoration.</p>
+      <div class="timestamp-list">
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=ZOigoWyAOYo&amp;t=68s">1:08</a> Naeser describes initial skepticism and the idea that photons could be delivered into the brain from scalp-applied laser or LED.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=ZOigoWyAOYo&amp;t=92s">1:32</a> Mentions early transcranial LED work for traumatic brain injury cognition.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=ZOigoWyAOYo&amp;t=348s">5:48</a> Explains mitochondrial / nitric oxide / ATP mechanism framing.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=ZOigoWyAOYo&amp;t=430s">7:10</a> Discusses LED treatments over six weeks in football players / CTE-related cognitive context.</div>
+      </div>
+      <p><strong>Verdict:</strong> keep Naeser as a real PBM researcher lead, but separate her TBI/aphasia evidence from Eric's HH visual-field target.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>4. Evidence Map</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Question</th>
+          <th>Evidence Found</th>
+          <th>Decision</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Can tPBM affect brain physiology?</td>
+          <td>Yes, plausible. Human physiology work with 1064-nm laser reports changes in oxygenated hemoglobin and oxidized cytochrome c oxidase.</td>
+          <td><span class="badge promote">Supported mechanism</span></td>
+        </tr>
+        <tr>
+          <td>Is tPBM being studied for stroke?</td>
+          <td>Yes. Stroke-specific reviews and trials exist. One 2026 chronic ischemic stroke sham-controlled trial found no significant NIHSS advantage, while a 2025 post-stroke cognitive impairment study reported positive cognitive/neuropsychiatric outcomes.</td>
+          <td><span class="badge caution">Mixed clinical evidence</span></td>
+        </tr>
+        <tr>
+          <td>Does Naeser have real PBM publications?</td>
+          <td>Yes. Naeser has papers in chronic TBI and a chronic stroke aphasia case series with fMRI connectivity changes.</td>
+          <td><span class="badge watch">Real but adjacent</span></td>
+        </tr>
+        <tr>
+          <td>Is there strong evidence for tPBM restoring homonymous hemianopia?</td>
+          <td>No direct strong evidence found in this sprint.</td>
+          <td><span class="badge park">Not promoted</span></td>
+        </tr>
+        <tr>
+          <td>Is QEEG-guided tPBM targeting validated for chronic post-stroke HH?</td>
+          <td>No strong independent evidence found. The available videos are case-level or practitioner-level claims.</td>
+          <td><span class="badge park">Parked</span></td>
+        </tr>
+        <tr>
+          <td>Should NegletFix use Muse EEG as a QEEG map?</td>
+          <td>No. Muse is not clinical-grade multi-channel QEEG and cannot replace qualified EEG/QEEG acquisition, artifact review, and interpretation.</td>
+          <td><span class="badge park">Do not do</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>5. Clinical Trial Watch</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Trial</th>
+          <th>Status</th>
+          <th>Relevance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://clinicaltrials.gov/study/NCT07323823">NCT07323823</a> - Effect of PBM on electrical activity of the brain in stroke patients</td>
+          <td>Not yet recruiting, planned 2025-12-31 to 2026-12-31</td>
+          <td>Post-stroke aphasia, PBM, electrical activity. Useful for EEG/PBM methods, but not hemianopia.</td>
+        </tr>
+        <tr>
+          <td><a href="https://clinicaltrials.gov/study/NCT05497791">NCT05497791</a> - Stroke, Measurement and Rehabilitation</td>
+          <td>Completed</td>
+          <td>Transcranial laser stimulation plus neuromuscular electrical stimulation. General stroke rehab, not visual field.</td>
+        </tr>
+        <tr>
+          <td><a href="https://clinicaltrials.gov/study/NCT03751306">NCT03751306</a> - Aerobic exercise and transcranial low laser therapy</td>
+          <td>Unknown</td>
+          <td>Mixed CNS injury population; broad rehabilitation focus.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>6. What Gets Promoted</h2>
+    <div class="columns">
+      <div class="callout green">
+        <div class="label">Promote</div>
+        tPBM is a real research watchlist branch. It may be worth monitoring for stroke, aphasia, cognition, and electrical/physiology outcomes.
+      </div>
+      <div class="callout amber">
+        <div class="label">Watch</div>
+        QEEG may be useful in expert clinical neurophysiology settings, but only with high-quality EEG, raw review, artifact control, and a validated clinical question.
+      </div>
+      <div class="callout red">
+        <div class="label">Park</div>
+        QEEG-guided laser targeting for Eric's visual field, any "one session fixed it" claim, and any home-device purchase decision.
+      </div>
+      <div class="callout blue">
+        <div class="label">Keep Doing</div>
+        Continue the AV/VR path from Sprint 4 and use the daily tracker from Sprint 3. That path is more directly tied to hemianopia and Eric's current Unity build.
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>7. If This Branch Reopens</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Requirement</th>
+          <th>Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Target condition must include stroke visual field loss, HH, occipital stroke, or post-chiasmatic visual pathway damage.</td>
+          <td>TBI cognition, aphasia, and Parkinson's are not enough to infer benefit for Eric's left visual field.</td>
+        </tr>
+        <tr>
+          <td>Study should be controlled or at least independently replicated.</td>
+          <td>Case reports and device presentations are vulnerable to placebo, regression to the mean, and selection bias.</td>
+        </tr>
+        <tr>
+          <td>Dose/device details must be clear: wavelength, power, irradiance, fluence, pulse frequency, placement, schedule, and adverse events.</td>
+          <td>PBM effects are parameter-dependent. "Laser therapy" is too vague.</td>
+        </tr>
+        <tr>
+          <td>QEEG methods must include raw EEG review, montage, recording length, artifact handling, normative database, and qualified interpreter.</td>
+          <td>QEEG maps are only as good as the signal and assumptions behind them.</td>
+        </tr>
+        <tr>
+          <td>Outcome must include visual-field, contrast, reaction-time, reading, or daily-function measures.</td>
+          <td>General mood or cognition gains do not answer the NegletFix question.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>8. Saved Lead List</h2>
+    <div class="callout blue">
+      <div class="label">CSV output</div>
+      Full Sprint 5 evidence list: <a href="sprint-5-qeeg-tpbm-evidence-2026-05-25.csv">sprint-5-qeeg-tpbm-evidence-2026-05-25.csv</a>.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>9. Sources Used</h2>
+    <ul>
+      <li><a href="https://www.youtube.com/watch?v=JJOZjfpJaZs">Recovery After Stroke 404: QEEG-guided laser story</a></li>
+      <li><a href="https://www.youtube.com/watch?v=PhO5YKgu_jg">tPBM and qEEG guided photobiomodulation protocol</a></li>
+      <li><a href="https://www.youtube.com/watch?v=ZOigoWyAOYo">Interview with Dr Margaret Naeser on brain photobiomodulation</a></li>
+      <li><a href="https://www.acns.org/practice/guidelines/quantitative-eeg">ACNS quantitative EEG guideline resources</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/34038930/">ACNS qEEG guideline for mild traumatic brain injury</a></li>
+      <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11653948/">Potential and Challenges of Transcranial Photobiomodulation for the Treatment of Stroke</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/41550744/">Application of non-invasive transcranial photobiomodulation in ischemic stroke</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/42110828/">Transcranial near-infrared laser therapy in chronic ischemic stroke: sham-controlled trial</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/41383236/">Red-light PBM in post-stroke cognitive impairment randomized trial</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/31621498/">Naeser et al. chronic stroke aphasia tPBM case series</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/28001756/">Naeser et al. chronic TBI tPBM review and clinical work</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/32173886/">1064-nm tPBM human cerebral metabolism study</a></li>
+      <li><a href="https://clinicaltrials.gov/study/NCT07323823">NCT07323823: PBM and brain electrical activity in stroke patients</a></li>
+    </ul>
+  </div>
+
+  <p class="footer-note">Prepared as research triage, not medical advice. QEEG/tPBM should be discussed only with qualified clinicians or legitimate research teams, and it does not change the current NegletFix AV/VR protocol.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprint 3 Daily Function Tracker - NegletFix</title>
+<style>
+  :root {
+    --bg: #fbfbf8;
+    --paper: #ffffff;
+    --ink: #1d1b18;
+    --muted: #5b554d;
+    --faint: #81786d;
+    --line: #e6e0d8;
+    --soft: #f3f0eb;
+    --blue: #0e7490;
+    --blue-soft: #dff6fb;
+    --green: #166534;
+    --green-soft: #dcfce7;
+    --amber: #92400e;
+    --amber-soft: #fef3c7;
+    --red: #991b1b;
+    --red-soft: #fee2e2;
+    --violet: #6d28d9;
+    --violet-soft: #ede9fe;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  p { margin: 0 0 14px; }
+  strong { font-weight: 760; }
+  code {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 0.92em;
+  }
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 56px 28px 88px;
+  }
+  .doc-header {
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 36px;
+    padding-bottom: 28px;
+  }
+  .eyebrow {
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: clamp(32px, 5vw, 46px);
+    line-height: 1.08;
+    margin: 0 0 14px;
+    letter-spacing: 0;
+  }
+  .subtitle {
+    max-width: 860px;
+    color: var(--muted);
+    font-size: 19px;
+    margin: 0;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+  }
+  .pill {
+    border: 1px solid var(--line);
+    background: var(--paper);
+    border-radius: 999px;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: 650;
+  }
+  h2 {
+    font-size: 25px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    margin: 46px 0 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  h3 {
+    font-size: 18px;
+    line-height: 1.25;
+    margin: 0 0 8px;
+  }
+  ul { margin: 10px 0 0; padding-left: 20px; }
+  li { margin-bottom: 7px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 14px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  th, td {
+    border-bottom: 1px solid var(--line);
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+  }
+  th {
+    background: var(--soft);
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  tr:last-child td { border-bottom: 0; }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+  }
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+  }
+  .metric {
+    font-size: 34px;
+    font-weight: 850;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .muted { color: var(--muted); }
+  .callout {
+    border-radius: 8px;
+    margin: 18px 0;
+    padding: 16px 18px;
+    font-size: 15px;
+  }
+  .callout.blue { background: var(--blue-soft); color: #155e75; border-left: 4px solid var(--blue); }
+  .callout.green { background: var(--green-soft); color: var(--green); border-left: 4px solid var(--green); }
+  .callout.amber { background: var(--amber-soft); color: var(--amber); border-left: 4px solid var(--amber); }
+  .callout.red { background: var(--red-soft); color: var(--red); border-left: 4px solid var(--red); }
+  .callout.violet { background: var(--violet-soft); color: var(--violet); border-left: 4px solid var(--violet); }
+  .label {
+    font-size: 11px;
+    font-weight: 850;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 3px 9px;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .verified { background: var(--green-soft); color: var(--green); }
+  .watch { background: var(--violet-soft); color: var(--violet); }
+  .caution { background: var(--amber-soft); color: var(--amber); }
+  .episode {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    margin: 16px 0;
+    padding: 18px;
+  }
+  .episode-header {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+  }
+  .episode-title {
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin: 0 0 5px;
+  }
+  .timestamp-list {
+    display: grid;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .timestamp {
+    background: var(--soft);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  .timestamp a {
+    font-weight: 800;
+    margin-right: 8px;
+  }
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  .tracker-preview {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+    margin-top: 16px;
+  }
+  .score-row {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 12px;
+    border-bottom: 1px solid var(--line);
+    padding: 10px 0;
+  }
+  .score-row:last-child { border-bottom: 0; }
+  .score {
+    font-weight: 850;
+    color: var(--blue);
+  }
+  .footer-note {
+    margin-top: 44px;
+    color: var(--faint);
+    font-size: 14px;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+  @media (max-width: 880px) {
+    .wrap { padding: 36px 18px 64px; }
+    .cards, .columns { grid-template-columns: 1fr; }
+    .episode-header { display: block; }
+    table { display: block; overflow-x: auto; }
+    .score-row { grid-template-columns: 1fr; gap: 2px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="doc-header">
+    <div class="eyebrow">NegletFix validation sprint 3</div>
+    <h1>Daily Function Tracker</h1>
+    <p class="subtitle">Converted Recovery After Stroke episodes 274 and 156 into a practical tracker for Eric's 30-session AV program. The tracker captures lived function: glare/dimness, screens, reading, clutter, mobility confidence, and neurological fatigue.</p>
+    <div class="meta">
+      <span class="pill">Run date: 2026-05-25</span>
+      <span class="pill">Queue items: YT-010 + YT-011</span>
+      <span class="pill">Status: completed</span>
+      <span class="pill">CSV template included</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>1. Sprint Result</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="metric">2</div>
+        <p class="muted">survivor-function episodes converted.</p>
+      </div>
+      <div class="card">
+        <div class="metric">6</div>
+        <p class="muted">daily domains promoted.</p>
+      </div>
+      <div class="card">
+        <div class="metric">30</div>
+        <p class="muted">AV sessions covered by the CSV template.</p>
+      </div>
+    </div>
+
+    <div class="callout green">
+      <div class="label">Sprint 3 conclusion</div>
+      The tracker should sit beside the hard clinical measures. Contrast sensitivity and VR reaction time tell us what changed in the task. The daily-function tracker tells us whether Eric's real life became less visually expensive.
+    </div>
+
+    <div class="callout amber">
+      <div class="label">Boundary</div>
+      This is not a diagnostic score and not proof of visual-field restoration. It is a structured symptom and function log to compare against session data, baseline contrast sensitivity, and future clinician feedback.
+    </div>
+
+    <div class="callout blue">
+      <div class="label">Evidence caution</div>
+      Visual scanning and reading work are legitimate rehab themes, but the evidence is mixed. Eye-Search reported improved impaired-field search speed, while the larger SEARCH trial found both visual scanning and sham groups improved without a significant between-group difference. That is exactly why this tracker logs daily function instead of declaring a treatment effect.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>2. Episode Evidence</h2>
+
+    <div class="episode">
+      <div class="episode-header">
+        <div>
+          <p class="episode-title"><a href="https://www.youtube.com/watch?v=Jgg3ANVV4xw">Recovery After Stroke 274: Vision Loss and Stroke</a></p>
+          <p class="muted">Best use: symptom triggers, sensory load, screen intolerance, car-travel load, and the need for neuro-vision specialists.</p>
+        </div>
+        <span class="badge verified">Tracker source</span>
+      </div>
+      <div class="timestamp-list">
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Jgg3ANVV4xw&amp;t=615s">10:15</a> Visual movement and looking toward a computer aggravated head pain.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Jgg3ANVV4xw&amp;t=814s">13:34</a> Computer screens were hard even with different contrast modes.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Jgg3ANVV4xw&amp;t=932s">15:32</a> The pathway discussion points toward neuro-ophthalmology / neuro-optometry when vision problems are brain-origin.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Jgg3ANVV4xw&amp;t=1034s">17:14</a> Crowds, bright sunny days, overcast days, sunglasses, hats, and narrowed visual input appear as sensory-load strategies.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Jgg3ANVV4xw&amp;t=1194s">19:54</a> Long car travel and stimulation-heavy events could require closing eyes and were linked to symptom worsening.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=Jgg3ANVV4xw&amp;t=1307s">21:47</a> Fatigue and overdoing things are discussed as triggers that can make deficits flare.</div>
+      </div>
+    </div>
+
+    <div class="episode">
+      <div class="episode-header">
+        <div>
+          <p class="episode-title"><a href="https://www.youtube.com/watch?v=hrwA3CpFU7I">Recovery After Stroke 156: Adapting To Vision Problems After Stroke</a></p>
+          <p class="muted">Best use: reading effort, visual processing, figure-ground difficulty, midline shift, large-print tasks, computer accommodations, and neurological fatigue.</p>
+        </div>
+        <span class="badge verified">Tracker source</span>
+      </div>
+      <div class="timestamp-list">
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=hrwA3CpFU7I&amp;t=1468s">24:28</a> The guest describes visual processing, visual perception, memory, figure-ground, depth, distance, reading, and peripheral vision as affected domains.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=hrwA3CpFU7I&amp;t=1926s">32:06</a> Vision therapy had to be advocated for after standard discharge did not address the vision symptoms.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=hrwA3CpFU7I&amp;t=1992s">33:12</a> The episode frames the problem as neurological visual processing, not a simple ocular issue.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=hrwA3CpFU7I&amp;t=2620s">43:40</a> Midline shift and figure-ground problems appear in practical exercises.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=hrwA3CpFU7I&amp;t=2649s">44:09</a> Large-print crosswords, word searches, and simple mazes are used as practical visual tasks.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=hrwA3CpFU7I&amp;t=3308s">55:08</a> Computer use requires large font, large colored cursor, text-to-speech, and still creates neurological fatigue.</div>
+        <div class="timestamp"><a href="https://www.youtube.com/watch?v=hrwA3CpFU7I&amp;t=3960s">1:06:00</a> Reading requires repeated passes and becomes word-by-word effort.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>3. Verified Daily Domains</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Tracker Domain</th>
+          <th>Why It Belongs</th>
+          <th>Verification Anchor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Glare / dimness / brightness tolerance</td>
+          <td>Eric's own target includes persistent bilateral dimness. Episode 274 adds bright-day, overcast, and visual-overload triggers.</td>
+          <td><a href="https://my.clevelandclinic.org/health/symptoms/homonymous-hemianopsia">Cleveland Clinic</a> notes dimmed or dark visual experience can occur with HH. <a href="https://www.rnib.org.uk/your-eyes/eye-conditions-az/stroke-related-eye-conditions/">RNIB</a> lists light sensitivity among stroke-related visual symptoms.</td>
+        </tr>
+        <tr>
+          <td>Screen tolerance</td>
+          <td>Both episodes point to computer/screen load: screen aggravation in 274, large-font/cursor/TTS accommodations in 156.</td>
+          <td><a href="https://www.stroke.org/en/about-stroke/effects-of-stroke/vision-and-hearing/visual-disturbances">American Stroke Association</a> notes post-stroke visual difficulties can include reading problems and visual processing issues. Screen use should be logged as a near-vision load.</td>
+        </tr>
+        <tr>
+          <td>Reading effort</td>
+          <td>Episode 156 is especially strong here: large print, rereading, word-by-word effort, and fatigue after only a few emails.</td>
+          <td><a href="https://www.rnib.org.uk/your-eyes/eye-conditions-az/stroke-related-eye-conditions/">RNIB</a>, <a href="https://www.ncbi.nlm.nih.gov/books/NBK327908/">NICE/NCBI</a>, and <a href="https://my.clevelandclinic.org/health/symptoms/homonymous-hemianopsia">Cleveland Clinic</a> all connect hemianopia to reading difficulty and compensatory strategies.</td>
+        </tr>
+        <tr>
+          <td>Visual search / clutter / figure-ground</td>
+          <td>Episode 156 mentions figure-ground, visual perception, search tasks, word searches, and simple mazes.</td>
+          <td><a href="https://www.rnib.org.uk/your-eyes/eye-conditions-az/stroke-related-eye-conditions/">RNIB</a> explicitly recommends scanning, puzzles, word search games, and computer-based scanning programs to improve visual perception and tracking skills.</td>
+        </tr>
+        <tr>
+          <td>Mobility / scanning confidence</td>
+          <td>Sprint 2 already made mobility measurable. Sprint 3 adds crowded environments and car-travel load from lived experience.</td>
+          <td><a href="https://www.rnib.org.uk/your-eyes/eye-conditions-az/stroke-related-eye-conditions/">RNIB</a> notes day-to-day issues such as locating things, traffic, and crowded environments. <a href="sprint-2-function-mobility-2026-05-25.html">Sprint 2</a> covers Bowers' hazard-detection evidence.</td>
+        </tr>
+        <tr>
+          <td>Neurological fatigue / recovery next day</td>
+          <td>Episode 274 flags overdoing and stimulation-heavy days. Episode 156 describes neurological fatigue from reading and email.</td>
+          <td>Fatigue is common after stroke, but this tracker keeps it specific: visual fatigue after visual load, training, screens, reading, or crowds.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>4. The Tracker</h2>
+    <p>Use one row per AV training session. The scoring is deliberately simple: higher number means harder day.</p>
+
+    <div class="tracker-preview">
+      <h3>0-4 Difficulty Scale</h3>
+      <div class="score-row">
+        <div class="score">0 - none</div>
+        <div>No meaningful difficulty today.</div>
+      </div>
+      <div class="score-row">
+        <div class="score">1 - mild</div>
+        <div>Noticeable, but did not change the plan for the day.</div>
+      </div>
+      <div class="score-row">
+        <div class="score">2 - moderate</div>
+        <div>Needed an adaptation: sunglasses, hat, larger text, rest break, text-to-speech, reduced screen time, or quieter environment.</div>
+      </div>
+      <div class="score-row">
+        <div class="score">3 - strong</div>
+        <div>Had to stop, avoid, leave, or substantially shorten the activity.</div>
+      </div>
+      <div class="score-row">
+        <div class="score">4 - severe</div>
+        <div>Function was blocked, symptoms were unsafe, or the effect carried into the next day.</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Column</th>
+          <th>Record</th>
+          <th>Why</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>glare_dimness_0_4</code></td>
+          <td>How hard brightness, glare, dimness, or gray overlay felt today.</td>
+          <td>Eric's most important lived symptom beyond the field cut.</td>
+        </tr>
+        <tr>
+          <td><code>screen_tolerance_0_4</code></td>
+          <td>Difficulty using computer/phone/tablet after training.</td>
+          <td>Captures whether daily digital work becomes easier or more costly.</td>
+        </tr>
+        <tr>
+          <td><code>reading_effort_0_4</code></td>
+          <td>Difficulty reading text, email, subtitles, or documents.</td>
+          <td>Reading may improve through compensation even if visual field size does not change.</td>
+        </tr>
+        <tr>
+          <td><code>visual_search_clutter_0_4</code></td>
+          <td>Difficulty finding objects in clutter, menus, shelves, desktop, or busy environments.</td>
+          <td>Maps to figure-ground/search problems from episode 156 and scanning evidence.</td>
+        </tr>
+        <tr>
+          <td><code>mobility_scanning_confidence_0_4</code></td>
+          <td>Difficulty moving through rooms, streets, stores, or crowded places.</td>
+          <td>Connects Sprint 2 mobility risk to lived daily confidence.</td>
+        </tr>
+        <tr>
+          <td><code>neuro_fatigue_0_4</code></td>
+          <td>Visual/brain fatigue after training or daily visual load.</td>
+          <td>Captures the cost of seeing, not just whether the task was completed.</td>
+        </tr>
+        <tr>
+          <td><code>next_morning_recovery_0_4</code></td>
+          <td>Whether symptoms settled by the next morning.</td>
+          <td>Separates productive training load from prolonged regression.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout blue">
+      <div class="label">CSV template</div>
+      Starter file: <a href="daily-function-tracker-template-2026-05-25.csv">daily-function-tracker-template-2026-05-25.csv</a>. It has 30 rows, one for each planned AV session.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>5. Weekly Review</h2>
+    <div class="columns">
+      <div class="card">
+        <h3>Every 5 Sessions</h3>
+        <ul>
+          <li>Average each 0-4 domain for the last 5 completed sessions.</li>
+          <li>Mark best day and worst day.</li>
+          <li>List the top two triggers: bright light, screen, reading, clutter, crowd, car travel, poor sleep, or training load.</li>
+          <li>Compare with VR data: left detection, reaction time, head-scan behavior, and contrast checks when available.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>What Counts As Useful</h3>
+        <ul>
+          <li>Lower daily difficulty at the same real-life workload.</li>
+          <li>More screen or reading minutes before fatigue.</li>
+          <li>Faster next-morning recovery after visual load.</li>
+          <li>More confidence in cluttered or crowded places.</li>
+          <li>Objective VR improvement plus daily-function improvement in the same direction.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>6. Safety Rules</h2>
+    <div class="callout red">
+      <div class="label">Stop and escalate</div>
+      New sudden vision loss, new neurological symptoms, severe headache, new confusion, new weakness, or symptoms that feel stroke-like are emergency issues, not tracker entries. Cleveland Clinic explicitly treats new HH as urgent because it can signal stroke or brain bleed.
+    </div>
+    <div class="callout amber">
+      <div class="label">Training load rule</div>
+      If a session produces a <code>4</code> in headache/eye pain, neuro fatigue, or next-morning recovery, reduce the next session load and flag it for review before continuing the full protocol.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>7. Sources Used</h2>
+    <ul>
+      <li><a href="https://www.youtube.com/watch?v=Jgg3ANVV4xw">Recovery After Stroke 274: Vision Loss and Stroke</a></li>
+      <li><a href="https://www.youtube.com/watch?v=hrwA3CpFU7I">Recovery After Stroke 156: Adapting To Vision Problems After Stroke</a></li>
+      <li><a href="https://www.stroke.org/en/help-and-support/resource-library/lets-talk-about-stroke/vision-changes">American Stroke Association: Let's Talk About Stroke and Vision Changes</a></li>
+      <li><a href="https://www.stroke.org/en/about-stroke/effects-of-stroke/vision-and-hearing/visual-disturbances">American Stroke Association: Visual Disturbances</a></li>
+      <li><a href="https://www.rnib.org.uk/your-eyes/eye-conditions-az/stroke-related-eye-conditions/">RNIB: Stroke-related eye conditions</a></li>
+      <li><a href="https://www.ncbi.nlm.nih.gov/books/NBK327908/">NICE / NCBI Bookshelf: Stroke Rehabilitation - Vision</a></li>
+      <li><a href="https://www.ncbi.nlm.nih.gov/books/NBK585577/">Clinical Pathways in Stroke Rehabilitation: Treating Neurovisual Deficits and Spatial Neglect</a></li>
+      <li><a href="https://journals.sagepub.com/doi/10.1177/23969873251314693">European Stroke Organisation guideline on visual impairment in stroke</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/25642437/">Eye-Search: web-based therapy that improves visual search in hemianopia</a></li>
+      <li><a href="https://pubmed.ncbi.nlm.nih.gov/40083185/">SEARCH trial: scanning eye training for hemianopia after stroke</a></li>
+      <li><a href="https://my.clevelandclinic.org/health/symptoms/homonymous-hemianopsia">Cleveland Clinic: Homonymous Hemianopia</a></li>
+    </ul>
+  </div>
+
+  <p class="footer-note">Prepared as a research triage artifact, not medical advice. The tracker is meant to make Eric's lived function visible beside objective app data.</p>
+</div>
+</body>
+</html>
