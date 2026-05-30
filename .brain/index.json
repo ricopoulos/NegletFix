@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "project_name": "NegletFix",
   "description": "VR rehabilitation for left homonymous hemianopia with EEG neurofeedback",
-  "last_updated": "2026-05-30T18:36:00Z",
+  "last_updated": "2026-05-30T18:50:00Z",
   "wiki": {
     "path": ".brain/wiki/",
     "pages": 11,
@@ -37,7 +37,7 @@
     "xr-plugin-management": {
       "status": "operational",
       "health": "yellow",
-      "notes": "OpenXR + Meta Quest Support + Oculus Touch profile configured 2026-05-16. Project Validation 14/15 passing. SSAO renderer feature is the remaining warning — defer to deployment optimization pass."
+      "notes": "OpenXR + Meta Quest Support + Oculus Touch profile configured 2026-05-16. SSAO renderer feature disabled 2026-05-30 as Quest performance/polish cleanup."
     }
   },
   "baseline_results": {
@@ -51,7 +51,6 @@
   "active_issues": [],
   "next_actions": [
     "Optional: install/run the freshly rebuilt `Builds/AVTrainingManualSmoke.apk` once more to verify the post-training guard; controller response/reward smoke itself has passed",
-    "Disable SSAO in URP renderer for Quest performance (polish)",
     "Quest 3 acquisition when budget allows (used via Back Market ~€350-450)",
     "Phase 2 launch: 30-session Paradigm B program with mid-program CS checks"
   ]

@@ -53,11 +53,13 @@ Patched APK run passed on Quest 2:
 
 Follow-up cleanup added after the successful smoke: `DataLogger.CloseTrainingTrialLog()` closes/flushed the training CSV at training end, player builds now use `Application.persistentDataPath` for the normal session log directory, and `AudioVisualTraining` now guards the block/trial coroutine so a held trigger cannot create an extra trial log after training has switched into cooldown. Rebuilt `Builds/AVTrainingManualSmoke.apk` successfully after these fixes.
 
+#### Quest Performance Polish (2026-05-30)
+Disabled the active Screen Space Ambient Occlusion renderer feature in `Assets/Settings/PC_Renderer.asset`. Android is already mapped to `Mobile_RPAsset`/`Mobile_Renderer`, which has no SSAO feature, but disabling the default PC renderer's SSAO removes the remaining validation/performance concern from the shared URP setup.
+
 #### Remaining Work
 1. **Optional final on-device check** — install/run the freshly rebuilt `Builds/AVTrainingManualSmoke.apk` once more only if we want direct confirmation that the post-training guard prevents extra empty CSV files
 2. **Visual stimulus prefab** — replace programmatic Sphere fallback with Gabor patch / high-contrast disk
-3. **SSAO disable** for Quest deployment performance (URP renderer asset)
-4. **Phase 2 launch** after controller smoke passes: 30 sessions × 5 days/week × 6 weeks at the Alharshan dose; mid-program CS checks at sessions 5/10/15/20/25; full reassessment at session 30
+3. **Phase 2 launch** after controller smoke passes: 30 sessions × 5 days/week × 6 weeks at the Alharshan dose; mid-program CS checks at sessions 5/10/15/20/25; full reassessment at session 30
 
 ---
 
