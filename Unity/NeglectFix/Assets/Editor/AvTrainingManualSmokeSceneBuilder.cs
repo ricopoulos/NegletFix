@@ -13,34 +13,68 @@ namespace NeglectFix.EditorTools
 {
     public static class AvTrainingManualSmokeSceneBuilder
     {
-        private const string ScenePath = "Assets/Scenes/AVTrainingManualSmoke.unity";
+        private const string SmokeScenePath = "Assets/Scenes/AVTrainingManualSmoke.unity";
+        private const string Session1PilotScenePath = "Assets/Scenes/AVTrainingSession1Pilot.unity";
 
         [MenuItem("NeglectFix/Testing/Create AV Training Manual Smoke Scene")]
         public static void CreateSceneFromMenu()
         {
-            CreateScene(addToBuildSettings: true);
+            CreateScene(SmokeScenePath, addToBuildSettings: true, ScenePreset.ManualSmoke);
+        }
+
+        [MenuItem("NeglectFix/Testing/Create AV Training Session 1 Pilot Scene")]
+        public static void CreateSession1PilotSceneFromMenu()
+        {
+            CreateScene(Session1PilotScenePath, addToBuildSettings: false, ScenePreset.Session1Pilot);
         }
 
         public static void CreateSceneFromBatch()
         {
-            CreateScene(addToBuildSettings: true);
+            CreateScene(SmokeScenePath, addToBuildSettings: true, ScenePreset.ManualSmoke);
+        }
+
+        public static void CreateSession1PilotSceneFromBatch()
+        {
+            CreateScene(Session1PilotScenePath, addToBuildSettings: false, ScenePreset.Session1Pilot);
         }
 
         public static void BuildAndroidApkFromBatch()
         {
-            CreateScene(addToBuildSettings: true);
+            CreateScene(SmokeScenePath, addToBuildSettings: true, ScenePreset.ManualSmoke);
 
             var apkPath = GetCommandLineArgument("-apkPath");
             if (string.IsNullOrWhiteSpace(apkPath))
                 apkPath = "Builds/AVTrainingManualSmoke.apk";
 
+            BuildAndroidApk(SmokeScenePath, apkPath);
+        }
+
+        public static void BuildSession1PilotAndroidApkFromBatch()
+        {
+            CreateScene(Session1PilotScenePath, addToBuildSettings: false, ScenePreset.Session1Pilot);
+
+            var apkPath = GetCommandLineArgument("-apkPath");
+            if (string.IsNullOrWhiteSpace(apkPath))
+                apkPath = "Builds/AVTrainingSession1Pilot.apk";
+
+            BuildAndroidApk(Session1PilotScenePath, apkPath);
+        }
+
+        private enum ScenePreset
+        {
+            ManualSmoke,
+            Session1Pilot
+        }
+
+        private static void BuildAndroidApk(string scenePath, string apkPath)
+        {
             var directory = Path.GetDirectoryName(apkPath);
             if (!string.IsNullOrEmpty(directory))
                 Directory.CreateDirectory(directory);
 
             var buildOptions = new BuildPlayerOptions
             {
-                scenes = new[] { ScenePath },
+                scenes = new[] { scenePath },
                 locationPathName = apkPath,
                 target = BuildTarget.Android,
                 targetGroup = BuildTargetGroup.Android,
@@ -55,7 +89,7 @@ namespace NeglectFix.EditorTools
                 EditorApplication.Exit(1);
         }
 
-        private static void CreateScene(bool addToBuildSettings)
+        private static void CreateScene(string scenePath, bool addToBuildSettings, ScenePreset preset)
         {
             Directory.CreateDirectory("Assets/Scenes");
 
@@ -66,16 +100,16 @@ namespace NeglectFix.EditorTools
 
             CreateCamera();
             CreateLight();
-            CreateAvTrainingSystem();
+            CreateAvTrainingSystem(preset);
 
-            EditorSceneManager.SaveScene(scene, ScenePath);
+            EditorSceneManager.SaveScene(scene, scenePath);
 
             if (addToBuildSettings)
-                AddSceneToBuildSettings(ScenePath);
+                AddSceneToBuildSettings(scenePath);
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-            Debug.Log($"[NeglectFix] AV training manual smoke scene ready: {ScenePath}");
+            Debug.Log($"[NeglectFix] AV training scene ready: {scenePath}");
         }
 
         private static void CreateCamera()
@@ -107,7 +141,7 @@ namespace NeglectFix.EditorTools
             light.intensity = 1.1f;
         }
 
-        private static void CreateAvTrainingSystem()
+        private static void CreateAvTrainingSystem(ScenePreset preset)
         {
             var root = new GameObject("AVTrainingSystem_ManualSmoke");
 
@@ -122,7 +156,6 @@ namespace NeglectFix.EditorTools
             rewardController.useSpatialAudio = false;
 
             var scheduler = root.AddComponent<ProgramScheduler>();
-            scheduler.stateFileName = "program_state_manual_smoke.json";
             scheduler.totalSessionsPlanned = 1;
             scheduler.sessionsPerWeek = 7;
             scheduler.reMeasurementSessions = new int[0];
@@ -132,19 +165,35 @@ namespace NeglectFix.EditorTools
             training.trialLogger = dataLogger;
             training.rewardController = rewardController;
             training.programScheduler = scheduler;
-            training.baselineDuration = 5f;
             training.blocksPerSession = 1;
-            training.blockDurationSec = 60f;
             training.interBlockRestSec = 0f;
-            training.cooldownDurationSec = 5f;
-            training.minInterStimulusIntervalSec = 0.75f;
-            training.maxInterStimulusIntervalSec = 1.25f;
             training.stimulusDurationSec = 0.25f;
             training.responseWindowSec = 1.5f;
             training.generatedStimulusPattern = AudioVisualTraining.StimulusPattern.SolidDisk;
             training.stimulusAngularSizeDeg = 3f;
             training.generatedStimulusTextureSize = 128;
             training.enableLegacyKeyboardFallback = true;
+
+            if (preset == ScenePreset.Session1Pilot)
+            {
+                root.name = "AVTrainingSystem_Session1Pilot";
+                scheduler.stateFileName = "program_state_session1_pilot.json";
+                training.baselineDuration = 30f;
+                training.blockDurationSec = 300f;
+                training.cooldownDurationSec = 30f;
+                training.minInterStimulusIntervalSec = 1.2f;
+                training.maxInterStimulusIntervalSec = 2.5f;
+                training.stimulusAngularSizeDeg = 4f;
+            }
+            else
+            {
+                scheduler.stateFileName = "program_state_manual_smoke.json";
+                training.baselineDuration = 5f;
+                training.blockDurationSec = 60f;
+                training.cooldownDurationSec = 5f;
+                training.minInterStimulusIntervalSec = 0.75f;
+                training.maxInterStimulusIntervalSec = 1.25f;
+            }
         }
 
         private static void AddSceneToBuildSettings(string scenePath)

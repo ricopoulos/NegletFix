@@ -59,9 +59,12 @@ Disabled the active Screen Space Ambient Occlusion renderer feature in `Assets/S
 #### Generated Visual Stimulus Upgrade (2026-05-30)
 Replaced the programmatic Sphere fallback in `AudioVisualTraining` with a flat camera-facing quad that generates a controlled grayscale texture at runtime. It supports a solid disk target and a Gabor patch mode, fixed visual angle sizing, soft edges, and LogCS-derived contrast on a matched gray background. The manual smoke scene builder now configures the generated disk defaults.
 
+#### Session 1 Pilot Scene (2026-05-30)
+Added `Assets/Scenes/AVTrainingSession1Pilot.unity` and corresponding editor/batch helpers. This scene is intentionally between smoke and full protocol: 30s baseline, one 5-minute training block, 30s cooldown, 4° generated disk targets, and a separate `program_state_session1_pilot.json` state file.
+
 #### Remaining Work
-1. **Optional final on-device check** — install/run the freshly rebuilt `Builds/AVTrainingManualSmoke.apk` once more only if we want direct confirmation that the post-training guard prevents extra empty CSV files
-2. **Phase 2 launch** after controller smoke passes: 30 sessions × 5 days/week × 6 weeks at the Alharshan dose; mid-program CS checks at sessions 5/10/15/20/25; full reassessment at session 30
+1. **Pilot on-device check** — build/install/run `AVTrainingSession1Pilot` on Quest and confirm comfort, target visibility, trigger responses, and CSV closure over a 6-minute pilot session
+2. **Phase 2 launch** after pilot passes: 30 sessions × 5 days/week × 6 weeks at the Alharshan dose; mid-program CS checks at sessions 5/10/15/20/25; full reassessment at session 30
 
 ---
 
