@@ -141,6 +141,9 @@ namespace NeglectFix.EditorTools
             training.maxInterStimulusIntervalSec = 1.25f;
             training.stimulusDurationSec = 0.25f;
             training.responseWindowSec = 1.5f;
+            training.generatedStimulusPattern = AudioVisualTraining.StimulusPattern.SolidDisk;
+            training.stimulusAngularSizeDeg = 3f;
+            training.generatedStimulusTextureSize = 128;
             training.enableLegacyKeyboardFallback = true;
         }
 

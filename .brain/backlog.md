@@ -56,10 +56,12 @@ Follow-up cleanup added after the successful smoke: `DataLogger.CloseTrainingTri
 #### Quest Performance Polish (2026-05-30)
 Disabled the active Screen Space Ambient Occlusion renderer feature in `Assets/Settings/PC_Renderer.asset`. Android is already mapped to `Mobile_RPAsset`/`Mobile_Renderer`, which has no SSAO feature, but disabling the default PC renderer's SSAO removes the remaining validation/performance concern from the shared URP setup.
 
+#### Generated Visual Stimulus Upgrade (2026-05-30)
+Replaced the programmatic Sphere fallback in `AudioVisualTraining` with a flat camera-facing quad that generates a controlled grayscale texture at runtime. It supports a solid disk target and a Gabor patch mode, fixed visual angle sizing, soft edges, and LogCS-derived contrast on a matched gray background. The manual smoke scene builder now configures the generated disk defaults.
+
 #### Remaining Work
 1. **Optional final on-device check** — install/run the freshly rebuilt `Builds/AVTrainingManualSmoke.apk` once more only if we want direct confirmation that the post-training guard prevents extra empty CSV files
-2. **Visual stimulus prefab** — replace programmatic Sphere fallback with Gabor patch / high-contrast disk
-3. **Phase 2 launch** after controller smoke passes: 30 sessions × 5 days/week × 6 weeks at the Alharshan dose; mid-program CS checks at sessions 5/10/15/20/25; full reassessment at session 30
+2. **Phase 2 launch** after controller smoke passes: 30 sessions × 5 days/week × 6 weeks at the Alharshan dose; mid-program CS checks at sessions 5/10/15/20/25; full reassessment at session 30
 
 ---
 

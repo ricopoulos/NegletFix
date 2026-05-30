@@ -44,6 +44,35 @@ namespace NeglectFix.Tasks
         [Range(0.5f, 5f)]
         public float stimulusDistanceMeters = 1.5f;
 
+        public enum StimulusPattern
+        {
+            SolidDisk,
+            GaborPatch
+        }
+
+        [Tooltip("Generated fallback target when no prefab is assigned.")]
+        public StimulusPattern generatedStimulusPattern = StimulusPattern.SolidDisk;
+
+        [Tooltip("Generated fallback target diameter in degrees of visual angle.")]
+        [Range(0.5f, 10f)]
+        public float stimulusAngularSizeDeg = 3f;
+
+        [Tooltip("Linear gray background luminance used by generated fallback stimuli.")]
+        [Range(0f, 1f)]
+        public float stimulusBackgroundLuminance = 0.5f;
+
+        [Tooltip("Texture resolution for generated disk/Gabor fallback stimuli.")]
+        [Range(32, 512)]
+        public int generatedStimulusTextureSize = 128;
+
+        [Tooltip("Cycles across the generated Gabor patch diameter.")]
+        [Range(1f, 12f)]
+        public float gaborCycles = 4f;
+
+        [Tooltip("Soft edge width as a fraction of generated stimulus radius.")]
+        [Range(0f, 0.5f)]
+        public float stimulusSoftEdgeFraction = 0.12f;
+
         [Header("AV Training — Trial Timing")]
         [Tooltip("Minimum gap between stimuli (seconds).")]
         public float minInterStimulusIntervalSec = 2.0f;
@@ -99,6 +128,8 @@ namespace NeglectFix.Tasks
         private bool leftXRResponsePressed;
         private bool rightXRResponsePressed;
         private bool xrControllerDevicesLogged;
+        private Material generatedStimulusMaterial;
+        private Texture2D generatedStimulusTexture;
         private EccentricityProgression progression;
         private float currentLogCS;             // Current contrast on the staircase
         private int consecutiveCorrect;         // For 2-up/1-down logic
@@ -145,6 +176,18 @@ namespace NeglectFix.Tasks
             {
                 defaultResponseAction.Dispose();
                 defaultResponseAction = null;
+            }
+
+            if (generatedStimulusMaterial != null)
+            {
+                Destroy(generatedStimulusMaterial);
+                generatedStimulusMaterial = null;
+            }
+
+            if (generatedStimulusTexture != null)
+            {
+                Destroy(generatedStimulusTexture);
+                generatedStimulusTexture = null;
             }
         }
 
@@ -404,25 +447,144 @@ namespace NeglectFix.Tasks
 
         private GameObject SpawnVisualStimulus(Vector3 position)
         {
-            GameObject stim;
             if (visualStimulusPrefab != null)
             {
-                stim = Instantiate(visualStimulusPrefab, position, Quaternion.identity);
+                GameObject prefabStimulus = Instantiate(visualStimulusPrefab, position, Quaternion.identity);
+                FaceStimulusToCamera(prefabStimulus);
+                return prefabStimulus;
             }
-            else
-            {
-                // Fallback: bright sphere
-                stim = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                stim.transform.position = position;
-                stim.transform.localScale = Vector3.one * 0.1f;
-                Renderer r = stim.GetComponent<Renderer>();
-                // Compute contrast from currentLogCS → grayscale luminance offset from background
-                float contrastFraction = LogCSToContrast(currentLogCS);
-                float backgroundLuminance = 0.5f;  // gray background assumption
-                float letterLuminance = Mathf.Clamp01(backgroundLuminance * (1f - contrastFraction));
-                if (r != null) r.material.color = new Color(letterLuminance, letterLuminance, letterLuminance);
-            }
+
+            GameObject stim = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            stim.name = $"AVTrainingStimulus_{generatedStimulusPattern}";
+            stim.transform.position = position;
+            FaceStimulusToCamera(stim);
+            ScaleStimulusToAngularSize(stim, position);
+
+            Collider collider = stim.GetComponent<Collider>();
+            if (collider != null)
+                Destroy(collider);
+
+            float contrastFraction = LogCSToContrast(currentLogCS);
+            UpdateGeneratedStimulusTexture(contrastFraction);
+
+            Renderer renderer = stim.GetComponent<Renderer>();
+            if (renderer != null)
+                renderer.sharedMaterial = GetGeneratedStimulusMaterial();
+
             return stim;
+        }
+
+        private void FaceStimulusToCamera(GameObject stim)
+        {
+            Camera cam = Camera.main;
+            if (cam == null || stim == null) return;
+
+            stim.transform.rotation = cam.transform.rotation;
+        }
+
+        private void ScaleStimulusToAngularSize(GameObject stim, Vector3 position)
+        {
+            Camera cam = Camera.main;
+            float distance = cam != null ? Vector3.Distance(cam.transform.position, position) : stimulusDistanceMeters;
+            float diameterMeters = 2f * distance * Mathf.Tan(stimulusAngularSizeDeg * Mathf.Deg2Rad * 0.5f);
+            stim.transform.localScale = new Vector3(diameterMeters, diameterMeters, 1f);
+        }
+
+        private Material GetGeneratedStimulusMaterial()
+        {
+            if (generatedStimulusMaterial != null)
+                return generatedStimulusMaterial;
+
+            Shader shader = Shader.Find("Universal Render Pipeline/Unlit");
+            if (shader == null)
+                shader = Shader.Find("Unlit/Texture");
+            if (shader == null)
+                shader = Shader.Find("Sprites/Default");
+
+            generatedStimulusMaterial = new Material(shader)
+            {
+                name = "AVTrainingGeneratedStimulus",
+                color = Color.white
+            };
+
+            if (generatedStimulusMaterial.HasProperty("_BaseMap"))
+                generatedStimulusMaterial.SetTexture("_BaseMap", generatedStimulusTexture);
+            if (generatedStimulusMaterial.HasProperty("_MainTex"))
+                generatedStimulusMaterial.SetTexture("_MainTex", generatedStimulusTexture);
+            if (generatedStimulusMaterial.HasProperty("_BaseColor"))
+                generatedStimulusMaterial.SetColor("_BaseColor", Color.white);
+            if (generatedStimulusMaterial.HasProperty("_Color"))
+                generatedStimulusMaterial.SetColor("_Color", Color.white);
+            if (generatedStimulusMaterial.HasProperty("_Cull"))
+                generatedStimulusMaterial.SetFloat("_Cull", 0f);
+
+            return generatedStimulusMaterial;
+        }
+
+        private void UpdateGeneratedStimulusTexture(float contrastFraction)
+        {
+            int textureSize = Mathf.ClosestPowerOfTwo(Mathf.Clamp(generatedStimulusTextureSize, 32, 512));
+            if (generatedStimulusTexture == null ||
+                generatedStimulusTexture.width != textureSize ||
+                generatedStimulusTexture.height != textureSize)
+            {
+                if (generatedStimulusTexture != null)
+                    Destroy(generatedStimulusTexture);
+
+                generatedStimulusTexture = new Texture2D(textureSize, textureSize, TextureFormat.RGBA32, false, true)
+                {
+                    name = "AVTrainingGeneratedStimulusTexture",
+                    wrapMode = TextureWrapMode.Clamp,
+                    filterMode = FilterMode.Bilinear
+                };
+            }
+
+            Color[] pixels = new Color[textureSize * textureSize];
+            float background = Mathf.Clamp01(stimulusBackgroundLuminance);
+            float contrast = Mathf.Clamp01(contrastFraction);
+            float radius = 0.5f;
+            float edgeStart = radius * (1f - Mathf.Clamp01(stimulusSoftEdgeFraction));
+            float cycles = Mathf.Max(1f, gaborCycles);
+
+            for (int y = 0; y < textureSize; y++)
+            {
+                float v = ((y + 0.5f) / textureSize - 0.5f) * 2f;
+                for (int x = 0; x < textureSize; x++)
+                {
+                    float u = ((x + 0.5f) / textureSize - 0.5f) * 2f;
+                    float normalizedRadius = Mathf.Sqrt(u * u + v * v) * 0.5f;
+                    float mask = 1f - Mathf.SmoothStep(edgeStart, radius, normalizedRadius);
+                    float luminance = background;
+
+                    if (mask > 0f)
+                    {
+                        if (generatedStimulusPattern == StimulusPattern.GaborPatch)
+                        {
+                            float gaussian = Mathf.Exp(-(u * u + v * v) * 2.5f);
+                            float carrier = Mathf.Cos(u * Mathf.PI * cycles);
+                            luminance = Mathf.Clamp01(background + carrier * contrast * 0.5f * gaussian * mask);
+                        }
+                        else
+                        {
+                            float diskLuminance = Mathf.Clamp01(background * (1f - contrast));
+                            luminance = Mathf.Lerp(background, diskLuminance, mask);
+                        }
+                    }
+
+                    pixels[y * textureSize + x] = new Color(luminance, luminance, luminance, 1f);
+                }
+            }
+
+            generatedStimulusTexture.SetPixels(pixels);
+            generatedStimulusTexture.Apply(false, false);
+
+            if (generatedStimulusMaterial != null)
+            {
+                if (generatedStimulusMaterial.HasProperty("_BaseMap"))
+                    generatedStimulusMaterial.SetTexture("_BaseMap", generatedStimulusTexture);
+                if (generatedStimulusMaterial.HasProperty("_MainTex"))
+                    generatedStimulusMaterial.SetTexture("_MainTex", generatedStimulusTexture);
+            }
         }
 
         private AudioSource PlayCoLocalizedAudio(GameObject parent, Vector3 position)

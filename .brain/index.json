@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "project_name": "NegletFix",
   "description": "VR rehabilitation for left homonymous hemianopia with EEG neurofeedback",
-  "last_updated": "2026-05-30T18:50:00Z",
+  "last_updated": "2026-05-30T19:05:00Z",
   "wiki": {
     "path": ".brain/wiki/",
     "pages": 11,
@@ -27,7 +27,7 @@
       "status": "smoke-tested",
       "health": "yellow",
       "path": "Assets/Scripts/Tasks/AudioVisualTraining.cs",
-      "notes": "Phase 1 scaffold complete 2026-05-16 (commits ecf327f + 7ea389c + 24a3075 on main). Paradigm B (congruent-pair), Alharshan 2026 dose (30 min × 5×/week × 6 weeks = 15hr). Headless PlayMode smoke test passed 2026-05-30: shortened session completed and trial CSV opened/closed after fixing trialLogger dependency initialization. Quest/InputSystem response binding added 2026-05-30; strengthened smoke test simulates Space via Unity.InputSystem.TestFramework and verifies at least one hit/reward plus hit CSV columns. Manual smoke scene `Assets/Scenes/AVTrainingManualSmoke.unity` generated and placed first in Build Settings. Quest manual smoke passed 2026-05-30 on Quest 2 after adding UnityEngine.XR fallback polling: log showed `Oculus Touch Controller OpenXR/triggerButton`, reward events fired, pulled CSV `SmokeResults/av_training_2026-05-30_14-23-19.csv` with 44 rows / 42 hits. Follow-up guard added so in-flight trials cannot create extra logs after training ends; Android smoke APK rebuilt successfully at `Unity/NeglectFix/Builds/AVTrainingManualSmoke.apk`."
+      "notes": "Phase 1 scaffold complete 2026-05-16 (commits ecf327f + 7ea389c + 24a3075 on main). Paradigm B (congruent-pair), Alharshan 2026 dose (30 min × 5×/week × 6 weeks = 15hr). Headless PlayMode smoke test passed 2026-05-30: shortened session completed and trial CSV opened/closed after fixing trialLogger dependency initialization. Quest/InputSystem response binding added 2026-05-30; strengthened smoke test simulates Space via Unity.InputSystem.TestFramework and verifies at least one hit/reward plus hit CSV columns. Manual smoke scene `Assets/Scenes/AVTrainingManualSmoke.unity` generated and placed first in Build Settings. Quest manual smoke passed 2026-05-30 on Quest 2 after adding UnityEngine.XR fallback polling: log showed `Oculus Touch Controller OpenXR/triggerButton`, reward events fired, pulled CSV `SmokeResults/av_training_2026-05-30_14-23-19.csv` with 44 rows / 42 hits. Follow-up guard added so in-flight trials cannot create extra logs after training ends; Android smoke APK rebuilt successfully at `Unity/NeglectFix/Builds/AVTrainingManualSmoke.apk`. Generated fallback visual stimulus upgraded from sphere to flat contrast-controlled disk/Gabor quad on 2026-05-30."
     },
     "quest-dev-mode": {
       "status": "operational",
