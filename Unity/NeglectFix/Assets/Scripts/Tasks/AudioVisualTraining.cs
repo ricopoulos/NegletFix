@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -64,6 +65,9 @@ namespace NeglectFix.Tasks
         [Tooltip("Rest duration between blocks in seconds.")]
         public float interBlockRestSec = 30f;
 
+        [Tooltip("Cooldown phase duration after the training blocks complete.")]
+        public float cooldownDurationSec = 60f;
+
         [Header("AV Training — Adaptive Staircase")]
         [Tooltip("2-up/1-down weighted staircase: this many correct in a row to make stimulus harder.")]
         [Range(1, 4)]
@@ -76,11 +80,25 @@ namespace NeglectFix.Tasks
         [Tooltip("Baseline contrast sensitivity results (drives eccentricity ladder + starting contrast). Auto-loaded if null.")]
         public NeglectFix.Assessment.ContrastSensitivityResults baselineResults;
 
+        [Header("AV Training — Input")]
+        [Tooltip("Input System action for 'I saw it'. If empty, Quest trigger + Space/Enter bindings are created at runtime.")]
+        public InputActionProperty responseAction;
+
+        [Tooltip("Keep legacy keyboard/Submit fallback enabled for quick Editor testing.")]
+        public bool enableLegacyKeyboardFallback = true;
+
         [Header("AV Training — Dependencies")]
         public ProgramScheduler programScheduler;
         public NeglectFix.Utils.DataLogger trialLogger;
 
         // Internal state
+        private InputAction defaultResponseAction;
+        private bool responseActionEnabledByTask;
+        private readonly List<UnityEngine.XR.InputDevice> xrControllerDevices = new List<UnityEngine.XR.InputDevice>();
+        private readonly List<UnityEngine.XR.InputFeatureUsage> xrFeatureUsages = new List<UnityEngine.XR.InputFeatureUsage>();
+        private bool leftXRResponsePressed;
+        private bool rightXRResponsePressed;
+        private bool xrControllerDevicesLogged;
         private EccentricityProgression progression;
         private float currentLogCS;             // Current contrast on the staircase
         private int consecutiveCorrect;         // For 2-up/1-down logic
@@ -92,6 +110,7 @@ namespace NeglectFix.Tasks
         private bool trialHitFlag;
         private int totalTrialsThisSession;
         private int totalHitsThisSession;
+        private bool trainingLoopActive;
 
         // Trial data record — persisted via DataLogger
         public struct TrainingTrial
@@ -110,17 +129,41 @@ namespace NeglectFix.Tasks
             public float avDeltaMs;     // audio onset relative to visual onset (sub-50ms target)
         }
 
+        private void OnEnable()
+        {
+            EnableResponseAction();
+        }
+
+        private void OnDisable()
+        {
+            DisableResponseAction();
+        }
+
+        private void OnDestroy()
+        {
+            if (defaultResponseAction != null)
+            {
+                defaultResponseAction.Dispose();
+                defaultResponseAction = null;
+            }
+        }
+
         protected override void Start()
         {
             // Override default phase durations for Alharshan dose
             // Baseline 120s (unchanged), Training 1800s (30 min), Cooldown 60s (shorter than default)
             trainingDuration = blocksPerSession * blockDurationSec + (blocksPerSession - 1) * interBlockRestSec;
-            cooldownDuration = 60f;
+            cooldownDuration = cooldownDurationSec;
             taskName = "AudioVisualTraining_ParadigmB";
+            EnableResponseAction();
+            LogXRControllerDevices();
 
             // Find personalization dependencies
             if (programScheduler == null)
                 programScheduler = FindObjectOfType<ProgramScheduler>();
+
+            if (dataLogger == null)
+                dataLogger = FindObjectOfType<NeglectFix.Utils.DataLogger>();
 
             if (trialLogger == null)
                 trialLogger = dataLogger;
@@ -157,6 +200,7 @@ namespace NeglectFix.Tasks
 
             totalTrialsThisSession = 0;
             totalHitsThisSession = 0;
+            trainingLoopActive = true;
 
             // Begin block-by-block trial loop
             StartCoroutine(RunBlocks());
@@ -164,7 +208,9 @@ namespace NeglectFix.Tasks
 
         protected override void OnTrainingPhaseEnd()
         {
+            trainingLoopActive = false;
             base.OnTrainingPhaseEnd();
+            trialLogger?.CloseTrainingTrialLog();
             programScheduler?.RecordSessionComplete();
 
             float hitRate = totalTrialsThisSession > 0 ? (float)totalHitsThisSession / totalTrialsThisSession : 0f;
@@ -181,11 +227,14 @@ namespace NeglectFix.Tasks
 
                 float blockEndTime = Time.time + blockDurationSec;
                 int trialIndex = 0;
-                while (Time.time < blockEndTime && currentPhase == SessionPhase.Training)
+                while (Time.time < blockEndTime && IsTrainingLoopActive())
                 {
                     trialIndex++;
                     yield return RunSingleTrial(blockIdx, trialIndex);
                 }
+
+                if (!IsTrainingLoopActive())
+                    yield break;
 
                 dataLogger?.LogEvent($"block_{blockIdx}_end");
 
@@ -193,7 +242,10 @@ namespace NeglectFix.Tasks
                 {
                     Debug.Log($"[AVTraining] Rest for {interBlockRestSec}s before block {blockIdx + 1}.");
                     dataLogger?.LogEvent("block_rest_start");
-                    yield return new WaitForSeconds(interBlockRestSec);
+                    yield return WaitForTrainingSeconds(interBlockRestSec);
+                    if (!IsTrainingLoopActive())
+                        yield break;
+
                     dataLogger?.LogEvent("block_rest_end");
                 }
             }
@@ -203,7 +255,10 @@ namespace NeglectFix.Tasks
         {
             // Inter-stimulus interval
             float isi = UnityEngine.Random.Range(minInterStimulusIntervalSec, maxInterStimulusIntervalSec);
-            yield return new WaitForSeconds(isi);
+            yield return WaitForTrainingSeconds(isi);
+
+            if (!IsTrainingLoopActive())
+                yield break;
 
             // Eccentricity from progression
             float eccentricityDeg = 8f;  // fallback
@@ -235,7 +290,7 @@ namespace NeglectFix.Tasks
             float stimulusEndTime = trialStimulusOnsetTime + stimulusDurationSec;
             float responseDeadline = trialStimulusOnsetTime + responseWindowSec;
 
-            while (Time.time < responseDeadline)
+            while (Time.time < responseDeadline && IsTrainingLoopActive())
             {
                 // Check for response input
                 if (!responseReceived && DetectResponse())
@@ -253,6 +308,12 @@ namespace NeglectFix.Tasks
                 }
 
                 yield return null;
+            }
+
+            if (!IsTrainingLoopActive())
+            {
+                if (stimObj != null) Destroy(stimObj);
+                yield break;
             }
 
             // Trial bookkeeping
@@ -293,6 +354,18 @@ namespace NeglectFix.Tasks
 
             // Cleanup
             if (stimObj != null) Destroy(stimObj);
+        }
+
+        private bool IsTrainingLoopActive()
+        {
+            return trainingLoopActive && currentPhase == SessionPhase.Training;
+        }
+
+        private IEnumerator WaitForTrainingSeconds(float durationSec)
+        {
+            float endTime = Time.time + durationSec;
+            while (Time.time < endTime && IsTrainingLoopActive())
+                yield return null;
         }
 
         private void UpdateStaircase(bool hit)
@@ -393,15 +466,205 @@ namespace NeglectFix.Tasks
 
         private bool DetectResponse()
         {
-            // Quest controller: trigger button on either hand
-            // (Wired via Input System binding in production; falls back to keyboard for editor testing)
-            if (Input.GetKeyDown(KeyCode.Space)) return true;
-            if (Input.GetKeyDown(KeyCode.Return)) return true;
+            InputAction action = responseAction.action;
+            if (action != null && action.enabled && action.WasPressedThisFrame())
+                return true;
 
-            // Quest controller trigger axis fallback (Unity legacy input)
-            if (Input.GetAxis("Submit") > 0.5f) return true;
+            if (DetectXRControllerResponse())
+                return true;
+
+            if (!enableLegacyKeyboardFallback) return false;
+
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Space)) return true;
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Return)) return true;
+
+            if (UnityEngine.Input.GetAxis("Submit") > 0.5f) return true;
 
             return false;
+        }
+
+        private bool DetectXRControllerResponse()
+        {
+            bool left = DetectXRControllerResponse(
+                UnityEngine.XR.InputDeviceCharacteristics.Left,
+                ref leftXRResponsePressed,
+                "left");
+
+            bool right = DetectXRControllerResponse(
+                UnityEngine.XR.InputDeviceCharacteristics.Right,
+                ref rightXRResponsePressed,
+                "right");
+
+            return left || right;
+        }
+
+        private bool DetectXRControllerResponse(
+            UnityEngine.XR.InputDeviceCharacteristics hand,
+            ref bool wasPressed,
+            string handLabel)
+        {
+            xrControllerDevices.Clear();
+            UnityEngine.XR.InputDevices.GetDevicesWithCharacteristics(
+                UnityEngine.XR.InputDeviceCharacteristics.Controller | hand,
+                xrControllerDevices);
+
+            bool isPressed = false;
+            string source = "";
+
+            foreach (UnityEngine.XR.InputDevice device in xrControllerDevices)
+            {
+                if (TryReadXRResponsePressed(device, out source))
+                {
+                    isPressed = true;
+                    break;
+                }
+            }
+
+            if (isPressed && !wasPressed)
+            {
+                Debug.Log($"[AVTraining] XR {handLabel} response detected via {source}.");
+                wasPressed = true;
+                return true;
+            }
+
+            wasPressed = isPressed;
+            return false;
+        }
+
+        private static bool TryReadXRResponsePressed(UnityEngine.XR.InputDevice device, out string source)
+        {
+            if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out bool triggerButton) &&
+                triggerButton)
+            {
+                source = $"{device.name}/triggerButton";
+                return true;
+            }
+
+            if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.trigger, out float trigger) &&
+                trigger >= 0.65f)
+            {
+                source = $"{device.name}/trigger={trigger:F2}";
+                return true;
+            }
+
+            if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.gripButton, out bool gripButton) &&
+                gripButton)
+            {
+                source = $"{device.name}/gripButton";
+                return true;
+            }
+
+            if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.grip, out float grip) &&
+                grip >= 0.65f)
+            {
+                source = $"{device.name}/grip={grip:F2}";
+                return true;
+            }
+
+            if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primaryButton, out bool primaryButton) &&
+                primaryButton)
+            {
+                source = $"{device.name}/primaryButton";
+                return true;
+            }
+
+            if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondaryButton, out bool secondaryButton) &&
+                secondaryButton)
+            {
+                source = $"{device.name}/secondaryButton";
+                return true;
+            }
+
+            source = "";
+            return false;
+        }
+
+        private void EnableResponseAction()
+        {
+            InputAction action = GetOrCreateResponseAction();
+            if (action == null || action.enabled) return;
+
+            action.Enable();
+            responseActionEnabledByTask = true;
+        }
+
+        private void DisableResponseAction()
+        {
+            InputAction action = responseAction.action;
+            if (action != null && responseActionEnabledByTask && action.enabled)
+                action.Disable();
+
+            responseActionEnabledByTask = false;
+        }
+
+        private InputAction GetOrCreateResponseAction()
+        {
+            InputAction action = responseAction.action;
+            if (action != null) return action;
+
+            defaultResponseAction = new InputAction(
+                name: "AVTrainingResponse",
+                type: InputActionType.Button,
+                expectedControlType: "Button");
+
+            AddDefaultResponseBindings(defaultResponseAction);
+            responseAction = new InputActionProperty(defaultResponseAction);
+            return defaultResponseAction;
+        }
+
+        private static void AddDefaultResponseBindings(InputAction action)
+        {
+            // Generic XR covers OpenXR/Quest controller profiles; explicit Meta/Oculus bindings cover
+            // editor/device layouts that surface Quest controllers by profile-specific layout names.
+            action.AddBinding("<XRController>{LeftHand}/triggerPressed");
+            action.AddBinding("<XRController>{RightHand}/triggerPressed");
+            action.AddBinding("<XRController>{LeftHand}/trigger").WithInteraction("press");
+            action.AddBinding("<XRController>{RightHand}/trigger").WithInteraction("press");
+            action.AddBinding("<XRController>{LeftHand}/gripPressed");
+            action.AddBinding("<XRController>{RightHand}/gripPressed");
+            action.AddBinding("<XRController>{LeftHand}/primaryButton");
+            action.AddBinding("<XRController>{RightHand}/primaryButton");
+            action.AddBinding("<XRController>{LeftHand}/secondaryButton");
+            action.AddBinding("<XRController>{RightHand}/secondaryButton");
+            action.AddBinding("<OculusTouchController>{LeftHand}/triggerPressed");
+            action.AddBinding("<OculusTouchController>{RightHand}/triggerPressed");
+            action.AddBinding("<OculusTouchController>{LeftHand}/trigger").WithInteraction("press");
+            action.AddBinding("<OculusTouchController>{RightHand}/trigger").WithInteraction("press");
+            action.AddBinding("<OculusTouchController>{LeftHand}/gripPressed");
+            action.AddBinding("<OculusTouchController>{RightHand}/gripPressed");
+            action.AddBinding("<OculusTouchController>{LeftHand}/primaryButton");
+            action.AddBinding("<OculusTouchController>{RightHand}/primaryButton");
+            action.AddBinding("<OculusTouchController>{LeftHand}/secondaryButton");
+            action.AddBinding("<OculusTouchController>{RightHand}/secondaryButton");
+            action.AddBinding("<QuestTouchPlusController>{LeftHand}/triggerPressed");
+            action.AddBinding("<QuestTouchPlusController>{RightHand}/triggerPressed");
+            action.AddBinding("<QuestTouchPlusController>{LeftHand}/trigger").WithInteraction("press");
+            action.AddBinding("<QuestTouchPlusController>{RightHand}/trigger").WithInteraction("press");
+            action.AddBinding("<QuestProTouchController>{LeftHand}/triggerPressed");
+            action.AddBinding("<QuestProTouchController>{RightHand}/triggerPressed");
+            action.AddBinding("<QuestProTouchController>{LeftHand}/trigger").WithInteraction("press");
+            action.AddBinding("<QuestProTouchController>{RightHand}/trigger").WithInteraction("press");
+            action.AddBinding("<Keyboard>/space");
+            action.AddBinding("<Keyboard>/enter");
+        }
+
+        private void LogXRControllerDevices()
+        {
+            if (xrControllerDevicesLogged) return;
+            xrControllerDevicesLogged = true;
+
+            xrControllerDevices.Clear();
+            UnityEngine.XR.InputDevices.GetDevicesWithCharacteristics(
+                UnityEngine.XR.InputDeviceCharacteristics.Controller,
+                xrControllerDevices);
+
+            foreach (UnityEngine.XR.InputDevice device in xrControllerDevices)
+            {
+                xrFeatureUsages.Clear();
+                device.TryGetFeatureUsages(xrFeatureUsages);
+                Debug.Log($"[AVTraining] XR controller device: name={device.name}, " +
+                          $"characteristics={device.characteristics}, features={string.Join(", ", xrFeatureUsages)}");
+            }
         }
 
         // Static helper: LogCS to fractional contrast (Weber)
@@ -424,7 +687,7 @@ namespace NeglectFix.Tasks
                             (totalTrialsThisSession > 0 ? $" ({(float)totalHitsThisSession / totalTrialsThisSession:P0})" : ""));
             if (progression != null)
                 GUILayout.Label($"Severity: {progression.severity} | Affected: {progression.affectedHemifield}");
-            GUILayout.Label("<i>Press SPACE on stimulus detection.</i>");
+            GUILayout.Label("<i>Press Quest trigger or SPACE on detection.</i>");
             GUILayout.EndArea();
         }
     }

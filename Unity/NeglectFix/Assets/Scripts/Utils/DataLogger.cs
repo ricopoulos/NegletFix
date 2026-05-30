@@ -88,22 +88,23 @@ namespace NeglectFix.Utils
                 return;
             }
 
-            // Create log folder if it doesn't exist
-            string logPath = Path.Combine(Application.dataPath, "..", logFolderName);
-            if (!Directory.Exists(logPath))
-            {
-                Directory.CreateDirectory(logPath);
-                Debug.Log($"[DataLogger] Created log folder: {logPath}");
-            }
+            string logPath = GetSessionLogDirectory();
 
-            // Create session file with timestamp
-            string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-            string fileName = $"session_{timestamp}.csv";
-            currentSessionFile = Path.Combine(logPath, fileName);
-
-            // Open CSV writer
             try
             {
+                // Create log folder if it doesn't exist
+                if (!Directory.Exists(logPath))
+                {
+                    Directory.CreateDirectory(logPath);
+                    Debug.Log($"[DataLogger] Created log folder: {logPath}");
+                }
+
+                // Create session file with timestamp
+                string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+                string fileName = $"session_{timestamp}.csv";
+                currentSessionFile = Path.Combine(logPath, fileName);
+
+                // Open CSV writer
                 csvWriter = new StreamWriter(currentSessionFile, false);
                 csvWriter.WriteLine(CSV_HEADER);
                 csvWriter.WriteLine($"# Session started: {DateTime.Now}");
@@ -122,6 +123,15 @@ namespace NeglectFix.Utils
             {
                 Debug.LogError($"[DataLogger] Failed to create log file: {e.Message}");
             }
+        }
+
+        private string GetSessionLogDirectory()
+        {
+#if UNITY_EDITOR
+            return Path.GetFullPath(Path.Combine(Application.dataPath, "..", logFolderName));
+#else
+            return Path.Combine(Application.persistentDataPath, logFolderName);
+#endif
         }
 
         public void StopLogging()
@@ -265,6 +275,7 @@ namespace NeglectFix.Utils
         public bool IsLogging() => isLogging;
         public int GetSamplesLogged() => samplesLogged;
         public string GetCurrentSessionFile() => currentSessionFile;
+        public void CloseTrainingTrialLog() => CloseTrialFile();
 
         #region Contrast Sensitivity Logging
 
@@ -409,6 +420,7 @@ namespace NeglectFix.Utils
 
             string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
             currentTrialFile = Path.Combine(trialsPath, $"av_training_{timestamp}.csv");
+            trainingTrialsLogged = 0;
 
             try
             {

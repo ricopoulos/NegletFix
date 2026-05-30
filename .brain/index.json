@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "project_name": "NegletFix",
   "description": "VR rehabilitation for left homonymous hemianopia with EEG neurofeedback",
-  "last_updated": "2026-05-26T17:02:55Z",
+  "last_updated": "2026-05-30T18:36:00Z",
   "wiki": {
     "path": ".brain/wiki/",
     "pages": 11,
@@ -24,10 +24,10 @@
       "notes": "Muse headband integration via Mind Monitor OSC - decoupled from v1 critical path. RewardController.RewardMode.OpenLoop is default; EegGated reserved for v2 after Muse signal-quality validation per Treves 2025 JMIR meta-analysis."
     },
     "audiovisual-training": {
-      "status": "scaffolded",
+      "status": "smoke-tested",
       "health": "yellow",
       "path": "Assets/Scripts/Tasks/AudioVisualTraining.cs",
-      "notes": "Phase 1 scaffold complete 2026-05-16 (commits ecf327f + 7ea389c + 24a3075 on main). Paradigm B (congruent-pair), Alharshan 2026 dose (30 min × 5×/week × 6 weeks = 15hr). Compiles clean in Unity 6.2, zero errors. Smoke test in Editor pending — fresh-head task next session."
+      "notes": "Phase 1 scaffold complete 2026-05-16 (commits ecf327f + 7ea389c + 24a3075 on main). Paradigm B (congruent-pair), Alharshan 2026 dose (30 min × 5×/week × 6 weeks = 15hr). Headless PlayMode smoke test passed 2026-05-30: shortened session completed and trial CSV opened/closed after fixing trialLogger dependency initialization. Quest/InputSystem response binding added 2026-05-30; strengthened smoke test simulates Space via Unity.InputSystem.TestFramework and verifies at least one hit/reward plus hit CSV columns. Manual smoke scene `Assets/Scenes/AVTrainingManualSmoke.unity` generated and placed first in Build Settings. Quest manual smoke passed 2026-05-30 on Quest 2 after adding UnityEngine.XR fallback polling: log showed `Oculus Touch Controller OpenXR/triggerButton`, reward events fired, pulled CSV `SmokeResults/av_training_2026-05-30_14-23-19.csv` with 44 rows / 42 hits. Follow-up guard added so in-flight trials cannot create extra logs after training ends; Android smoke APK rebuilt successfully at `Unity/NeglectFix/Builds/AVTrainingManualSmoke.apk`."
     },
     "quest-dev-mode": {
       "status": "operational",
@@ -50,8 +50,7 @@
   },
   "active_issues": [],
   "next_actions": [
-    "Fresh-head smoke test of AV training in Unity Editor",
-    "Quest controller input binding via InputSystem (replaces keyboard fallback)",
+    "Optional: install/run the freshly rebuilt `Builds/AVTrainingManualSmoke.apk` once more to verify the post-training guard; controller response/reward smoke itself has passed",
     "Disable SSAO in URP renderer for Quest performance (polish)",
     "Quest 3 acquisition when budget allows (used via Back Market ~€350-450)",
     "Phase 2 launch: 30-session Paradigm B program with mid-program CS checks"
