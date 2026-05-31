@@ -1,6 +1,6 @@
 ---
 title: Hardware Setup
-last_updated: 2026-05-16
+last_updated: 2026-05-30
 confidence: HIGH
 sources:
   - CLAUDE.md
@@ -9,6 +9,7 @@ sources:
   - RESEARCH_SUMMARY.md
   - .brain/cross-cutting.md
   - 2026-05-14 research audit + 2026-05-16 working fix for Quest dev mode (see §6 + §9)
+  - .brain/sessions/2026-05-30-quest-guided-pilot-wrap.md
 ---
 
 # Hardware Setup
@@ -140,6 +141,40 @@ Required for sideloading NegletFix builds.
 
 See [[unity-architecture]]#quest-2-deployment-android for build settings detail.
 
+### ADB workflow validated 2026-05-30
+
+Source map: `.brain/sessions/2026-05-30-quest-guided-pilot-wrap.md`, `scripts/quest-adb.sh`.
+
+Quest USB ADB became a major friction point during the guided pilot session. The practical recovery path was:
+
+1. Open **Meta Quest Developer Hub** on the Mac.
+2. Let MQDH detect the Quest 2 over USB.
+3. Confirm terminal ADB sees the same headset:
+   ```bash
+   adb devices -l
+   ```
+4. If USB is stable long enough, enable cached Wi-Fi ADB:
+   ```bash
+   scripts/quest-adb.sh enable-wifi
+   ```
+5. For later loops, prefer:
+   ```bash
+   scripts/quest-adb.sh status
+   scripts/quest-adb.sh install-run
+   scripts/quest-adb.sh logs
+   ```
+
+Known current device:
+- Quest 2 serial: `1WMHH831TR1047`
+- Cached LAN IP used during the session: `10.0.0.136`
+- Terminal ADB path: `/opt/homebrew/bin/adb`
+
+For off-face testing, the headset may sleep or show `HEADSET_UNMOUNTED`. This command worked during the session:
+```bash
+adb shell am broadcast -a com.oculus.vrpowermanager.prox_close
+```
+Use it deliberately: it can keep the display awake and drain battery until reboot.
+
 ---
 
 ## 7. Physical Wearing Setup
@@ -173,9 +208,12 @@ From `.brain/cross-cutting.md:41-46`:
 | Muse disconnects repeatedly | BLE interference or low battery | Charge Muse, move phone closer, disable other BLE devices |
 | Unity compiles but no OSC even with extOSC installed | `#define EXTOSC_INSTALLED` not uncommented | Open `MuseOSCReceiver.cs:5`, remove the `//` before the define |
 | Quest not detected by `adb` | Driver (Windows) / USB-C cable | Use the official Quest cable or known-good USB-C 3.0 data cable (not charge-only) |
+| Quest intermittently disappears from terminal ADB but MQDH sees it | Competing/flaky ADB daemon or USB handshake | Open MQDH, confirm device is connected, then restart terminal ADB. Prefer `scripts/quest-adb.sh enable-wifi` once USB works long enough. Keep MQDH and terminal pointed at the same ADB path if possible. |
+| Quest shows `unauthorized` and no prompt is visible | Debug prompt missed, headset asleep, or stale host key | Wake headset, replug USB, watch inside headset for the prompt, choose **Always allow**. If still stuck, restart ADB; only delete `~/.android/adbkey*` as a last resort because it forces reauthorization. |
 | Both Muse and Quest slip during session | Fit conflict | Try Muse S instead of Muse 2; Quest elite strap improves stability |
 | VR motion sickness during AV training | Fatigue or new user | Start 5-10 min sessions, stationary only; no locomotion; 90 Hz refresh minimum |
 | Meta Horizon app: *"only the owner can do it"* when toggling Developer Mode | Headset is primary-paired to a different Meta account than the one with the verified dev org — "owner" means primary device-paired account, NOT org owner | **Verified-working fix (Eric 2026-05-16)**: previous owner unpairs in their Meta app first → factory-reset Quest → re-pair to dev-org owner's account → toggle dev mode in their Meta Horizon app. See §6 for full procedure. The earlier "invite to org as Admin" workaround was based on a wrong diagnosis and is not the fix. |
+| Markers hard to see because Quest camera/passthrough appears behind app | App background not visually controlled | Use the current AV training builds with `AVTrainingControlledBackdrop`: opaque gray camera-locked quad behind prompts/stimuli. Eric confirmed gray background + visible markers in-headset on 2026-05-30. |
 
 ---
 

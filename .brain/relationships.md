@@ -17,8 +17,8 @@
 - **Relationship type**: self
 - **State**: active
 - **Temperature**: warm
-- **Waiting on**: self — fresh-head smoke test of Phase 1 scaffold + Quest controller input binding before Phase 2 program launch
-- **Blocker**: smoke test pending (15-min Editor task); Quest 3 acquisition deferred to budget
+- **Waiting on**: self — polish sparse right-control trials and decide first rehab dose length
+- **Blocker**: no hard blocker; next work is protocol polish before Phase 2 launch. Quest 3 acquisition deferred to budget.
 - **Last contact**: ongoing (self)
 
 **Context**:
@@ -27,6 +27,7 @@ Right-PCA stroke July 2021 → left homonymous hemianopia. NegletFix is rehab, n
 Originally documented as the most extreme research-to-execution inversion in the portfolio (11 wiki pages, only 5 sessions; WIP-001 "PAUSED, ready to begin" longer than the entire Charles pilot ran). That changed on **2026-05-16**: WIP-001 scaffolded in one session (Phase 1 — `AudioVisualTraining.cs` + `ProgramScheduler.cs` + `EccentricityProgression.cs` + DataLogger extension + RewardController decouple). Unity 6.2 imported clean, XR Plug-in Management configured, 6 commits pushed. Self-blocker pattern is officially partially broken — code exists, smoke test next.
 
 - 2026-05-16: Massive productive session — Quest dev mode resolved + Phase 1 Unity scaffold built. 6 commits pushed to main. Self-blocker partially broken (smoke test still pending but execution gear engaged).
+- 2026-05-30: Quest guided AV pilot completed. USB friction was worked through, QuickReadyCheck and Session1Pilot builds ran on Quest 2, and Eric completed a 45-trial left-field recorded block. The task felt emotionally brutal because audio made the unseen left markers explicit, but Eric reaffirmed full commitment: "if you can measure it, you can modify it."
 
 ---
 

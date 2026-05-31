@@ -1,17 +1,18 @@
 ---
 title: Unity Architecture
-last_updated: 2026-05-16
+last_updated: 2026-05-30
 confidence: HIGH
 sources:
   - Unity/NeglectFix/Assets/Scripts/**/*.cs
   - PROJECT_SUMMARY.md
   - CLAUDE.md
   - 2026-05-16 Phase 1 scaffold + XR config session
+  - .brain/sessions/2026-05-30-quest-guided-pilot-wrap.md
 ---
 
 # Unity Architecture
 
-Developer reference for the NegletFix Unity codebase. **13 C# scripts** (10 original + 3 added in Phase 1, 2026-05-16), ~4,300 LOC total, organized in 4 subsystems: Assessment, EEG, Tasks, Utils. Target platform: Meta Quest 2/3 (Android ARM64) via OpenXR; OpenXR + Meta Quest Support enabled as of 2026-05-16.
+Developer reference for the NegletFix Unity codebase. **13 C# scripts** (10 original + 3 added in Phase 1, 2026-05-16), organized in 4 subsystems: Assessment, EEG, Tasks, Utils. Target platform: Meta Quest 2/3 (Android ARM64) via OpenXR; OpenXR + Meta Quest Support enabled as of 2026-05-16. The AV training path has now been validated on Quest 2 in a guided pilot (2026-05-30).
 
 **Unity version**: 6.2 (6000.2.8f1) with VR template (`.brain/cross-cutting.md:43`).
 **Project path**: `Unity/NeglectFix/` (note the casing: directory is `NeglectFix`, git repo is `NegletFix`).
@@ -52,9 +53,9 @@ All paths relative to `Unity/NeglectFix/Assets/Scripts/`.
 
 | Script | LOC | Responsibility |
 |--------|-----|---------------|
-| `Tasks/TaskManager.cs` | 325 | Abstract base class. Session phases (`NotStarted` → `Baseline` → `Training` → `Cooldown` → `Completed`), default durations overridable by concrete tasks. Hooks for `dataLogger`, `engagementCalculator`, `rewardController`. |
-| `Tasks/AudioVisualTraining.cs` ★ | ~320 | **Paradigm B** main task, congruent-pair detection. Extends `TaskManager`. Trial loop with random ISI (2-5s), 3×10-min blocks, 2-up/1-down weighted staircase converging on ~70.7%, sub-50ms AV sync, baseline-driven personalization. Procedural 400Hz tone with Hann window as audio fallback. Reward triggered directly on hit (open-loop, not EEG-gated). |
-| `Tasks/ProgramScheduler.cs` ★ | ~200 | Program state machine — session count, last-session timestamp, paradigm choice, re-measurement triggers. Persisted as JSON to `Application.persistentDataPath/program_state.json`. Supports paradigm switching for Phase 3. |
+| `Tasks/TaskManager.cs` | ~430 | Abstract base class. Session phases (`NotStarted` → optional `Ready` → `Baseline` → `Training` → `Cooldown` → `Completed`), default durations overridable by concrete tasks. Hooks for ready UI, `dataLogger`, `engagementCalculator`, `rewardController`. |
+| `Tasks/AudioVisualTraining.cs` ★ | expanded | **Paradigm B** main task, congruent-pair detection. Extends `TaskManager`. Trial loop with random ISI, block structure, 2-up/1-down weighted staircase, sub-50ms AV sync, baseline-driven personalization, Quest XR trigger polling fallback, controlled gray backdrop, center fixation cross, ready/baseline/practice/completion headset prompts. Reward triggered directly on hit (open-loop, not EEG-gated). |
+| `Tasks/ProgramScheduler.cs` ★ | ~230 | Program state machine — session count, last-session timestamp, paradigm choice, re-measurement triggers. Persisted as JSON to `Application.persistentDataPath/program_state.json`. Supports paradigm switching for Phase 3 and `resetStateOnAwake` for repeatable smoke/pilot builds. |
 | `Tasks/EccentricityProgression.cs` ★ | ~110 | Classifies CS asymmetry severity (Severe/Moderate/Mild), selects appropriate eccentricity ladder, progresses across sessions. Eric's case (asymmetry 2.25) → Severe → ladder `[5,8,12,16,20]°` starting at scotoma border per Yang/Cavanaugh/Saionz 2023. |
 
 ★ = added 2026-05-16 (Phase 1 scaffold).
@@ -170,21 +171,38 @@ Cross-namespace references use fully qualified names (e.g., `NeglectFix.EEG.Enga
 
 See [[hardware-setup]] for Muse/Mind Monitor/OSC wiring.
 
+### Current Quest validation state (2026-05-30)
+
+Source map: `.brain/sessions/2026-05-30-quest-guided-pilot-wrap.md`.
+
+- Package ID: `com.UnityTechnologies.com.unity.template.urpblank`
+- Quest 2 serial: `1WMHH831TR1047`
+- USB ADB is authorized but physically intermittent; Meta Quest Developer Hub helped restore the handshake during the session.
+- Wi-Fi ADB helper added: `scripts/quest-adb.sh`
+- Fast smoke APK: `Builds/AVTrainingQuickReadyCheck.apk`
+- Guided pilot APK: `Builds/AVTrainingSession1Pilot.apk`
+- Guided pilot completed on Quest 2 at 23:27 local time with 45 recorded left-field trials and clean CSV close.
+
 ---
 
-## 6. AV Training Module (built 2026-05-16) — What Exists Now
+## 6. AV Training Module (built 2026-05-16, Quest-guided pilot 2026-05-30)
 
-The audiovisual training module is **built and committed** as of 2026-05-16 (Phase 1 scaffold, commits `ecf327f` + `7ea389c` + `24a3075` on `main`). Implements Paradigm B (congruent-pair detection, Wake Forest / Rowland 2023 lineage) at the Alharshan/Alwashmi 2026 dose for chronic adult stroke.
+The audiovisual training module is **built, committed, and Quest-pilot validated**. Initial scaffold landed 2026-05-16 (commits `ecf327f` + `7ea389c` + `24a3075` on `main`). Guided Quest pilot landed 2026-05-30 (commit `73cfce8`). It implements Paradigm B (congruent-pair detection, Wake Forest / Rowland 2023 lineage) with a path toward the Alharshan/Alwashmi 2026 dose for chronic adult stroke.
 
 Files (see Section 1 for details):
-- `Tasks/AudioVisualTraining.cs` — main task with trial loop, staircase, AV pair presentation
-- `Tasks/ProgramScheduler.cs` — program state JSON persistence
+- `Tasks/AudioVisualTraining.cs` — main task with trial loop, staircase, AV pair presentation, controlled backdrop, fixation cross, practice block, Quest trigger polling
+- `Tasks/ProgramScheduler.cs` — program state JSON persistence and repeatable-pilot reset
 - `Tasks/EccentricityProgression.cs` — baseline-driven eccentricity ladder
 
+Scenes/tools:
+- `Assets/Editor/AvTrainingManualSmokeSceneBuilder.cs` — generates manual smoke, quick-ready, and Session1 pilot scenes/APKs.
+- `Assets/Scenes/AVTrainingQuickReadyCheck.unity` — ~15s prompt/controller/visibility check.
+- `Assets/Scenes/AVTrainingSession1Pilot.unity` — guided pilot scene with Eric baseline, practice, recorded block, completion prompt.
+
 What's still on the to-do list:
-- **Smoke test in Editor** — create a scene with the components wired up, hit Play, watch trials populate CSV. Deferred to a fresh-head session.
-- **Quest controller input** — `DetectResponse()` currently falls back to keyboard SPACE/Return and legacy `Input.GetAxis("Submit")`. For real Quest deployment, this needs an `InputSystem.InputAction` binding to the Quest controller trigger.
-- **Visual stimulus prefab** — fallback creates a programmatic Sphere; a proper Gabor patch or high-contrast disk prefab is a polish step.
+- **Sparse right-control trials** — add ~10-20% right-hemifield control trials and log them separately from left rehab trials.
+- **Therapeutic dose ramp** — decide first real rehab block length (2 min / 5 min / gradual ramp to 30 min).
+- **Clinical contrast policy** — remove or reduce high validation contrast floor once visibility/prompt flow is stable.
 - **Phase 3 — Paradigm A (3D-MOT-IVR)** — significantly larger build; deferred until Phase 2 (30 sessions of Paradigm B) is run and shows responder data.
 
 Integration: `TaskManager` already wires `dataLogger`, `engagementCalculator`, `rewardController`. The new `AudioVisualTraining` inherits this plumbing and adds `programScheduler` + `trialLogger` (defaults to `dataLogger`). See [[audiovisual-training-protocol]] §5 for the build spec and runtime trial-loop pseudocode.

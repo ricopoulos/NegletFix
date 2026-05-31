@@ -1,6 +1,6 @@
 ---
 title: Rehabilitation Roadmap
-last_updated: 2026-05-14
+last_updated: 2026-05-30
 confidence: MIXED
 sources:
   - .brain/index.json
@@ -10,6 +10,7 @@ sources:
   - PROJECT_SUMMARY.md
   - NEUROFEEDBACK_PROTOCOL.md
   - 2026-05-14 PubMed-verified audit — see [[research-papers-index]] Recent Additions
+  - .brain/sessions/2026-05-30-quest-guided-pilot-wrap.md
 ---
 
 # Rehabilitation Roadmap
@@ -81,21 +82,42 @@ See [[erics-baseline]] for the measured starting point, [[audiovisual-training-p
 - Quest controller input binding via InputSystem (replaces keyboard SPACE fallback in `DetectResponse()`)
 - Quest 3 acquisition (budget-dependent)
 
+### 2026-05-30 — Quest AV guided pilot completed
+
+Source map: `.brain/sessions/2026-05-30-quest-guided-pilot-wrap.md`.
+
+This session moved the AV training path from code scaffold to a real headset-validated pilot:
+- Restored ADB workflow after USB friction; added `scripts/quest-adb.sh` for cached Wi-Fi ADB.
+- Added ready prompt/countdown, completion message, controlled gray backdrop, center fixation cross, and unlogged practice block.
+- Added `AVTrainingQuickReadyCheck` for fast visual/controller smoke testing.
+- Rebuilt and installed `AVTrainingSession1Pilot.apk`.
+- Eric completed the guided Quest pilot.
+
+Recorded pilot result:
+- 45 recorded trials
+- 33 hits (73.3%)
+- all left hemifield
+- eccentricity range `-8°..-5°`
+- average hit RT ~475ms
+- final staircase log `0.45 LogCS`
+
+Interpretation:
+- The UI/visibility/control path is now good enough to expose the real left-field deficit.
+- This was emotionally heavy but productive; Eric explicitly framed the brutality as part of the rehab journey.
+- Next iteration should add sparse right-control trials to confirm attention/input/visibility while preserving left-field therapeutic dose.
+
 ---
 
 ## 2. NEXT — Planned, Ready to Build [MEDIUM]
 
-### WIP-001: Audiovisual training module — PAUSED, ready to resume
+### WIP-001: Audiovisual training module — active polish before rehab start
 
-From `.brain/backlog.md:12-28`:
-- **Status**: PAUSED (not blocked)
-- **Context**: Main rehabilitation module based on Daibert-Nido 2021
-- **Unblocked by**: baseline measurement completed 2025-12-15
-- **Resume path**:
-  1. Review baseline (Left 0.00, Right 2.25 LogCS) — done
-  2. Design audiovisual task using parameters in [[audiovisual-training-protocol]]
-  3. Implement in Unity as `Tasks/AudioVisualTraining.cs` extending `TaskManager`
-  4. Integrate `ConfigureFromContrastResults()` personalization hook
+The AV module is no longer paused or merely scaffolded. It is on-headset validated and needs polish before starting the first real rehab block:
+1. Add sparse right-control trials (~10-20%) and log them separately from left rehab trials.
+2. Keep left hemifield as the primary dose.
+3. Decide first real dose length: repeat 2-minute guided block, move to 5 minutes, or ramp gradually.
+4. Decide when to reduce/remove high validation contrast floor and let the staircase become clinically meaningful.
+5. Keep fixed-gaze contrast/field assessment separate from AV training.
 
 See [[audiovisual-training-protocol]]#what-to-build-in-unity for build spec.
 
@@ -105,11 +127,11 @@ Per [[contrast-sensitivity-test]] and [[audiovisual-training-protocol]]:
 - **Post session 20**: full 3-hemifield reassessment — compare to baseline
 - Append each to [[erics-baseline]]#progress-log, never overwrite
 
-### Quest VR deployment (next major)
-- Test the contrast sensitivity test in actual Quest headset
-- Replace ±300px UI offset with proper visual-angle positioning (known FOV enables calibrated eccentricity)
-- Verify fixation cross and letter rendering are visible at expected contrasts on Quest OLED (~100 cd/m²)
-- See `.brain/index.json:35` — "Quest VR deployment for immersive testing"
+### Quest VR deployment (current state)
+- Quest AV training deployment is operational for APK install/launch/log pull.
+- Contrast sensitivity test still needs its own Quest validation; do not infer assessment validity from the AV pilot.
+- Replace ±300px UI offset with proper visual-angle positioning for future VR assessment mode.
+- Verify fixation cross and letter rendering for the contrast test separately from AV training markers.
 
 ### Audiovisual training program
 Three dose options, picked based on Eric's chronic profile (see [[audiovisual-training-protocol]] §1):
@@ -165,26 +187,27 @@ Display brightness, viewing distance, ambient light all affect contrast measurem
 |-------|--------|----------|------------|
 | Instrument (contrast sensitivity test) | Working | Bug fixed, produces valid per-hemifield LogCS | HIGH |
 | Baseline | Measured | Central ~1.05, Right 2.25, Left 0.00 | HIGH |
-| Code for audiovisual training | Not yet written | Parameters fully specified | — |
+| Code for audiovisual training | Quest-guided pilot completed | 45 left-field recorded trials, clean CSV close, Eric confirmed flow works | MEDIUM-HIGH for flow / MIXED for rehab effect |
 | Code for EEG pipeline | Written, untested with real Muse | Simulator path works | MEDIUM |
-| Audiovisual training effect on Eric's left hemifield | Not yet attempted | Daibert-Nido cohort +0.31-0.54 LogCS | MEDIUM predict |
+| Audiovisual training effect on Eric's left hemifield | Started as flow pilot, not full dose | 73.3% hit rate at `-5°/-8°`; no pre/post outcome claim yet | MEDIUM predict |
 | Effect on central dimness ("gray overlay") | Not attempted | Theoretical only | UNKNOWN |
 | Transfer to daily function | Not attempted | Mixed literature | UNKNOWN |
 
-The project has the hardware, the research base, the instrument, and the baseline. What's missing is the intervention code and 6-7 weeks of disciplined Eric-time.
+The project has the hardware, the research base, the instrument, the baseline, and a Quest-validated AV training pilot. What's missing is the polished control-trial logic, the dose decision, and 6 weeks of disciplined Eric-time.
 
 ---
 
 ## 5. Critical Path
 
-1. **Build `Tasks/AudioVisualTraining.cs`** — see [[audiovisual-training-protocol]]#what-to-build-in-unity
-2. **Pilot 2-3 open-loop sessions** in Unity Editor (no Muse required yet)
-3. **Mid-pilot re-test** — run full contrast sensitivity test, append to [[erics-baseline]]#progress-log, check signal in left-hemifield score
-4. **Wire Muse for real** — install extOSC, confirm signal quality on Eric
-5. **Enable closed-loop** — add engagement gating to the training task
-6. **Complete the 20-session Daibert-Nido program** with mid-course quick-checks every 5 sessions
-7. **Post-program full re-assessment** — compare to 2025-12-15 baseline
-8. **Document outcome honestly** — whatever the result is, log it
+1. **Add sparse right-control trials** — log as controls, not rehab dose.
+2. **Choose first rehab dose length** — 2-minute repeat, 5-minute ramp, or progressive schedule.
+3. **Run first real open-loop rehab session** on Quest with left-field primary dose.
+4. **Mid-pilot re-test** — run full contrast sensitivity test, append to [[erics-baseline]]#progress-log, check signal in left-hemifield score.
+5. **Wire Muse for real** — install extOSC, confirm signal quality on Eric.
+6. **Enable closed-loop only after signal validation** — add engagement gating to the training task.
+7. **Complete the 30-session Alharshan-style program** with mid-course quick-checks every 5 sessions if tolerated.
+8. **Post-program full re-assessment** — compare to 2025-12-15 baseline.
+9. **Document outcome honestly** — whatever the result is, log it.
 
 ---
 

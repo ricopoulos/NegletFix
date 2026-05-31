@@ -1,6 +1,6 @@
 ---
 title: Audiovisual Training Protocol (Daibert-Nido family)
-last_updated: 2026-05-14
+last_updated: 2026-05-30
 confidence: MIXED
 sources:
   - NEUROFEEDBACK_PROTOCOL.md
@@ -10,6 +10,7 @@ sources:
   - CLAUDE.md
   - .brain/backlog.md
   - 2026-05-14 research audit — see [[research-papers-index]] Recent Additions
+  - .brain/sessions/2026-05-30-quest-guided-pilot-wrap.md
 ---
 
 # Audiovisual Training Protocol
@@ -28,7 +29,7 @@ See [[research-papers-index]] for full citations.
 
 > **⚠ Reframing (2026-05-14)**: This page previously presented Daibert-Nido 2021 as the "anchor" producing reliable +0.31 to +0.54 LogCS gains, with HIGH confidence. That was overstated. The effect-size range is plausible but **not independently replicated at scale in chronic adult stroke**. Realistic targets for Eric's chronic case: detection-RT improvements, ADL transfer, and modest CS gains at the scotoma border — not a left-field LogCS jump from 0.00 to anywhere near the intact field's 2.25.
 
-**Status**: Specification family is complete; Unity implementation is PAUSED as `WIP-001` in `.brain/backlog.md` — ready to resume post-baseline.
+**Status**: Unity implementation is now a Quest-validated guided pilot. On 2026-05-30, Eric completed a headset run with 45 recorded left-field trials, 33 hits (73.3%), all at `-5°/-8°`, after a short practice block. This validates the task flow and logging; it is not yet the full 30-session therapeutic dose.
 
 See [[scientific-foundation]] for the "why," [[erics-baseline]] for the starting point, [[unity-architecture]] for where to build it.
 
@@ -131,24 +132,59 @@ Three phases per session (`NEUROFEEDBACK_PROTOCOL.md:109-127`):
 - Optional post-session measurement
 - Compare to pre-session baseline
 
+### Current guided Quest pilot structure (validated 2026-05-30)
+
+Source map: `.brain/sessions/2026-05-30-quest-guided-pilot-wrap.md`, `Assets/Editor/AvTrainingManualSmokeSceneBuilder.cs`, `Assets/Scripts/Tasks/AudioVisualTraining.cs`.
+
+The current on-headset pilot is shorter than the therapeutic dose and exists to validate instructions, visibility, controller input, and logging:
+
+| Phase | Duration | Purpose |
+|-------|----------|---------|
+| Ready prompt | waits for trigger + 2s countdown | Eric adjusts headset/controller before any baseline or trial logging |
+| Baseline/calibration | 5s | short pre-training state, visible prompt |
+| Practice intro | 4s | explicitly says this is rehab training, not a contrast test |
+| Practice block | 15s | unlogged trials; rewards allowed; no CSV rows and no staircase updates |
+| Recorded block | 120s | left-field AV trials, trial CSV + staircase active |
+| Cooldown | 5s | closes logs and shows completion prompt |
+
+Instruction model:
+- Start on the small center cross.
+- When a marker appears, move only the eyes toward it and press.
+- Keep the head still.
+- This is **training-flow validation**, not the fixed-gaze contrast/field assessment.
+
+> **Decision 2026-05-30:** Keep fixed-gaze contrast/field measurement as a separate assessment mode. The AV training task may use a fixation cross as an anchor, but it should not pretend to be Humphrey/perimetry-style testing.
+
 ---
 
-## 5. What's Built in Unity (Phase 1 — 2026-05-16)
+## 5. What's Built in Unity (Phase 1 → Quest pilot, 2026-05-16 to 2026-05-30)
 
-Implementation is now scaffolded on disk. v1 ships **Paradigm B (congruent-pair)** open-loop, per the 2026-05-16 build plan. Files:
+Implementation is now scaffolded, smoke-tested, and Quest-pilot validated. v1 ships **Paradigm B (congruent-pair)** open-loop, per the 2026-05-16 build plan and 2026-05-30 headset validation. Files:
 
 | File | Role | Status |
 |------|------|--------|
-| `Assets/Scripts/Tasks/AudioVisualTraining.cs` | Main task. Extends `TaskManager`. Trial loop, 3×10-min blocks, 2-up/1-down weighted staircase, sub-50ms AV sync, baseline-driven personalization. | ✓ Scaffolded |
-| `Assets/Scripts/Tasks/ProgramScheduler.cs` | Session count + timestamp + re-measurement triggers, persisted as JSON in `Application.persistentDataPath/program_state.json`. | ✓ Scaffolded |
+| `Assets/Scripts/Tasks/AudioVisualTraining.cs` | Main task. Extends `TaskManager`. Trial loop, 2-up/1-down weighted staircase, sub-50ms AV sync, baseline-driven personalization, Quest trigger/XR polling fallback, controlled gray backdrop, center fixation cross, ready/baseline/practice/completion headset prompts. | ✓ Quest-pilot validated |
+| `Assets/Scripts/Tasks/ProgramScheduler.cs` | Session count + timestamp + re-measurement triggers, persisted as JSON in `Application.persistentDataPath/program_state.json`; `resetStateOnAwake` supports repeatable smoke/pilot scenes. | ✓ Quest-pilot validated |
 | `Assets/Scripts/Tasks/EccentricityProgression.cs` | Computes per-session eccentricity ladder from baseline CS asymmetry. Severe/Moderate/Mild classification → ladder selection → in-session progression. | ✓ Scaffolded |
 | `Assets/Scripts/Utils/DataLogger.cs` | Extended with `LogTrainingTrial()` + per-session trial CSV in `Application.persistentDataPath/training_trials/`. | ✓ Extended |
 | `Assets/Scripts/Utils/RewardController.cs` | Added `RewardMode` enum. v1 default = `OpenLoop` (task triggers rewards directly, EEG NOT a gate). `EegGated` mode preserved for v2. | ✓ Decoupled |
+| `Assets/Scenes/AVTrainingQuickReadyCheck.unity` | Short headset smoke scene for prompt/controller/visibility validation. | ✓ Quest-passed |
+| `Assets/Scenes/AVTrainingSession1Pilot.unity` | Guided pilot scene with Eric baseline, controlled backdrop, practice, recorded left-field block, completion prompt. | ✓ Quest-passed |
 | `Packages/manifest.json` | Added `com.unity.xr.management 4.5.0`, `com.unity.xr.openxr 1.14.0`, `com.unity.xr.interaction.toolkit 3.0.7`. | ✓ Updated |
 
 ### Trial loop (real, from AudioVisualTraining.cs)
 
 ```
+optional ready prompt:
+  wait for trigger/Space confirmation
+  run countdown before baseline/data collection
+
+optional practice block:
+  run normal AV trials
+  allow reward feedback
+  do NOT write trial CSV rows
+  do NOT update staircase
+
 for each block (1..3):
   for blockDurationSec (default 600s = 10 min):
     wait random ISI (2-5s)
@@ -170,7 +206,8 @@ for each block (1..3):
 `AudioVisualTraining.cs` takes a `ContrastSensitivityResults` in the inspector or auto-loads at start. From it:
 - `EccentricityProgression` classifies severity (Severe/Moderate/Mild) from `|right − left|` LogCS asymmetry
 - For Eric's case (Left 0.00, Right 2.25, asymmetry 2.25): severity = **Severe** → ladder `[5, 8, 12, 16, 20]°` starting near scotoma border (per Yang/Cavanaugh/Saionz 2023)
-- Starting contrast = baseline affected hemifield LogCS + 0.30 (easier than threshold to build engagement before staircase tightens)
+- Starting contrast = slightly easier than the affected threshold; validation scenes currently enforce a high contrast floor so Quest visibility can be debugged before therapeutic contrast is tightened.
+- Serialized all-zero baseline objects are ignored because they previously caused stale/right-field pilot behavior.
 
 ### Trial CSV schema
 
@@ -185,10 +222,25 @@ contrast_logcs, stimulus_onset_ms, audio_onset_ms, response_onset_ms, rt_ms, hit
 
 ### Open work in Phase 1 (not yet done)
 
-- **Quest XR setup inside Unity Editor**: Edit → Project Settings → XR Plugin Management → enable OpenXR for Android → in OpenXR settings, enable **Meta Quest Support** feature + Meta Touch Controllers interaction profile. (Manifest packages are in, but the project-settings toggles are inspector-only and not yet flipped.)
-- **Input wiring**: the `DetectResponse()` method currently falls back to keyboard SPACE/Return and the legacy `"Submit"` axis. For Quest controllers, this needs an `XRController` binding via the new Input System. Acceptable as scaffolding; promote to InputSystem Action when running on-headset.
-- **Visual stimulus prefab**: the fallback creates a programmatic Sphere with grayscale-coded contrast. A proper prefab (Gabor patch or high-contrast disk) is a polish step.
-- **Audio**: procedural 400 Hz tone with Hann window is built in as a fallback; an assigned AudioClip is preferable for final fit.
+- **Sparse right-side control trials**: next iteration should add ~10-20% right-hemifield controls, logged separately from left-field rehab trials, to verify attention/input/visibility without diluting the therapeutic dose.
+- **Therapeutic dose ramp**: choose whether the first real rehab day uses the 2-minute guided block, a 5-minute block, or a gradual ramp toward the Alharshan 30-minute dose.
+- **Contrast policy**: decide when to remove the high validation contrast floor and let the adaptive staircase become clinically meaningful.
+- **Audio asset**: procedural 400 Hz tone with Hann window is built in as a fallback; an assigned AudioClip is preferable for final fit.
+- **EEG layer**: still deferred. Open-loop AV training is the validated v1 path; Muse/EEG remains exploratory.
+
+### 2026-05-30 Quest validation result
+
+Guided Session1Pilot:
+- Trial CSV: `Unity/NeglectFix/SmokeResults/GuidedPilot/av_training_2026-05-30_23-25-27.csv`
+- Session CSV: `Unity/NeglectFix/SmokeResults/GuidedPilot/session_2026-05-30_23-24-58.csv`
+- Live log: `Unity/NeglectFix/SmokeResults/guided-pilot-live.log`
+- Recorded block: 45 trials, 33 hits, 73.3% hit rate
+- All recorded trials: left hemifield
+- Eccentricity range: `-8°..-5°`
+- Average hit RT: ~475ms
+- Contrast staircase range: `0.00..0.75 LogCS`, final log `0.45 LogCS`
+
+Eric's subjective feedback: the center cross helped him stay anchored. The task was emotionally heavy because audio made the unseen left marker explicit, but this was accepted as part of the rehab journey. Quote recorded in session memory: "if you can measure it, you can modify it."
 
 ---
 
