@@ -30,6 +30,16 @@ namespace NeglectFix.Tasks
         [Tooltip("Cool-down phase duration (seconds)")]
         public float cooldownDuration = 180f; // 3 minutes
 
+        [Header("Ready Prompt")]
+        [Tooltip("Show a pre-session ready phase before baseline data collection starts.")]
+        public bool readyPromptEnabled = false;
+
+        [Tooltip("Require the patient/operator to confirm readiness before the countdown starts.")]
+        public bool requireReadyConfirmation = true;
+
+        [Tooltip("Countdown duration after readiness is confirmed, before baseline starts.")]
+        public float readyCountdownDuration = 5f;
+
         [Header("Dependencies")]
         public NeglectFix.Utils.DataLogger dataLogger;
         public NeglectFix.EEG.EngagementCalculator engagementCalculator;
@@ -44,6 +54,7 @@ namespace NeglectFix.Tasks
         public enum SessionPhase
         {
             NotStarted,
+            Ready,
             Baseline,
             Training,
             Cooldown,
@@ -52,6 +63,7 @@ namespace NeglectFix.Tasks
 
         // Events
         public event Action OnSessionStarted;
+        public event Action OnReadyStarted;
         public event Action OnBaselineStarted;
         public event Action OnTrainingStarted;
         public event Action OnCooldownStarted;
@@ -78,6 +90,11 @@ namespace NeglectFix.Tasks
             // Wait a moment for all systems to initialize
             yield return new WaitForSeconds(2f);
 
+            if (readyPromptEnabled)
+            {
+                yield return StartCoroutine(ReadyPhase());
+            }
+
             sessionStartTime = Time.time;
             OnSessionStarted?.Invoke();
 
@@ -96,6 +113,42 @@ namespace NeglectFix.Tasks
             OnTaskCompleted();
 
             Debug.Log($"[{taskName}] Session completed! Total time: {GetSessionDuration() / 60f:F1} minutes");
+        }
+
+        private IEnumerator ReadyPhase()
+        {
+            currentPhase = SessionPhase.Ready;
+            phaseStartTime = Time.time;
+            OnReadyStarted?.Invoke();
+
+            Debug.Log($"[{taskName}] === READY PHASE ===");
+
+            OnReadyPhaseStart();
+
+            if (requireReadyConfirmation)
+            {
+                Debug.Log("Adjust headset/controllers, then press the response button to begin countdown.");
+
+                while (!IsReadyConfirmationPressed())
+                {
+                    OnReadyPhaseUpdate(readyCountdownDuration, waitingForConfirmation: true);
+                    yield return null;
+                }
+            }
+
+            float countdownDuration = Mathf.Max(0f, readyCountdownDuration);
+            float countdownEndTime = Time.time + countdownDuration;
+
+            while (Time.time < countdownEndTime)
+            {
+                OnReadyPhaseUpdate(countdownEndTime - Time.time, waitingForConfirmation: false);
+                yield return null;
+            }
+
+            OnReadyPhaseUpdate(0f, waitingForConfirmation: false);
+            OnReadyPhaseEnd();
+
+            Debug.Log($"[{taskName}] Ready complete. Starting baseline.");
         }
 
         private IEnumerator BaselinePhase()
@@ -185,6 +238,50 @@ namespace NeglectFix.Tasks
         // Abstract methods - override in child classes
 
         /// <summary>
+        /// Called before baseline starts. Use this for patient/operator readiness UI.
+        /// </summary>
+        protected virtual void OnReadyPhaseStart()
+        {
+            // Override in child task
+        }
+
+        /// <summary>
+        /// Called during the ready phase. Use this to update countdown UI.
+        /// </summary>
+        protected virtual void OnReadyPhaseUpdate(float countdownRemainingSec, bool waitingForConfirmation)
+        {
+            // Override in child task
+        }
+
+        /// <summary>
+        /// Called when the ready phase ends, immediately before baseline starts.
+        /// </summary>
+        protected virtual void OnReadyPhaseEnd()
+        {
+            // Override in child task
+        }
+
+        /// <summary>
+        /// Returns true when the patient/operator confirms readiness.
+        /// </summary>
+        protected virtual bool IsReadyConfirmationPressed()
+        {
+            if (Input.GetKeyDown(KeyCode.Space)) return true;
+            if (Input.GetKeyDown(KeyCode.Return)) return true;
+
+            try
+            {
+                if (Input.GetAxis("Submit") > 0.5f) return true;
+            }
+            catch (ArgumentException)
+            {
+                // Some player/input configurations do not define the legacy Submit axis.
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Called when baseline phase starts. Set up resting environment.
         /// </summary>
         protected virtual void OnBaselinePhaseStart()
@@ -258,6 +355,7 @@ namespace NeglectFix.Tasks
         {
             float duration = currentPhase switch
             {
+                SessionPhase.Ready => readyCountdownDuration,
                 SessionPhase.Baseline => baselineDuration,
                 SessionPhase.Training => trainingDuration,
                 SessionPhase.Cooldown => cooldownDuration,
@@ -275,6 +373,7 @@ namespace NeglectFix.Tasks
         {
             float duration = currentPhase switch
             {
+                SessionPhase.Ready => readyCountdownDuration,
                 SessionPhase.Baseline => baselineDuration,
                 SessionPhase.Training => trainingDuration,
                 SessionPhase.Cooldown => cooldownDuration,
@@ -317,7 +416,10 @@ namespace NeglectFix.Tasks
             GUILayout.BeginArea(new Rect(Screen.width / 2 - 200, 10, 400, 80));
             GUILayout.Label($"<b><size=18>{taskName}</size></b>");
             GUILayout.Label($"<b>Phase:</b> {currentPhase}");
-            GUILayout.Label($"<b>Time remaining:</b> {GetPhaseRemainingTime() / 60f:F1} min");
+            if (currentPhase == SessionPhase.Ready)
+                GUILayout.Label("<b>Status:</b> Waiting for readiness / countdown");
+            else
+                GUILayout.Label($"<b>Time remaining:</b> {GetPhaseRemainingTime() / 60f:F1} min");
             GUILayout.Label($"<b>Progress:</b> {GetPhaseProgress():P0}");
             GUILayout.EndArea();
         }

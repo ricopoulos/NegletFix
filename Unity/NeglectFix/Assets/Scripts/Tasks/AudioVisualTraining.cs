@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 
 namespace NeglectFix.Tasks
 {
@@ -73,6 +75,50 @@ namespace NeglectFix.Tasks
         [Range(0f, 0.5f)]
         public float stimulusSoftEdgeFraction = 0.12f;
 
+        [Tooltip("Minimum generated stimulus Weber contrast. Keep at 0 for clinical runs; use >0 for visibility validation builds.")]
+        [Range(0f, 1f)]
+        public float minimumGeneratedStimulusContrast = 0f;
+
+        [Header("AV Training — Controlled Background")]
+        [Tooltip("Render an opaque gray field behind all prompts and stimuli so Quest passthrough/home video cannot reduce contrast.")]
+        public bool ensureOpaqueTrainingBackdrop = true;
+
+        [Tooltip("Distance from the headset/camera where the opaque visual-field backdrop appears.")]
+        [Range(1.6f, 5f)]
+        public float opaqueBackdropDistanceMeters = 2.4f;
+
+        [Tooltip("Backdrop width in meters. Keep large enough to cover the left/right eccentricity ladder.")]
+        [Range(2f, 8f)]
+        public float opaqueBackdropWidthMeters = 5.2f;
+
+        [Tooltip("Backdrop height in meters.")]
+        [Range(1.5f, 5f)]
+        public float opaqueBackdropHeightMeters = 3.4f;
+
+        [Tooltip("Linear gray luminance of the controlled backdrop.")]
+        [Range(0f, 1f)]
+        public float opaqueBackdropLuminance = 0.5f;
+
+        [Header("AV Training — Fixation Guidance")]
+        [Tooltip("Render a small central cross so the patient has a stable starting point before each marker appears.")]
+        public bool showCenterFixationCross = true;
+
+        [Tooltip("Distance from the headset/camera where the fixation cross appears.")]
+        [Range(0.75f, 3f)]
+        public float fixationCrossDistanceMeters = 1.15f;
+
+        [Tooltip("Total cross length in meters. Keep small so it anchors gaze without becoming the task.")]
+        [Range(0.01f, 0.2f)]
+        public float fixationCrossSizeMeters = 0.04f;
+
+        [Tooltip("Cross stroke thickness in meters.")]
+        [Range(0.002f, 0.03f)]
+        public float fixationCrossThicknessMeters = 0.004f;
+
+        [Tooltip("Linear luminance of the fixation cross.")]
+        [Range(0f, 1f)]
+        public float fixationCrossLuminance = 0.92f;
+
         [Header("AV Training — Trial Timing")]
         [Tooltip("Minimum gap between stimuli (seconds).")]
         public float minInterStimulusIntervalSec = 2.0f;
@@ -97,6 +143,24 @@ namespace NeglectFix.Tasks
         [Tooltip("Cooldown phase duration after the training blocks complete.")]
         public float cooldownDurationSec = 60f;
 
+        [Header("AV Training — Practice")]
+        [Tooltip("Run a short unlogged practice block before recorded training trials.")]
+        public bool enablePracticeBlock = false;
+
+        [Tooltip("How long to show the practice instructions after calibration and before practice trials.")]
+        [Range(0f, 20f)]
+        public float practiceIntroDurationSec = 4f;
+
+        [Tooltip("Practice duration in seconds. Practice trials do not write to the training-trial CSV or staircase.")]
+        [Range(0f, 120f)]
+        public float practiceDurationSec = 20f;
+
+        [Tooltip("Trigger normal reward feedback during practice hits, while keeping practice out of the recorded pilot results.")]
+        public bool rewardPracticeHits = true;
+
+        [TextArea(2, 5)]
+        public string practicePromptInstructions = "Practice first.\nStart on the center cross. When a marker appears, move only your eyes to it and press.\nKeep your head still. These practice trials are not counted.";
+
         [Header("AV Training — Adaptive Staircase")]
         [Tooltip("2-up/1-down weighted staircase: this many correct in a row to make stimulus harder.")]
         [Range(1, 4)]
@@ -115,6 +179,33 @@ namespace NeglectFix.Tasks
 
         [Tooltip("Keep legacy keyboard/Submit fallback enabled for quick Editor testing.")]
         public bool enableLegacyKeyboardFallback = true;
+
+        [Header("AV Training — Ready Prompt")]
+        [Tooltip("Enable the pre-baseline ready prompt and countdown for AV training sessions.")]
+        public bool enableAvReadyPrompt = true;
+
+        [Tooltip("Render a world-space readiness prompt in front of the headset.")]
+        public bool showReadyPromptInHeadset = true;
+
+        [Tooltip("Distance from the headset/camera where the ready prompt appears.")]
+        [Range(0.75f, 3f)]
+        public float readyPromptDistanceMeters = 1.25f;
+
+        [TextArea(2, 4)]
+        public string readyPromptInstructions = "This is rehab training, not a contrast test.\nStart on the center cross. When a marker appears, move your eyes to it and press.\nKeep your head still.";
+
+        [TextArea(1, 3)]
+        public string readyCountdownInstructions = "Find the center cross.\nKeep your head still. Move only your eyes after each marker appears.";
+
+        [TextArea(2, 4)]
+        public string baselinePromptInstructions = "Calibrating before training starts.\nKeep the headset still and look at the center cross.";
+
+        [Header("AV Training — Completion Prompt")]
+        [Tooltip("Render a clear end-of-run message in the headset after cooldown completes.")]
+        public bool showCompletionPromptInHeadset = true;
+
+        [TextArea(2, 4)]
+        public string completionPromptInstructions = "You can remove the headset now.\nThank you.";
 
         [Header("AV Training — Dependencies")]
         public ProgramScheduler programScheduler;
@@ -142,6 +233,12 @@ namespace NeglectFix.Tasks
         private int totalTrialsThisSession;
         private int totalHitsThisSession;
         private bool trainingLoopActive;
+        private GameObject readyPromptRoot;
+        private TextMeshProUGUI readyPromptText;
+        private GameObject visualFieldBackdrop;
+        private Material visualFieldBackdropMaterial;
+        private GameObject fixationCrossRoot;
+        private Material fixationCrossMaterial;
 
         // Trial data record — persisted via DataLogger
         public struct TrainingTrial
@@ -189,17 +286,44 @@ namespace NeglectFix.Tasks
                 Destroy(generatedStimulusTexture);
                 generatedStimulusTexture = null;
             }
+
+            if (visualFieldBackdrop != null)
+            {
+                Destroy(visualFieldBackdrop);
+                visualFieldBackdrop = null;
+            }
+
+            if (visualFieldBackdropMaterial != null)
+            {
+                Destroy(visualFieldBackdropMaterial);
+                visualFieldBackdropMaterial = null;
+            }
+
+            DestroyFixationCrossDisplay();
+            DestroyReadyPromptDisplay();
         }
 
         protected override void Start()
         {
-            // Override default phase durations for Alharshan dose
-            // Baseline 120s (unchanged), Training 1800s (30 min), Cooldown 60s (shorter than default)
-            trainingDuration = blocksPerSession * blockDurationSec + (blocksPerSession - 1) * interBlockRestSec;
+            if (enableAvReadyPrompt)
+            {
+                readyPromptEnabled = true;
+                requireReadyConfirmation = true;
+            }
+
+            // Override default phase durations from the configured block/practice structure.
+            float recordedTrainingDuration = blocksPerSession * blockDurationSec + (blocksPerSession - 1) * interBlockRestSec;
+            float practiceTotalDuration = enablePracticeBlock
+                ? Mathf.Max(0f, practiceIntroDurationSec) + Mathf.Max(0f, practiceDurationSec)
+                : 0f;
+            trainingDuration = recordedTrainingDuration + practiceTotalDuration;
             cooldownDuration = cooldownDurationSec;
             taskName = "AudioVisualTraining_ParadigmB";
             EnableResponseAction();
             LogXRControllerDevices();
+            EnsureOpaqueTrainingBackdrop();
+            EnsureFixationCrossDisplay();
+            SetFixationCrossVisible(false);
 
             // Find personalization dependencies
             if (programScheduler == null)
@@ -211,31 +335,94 @@ namespace NeglectFix.Tasks
             if (trialLogger == null)
                 trialLogger = dataLogger;
 
-            // Load baseline if not provided
-            if (baselineResults == null)
+            // Load baseline if provided and non-empty. A serialized all-zero object should not
+            // be treated as a valid clinical baseline because it flips tie cases to the right side.
+            if (!HasUsableBaselineResults(baselineResults))
             {
                 Debug.LogWarning("[AVTraining] No baselineResults assigned. Eccentricity progression will use defaults; " +
                                  "contrast will start at a generic level. Run contrast sensitivity test first for personalization.");
+                baselineResults = null;
             }
             else
             {
                 progression = new EccentricityProgression(baselineResults, programScheduler?.totalSessionsPlanned ?? 30);
-                // Start at affected-hemifield baseline + 0.30 LogCS (easier than threshold to build engagement)
+                // Start below the affected-hemifield threshold so early sessions are visible enough
+                // to build engagement. Lower LogCS means higher contrast.
                 float baselineAffected = (progression.affectedHemifield == EccentricityProgression.Hemifield.Left)
                     ? baselineResults.leftHemifieldLogCS
                     : baselineResults.rightHemifieldLogCS;
-                currentLogCS = Mathf.Max(0f, baselineAffected + 0.30f);
-                Debug.Log($"[AVTraining] Starting contrast: {currentLogCS:F2} LogCS (baseline affected = {baselineAffected:F2}, +0.30 offset).");
+                currentLogCS = Mathf.Max(0f, baselineAffected - 0.30f);
+                Debug.Log($"[AVTraining] Starting contrast: {currentLogCS:F2} LogCS (baseline affected = {baselineAffected:F2}, -0.30 offset).");
             }
 
             // Determine session index
-            currentSessionIndex = (programScheduler != null) ? programScheduler.sessionsCompleted + 1 : 1;
+            int plannedSessions = Mathf.Max(1, programScheduler?.totalSessionsPlanned ?? 30);
+            int completedSessions = Mathf.Max(0, programScheduler?.sessionsCompleted ?? 0);
+            currentSessionIndex = Mathf.Clamp(completedSessions + 1, 1, plannedSessions);
 
             base.Start();
         }
 
+        protected override void OnReadyPhaseStart()
+        {
+            SetFixationCrossVisible(false);
+
+            if (!showReadyPromptInHeadset)
+                return;
+
+            EnsureReadyPromptDisplay();
+            UpdateReadyPromptDisplay(readyCountdownDuration, waitingForConfirmation: true);
+        }
+
+        protected override void OnReadyPhaseUpdate(float countdownRemainingSec, bool waitingForConfirmation)
+        {
+            if (!showReadyPromptInHeadset)
+                return;
+
+            EnsureReadyPromptDisplay();
+            UpdateReadyPromptDisplay(countdownRemainingSec, waitingForConfirmation);
+        }
+
+        protected override void OnReadyPhaseEnd()
+        {
+            DestroyReadyPromptDisplay();
+        }
+
+        protected override bool IsReadyConfirmationPressed()
+        {
+            return DetectResponse() || base.IsReadyConfirmationPressed();
+        }
+
+        protected override void OnTaskCompleted()
+        {
+            SetFixationCrossVisible(false);
+            base.OnTaskCompleted();
+
+            if (showCompletionPromptInHeadset)
+                ShowCompletionPromptDisplay();
+        }
+
+        protected override void OnBaselinePhaseStart()
+        {
+            SetFixationCrossVisible(true);
+
+            if (!showReadyPromptInHeadset)
+                return;
+
+            EnsureReadyPromptDisplay();
+            StartCoroutine(UpdateBaselinePrompt());
+        }
+
+        protected override void OnBaselinePhaseEnd()
+        {
+            DestroyReadyPromptDisplay();
+        }
+
         protected override void OnTrainingPhaseStart()
         {
+            DestroyReadyPromptDisplay();
+            SetFixationCrossVisible(true);
+
             base.OnTrainingPhaseStart();
 
             // Record session start with scheduler
@@ -245,13 +432,14 @@ namespace NeglectFix.Tasks
             totalHitsThisSession = 0;
             trainingLoopActive = true;
 
-            // Begin block-by-block trial loop
-            StartCoroutine(RunBlocks());
+            // Begin optional practice, then the recorded block-by-block trial loop.
+            StartCoroutine(RunPracticeThenBlocks());
         }
 
         protected override void OnTrainingPhaseEnd()
         {
             trainingLoopActive = false;
+            SetFixationCrossVisible(false);
             base.OnTrainingPhaseEnd();
             trialLogger?.CloseTrainingTrialLog();
             programScheduler?.RecordSessionComplete();
@@ -259,6 +447,46 @@ namespace NeglectFix.Tasks
             float hitRate = totalTrialsThisSession > 0 ? (float)totalHitsThisSession / totalTrialsThisSession : 0f;
             Debug.Log($"[AVTraining] Session complete. {totalTrialsThisSession} trials, {totalHitsThisSession} hits " +
                       $"({hitRate:P0}). Final staircase: {currentLogCS:F2} LogCS.");
+        }
+
+        private IEnumerator RunPracticeThenBlocks()
+        {
+            if (enablePracticeBlock && practiceDurationSec > 0f)
+            {
+                yield return RunPracticeBlock();
+
+                if (!IsTrainingLoopActive())
+                    yield break;
+            }
+
+            yield return RunBlocks();
+        }
+
+        private IEnumerator RunPracticeBlock()
+        {
+            dataLogger?.LogEvent("practice_start");
+            Debug.Log("[AVTraining] === PRACTICE BLOCK (unlogged trials) ===");
+
+            if (showReadyPromptInHeadset && practiceIntroDurationSec > 0f)
+            {
+                EnsureReadyPromptDisplay();
+                UpdatePracticePromptDisplay();
+                yield return WaitForTrainingSeconds(practiceIntroDurationSec);
+                DestroyReadyPromptDisplay();
+            }
+
+            if (!IsTrainingLoopActive())
+                yield break;
+
+            float practiceEndTime = Time.time + practiceDurationSec;
+            int practiceTrialIndex = 0;
+            while (Time.time < practiceEndTime && IsTrainingLoopActive())
+            {
+                practiceTrialIndex++;
+                yield return RunSingleTrial(0, practiceTrialIndex, recordTrial: false);
+            }
+
+            dataLogger?.LogEvent("practice_end");
         }
 
         private IEnumerator RunBlocks()
@@ -294,7 +522,7 @@ namespace NeglectFix.Tasks
             }
         }
 
-        private IEnumerator RunSingleTrial(int blockIdx, int trialIdx)
+        private IEnumerator RunSingleTrial(int blockIdx, int trialIdx, bool recordTrial = true)
         {
             // Inter-stimulus interval
             float isi = UnityEngine.Random.Range(minInterStimulusIntervalSec, maxInterStimulusIntervalSec);
@@ -359,9 +587,13 @@ namespace NeglectFix.Tasks
                 yield break;
             }
 
-            // Trial bookkeeping
-            totalTrialsThisSession++;
-            if (trialHitFlag) totalHitsThisSession++;
+            // Trial bookkeeping. Practice trials are deliberately excluded from the pilot CSV
+            // and staircase so the recorded block remains interpretable.
+            if (recordTrial)
+            {
+                totalTrialsThisSession++;
+                if (trialHitFlag) totalHitsThisSession++;
+            }
 
             float stimulusOnsetMs = (trialStimulusOnsetTime - sessionStartTime) * 1000f;
             float audioOnsetMs = (trialAudioOnsetTime - sessionStartTime) * 1000f;
@@ -369,31 +601,40 @@ namespace NeglectFix.Tasks
             float rtMs = trialResponseTime > 0 ? (trialResponseTime - trialStimulusOnsetTime) * 1000f : -1f;
             float avDeltaMs = (trialAudioOnsetTime - trialStimulusOnsetTime) * 1000f;
 
-            var trial = new TrainingTrial
+            if (recordTrial)
             {
-                sessionIndex = currentSessionIndex,
-                blockIndex = blockIdx,
-                trialIndex = trialIdx,
-                eccentricityDeg = eccentricityDeg,
-                hemifield = hemifield,
-                contrastLogCS = currentLogCS,
-                stimulusOnsetMs = stimulusOnsetMs,
-                audioOnsetMs = audioOnsetMs,
-                responseOnsetMs = responseOnsetMs,
-                rtMs = rtMs,
-                hit = trialHitFlag,
-                avDeltaMs = avDeltaMs,
-            };
-            trialLogger?.LogTrainingTrial(trial);
+                var trial = new TrainingTrial
+                {
+                    sessionIndex = currentSessionIndex,
+                    blockIndex = blockIdx,
+                    trialIndex = trialIdx,
+                    eccentricityDeg = eccentricityDeg,
+                    hemifield = hemifield,
+                    contrastLogCS = currentLogCS,
+                    stimulusOnsetMs = stimulusOnsetMs,
+                    audioOnsetMs = audioOnsetMs,
+                    responseOnsetMs = responseOnsetMs,
+                    rtMs = rtMs,
+                    hit = trialHitFlag,
+                    avDeltaMs = avDeltaMs,
+                };
+                trialLogger?.LogTrainingTrial(trial);
+            }
+            else
+            {
+                Debug.Log($"[AVTraining] Practice trial {trialIdx}: {(trialHitFlag ? "hit" : "miss")} " +
+                          $"at {eccentricityDeg:F1} deg {hemifield}, RT={rtMs:F0}ms.");
+            }
 
             // Reward on hit (open-loop — not gated on EEG)
-            if (trialHitFlag && rewardController != null)
+            if (trialHitFlag && rewardController != null && (recordTrial || rewardPracticeHits))
             {
                 rewardController.TriggerReward();
             }
 
-            // Adapt staircase
-            UpdateStaircase(trialHitFlag);
+            // Adapt staircase only from recorded trials.
+            if (recordTrial)
+                UpdateStaircase(trialHitFlag);
 
             // Cleanup
             if (stimObj != null) Destroy(stimObj);
@@ -464,7 +705,7 @@ namespace NeglectFix.Tasks
             if (collider != null)
                 Destroy(collider);
 
-            float contrastFraction = LogCSToContrast(currentLogCS);
+            float contrastFraction = Mathf.Max(LogCSToContrast(currentLogCS), minimumGeneratedStimulusContrast);
             UpdateGeneratedStimulusTexture(contrastFraction);
 
             Renderer renderer = stim.GetComponent<Renderer>();
@@ -472,6 +713,20 @@ namespace NeglectFix.Tasks
                 renderer.sharedMaterial = GetGeneratedStimulusMaterial();
 
             return stim;
+        }
+
+        private static bool HasUsableBaselineResults(NeglectFix.Assessment.ContrastSensitivityResults results)
+        {
+            if (results == null)
+                return false;
+
+            bool hasHemifields = results.leftHemifieldLogCS >= 0f && results.rightHemifieldLogCS >= 0f;
+            bool hasSignal = Mathf.Abs(results.leftHemifieldLogCS) > 0.01f ||
+                             Mathf.Abs(results.rightHemifieldLogCS) > 0.01f ||
+                             Mathf.Abs(results.centralLogCS) > 0.01f ||
+                             Mathf.Abs(results.asymmetry) > 0.01f;
+
+            return hasHemifields && hasSignal;
         }
 
         private void FaceStimulusToCamera(GameObject stim)
@@ -488,6 +743,172 @@ namespace NeglectFix.Tasks
             float distance = cam != null ? Vector3.Distance(cam.transform.position, position) : stimulusDistanceMeters;
             float diameterMeters = 2f * distance * Mathf.Tan(stimulusAngularSizeDeg * Mathf.Deg2Rad * 0.5f);
             stim.transform.localScale = new Vector3(diameterMeters, diameterMeters, 1f);
+        }
+
+        private void EnsureOpaqueTrainingBackdrop()
+        {
+            if (!ensureOpaqueTrainingBackdrop || visualFieldBackdrop != null)
+                return;
+
+            Camera cam = Camera.main;
+            if (cam == null)
+            {
+                Debug.LogWarning("[AVTraining] Cannot create opaque backdrop because no Main Camera was found.");
+                return;
+            }
+
+            visualFieldBackdrop = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            visualFieldBackdrop.name = "AVTrainingControlledBackdrop";
+            visualFieldBackdrop.transform.SetParent(cam.transform, false);
+            visualFieldBackdrop.transform.localPosition = new Vector3(
+                0f,
+                0f,
+                Mathf.Max(opaqueBackdropDistanceMeters, stimulusDistanceMeters + 0.35f));
+            visualFieldBackdrop.transform.localRotation = Quaternion.identity;
+            visualFieldBackdrop.transform.localScale = new Vector3(
+                opaqueBackdropWidthMeters,
+                opaqueBackdropHeightMeters,
+                1f);
+
+            Collider collider = visualFieldBackdrop.GetComponent<Collider>();
+            if (collider != null)
+                Destroy(collider);
+
+            Shader shader = Shader.Find("Universal Render Pipeline/Unlit");
+            if (shader == null)
+                shader = Shader.Find("Unlit/Color");
+            if (shader == null)
+                shader = Shader.Find("Sprites/Default");
+
+            float luminance = Mathf.Clamp01(opaqueBackdropLuminance);
+            Color backdropColor = new Color(luminance, luminance, luminance, 1f);
+
+            visualFieldBackdropMaterial = new Material(shader)
+            {
+                name = "AVTrainingControlledBackdropMaterial",
+                color = backdropColor,
+                renderQueue = 2000
+            };
+
+            if (visualFieldBackdropMaterial.HasProperty("_BaseColor"))
+                visualFieldBackdropMaterial.SetColor("_BaseColor", backdropColor);
+            if (visualFieldBackdropMaterial.HasProperty("_Color"))
+                visualFieldBackdropMaterial.SetColor("_Color", backdropColor);
+            if (visualFieldBackdropMaterial.HasProperty("_Cull"))
+                visualFieldBackdropMaterial.SetFloat("_Cull", 0f);
+
+            Renderer renderer = visualFieldBackdrop.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.sharedMaterial = visualFieldBackdropMaterial;
+                renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                renderer.receiveShadows = false;
+            }
+        }
+
+        private void EnsureFixationCrossDisplay()
+        {
+            if (!showCenterFixationCross || fixationCrossRoot != null)
+                return;
+
+            Camera cam = Camera.main;
+            if (cam == null)
+            {
+                Debug.LogWarning("[AVTraining] Cannot create fixation cross because no Main Camera was found.");
+                return;
+            }
+
+            fixationCrossRoot = new GameObject("AVTrainingCenterFixationCross");
+            fixationCrossRoot.transform.SetParent(cam.transform, false);
+            fixationCrossRoot.transform.localPosition = new Vector3(0f, 0f, fixationCrossDistanceMeters);
+            fixationCrossRoot.transform.localRotation = Quaternion.identity;
+            fixationCrossRoot.transform.localScale = Vector3.one;
+
+            Shader shader = Shader.Find("Universal Render Pipeline/Unlit");
+            if (shader == null)
+                shader = Shader.Find("Unlit/Color");
+            if (shader == null)
+                shader = Shader.Find("Sprites/Default");
+
+            float luminance = Mathf.Clamp01(fixationCrossLuminance);
+            Color crossColor = new Color(luminance, luminance, luminance, 1f);
+            fixationCrossMaterial = new Material(shader)
+            {
+                name = "AVTrainingFixationCrossMaterial",
+                color = crossColor,
+                renderQueue = 3000
+            };
+
+            if (fixationCrossMaterial.HasProperty("_BaseColor"))
+                fixationCrossMaterial.SetColor("_BaseColor", crossColor);
+            if (fixationCrossMaterial.HasProperty("_Color"))
+                fixationCrossMaterial.SetColor("_Color", crossColor);
+            if (fixationCrossMaterial.HasProperty("_Cull"))
+                fixationCrossMaterial.SetFloat("_Cull", 0f);
+
+            CreateFixationCrossBar(
+                "Horizontal",
+                new Vector3(fixationCrossSizeMeters, fixationCrossThicknessMeters, 1f));
+            CreateFixationCrossBar(
+                "Vertical",
+                new Vector3(fixationCrossThicknessMeters, fixationCrossSizeMeters, 1f));
+
+            fixationCrossRoot.SetActive(false);
+        }
+
+        private void CreateFixationCrossBar(string name, Vector3 localScale)
+        {
+            if (fixationCrossRoot == null)
+                return;
+
+            GameObject bar = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            bar.name = $"AVTrainingFixationCross_{name}";
+            bar.transform.SetParent(fixationCrossRoot.transform, false);
+            bar.transform.localPosition = Vector3.zero;
+            bar.transform.localRotation = Quaternion.identity;
+            bar.transform.localScale = localScale;
+
+            Collider collider = bar.GetComponent<Collider>();
+            if (collider != null)
+                Destroy(collider);
+
+            Renderer renderer = bar.GetComponent<Renderer>();
+            if (renderer != null)
+            {
+                renderer.sharedMaterial = fixationCrossMaterial;
+                renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                renderer.receiveShadows = false;
+            }
+        }
+
+        private void SetFixationCrossVisible(bool visible)
+        {
+            if (!showCenterFixationCross)
+            {
+                if (fixationCrossRoot != null)
+                    fixationCrossRoot.SetActive(false);
+                return;
+            }
+
+            EnsureFixationCrossDisplay();
+
+            if (fixationCrossRoot != null)
+                fixationCrossRoot.SetActive(visible);
+        }
+
+        private void DestroyFixationCrossDisplay()
+        {
+            if (fixationCrossRoot != null)
+            {
+                Destroy(fixationCrossRoot);
+                fixationCrossRoot = null;
+            }
+
+            if (fixationCrossMaterial != null)
+            {
+                Destroy(fixationCrossMaterial);
+                fixationCrossMaterial = null;
+            }
         }
 
         private Material GetGeneratedStimulusMaterial()
@@ -643,6 +1064,136 @@ namespace NeglectFix.Tasks
             if (UnityEngine.Input.GetAxis("Submit") > 0.5f) return true;
 
             return false;
+        }
+
+        private void EnsureReadyPromptDisplay()
+        {
+            if (readyPromptRoot != null && readyPromptText != null)
+                return;
+
+            Camera cam = Camera.main;
+            if (cam == null)
+            {
+                Debug.LogWarning("[AVTraining] Cannot create ready prompt because no Main Camera was found.");
+                return;
+            }
+
+            readyPromptRoot = new GameObject("AVTrainingReadyPrompt");
+            readyPromptRoot.transform.SetParent(cam.transform, false);
+            readyPromptRoot.transform.localPosition = new Vector3(0f, -0.02f, readyPromptDistanceMeters);
+            readyPromptRoot.transform.localRotation = Quaternion.identity;
+            readyPromptRoot.transform.localScale = Vector3.one * 0.0015f;
+
+            Canvas canvas = readyPromptRoot.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = cam;
+
+            RectTransform canvasRect = canvas.GetComponent<RectTransform>();
+            canvasRect.sizeDelta = new Vector2(900f, 520f);
+
+            var scaler = readyPromptRoot.AddComponent<CanvasScaler>();
+            scaler.dynamicPixelsPerUnit = 24f;
+
+            readyPromptRoot.AddComponent<GraphicRaycaster>();
+
+            GameObject panelObject = new GameObject("Panel");
+            panelObject.transform.SetParent(readyPromptRoot.transform, false);
+
+            RectTransform panelRect = panelObject.AddComponent<RectTransform>();
+            panelRect.anchorMin = Vector2.zero;
+            panelRect.anchorMax = Vector2.one;
+            panelRect.offsetMin = Vector2.zero;
+            panelRect.offsetMax = Vector2.zero;
+
+            Image panelImage = panelObject.AddComponent<Image>();
+            panelImage.color = new Color(0.02f, 0.02f, 0.02f, 0.96f);
+
+            GameObject textObject = new GameObject("Text");
+            textObject.transform.SetParent(panelObject.transform, false);
+
+            RectTransform textRect = textObject.AddComponent<RectTransform>();
+            textRect.anchorMin = Vector2.zero;
+            textRect.anchorMax = Vector2.one;
+            textRect.offsetMin = new Vector2(48f, 36f);
+            textRect.offsetMax = new Vector2(-48f, -36f);
+
+            readyPromptText = textObject.AddComponent<TextMeshProUGUI>();
+            readyPromptText.alignment = TextAlignmentOptions.Center;
+            readyPromptText.color = Color.white;
+            readyPromptText.enableAutoSizing = true;
+            readyPromptText.fontSizeMin = 24f;
+            readyPromptText.fontSizeMax = 54f;
+            readyPromptText.raycastTarget = false;
+        }
+
+        private void UpdateReadyPromptDisplay(float countdownRemainingSec, bool waitingForConfirmation)
+        {
+            if (readyPromptText == null)
+                return;
+
+            if (waitingForConfirmation)
+            {
+                readyPromptText.text =
+                    "<b>GET READY</b>\n\n" +
+                    readyPromptInstructions +
+                    "\n\n<size=70%>No data collection starts until you confirm.</size>";
+                return;
+            }
+
+            int seconds = Mathf.Max(0, Mathf.CeilToInt(countdownRemainingSec));
+            readyPromptText.text =
+                $"<b>STARTING IN {seconds}</b>\n\n" +
+                readyCountdownInstructions;
+        }
+
+        private void UpdatePracticePromptDisplay()
+        {
+            if (readyPromptText == null)
+                return;
+
+            readyPromptText.text =
+                "<b>PRACTICE</b>\n\n" +
+                practicePromptInstructions +
+                "\n\n<size=70%>Recorded pilot trials start after practice.</size>";
+        }
+
+        private IEnumerator UpdateBaselinePrompt()
+        {
+            while (currentPhase == SessionPhase.Baseline)
+            {
+                if (readyPromptText != null)
+                {
+                    int seconds = Mathf.Max(0, Mathf.CeilToInt(GetPhaseRemainingTime()));
+                    readyPromptText.text =
+                        "<b>CALIBRATING</b>\n\n" +
+                        baselinePromptInstructions +
+                        $"\n\n<size=70%>Training starts in {seconds} seconds.</size>";
+                }
+
+                yield return null;
+            }
+        }
+
+        private void ShowCompletionPromptDisplay()
+        {
+            EnsureReadyPromptDisplay();
+
+            if (readyPromptText == null)
+                return;
+
+            readyPromptText.text =
+                "<b>SESSION COMPLETE</b>\n\n" +
+                completionPromptInstructions;
+        }
+
+        private void DestroyReadyPromptDisplay()
+        {
+            if (readyPromptRoot == null)
+                return;
+
+            Destroy(readyPromptRoot);
+            readyPromptRoot = null;
+            readyPromptText = null;
         }
 
         private bool DetectXRControllerResponse()

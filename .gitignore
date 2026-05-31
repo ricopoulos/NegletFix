@@ -34,5 +34,8 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
+# Local Quest ADB helper state
+.quest-adb-ip
+
 # Crashlytics generated file
 crashlytics-build.properties

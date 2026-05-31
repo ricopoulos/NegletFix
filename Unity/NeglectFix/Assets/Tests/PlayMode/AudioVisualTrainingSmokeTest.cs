@@ -6,6 +6,7 @@ using System.Linq;
 using NeglectFix.Tasks;
 using NeglectFix.Utils;
 using NUnit.Framework;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -127,6 +128,19 @@ namespace NeglectFix.Tests.PlayMode
 
                     pressSpace = !pressSpace;
                 }
+                else if (training.currentPhase == TaskManager.SessionPhase.Ready)
+                {
+                    if (pressSpace)
+                        input.Press(keyboard.spaceKey);
+                    else
+                        input.Release(keyboard.spaceKey);
+
+                    pressSpace = !pressSpace;
+                }
+                else
+                {
+                    input.Release(keyboard.spaceKey);
+                }
 
                 yield return null;
             }
@@ -137,6 +151,13 @@ namespace NeglectFix.Tests.PlayMode
             Assert.That(rewardController.GetTotalRewards(), Is.GreaterThan(0));
             Assert.That(dataLogger.GetTrainingTrialsLogged(), Is.GreaterThan(0));
             Assert.That(dataLogger.GetCurrentTrialFile(), Is.Not.Empty);
+
+            TextMeshProUGUI completionPrompt = UnityEngine.Object
+                .FindObjectsByType<TextMeshProUGUI>(FindObjectsSortMode.None)
+                .FirstOrDefault(text => text.text.Contains("SESSION COMPLETE", StringComparison.Ordinal));
+
+            Assert.That(completionPrompt, Is.Not.Null);
+            Assert.That(completionPrompt.text, Does.Contain("You can remove the headset now."));
 
             generatedSessionFile = dataLogger.GetCurrentSessionFile();
             generatedTrialFile = dataLogger.GetCurrentTrialFile();

@@ -41,6 +41,9 @@ namespace NeglectFix.Tasks
         [Tooltip("Storage filename for program state (in Application.persistentDataPath).")]
         public string stateFileName = "program_state.json";
 
+        [Tooltip("Delete saved progress on startup. Use only for repeatable smoke/pilot builds.")]
+        public bool resetStateOnAwake = false;
+
         [Header("Status (read-only)")]
         public int sessionsCompleted = 0;
         public DateTime lastSessionTimestamp = DateTime.MinValue;
@@ -67,6 +70,13 @@ namespace NeglectFix.Tasks
 
         void Awake()
         {
+            if (resetStateOnAwake)
+            {
+                ClearSavedState();
+                Debug.Log($"[ProgramScheduler] Reset saved state on startup: {stateFileName}");
+                return;
+            }
+
             LoadState();
         }
 
@@ -141,6 +151,25 @@ namespace NeglectFix.Tasks
         public int GetSessionsCompleted() => sessionsCompleted;
 
         public int GetSessionsRemaining() => Mathf.Max(0, totalSessionsPlanned - sessionsCompleted);
+
+        public void ClearSavedState()
+        {
+            sessionsCompleted = 0;
+            lastSessionTimestamp = DateTime.MinValue;
+            programStartedAt = DateTime.MinValue;
+            reMeasurementDue = false;
+
+            try
+            {
+                string path = GetStatePath();
+                if (File.Exists(path))
+                    File.Delete(path);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[ProgramScheduler] Failed to clear saved state: {e.Message}");
+            }
+        }
 
         /// <summary>
         /// Reset the program state — for starting a new paradigm phase (e.g., after Phase 2 finishes,
