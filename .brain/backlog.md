@@ -11,7 +11,7 @@
 
 ## WIP-001: Audiovisual Training Module
 
-**Status**: PILOT QUEST SESSION PASSED + READY PROMPT ADDED (Phase 1 scaffold complete 2026-05-16; headless PlayMode smoke passed 2026-05-30; Quest controller smoke passed 2026-05-30; 6-minute Session 1 pilot passed 2026-05-30; quick Ready check passed 2026-05-30)
+**Status**: CONTROL-RAMP HEADSET VALIDATED (Phase 1 scaffold complete 2026-05-16; headless PlayMode smoke passed 2026-05-30; Quest controller smoke passed 2026-05-30; guided Session 1 pilot passed 2026-05-30; sparse right controls + 5-minute, 8-minute, and 12-minute ramps implemented, PlayMode-tested, APK rebuilt, and Quest-run passed 2026-05-31)
 **Created**: 2025-12-15
 **Priority**: High
 
@@ -212,15 +212,103 @@ Verification:
 - Eric subjective feedback: guided flow is good. Center cross helped him stay anchored; he described it as focusing/gazing on the cross while trying not to chase. The experience was emotionally heavy because the sound made it clear a marker appeared while the left-side marker was still not visible without eye movement. Treat this as useful validation that the task is exposing the real deficit, not merely a UI problem.
 - Candidate next iteration: add sparse random right-hemifield control markers to confirm attention/input/visibility, but keep them clearly marked as control trials and limit their proportion so they do not dilute left-field rehabilitation dose.
 
+#### Sparse Right Controls + Dose Ramp (2026-05-31)
+Implemented the next concrete polish pass:
+- `AudioVisualTraining` now supports sparse intact-hemifield control trials during recorded blocks. For Eric's baseline, controls resolve to right-side markers.
+- Default control policy: `intactControlTrialProbability=0.15`, `minimumRehabTrialsBetweenControlTrials=3`, first recorded trial always rehab-dose.
+- Control rows are kept separate in the trial CSV via `trial_type`, `is_control_trial`, and `counts_for_rehab_dose`.
+- Control trials can trigger feedback but do not update the adaptive staircase. Only affected-left rehab rows count for rehab dose and LogCS adaptation.
+- `DataLogger` now tracks total/rehab/control trial counts and writes a trial summary on close.
+- PlayMode smoke test now asserts both rehab and right-control rows exist.
+- `AVTrainingSession1Pilot.unity` regenerated as the first dose ramp: 5s calibration + 4s practice instructions + 15s practice + 300s recorded block + 5s cooldown.
+- `AVTrainingQuickReadyCheck.unity` regenerated with controls disabled so it remains a pure left-visibility/controller check.
+- PlayMode smoke passed at `Unity/NeglectFix/SmokeResults/playmode-right-control-ramp-results.xml`.
+- `Unity/NeglectFix/Builds/AVTrainingSession1Pilot.apk` rebuilt successfully for headset validation (64 MB Finder size; Unity reported 1,005,397,706 bytes before APK compression/packaging metadata reporting differences).
+- Quest 2 headset validation passed on 2026-05-31:
+  - Live log: `Unity/NeglectFix/SmokeResults/ControlRamp/control-ramp-live.log`
+  - Trial CSV: `Unity/NeglectFix/SmokeResults/ControlRamp/av_training_2026-05-31_08-55-37.csv`
+  - Session CSV: `Unity/NeglectFix/SmokeResults/ControlRamp/session_2026-05-31_08-55-10.csv`
+  - Runtime summary: 110 recorded trials, split into 96 rehab-dose left trials and 14 right-control trials.
+  - Rehab result: 53/96 hits (55.2%), final staircase 0.15 LogCS.
+  - Right controls: 14/14 hits (100%), all `right_control` rows flagged with `counts_for_rehab_dose=0`.
+- Quest 2 8-minute ramp passed on 2026-05-31 over Wi-Fi ADB:
+  - Scene current recorded block: 480s plus 15s practice.
+  - Live log: `Unity/NeglectFix/SmokeResults/Ramp8/ramp8-live.log`
+  - Trial CSV: `Unity/NeglectFix/SmokeResults/Ramp8/av_training_2026-05-31_09-13-38.csv`
+  - Session CSV: `Unity/NeglectFix/SmokeResults/Ramp8/session_2026-05-31_09-12-41.csv`
+  - Runtime summary: 173 recorded trials, split into 157 rehab-dose left trials and 16 right-control trials.
+  - Rehab result: 75/157 hits (47.8%), final staircase 0.30 LogCS.
+  - Right controls: 16/16 hits (100%), mean hit RT ~392ms, all controls excluded from rehab dose/staircase.
+  - Session CSV logged 4570 samples.
+  - A short Quest system/passthrough focus hiccup occurred during startup; the app resumed and completed cleanly.
+- Quest 2 12-minute ramp passed on 2026-05-31 over Wi-Fi ADB:
+  - Scene current recorded block: 720s plus 15s practice.
+  - Live log: `Unity/NeglectFix/SmokeResults/Ramp12/ramp12-live.log`
+  - Trial CSV: `Unity/NeglectFix/SmokeResults/Ramp12/av_training_2026-05-31_09-33-25.csv`
+  - Session CSV: `Unity/NeglectFix/SmokeResults/Ramp12/session_2026-05-31_09-32-56.csv`
+  - Runtime summary: 255 recorded trials, split into 233 rehab-dose left trials and 22 right-control trials.
+  - Rehab result: 114/233 hits (48.9%), final staircase 0.15 LogCS.
+  - Right controls: 22/22 hits (100%), mean hit RT ~444ms, all controls excluded from rehab dose/staircase.
+  - Session CSV logged 6725 samples.
+  - No focus loss, Android runtime errors, or Unity exceptions were found in the live log.
+
+Dose decision:
+- Do not repeat the 2-minute validation block unless Eric feels fragile that day.
+- Do not jump directly to 30 minutes.
+- First real run was the 5-minute control-ramp scene; second ramp was 8 minutes; third same-day ramp was 12 minutes. Prefer no more training on 2026-05-31 after 25 minutes of recorded dose. Next session: repeat 12 if the stack felt heavy, or move to 15 minutes if tolerable. Then step toward 20, 25, and 30 minutes.
+- Keep the high validation contrast floor for the first 5-minute ramp; reduce it later only if right-control hit rate is near ceiling and left-field engagement remains tolerable.
+
 #### Remaining Work
-1. **Use Wi-Fi ADB for Quest runs** — prefer `scripts/quest-adb.sh install-run` / `scripts/quest-adb.sh logs`; cached Quest IP is `10.0.0.136`
-2. **Next headset validation** — launch the installed guided Session 1 pilot only when Eric has the headset adjusted and is ready for ~2.5 minutes
-3. **Pilot interpretation** — after the guided run, decide the first therapeutic dose length and whether to keep high-contrast validation markers briefly or transition to adaptive clinical contrast immediately
-4. **Phase 2 launch**: 30 sessions × 5 days/week × 6 weeks at the Alharshan dose; mid-program CS checks at sessions 5/10/15/20/25; full reassessment at session 30
+1. **Field-mapping calibration scene** — build the separate fixed-cross map scene in WIP-002 before declaring the official rehab phase started.
+2. **Subjective interpretation** — ask Eric about fatigue, emotional load, left marker visibility, and whether right-control markers felt obvious after the stacked 5+8+12-minute day.
+3. **Next ramp decision** — repeat 12 minutes if the stack felt heavy, or move to 15 minutes if tolerable.
+4. **Contrast policy** — keep the high validation contrast floor until visibility/tolerance are stable, then decide when to reduce it so the adaptive staircase becomes clinically meaningful.
+5. **Use Wi-Fi ADB for Quest runs** — prefer `scripts/quest-adb.sh install-run` / `scripts/quest-adb.sh logs`; cached Quest IP is `10.0.0.136`.
+6. **Phase 2 launch**: 30 sessions × 5 days/week × 6 weeks at the Alharshan dose; mid-program CS checks at sessions 5/10/15/20/25; full reassessment at session 30.
+
+#### HTML Evidence Report + Field Map Prototype (2026-05-31)
+- Added `scripts/generate-rehab-report.js`.
+- Generated `reports/rehab-dose-ramp-2026-05-31.html` from the real 5/8/12-minute Quest CSVs.
+- Report story: 25 recorded training minutes, 538 total trials, 242/486 left rehab hits, and 52/52 right-control hits.
+- Field map modes:
+  - Evidence: persuasive trial-distribution map.
+  - Retinal truth: honest map of logged horizontal eccentricity only.
+  - Heat bloom: expressive GSAP/SVG density storytelling, not diagnostic.
+- Key finding: the current CSV is not enough for a true clinical field map because vertical retinal angle is not logged and current AV stimuli are on the horizontal meridian.
 
 ---
 
-## WIP-002 (future): Paradigm A — 3D-MOT-IVR
+## WIP-002: Quick Field-Mapping Calibration Scene
+
+**Status**: READY TO BUILD NEXT SESSION
+**Created**: 2026-05-31
+**Priority**: High
+
+#### Goal
+Build a separate assessment/calibration scene before declaring the official 6-week rehab phase started. The scene should produce a defensible spatial performance map that chooses first rehab training locations.
+
+#### Planned Scope
+- Fixed center cross.
+- Controlled test points left/right/up/down, not only horizontal meridian targets.
+- Separate assessment scene; do not merge this into the rehab dose-ramp scene.
+- Expanded per-trial logging:
+  - horizontal angle
+  - vertical angle
+  - stimulus world position
+  - camera-relative direction
+  - head yaw/pitch at stimulus onset
+  - head yaw/pitch at response
+- Use the resulting map to recommend the next rehab locations.
+- Then run the next rehab dose ramp from selected locations.
+
+#### Explicit Non-Goals
+- Do not pretend this is Humphrey perimetry.
+- Do not make the expressive report field map a clinical map without richer spatial logging.
+- Do not add Quest eye tracking unless hardware/API support exists later; Quest 2 cannot provide eye position.
+
+---
+
+## WIP-003 (future): Paradigm A — 3D-MOT-IVR
 
 **Status**: NOT-STARTED
 **Created**: 2026-05-16 (Phase 3 in build plan)
@@ -235,7 +323,7 @@ After Phase 2 (Paradigm B) runs 30 sessions and produces responder data, optiona
 
 ---
 
-## WIP-003 (future): Official Unity MCP Migration Check
+## WIP-004 (future): Official Unity MCP Migration Check
 
 **Status**: PAUSED
 **Created**: 2026-05-30

@@ -1,0 +1,1332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NeglectFix Session Report - May 31, 2026</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f5f1e8;
+      --muted: #a8b0b0;
+      --dim: #6f7977;
+      --bg: #101415;
+      --panel: #171d1e;
+      --panel-2: #1d2425;
+      --line: rgba(245, 241, 232, 0.16);
+      --green: #7bd88f;
+      --cyan: #69d2e7;
+      --amber: #f0c45c;
+      --red: #f16f6f;
+      --blue: #7aa7ff;
+      --shadow: rgba(0, 0, 0, 0.34);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(180deg, rgba(105, 210, 231, 0.08), transparent 35rem),
+        radial-gradient(circle at 75% 12%, rgba(240, 196, 92, 0.08), transparent 24rem),
+        var(--bg);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      min-height: 100vh;
+    }
+
+    .shell {
+      width: min(1180px, calc(100vw - 36px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 86vh;
+      display: grid;
+      align-items: center;
+      padding: 64px 0 42px;
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(123, 216, 143, 0.04) 0 49%, rgba(255, 255, 255, 0.16) 49.9% 50.1%, rgba(105, 210, 231, 0.04) 50.1% 100%),
+        repeating-linear-gradient(90deg, rgba(245, 241, 232, 0.05) 0 1px, transparent 1px 70px);
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.86), transparent 78%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr);
+      gap: 48px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--cyan);
+      font-size: 0.76rem;
+      font-weight: 750;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 860px;
+      margin-bottom: 22px;
+      font-size: clamp(3.8rem, 8.2vw, 8.8rem);
+      line-height: 0.88;
+      letter-spacing: 0;
+    }
+
+    .hero-copy {
+      max-width: 760px;
+      color: #d9ddd7;
+      font-size: clamp(1.08rem, 1.6vw, 1.35rem);
+      line-height: 1.55;
+    }
+
+    .proof-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      border: 1px solid var(--line);
+      background: var(--line);
+      box-shadow: 0 24px 90px var(--shadow);
+    }
+
+    .proof {
+      min-height: 150px;
+      padding: 22px;
+      background: rgba(23, 29, 30, 0.88);
+    }
+
+    .proof strong {
+      display: block;
+      font-size: clamp(2.2rem, 4vw, 4.5rem);
+      line-height: 1;
+    }
+
+    .proof span {
+      display: block;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.35;
+    }
+
+    .proof strong > span,
+    .proof strong .inline {
+      display: inline;
+      margin-top: 0;
+      color: inherit;
+      font-size: inherit;
+      line-height: inherit;
+    }
+
+    .section {
+      padding: 76px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section.alt {
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(300px, 0.55fr);
+      gap: 44px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      font-size: clamp(2.1rem, 4.6vw, 5rem);
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .section-lede {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.55;
+    }
+
+    .dose-timeline {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .dose-step,
+    .run-panel,
+    .recommendation,
+    .source-panel {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+      box-shadow: 0 18px 80px rgba(0, 0, 0, 0.18);
+    }
+
+    .dose-step {
+      position: relative;
+      min-height: 190px;
+      padding: 22px;
+      overflow: hidden;
+    }
+
+    .dose-step::after {
+      content: "";
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      bottom: 20px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--cyan));
+      transform-origin: left;
+      transform: scaleX(1);
+    }
+
+    .dose-step.is-lit::after {
+      transform: scaleX(1);
+      transition: transform 0.75s ease;
+    }
+
+    .step-index {
+      display: inline-flex;
+      width: 38px;
+      height: 38px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      color: var(--cyan);
+      font-weight: 800;
+      margin-bottom: 40px;
+    }
+
+    .dose-step strong,
+    .dose-step em,
+    .dose-step b {
+      display: block;
+      font-style: normal;
+    }
+
+    .dose-step strong {
+      font-size: 2.6rem;
+      line-height: 1;
+    }
+
+    .dose-step em {
+      margin-top: 8px;
+      color: var(--muted);
+    }
+
+    .dose-step b {
+      margin-top: 22px;
+      color: var(--ink);
+    }
+
+    .run-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .run-panel {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr) minmax(240px, 0.8fr);
+      gap: 22px;
+      align-items: center;
+      padding: 22px;
+    }
+
+    .run-panel h3 {
+      margin: 0;
+      font-size: 2.4rem;
+      line-height: 1;
+    }
+
+    .run-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .metric-value {
+      display: block;
+      font-size: 1.55rem;
+      font-weight: 820;
+      line-height: 1.08;
+    }
+
+    .metric-label {
+      display: block;
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .mini-bars {
+      display: grid;
+      gap: 10px;
+    }
+
+    .mini-bar {
+      position: relative;
+      min-height: 34px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.035);
+      overflow: hidden;
+    }
+
+    .mini-bar i {
+      position: absolute;
+      inset: 0 auto 0 0;
+      background: linear-gradient(90deg, rgba(123, 216, 143, 0.45), rgba(240, 196, 92, 0.52));
+      transform-origin: left;
+    }
+
+    .mini-bar.control i {
+      background: linear-gradient(90deg, rgba(105, 210, 231, 0.35), rgba(122, 167, 255, 0.56));
+    }
+
+    .mini-bar span {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 10px;
+      color: var(--ink);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .map-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin: -8px 0 18px;
+    }
+
+    .map-modes {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 1px;
+      border: 1px solid var(--line);
+      background: var(--line);
+    }
+
+    .map-mode {
+      appearance: none;
+      border: 0;
+      border-radius: 0;
+      padding: 11px 14px;
+      color: var(--muted);
+      background: rgba(23, 29, 30, 0.92);
+      font: inherit;
+      font-size: 0.84rem;
+      font-weight: 820;
+      cursor: pointer;
+    }
+
+    .map-mode[aria-selected="true"] {
+      color: #0f1415;
+      background: var(--ink);
+    }
+
+    .map-note {
+      max-width: 560px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .field-map {
+      min-height: 560px;
+      position: relative;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, rgba(123, 216, 143, 0.06), transparent 48%, rgba(245, 241, 232, 0.12) 49.7% 50.3%, transparent 52%, rgba(105, 210, 231, 0.06)),
+        rgba(12, 15, 16, 0.68);
+      overflow: hidden;
+    }
+
+    .field-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .field-path {
+      fill: rgba(123, 216, 143, 0.08);
+      stroke: rgba(123, 216, 143, 0.28);
+      stroke-width: 1.5;
+      opacity: 0.72;
+    }
+
+    .field-path.miss {
+      fill: rgba(241, 111, 111, 0.08);
+      stroke: rgba(241, 111, 111, 0.32);
+    }
+
+    .field-path.control {
+      fill: rgba(105, 210, 231, 0.1);
+      stroke: rgba(105, 210, 231, 0.35);
+    }
+
+    .field-map::before,
+    .field-map::after {
+      position: absolute;
+      top: 18px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .field-map::before {
+      content: "Left rehab field";
+      left: 22px;
+    }
+
+    .field-map::after {
+      content: "Right control field";
+      right: 22px;
+    }
+
+    .fixation {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 34px;
+      height: 34px;
+      transform: translate(-50%, -50%);
+    }
+
+    .fixation::before,
+    .fixation::after {
+      content: "";
+      position: absolute;
+      background: rgba(245, 241, 232, 0.72);
+    }
+
+    .fixation::before {
+      left: 15px;
+      top: 0;
+      width: 3px;
+      height: 34px;
+    }
+
+    .fixation::after {
+      left: 0;
+      top: 15px;
+      width: 34px;
+      height: 3px;
+    }
+
+    .trial-dot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 1;
+      background: var(--green);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
+    }
+
+    .trial-dot.control {
+      width: 10px;
+      height: 10px;
+      background: var(--cyan);
+    }
+
+    .trial-dot.miss {
+      background: transparent;
+      border: 1px solid var(--red);
+    }
+
+    .trial-dot.control.miss {
+      border-color: var(--amber);
+    }
+
+    .field-map[data-mode="heat"] .trial-dot {
+      opacity: 0.42;
+      filter: saturate(1.25);
+    }
+
+    .field-map[data-mode="retinal"] .trial-dot {
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.42), 0 0 14px rgba(245, 241, 232, 0.1);
+    }
+
+    .field-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .legend-key {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .legend-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .legend-dot.control {
+      background: var(--cyan);
+    }
+
+    .legend-dot.miss {
+      background: transparent;
+      border: 1px solid var(--red);
+    }
+
+    .band-wrap {
+      position: relative;
+      padding: 42px 0 24px;
+    }
+
+    .challenge-band {
+      position: relative;
+      height: 88px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, rgba(241, 111, 111, 0.13) 0 32%, rgba(240, 196, 92, 0.1) 32% 40%, rgba(123, 216, 143, 0.20) 40% 60%, rgba(240, 196, 92, 0.1) 60% 72%, rgba(105, 210, 231, 0.12) 72% 100%);
+      overflow: visible;
+    }
+
+    .band-labels {
+      display: grid;
+      grid-template-columns: 40fr 20fr 40fr;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .band-labels span:nth-child(2) {
+      color: var(--green);
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .band-labels span:nth-child(3) {
+      text-align: right;
+    }
+
+    .band-marker {
+      position: absolute;
+      top: -25px;
+      width: 2px;
+      height: 138px;
+      background: var(--ink);
+      transform: translateX(-50%) scaleY(1);
+      transform-origin: bottom;
+    }
+
+    .band-marker::before {
+      content: attr(data-rate);
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 5px 8px;
+      color: #0f1415;
+      background: var(--ink);
+      font-size: 0.78rem;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .band-marker span {
+      position: absolute;
+      bottom: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--ink);
+      font-size: 0.8rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.65fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .evidence-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .evidence-list li {
+      padding: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.035);
+      color: #dbe0da;
+      line-height: 1.5;
+    }
+
+    .evidence-list strong {
+      color: var(--ink);
+    }
+
+    .recommendation {
+      padding: 28px;
+      display: grid;
+      align-content: center;
+      min-height: 100%;
+    }
+
+    .recommendation h3 {
+      margin-bottom: 16px;
+      font-size: 2rem;
+    }
+
+    .recommendation p {
+      color: #e3e4dc;
+      font-size: 1.12rem;
+      line-height: 1.5;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      width: max-content;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 11px;
+      border: 1px solid rgba(123, 216, 143, 0.35);
+      color: var(--green);
+      background: rgba(123, 216, 143, 0.08);
+      font-size: 0.78rem;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .status-pill::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .source-panel {
+      padding: 22px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .source-list {
+      margin: 16px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+
+    .source-list code {
+      color: var(--ink);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.82rem;
+      overflow-wrap: anywhere;
+    }
+
+    .footer {
+      padding: 36px 0 48px;
+      color: var(--dim);
+      font-size: 0.85rem;
+    }
+
+    .reveal {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .reveal,
+      .trial-dot,
+      .band-marker {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 920px) {
+      .hero {
+        min-height: auto;
+        padding-top: 54px;
+      }
+
+      .hero-grid,
+      .section-head,
+      .evidence-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .proof-strip,
+      .dose-timeline {
+        grid-template-columns: 1fr;
+      }
+
+      .run-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .run-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .field-map {
+        min-height: 430px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .shell {
+        width: min(100vw - 24px, 1180px);
+      }
+
+      h1 {
+        font-size: clamp(3rem, 15vw, 4.7rem);
+      }
+
+      .section {
+        padding: 54px 0;
+      }
+
+      .proof {
+        min-height: 128px;
+      }
+
+      .run-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <p class="eyebrow">NeglectFix - Controlled Dose Ramp - May 31, 2026</p>
+          <h1>Proof of work.</h1>
+          <p class="hero-copy">A controlled rehab ramp that separates left-field training from right-field validation, then turns the evidence into a session story.</p>
+        </div>
+        <div class="proof-strip" aria-label="Session proof summary">
+          <div class="proof">
+            <strong class="count-up" data-value="25">25</strong>
+            <span>minutes recorded training dose</span>
+          </div>
+          <div class="proof">
+            <strong class="count-up" data-value="538">538</strong>
+            <span>total controlled trials across 3 runs</span>
+          </div>
+          <div class="proof">
+            <strong><span class="count-up inline" data-value="52">52</span>/<span>52</span></strong>
+            <span>right-control checks passed</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head reveal">
+          <h2>Dose ramp completed.</h2>
+          <p class="section-lede">The goal was not to prove visual recovery today. The goal was to prove that the protocol can run, adapt, log cleanly, and keep its own right-side control check while dose increases.</p>
+        </div>
+        <div class="dose-timeline">
+
+        <div class="dose-step reveal" style="--step:0">
+          <span class="step-index">01</span>
+          <strong>5 min</strong>
+          <em>Shakedown</em>
+          <b>110 trials</b>
+        </div>
+
+        <div class="dose-step reveal" style="--step:1">
+          <span class="step-index">02</span>
+          <strong>8 min</strong>
+          <em>Comfort ramp</em>
+          <b>173 trials</b>
+        </div>
+
+        <div class="dose-step reveal" style="--step:2">
+          <span class="step-index">03</span>
+          <strong>12 min</strong>
+          <em>Meaningful dose</em>
+          <b>255 trials</b>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="shell">
+        <div class="section-head reveal">
+          <h2>Left challenged. Right confirmed.</h2>
+          <p class="section-lede">Left trials counted as rehab dose. Right trials were sparse controls. They rewarded successful responses but did not update the adaptive staircase.</p>
+        </div>
+        <div class="run-stack">
+
+        <article class="run-panel reveal" data-run="ramp5">
+          <div>
+            <p class="eyebrow">Shakedown</p>
+            <h3>5 min</h3>
+          </div>
+          <div class="run-grid">
+            <div>
+              <span class="metric-value">110</span>
+              <span class="metric-label">trials</span>
+            </div>
+            <div>
+              <span class="metric-value">53/96</span>
+              <span class="metric-label">left rehab</span>
+            </div>
+            <div>
+              <span class="metric-value">14/14</span>
+              <span class="metric-label">right controls</span>
+            </div>
+            <div>
+              <span class="metric-value">0.15</span>
+              <span class="metric-label">final LogCS</span>
+            </div>
+          </div>
+          <div class="mini-bars" aria-label="Hit rate comparison for 5 min">
+            <div class="mini-bar">
+              <span>Left rehab 55.2%</span>
+              <i style="width:55.2%"></i>
+            </div>
+            <div class="mini-bar control">
+              <span>Right control 100.0%</span>
+              <i style="width:100.0%"></i>
+            </div>
+          </div>
+        </article>
+
+        <article class="run-panel reveal" data-run="ramp8">
+          <div>
+            <p class="eyebrow">Comfort ramp</p>
+            <h3>8 min</h3>
+          </div>
+          <div class="run-grid">
+            <div>
+              <span class="metric-value">173</span>
+              <span class="metric-label">trials</span>
+            </div>
+            <div>
+              <span class="metric-value">75/157</span>
+              <span class="metric-label">left rehab</span>
+            </div>
+            <div>
+              <span class="metric-value">16/16</span>
+              <span class="metric-label">right controls</span>
+            </div>
+            <div>
+              <span class="metric-value">0.45</span>
+              <span class="metric-label">final LogCS</span>
+            </div>
+          </div>
+          <div class="mini-bars" aria-label="Hit rate comparison for 8 min">
+            <div class="mini-bar">
+              <span>Left rehab 47.8%</span>
+              <i style="width:47.8%"></i>
+            </div>
+            <div class="mini-bar control">
+              <span>Right control 100.0%</span>
+              <i style="width:100.0%"></i>
+            </div>
+          </div>
+        </article>
+
+        <article class="run-panel reveal" data-run="ramp12">
+          <div>
+            <p class="eyebrow">Meaningful dose</p>
+            <h3>12 min</h3>
+          </div>
+          <div class="run-grid">
+            <div>
+              <span class="metric-value">255</span>
+              <span class="metric-label">trials</span>
+            </div>
+            <div>
+              <span class="metric-value">114/233</span>
+              <span class="metric-label">left rehab</span>
+            </div>
+            <div>
+              <span class="metric-value">22/22</span>
+              <span class="metric-label">right controls</span>
+            </div>
+            <div>
+              <span class="metric-value">0.15</span>
+              <span class="metric-label">final LogCS</span>
+            </div>
+          </div>
+          <div class="mini-bars" aria-label="Hit rate comparison for 12 min">
+            <div class="mini-bar">
+              <span>Left rehab 48.9%</span>
+              <i style="width:48.9%"></i>
+            </div>
+            <div class="mini-bar control">
+              <span>Right control 100.0%</span>
+              <i style="width:100.0%"></i>
+            </div>
+          </div>
+        </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head reveal">
+          <h2>The useful challenge zone.</h2>
+          <p class="section-lede">The left rehab hit rate stayed inside the intended training band. That means the task was giving work: not trivially easy, not impossibly hard.</p>
+        </div>
+        <div class="band-wrap reveal">
+          <div class="challenge-band" aria-label="Target hit-rate challenge band">
+
+        <div class="band-marker" style="left:55.2%" data-rate="55.2%">
+          <span>5 min</span>
+        </div>
+
+        <div class="band-marker" style="left:47.8%" data-rate="47.8%">
+          <span>8 min</span>
+        </div>
+
+        <div class="band-marker" style="left:48.9%" data-rate="48.9%">
+          <span>12 min</span>
+        </div>
+          </div>
+          <div class="band-labels">
+            <span>too hard</span>
+            <span>useful 40-60%</span>
+            <span>too easy</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="shell">
+        <div class="section-head reveal">
+          <h2>Trial field map.</h2>
+          <p class="section-lede">Every dot below is one recorded trial from today's ramp. The horizontal position is data-driven; the current Unity build only logs horizontal eccentricity, so vertical spread is a report layer, not a measured retinal height.</p>
+        </div>
+        <div class="map-toolbar reveal">
+          <div class="map-modes" role="tablist" aria-label="Field map view mode">
+            <button class="map-mode" type="button" data-map-mode="evidence" aria-selected="true">Evidence</button>
+            <button class="map-mode" type="button" data-map-mode="retinal" aria-selected="false">Retinal truth</button>
+            <button class="map-mode" type="button" data-map-mode="heat" aria-selected="false">Heat bloom</button>
+          </div>
+          <p class="map-note" id="mapNote">Evidence mode spreads repeated trials vertically so the work is visible. X-position still comes from the logged left/right eccentricity.</p>
+        </div>
+        <div class="field-map reveal" id="fieldMap" data-mode="evidence" aria-label="Visual field trial map">
+          <svg class="field-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path id="leftHitPath" class="field-path" d="M 24 16 C 32 17 34 34 32 50 C 34 66 32 83 24 84 C 18 80 17 64 18 50 C 17 36 18 20 24 16 Z"></path>
+            <path id="leftMissPath" class="field-path miss" d="M 18 18 C 23 17 25 34 24 50 C 25 66 23 83 18 82 C 14 78 13 63 14 50 C 13 37 14 22 18 18 Z"></path>
+            <path id="rightControlPath" class="field-path control" d="M 74 21 C 80 20 83 34 82 50 C 83 66 80 80 74 79 C 69 75 69 63 70 50 C 69 37 69 25 74 21 Z"></path>
+          </svg>
+          <div class="fixation" aria-hidden="true"></div>
+        </div>
+        <div class="field-legend">
+          <span class="legend-key"><i class="legend-dot"></i>left rehab hit</span>
+          <span class="legend-key"><i class="legend-dot miss"></i>left rehab miss</span>
+          <span class="legend-key"><i class="legend-dot control"></i>right control hit</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head reveal">
+          <h2>Evidence story.</h2>
+          <p class="section-lede">This is the marketing that matters: proof of work, proof of validity, proof of challenge, and a next prescription that follows the data.</p>
+        </div>
+        <div class="evidence-grid">
+          <ul class="evidence-list reveal">
+
+    <li><strong>Left field challenged.</strong> Rehab hit rate stayed in the productive band: 55.2% -> 47.8% -> 48.9%.</li>
+    <li><strong>Right field confirmed.</strong> Control checks stayed at 14/14 -> 16/16 -> 22/22.</li>
+    <li><strong>Training stayed honest.</strong> Control rows were flagged separately and excluded from rehab dose and staircase updates.</li>
+    <li><strong>Ramp held technically.</strong> The longest run closed cleanly at 255 trials and 6725 session samples.</li>
+          </ul>
+          <aside class="recommendation reveal">
+            <span class="status-pill">valid controlled session</span>
+            <h3>Next prescription</h3>
+            <p>Stop today after 25 minutes of recorded dose. Next session: repeat 12 minutes if today felt heavy, or move to 15 minutes if fresh.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="shell">
+        <div class="section-head reveal">
+          <h2>Source files.</h2>
+          <p class="section-lede">The report is generated from the pulled Quest CSV files so the same evidence can be regenerated after future sessions.</p>
+        </div>
+        <div class="source-panel reveal">
+          <strong>Latest run shown in detail:</strong> 12 min - 255 trials, 48.9% left rehab hit rate, 100.0% right control hit rate.
+          <ul class="source-list">
+            <li><code>Unity/NeglectFix/SmokeResults/ControlRamp/av_training_2026-05-31_08-55-37.csv</code></li><li><code>Unity/NeglectFix/SmokeResults/ControlRamp/session_2026-05-31_08-55-10.csv</code></li><li><code>Unity/NeglectFix/SmokeResults/Ramp8/av_training_2026-05-31_09-13-38.csv</code></li><li><code>Unity/NeglectFix/SmokeResults/Ramp8/session_2026-05-31_09-12-41.csv</code></li><li><code>Unity/NeglectFix/SmokeResults/Ramp12/av_training_2026-05-31_09-33-25.csv</code></li><li><code>Unity/NeglectFix/SmokeResults/Ramp12/session_2026-05-31_09-32-56.csv</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="shell">Generated locally by <code>scripts/generate-rehab-report.js</code>. This is a training report, not a clinical diagnosis.</div>
+    </footer>
+  </main>
+
+  <script>
+    window.__NEGLECTFIX_REPORT__ = {"title":"NeglectFix Session Report","subtitle":"Controlled Dose Ramp","dateLabel":"May 31, 2026","patientLabel":"Eric Lespagnon","recommendation":"Stop today after 25 minutes of recorded dose. Next session: repeat 12 minutes if today felt heavy, or move to 15 minutes if fresh.","generatedAt":"2026-05-31T23:36:11.130Z","runs":[{"id":"ramp5","label":"5 min","storyLabel":"Shakedown","plannedMinutes":5,"trialCsv":"Unity/NeglectFix/SmokeResults/ControlRamp/av_training_2026-05-31_08-55-37.csv","sessionCsv":"Unity/NeglectFix/SmokeResults/ControlRamp/session_2026-05-31_08-55-10.csv","meta":{"startedAt":"2026-05-31T08:55:37.3987800-04:00","device":"Oculus Quest 2 / Android OS 14 / API-34 (UP1A.231005.007.A1/52175280028600150)","scene":"AVTrainingSession1Pilot"},"total":{"count":110,"hits":67,"misses":43,"hitRate":0.6090909090909091,"meanRtMs":473.8805970149254,"medianRtMs":432,"contrastMin":0,"contrastMax":1.05,"lastContrast":0.15},"rehab":{"count":96,"hits":53,"misses":43,"hitRate":0.5520833333333334,"meanRtMs":498.6792452830189,"medianRtMs":459,"contrastMin":0,"contrastMax":1.05,"lastContrast":0.15},"control":{"count":14,"hits":14,"misses":0,"hitRate":1,"meanRtMs":380,"medianRtMs":383,"contrastMin":0,"contrastMax":0.9,"lastContrast":0.3},"session":{"durationSeconds":329,"durationMinutes":5.5,"samples":2954,"rewards":72,"endedAt":"5/31/2026 9:00:37 AM"},"spacing":{"controlIndices":[6,15,19,31,36,43,52,62,68,72,85,92,96,105],"minRehabBeforeControl":3,"minRowsBetweenControls":3},"validation":{"badControlRows":0,"badRehabRows":0,"controlsExcluded":true,"spacingRespected":true},"dotRows":[{"i":0,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":320},{"i":1,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":459},{"i":2,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":821},{"i":3,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":627},{"i":4,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":306},{"i":5,"runId":"ramp5","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0.3,"rt":432},{"i":6,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":752},{"i":7,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.45,"rt":418},{"i":8,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.45,"rt":418},{"i":9,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.6,"rt":348},{"i":10,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.6,"rt":808},{"i":11,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.75,"rt":529},{"i":12,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.75,"rt":348},{"i":13,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.9,"rt":432},{"i":14,"runId":"ramp5","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0.9,"rt":390},{"i":15,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.9,"rt":515},{"i":16,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":1.05,"rt":-1},{"i":17,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.9,"rt":627},{"i":18,"runId":"ramp5","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0.9,"rt":418},{"i":19,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.9,"rt":459},{"i":20,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":1.05,"rt":320},{"i":21,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":1.05,"rt":-1},{"i":22,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.9,"rt":-1},{"i":23,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.75,"rt":-1},{"i":24,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.6,"rt":432},{"i":25,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.6,"rt":348},{"i":26,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.75,"rt":557},{"i":27,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.75,"rt":404},{"i":28,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.9,"rt":-1},{"i":29,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.75,"rt":-1},{"i":30,"runId":"ramp5","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0.6,"rt":362},{"i":31,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.6,"rt":-1},{"i":32,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.45,"rt":780},{"i":33,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.45,"rt":362},{"i":34,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.6,"rt":362},{"i":35,"runId":"ramp5","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0.6,"rt":334},{"i":36,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.6,"rt":599},{"i":37,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.75,"rt":446},{"i":38,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.75,"rt":432},{"i":39,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.9,"rt":-1},{"i":40,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.75,"rt":487},{"i":41,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.75,"rt":334},{"i":42,"runId":"ramp5","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0.9,"rt":418},{"i":43,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.9,"rt":-1},{"i":44,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.75,"rt":-1},{"i":45,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.6,"rt":-1},{"i":46,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.45,"rt":-1},{"i":47,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":48,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":49,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":571},{"i":50,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":404},{"i":51,"runId":"ramp5","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0.15,"rt":320},{"i":52,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":557},{"i":53,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":54,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":55,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":404},{"i":56,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":57,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":418},{"i":58,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":59,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":432},{"i":60,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":61,"runId":"ramp5","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":348},{"i":62,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":63,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":64,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":65,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":66,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":67,"runId":"ramp5","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0,"rt":390},{"i":68,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":432},{"i":69,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":70,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":71,"runId":"ramp5","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0,"rt":362},{"i":72,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":73,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":975},{"i":74,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":75,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":76,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":487},{"i":77,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":78,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":376},{"i":79,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":362},{"i":80,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":571},{"i":81,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":82,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":83,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":404},{"i":84,"runId":"ramp5","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":362},{"i":85,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":571},{"i":86,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":87,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":88,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":89,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":529},{"i":90,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":91,"runId":"ramp5","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":376},{"i":92,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":696},{"i":93,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":94,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":640},{"i":95,"runId":"ramp5","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0,"rt":390},{"i":96,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":97,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":98,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":99,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":100,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":446},{"i":101,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":501},{"i":102,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":585},{"i":103,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":529},{"i":104,"runId":"ramp5","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0.3,"rt":418},{"i":105,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":106,"runId":"ramp5","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":-1},{"i":107,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":390},{"i":108,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":529},{"i":109,"runId":"ramp5","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":571}]},{"id":"ramp8","label":"8 min","storyLabel":"Comfort ramp","plannedMinutes":8,"trialCsv":"Unity/NeglectFix/SmokeResults/Ramp8/av_training_2026-05-31_09-13-38.csv","sessionCsv":"Unity/NeglectFix/SmokeResults/Ramp8/session_2026-05-31_09-12-41.csv","meta":{"startedAt":"2026-05-31T09:13:38.3786840-04:00","device":"Oculus Quest 2 / Android OS 14 / API-34 (UP1A.231005.007.A1/52175280028600150)","scene":"AVTrainingSession1Pilot"},"total":{"count":173,"hits":91,"misses":82,"hitRate":0.5260115606936416,"meanRtMs":507.75824175824175,"medianRtMs":432,"contrastMin":0,"contrastMax":0.45,"lastContrast":0.45},"rehab":{"count":157,"hits":75,"misses":82,"hitRate":0.47770700636942676,"meanRtMs":532.5066666666667,"medianRtMs":473,"contrastMin":0,"contrastMax":0.45,"lastContrast":0.45},"control":{"count":16,"hits":16,"misses":0,"hitRate":1,"meanRtMs":391.75,"medianRtMs":397,"contrastMin":0,"contrastMax":0.3,"lastContrast":0.15},"session":{"durationSeconds":509,"durationMinutes":8.5,"samples":4570,"rewards":97,"endedAt":"5/31/2026 9:21:39 AM"},"spacing":{"controlIndices":[7,12,26,44,58,66,75,80,90,94,98,116,121,132,136,140],"minRehabBeforeControl":3,"minRowsBetweenControls":3},"validation":{"badControlRows":0,"badRehabRows":0,"controlsExcluded":true,"spacingRespected":true},"dotRows":[{"i":0,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":627},{"i":1,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":599},{"i":2,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":3,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":710},{"i":4,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":766},{"i":5,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":390},{"i":6,"runId":"ramp8","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0.15,"rt":348},{"i":7,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":8,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":571},{"i":9,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":10,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":404},{"i":11,"runId":"ramp8","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0,"rt":404},{"i":12,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":348},{"i":13,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":473},{"i":14,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":362},{"i":15,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":16,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":390},{"i":17,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":404},{"i":18,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":390},{"i":19,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":334},{"i":20,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.45,"rt":418},{"i":21,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.45,"rt":-1},{"i":22,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":-1},{"i":23,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":24,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":459},{"i":25,"runId":"ramp8","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":362},{"i":26,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":1072},{"i":27,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":-1},{"i":28,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":334},{"i":29,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":752},{"i":30,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":390},{"i":31,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":376},{"i":32,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":432},{"i":33,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":34,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":348},{"i":35,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":404},{"i":36,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":376},{"i":37,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":418},{"i":38,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.45,"rt":-1},{"i":39,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":404},{"i":40,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":724},{"i":41,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.45,"rt":-1},{"i":42,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":418},{"i":43,"runId":"ramp8","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0.3,"rt":376},{"i":44,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":45,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":46,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":390},{"i":47,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":640},{"i":48,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":-1},{"i":49,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":50,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":51,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":52,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":473},{"i":53,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":390},{"i":54,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":-1},{"i":55,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":56,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":57,"runId":"ramp8","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":418},{"i":58,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":59,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":473},{"i":60,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":61,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":515},{"i":62,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":63,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":64,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":65,"runId":"ramp8","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":404},{"i":66,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":67,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":68,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":69,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":418},{"i":70,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":71,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":72,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":73,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":390},{"i":74,"runId":"ramp8","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0,"rt":404},{"i":75,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":76,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":77,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":432},{"i":78,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":79,"runId":"ramp8","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":432},{"i":80,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":81,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":529},{"i":82,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":599},{"i":83,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":446},{"i":84,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":418},{"i":85,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":86,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":376},{"i":87,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":418},{"i":88,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":89,"runId":"ramp8","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0.15,"rt":376},{"i":90,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":627},{"i":91,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":696},{"i":92,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":93,"runId":"ramp8","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0.15,"rt":376},{"i":94,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":95,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":96,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":97,"runId":"ramp8","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":390},{"i":98,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":99,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":100,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":724},{"i":101,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":102,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":103,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":104,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":459},{"i":105,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":543},{"i":106,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":668},{"i":107,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":529},{"i":108,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":109,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":418},{"i":110,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":111,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":112,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":113,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":571},{"i":114,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":115,"runId":"ramp8","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":404},{"i":116,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":117,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":641},{"i":118,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":119,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":120,"runId":"ramp8","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0,"rt":334},{"i":121,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":122,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":123,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":124,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":125,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":126,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":127,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":128,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":129,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":130,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":131,"runId":"ramp8","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0,"rt":446},{"i":132,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":133,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":134,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":682},{"i":135,"runId":"ramp8","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0,"rt":418},{"i":136,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":137,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":432},{"i":138,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":432},{"i":139,"runId":"ramp8","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0.15,"rt":376},{"i":140,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":141,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":794},{"i":142,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":557},{"i":143,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":613},{"i":144,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":145,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":146,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":808},{"i":147,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":148,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":149,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":640},{"i":150,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":151,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":487},{"i":152,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":153,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":154,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":654},{"i":155,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":156,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":585},{"i":157,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":158,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":159,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":613},{"i":160,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":975},{"i":161,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":162,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":446},{"i":163,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":682},{"i":164,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":165,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":166,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":682},{"i":167,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":1072},{"i":168,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":529},{"i":169,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":348},{"i":170,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":404},{"i":171,"runId":"ramp8","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":627},{"i":172,"runId":"ramp8","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.45,"rt":-1}]},{"id":"ramp12","label":"12 min","storyLabel":"Meaningful dose","plannedMinutes":12,"trialCsv":"Unity/NeglectFix/SmokeResults/Ramp12/av_training_2026-05-31_09-33-25.csv","sessionCsv":"Unity/NeglectFix/SmokeResults/Ramp12/session_2026-05-31_09-32-56.csv","meta":{"startedAt":"2026-05-31T09:33:25.9133690-04:00","device":"Oculus Quest 2 / Android OS 14 / API-34 (UP1A.231005.007.A1/52175280028600150)","scene":"AVTrainingSession1Pilot"},"total":{"count":255,"hits":136,"misses":119,"hitRate":0.5333333333333333,"meanRtMs":536.5073529411765,"medianRtMs":487,"contrastMin":0,"contrastMax":0.45,"lastContrast":0.15},"rehab":{"count":233,"hits":114,"misses":119,"hitRate":0.4892703862660944,"meanRtMs":554.2719298245614,"medianRtMs":494,"contrastMin":0,"contrastMax":0.45,"lastContrast":0.15},"control":{"count":22,"hits":22,"misses":0,"hitRate":1,"meanRtMs":444.45454545454544,"medianRtMs":418,"contrastMin":0,"contrastMax":0.45,"lastContrast":0.15},"session":{"durationSeconds":749,"durationMinutes":12.5,"samples":6725,"rewards":141,"endedAt":"5/31/2026 9:45:25 AM"},"spacing":{"controlIndices":[21,25,30,48,58,68,81,90,94,109,115,120,138,142,174,188,211,219,232,236,245,255],"minRehabBeforeControl":3,"minRowsBetweenControls":3},"validation":{"badControlRows":0,"badRehabRows":0,"controlsExcluded":true,"spacingRespected":true},"dotRows":[{"i":0,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":418},{"i":1,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":418},{"i":2,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":501},{"i":3,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":446},{"i":4,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":5,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":390},{"i":6,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":473},{"i":7,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":640},{"i":8,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":529},{"i":9,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.45,"rt":-1},{"i":10,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":724},{"i":11,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":487},{"i":12,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.45,"rt":-1},{"i":13,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":14,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":15,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":376},{"i":16,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":17,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":18,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":19,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":376},{"i":20,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":794},{"i":21,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":22,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":501},{"i":23,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":390},{"i":24,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0.15,"rt":390},{"i":25,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":599},{"i":26,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":404},{"i":27,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":404},{"i":28,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":390},{"i":29,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0.45,"rt":390},{"i":30,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.45,"rt":-1},{"i":31,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":32,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":487},{"i":33,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":487},{"i":34,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":348},{"i":35,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":36,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":37,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":390},{"i":38,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":459},{"i":39,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":432},{"i":40,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":41,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":42,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":43,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":404},{"i":44,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":45,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":446},{"i":46,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":515},{"i":47,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0.15,"rt":362},{"i":48,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":49,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":50,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":51,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":459},{"i":52,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":53,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":54,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":55,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":56,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":57,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":404},{"i":58,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":59,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":60,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":459},{"i":61,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":62,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":63,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":64,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":418},{"i":65,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":487},{"i":66,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":67,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":418},{"i":68,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":69,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":70,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":71,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":446},{"i":72,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":710},{"i":73,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":74,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":571},{"i":75,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":76,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":459},{"i":77,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":78,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":404},{"i":79,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":640},{"i":80,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0.15,"rt":432},{"i":81,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":446},{"i":82,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":83,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":84,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":404},{"i":85,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":432},{"i":86,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":-1},{"i":87,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":88,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":446},{"i":89,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0,"rt":446},{"i":90,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":794},{"i":91,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":446},{"i":92,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":93,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":348},{"i":94,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":696},{"i":95,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":96,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":97,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":515},{"i":98,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":99,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":752},{"i":100,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":877},{"i":101,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":102,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":668},{"i":103,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":571},{"i":104,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":515},{"i":105,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":106,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":107,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":390},{"i":108,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0,"rt":585},{"i":109,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":110,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":682},{"i":111,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":112,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":113,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":114,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0,"rt":404},{"i":115,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":116,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":117,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":696},{"i":118,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":1100},{"i":119,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0.15,"rt":390},{"i":120,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":696},{"i":121,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":122,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":487},{"i":123,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":863},{"i":124,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":125,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":654},{"i":126,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":127,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":128,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":752},{"i":129,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":130,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":627},{"i":131,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":132,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":133,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":571},{"i":134,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":668},{"i":135,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":136,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":585},{"i":137,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":418},{"i":138,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":139,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":557},{"i":140,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":141,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0,"rt":390},{"i":142,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":640},{"i":143,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":144,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":145,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":947},{"i":146,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":147,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":148,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":149,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":150,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":515},{"i":151,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":835},{"i":152,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":432},{"i":153,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":585},{"i":154,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":432},{"i":155,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":682},{"i":156,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.45,"rt":-1},{"i":157,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":158,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":159,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":160,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":161,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":162,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":501},{"i":163,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":164,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":165,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":432},{"i":166,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":947},{"i":167,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":376},{"i":168,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":487},{"i":169,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":418},{"i":170,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":171,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":172,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":446},{"i":173,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0,"rt":390},{"i":174,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":766},{"i":175,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":176,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":177,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":627},{"i":178,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":640},{"i":179,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":180,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":181,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":182,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":529},{"i":183,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":627},{"i":184,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":185,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":710},{"i":186,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":187,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0,"rt":487},{"i":188,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":189,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":821},{"i":190,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":191,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":192,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":459},{"i":193,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":194,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":195,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":557},{"i":196,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":197,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":418},{"i":198,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":199,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":487},{"i":200,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":201,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":390},{"i":202,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":1086},{"i":203,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":204,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":205,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":613},{"i":206,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":613},{"i":207,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":208,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":209,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":432},{"i":210,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":571},{"i":211,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":446},{"i":212,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":459},{"i":213,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":446},{"i":214,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":390},{"i":215,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":418},{"i":216,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.45,"rt":808},{"i":217,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.45,"rt":-1},{"i":218,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0.3,"rt":418},{"i":219,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.3,"rt":473},{"i":220,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":221,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":222,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":223,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":224,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":376},{"i":225,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":226,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":227,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":228,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":229,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":571},{"i":230,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":599},{"i":231,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0.15,"rt":418},{"i":232,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":473},{"i":233,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.15,"rt":-1},{"i":234,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":235,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":418},{"i":236,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":237,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":238,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":822},{"i":239,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":-1},{"i":240,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":446},{"i":241,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":242,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":243,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":487},{"i":244,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":5,"contrast":0,"rt":459},{"i":245,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":246,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":247,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0,"rt":-1},{"i":248,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":529},{"i":249,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0,"rt":459},{"i":250,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":599},{"i":251,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":1030},{"i":252,"runId":"ramp12","hit":false,"type":"rehab","control":false,"dose":true,"eccentricity":-8,"contrast":0.3,"rt":-1},{"i":253,"runId":"ramp12","hit":true,"type":"rehab","control":false,"dose":true,"eccentricity":-5,"contrast":0.15,"rt":529},{"i":254,"runId":"ramp12","hit":true,"type":"right_control","control":true,"dose":false,"eccentricity":8,"contrast":0.15,"rt":446}]}],"overall":{"recordedMinutes":25,"totalTrials":538,"rehabTrials":486,"rehabHits":242,"rehabHitRate":0.49794238683127573,"controlTrials":52,"controlHits":52,"controlHitRate":1,"sessionMinutes":26.5,"rewards":310,"samples":14249}};
+  </script>
+  <script>
+    (function () {
+      var data = window.__NEGLECTFIX_REPORT__;
+      var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var rendered = false;
+      var enhanced = false;
+
+      function createDots() {
+        var field = document.getElementById("fieldMap");
+        if (!field) return;
+        var rows = [];
+        data.runs.forEach(function (run) {
+          rows = rows.concat(run.dotRows);
+        });
+
+        rows.forEach(function (row, index) {
+          var dot = document.createElement("span");
+
+          dot.className = "trial-dot" + (row.control ? " control" : "") + (row.hit ? "" : " miss");
+          dot.dataset.index = String(index);
+          dot.dataset.runId = row.runId;
+          dot.title = row.runId + " " + row.type + " " + (row.hit ? "hit" : "miss") + " - LogCS " + row.contrast.toFixed(2);
+          field.appendChild(dot);
+        });
+
+        setMapMode("evidence", false);
+      }
+
+      function positionForMode(row, index, mode) {
+        var absEcc = Math.min(20, Math.abs(row.eccentricity || 5));
+        var side = row.eccentricity >= 0 ? 1 : -1;
+        var lane = row.runId === "ramp5" ? 0 : row.runId === "ramp8" ? 1 : 2;
+        var x;
+        var y;
+
+        if (mode === "retinal") {
+          x = 50 + side * (8 + absEcc * 3.1);
+          y = 50 + deterministicJitter(index, 12) * 7;
+          return { x: clamp(x, 7, 93), y: clamp(y, 42, 58) };
+        }
+
+        if (mode === "heat") {
+          x = 50 + side * (10 + absEcc * 2.8) + deterministicJitter(index + lane * 17, 5) * 3.4;
+          y = 50 + deterministicJitter(index * 7 + lane * 23, 19) * 30;
+          return { x: clamp(x, 8, 92), y: clamp(y, 16, 84) };
+        }
+
+        x = 50 + side * (12 + absEcc * 1.75 + lane * 2.2);
+        y = 12 + ((index * 37 + lane * 11) % 76);
+        return { x: clamp(x, 7, 93), y: clamp(y, 10, 90) };
+      }
+
+      function deterministicJitter(seed, spread) {
+        var raw = Math.sin(seed * 12.9898 + spread * 78.233) * 43758.5453;
+        return (raw - Math.floor(raw)) * 2 - 1;
+      }
+
+      function clamp(value, min, max) {
+        return Math.max(min, Math.min(max, value));
+      }
+
+      function setMapMode(mode, animate) {
+        var field = document.getElementById("fieldMap");
+        if (!field) return;
+
+        field.dataset.mode = mode;
+        var notes = {
+          evidence:
+            "Evidence mode spreads repeated trials vertically so the work is visible. X-position still comes from the logged left/right eccentricity.",
+          retinal:
+            "Retinal truth mode shows what today's log truly contains: horizontal eccentricity at 5 or 8 degrees, with vertical angle currently unmeasured and effectively zero.",
+          heat:
+            "Heat bloom mode turns the same trials into a density-style proof object. It is expressive, not diagnostic; the morphing shapes summarize hit/miss/control clusters.",
+        };
+        var note = document.getElementById("mapNote");
+        if (note) note.textContent = notes[mode] || notes.evidence;
+
+        document.querySelectorAll(".map-mode").forEach(function (button) {
+          button.setAttribute("aria-selected", button.dataset.mapMode === mode ? "true" : "false");
+        });
+
+        var rows = [];
+        data.runs.forEach(function (run) {
+          rows = rows.concat(run.dotRows);
+        });
+
+        var dots = Array.prototype.slice.call(field.querySelectorAll(".trial-dot"));
+        dots.forEach(function (dot) {
+          var index = Number(dot.dataset.index);
+          var point = positionForMode(rows[index], index, mode);
+          if (window.gsap && animate && !reduceMotion) {
+            gsap.to(dot, {
+              left: point.x + "%",
+              top: point.y + "%",
+              duration: 0.72,
+              ease: "power3.inOut",
+              overwrite: "auto",
+            });
+          } else {
+            dot.style.left = point.x.toFixed(2) + "%";
+            dot.style.top = point.y.toFixed(2) + "%";
+          }
+        });
+
+        morphFieldPaths(mode, animate);
+      }
+
+      function morphFieldPaths(mode, animate) {
+        var shapes = {
+          evidence: {
+            leftHit:
+              "M 24 16 C 32 17 34 34 32 50 C 34 66 32 83 24 84 C 18 80 17 64 18 50 C 17 36 18 20 24 16 Z",
+            leftMiss:
+              "M 18 18 C 23 17 25 34 24 50 C 25 66 23 83 18 82 C 14 78 13 63 14 50 C 13 37 14 22 18 18 Z",
+            rightControl:
+              "M 74 21 C 80 20 83 34 82 50 C 83 66 80 80 74 79 C 69 75 69 63 70 50 C 69 37 69 25 74 21 Z",
+          },
+          retinal: {
+            leftHit:
+              "M 18 47 C 24 46 31 46 36 48 C 38 49 38 51 36 52 C 31 54 24 54 18 53 C 15 52 15 48 18 47 Z",
+            leftMiss:
+              "M 12 48 C 18 47 25 47 29 48 C 31 49 31 51 29 52 C 25 53 18 53 12 52 C 10 51 10 49 12 48 Z",
+            rightControl:
+              "M 65 48 C 72 47 81 47 87 48 C 90 49 90 51 87 52 C 81 53 72 53 65 52 C 62 51 62 49 65 48 Z",
+          },
+          heat: {
+            leftHit:
+              "M 25 13 C 42 16 45 34 38 50 C 45 66 42 84 25 87 C 10 80 9 65 14 50 C 9 35 10 20 25 13 Z",
+            leftMiss:
+              "M 16 18 C 31 15 35 34 29 50 C 35 66 31 85 16 82 C 5 74 6 62 10 50 C 6 38 5 26 16 18 Z",
+            rightControl:
+              "M 73 18 C 90 20 93 37 88 50 C 93 63 90 80 73 82 C 61 77 60 63 64 50 C 60 37 61 23 73 18 Z",
+          },
+        };
+
+        var selected = shapes[mode] || shapes.evidence;
+        var pairs = [
+          ["leftHitPath", selected.leftHit],
+          ["leftMissPath", selected.leftMiss],
+          ["rightControlPath", selected.rightControl],
+        ];
+        pairs.forEach(function (pair) {
+          var el = document.getElementById(pair[0]);
+          if (!el) return;
+          if (window.gsap && animate && !reduceMotion) {
+            gsap.to(el, {
+              attr: { d: pair[1] },
+              duration: 0.75,
+              ease: "power3.inOut",
+              overwrite: "auto",
+            });
+          } else {
+            el.setAttribute("d", pair[1]);
+          }
+        });
+      }
+
+      function setupMapControls() {
+        document.querySelectorAll(".map-mode").forEach(function (button) {
+          button.addEventListener("click", function () {
+            setMapMode(button.dataset.mapMode, true);
+          });
+        });
+      }
+
+      function countUp(el) {
+        var value = Number(el.getAttribute("data-value"));
+        var state = { value: 0 };
+        if (!window.gsap || reduceMotion) {
+          el.textContent = String(value);
+          return;
+        }
+        el.textContent = "0";
+        gsap.to(state, {
+          value: value,
+          duration: 1.2,
+          ease: "power3.out",
+          onUpdate: function () {
+            el.textContent = String(Math.round(state.value));
+          },
+        });
+      }
+
+      function revealElements() {
+      var items = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+        if (!window.gsap || reduceMotion) {
+          items.forEach(function (item) {
+            item.style.opacity = 1;
+            item.style.transform = "none";
+          });
+          document.querySelectorAll(".dose-step").forEach(function (step) {
+            step.classList.add("is-lit");
+          });
+          document.querySelectorAll(".band-marker").forEach(function (marker) {
+            marker.style.transform = "translateX(-50%) scaleY(1)";
+          });
+          document.querySelectorAll(".trial-dot").forEach(function (dot) {
+            dot.style.opacity = 1;
+          });
+          return;
+        }
+
+        gsap.defaults({ duration: 0.75, ease: "power3.out" });
+        gsap.from(".hero .eyebrow, .hero h1, .hero-copy, .proof-strip", {
+          y: 18,
+          stagger: 0.08,
+          duration: 0.9,
+        });
+
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              var target = entry.target;
+              gsap.from(target, { y: 18 });
+
+              if (target.classList.contains("dose-step")) {
+                window.setTimeout(function () {
+                  target.classList.add("is-lit");
+                }, 220);
+              }
+
+              if (target.classList.contains("band-wrap")) {
+                gsap.from(".band-marker", {
+                  scaleY: 0,
+                  duration: 0.8,
+                  ease: "back.out(1.6)",
+                  stagger: 0.08,
+                });
+              }
+
+              if (target.id === "fieldMap") {
+                gsap.from(".trial-dot", {
+                  scale: 0.2,
+                  duration: 0.42,
+                  stagger: { each: 0.003, from: "start" },
+                  ease: "power2.out",
+                });
+              }
+
+              observer.unobserve(target);
+            });
+          },
+          { threshold: 0.18 },
+        );
+
+        items.forEach(function (item) {
+          observer.observe(item);
+        });
+      }
+
+      function renderStaticReport() {
+        if (rendered) return;
+        rendered = true;
+        createDots();
+        setupMapControls();
+      }
+
+      function enhanceReport() {
+        if (enhanced) return;
+        enhanced = true;
+        renderStaticReport();
+        if (!window.gsap || reduceMotion) return;
+        document.querySelectorAll(".count-up").forEach(countUp);
+        revealElements();
+      }
+
+      function loadGsapThenBoot() {
+        renderStaticReport();
+        var script = document.createElement("script");
+        script.src = "https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js";
+        script.async = true;
+        script.onload = enhanceReport;
+        script.onerror = enhanceReport;
+        document.head.appendChild(script);
+        window.setTimeout(enhanceReport, 1400);
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", loadGsapThenBoot);
+      } else {
+        loadGsapThenBoot();
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -4,7 +4,7 @@ Compiled knowledge base for the NegletFix project (VR audiovisual + EEG neurofee
 
 **Last compiled**: 2026-04-14
 **Last research audit**: 2026-05-26 — research-operations sprint added YouTube/X validation ladder, source queue, daily-function tracker, QEEG/tPBM watchlist, and medication doctor brief.
-**Last implementation update**: 2026-05-30 — Quest AV training smoke path reached a guided on-headset pilot; see [[audiovisual-training-protocol]], [[unity-architecture]], [[hardware-setup]], and [[rehabilitation-roadmap]].
+**Last implementation update**: 2026-05-31 — Quest AV training now has sparse right controls, headset-validated 5-minute, 8-minute, and 12-minute dose ramps, PlayMode validation, Wi-Fi ADB validation, pulled control-ramp CSVs, and a GSAP-enhanced HTML evidence report with field-map modes. Next build is the separate quick field-mapping calibration scene; see [[audiovisual-training-protocol]], [[unity-architecture]], [[hardware-setup]], and [[rehabilitation-roadmap]].
 **Karpathy principle**: *Query, don't load.* Read pages by name as you need them. Do not preload the whole wiki — the whole point is that it lives in files, not in a working-memory dump.
 
 ---
@@ -30,10 +30,10 @@ Cross-links between wiki pages use `[[wikilinks]]`. Code references use `path:li
 | [[scientific-foundation]] | Theoretical backbone — two visual pathways, Stein & Meredith's three principles, multisensory rehab evidence; **2026-05-14**: chronic-vs-subacute reality check (Saionz 2020/2025), Daibert-Nido downgrade, NF replication caveats | **2026-05-14** | HIGH (mech) / MIXED (effect sizes) |
 | [[erics-baseline]] | The 2025-12-15 anchor measurement (Left 0.00, Right 2.25, Central ~1.05 LogCS) + progress log for future sessions | 2026-04-14 | HIGH |
 | [[contrast-sensitivity-test]] | Measurement instrument — Modified Pelli-Robson; **2026-05-14**: LCD-vs-printed Zeri 2018 caveat, qCSF future-upgrade note | **2026-05-14** | HIGH (within-instrument) / MEDIUM (absolute) |
-| [[audiovisual-training-protocol]] | Daibert-Nido family — 3 dose options (Daibert-Nido 5h pediatric / Misawa 5.25h pediatric Quest / **Alharshan 15h adult stroke** ← recommended for Eric); **2026-05-30**: Unity/Quest guided pilot validated with fixation cross, practice block, controlled background, and left-field trial logs | **2026-05-30** | MIXED ↓ |
+| [[audiovisual-training-protocol]] | Daibert-Nido family — 3 dose options (Daibert-Nido 5h pediatric / Misawa 5.25h pediatric Quest / **Alharshan 15h adult stroke** ← recommended for Eric); **2026-05-31**: sparse right controls + 5-minute, 8-minute, and 12-minute dose ramps implemented and headset-validated; field-map accuracy caveat and next calibration scene documented | **2026-05-31** | MIXED ↓ |
 | [[eeg-neurofeedback]] | Muse TP10 pipeline; **2026-05-14**: hemianopia-vs-neglect category mismatch flagged, Treves 2025 consumer-NF null result, Muse signal-quality downgrade | **2026-05-14** | MIXED ↓ |
-| [[unity-architecture]] | Unity architecture and runtime state; **2026-05-30**: ready prompt, completion prompt, controlled backdrop, Quest trigger polling, QuickReadyCheck scene, guided Session1Pilot | **2026-05-30** | HIGH |
-| [[rehabilitation-roadmap]] | Honest DONE / NEXT / UNKNOWN progress map; **2026-05-30**: AV training moved from scaffold/pending to Quest-guided pilot completed | **2026-05-30** | MIXED |
+| [[unity-architecture]] | Unity architecture and runtime state; **2026-05-31**: sparse control-trial logging, 5-minute Session1 control-ramp scene, QuickReadyCheck remains left-only | **2026-05-31** | HIGH |
+| [[rehabilitation-roadmap]] | Honest DONE / NEXT / UNKNOWN progress map; **2026-05-31**: AV training has sparse controls and headset-validated 5-minute, 8-minute, and 12-minute ramps; next is quick field-mapping calibration + subjective tolerance report + repeat-12 vs 15-minute ramp decision | **2026-05-31** | MIXED |
 | [[hardware-setup]] | Quest + Muse + Mind Monitor + Mac, OSC port 5000, Quest ADB/MQDH/Wi-Fi workflow, troubleshooting table | **2026-05-30** | HIGH |
 | [[research-papers-index]] | Every cited paper — full citation, DOI, key finding, NegletFix relevance; **2026-05-14**: 3 citation corrections (Cuppini→Magosso, Elliott 1990→1991, Robineau 2017→2014) + 20+ new PubMed-verified entries | **2026-05-14** | HIGH (citations now verified) |
 | [[pharmacological-adjuncts]] | Medication adjuncts and doctor-conversation boundary; **2026-05-26**: refreshed against DARS/ESTREL levodopa evidence and 2024 fluoxetine IPD meta-analysis; no medication promoted for chronic HH recovery | **2026-05-26** | MIXED |
@@ -97,17 +97,18 @@ Updated 2026-05-26 with medication-adjunct caution entries from the doctor-brief
 
 ## Module Readiness Map
 
-Source: `.brain/index.json`, updated after the 2026-05-30 guided Quest pilot.
+Source: `.brain/index.json`, updated after the 2026-05-31 sparse-control/dose-ramp/report pass.
 
 | Module | Status | Health | Path | Notes |
 |--------|--------|--------|------|-------|
 | Contrast Sensitivity Test | operational | 🟢 green | `Unity/NeglectFix/Assets/Scripts/Assessment/ContrastSensitivityTest.cs` | Hemifield bug fixed 2025-12-15, first baseline recorded |
 | EEG Pipeline (code) | implemented | 🟡 yellow | `Unity/NeglectFix/Assets/Scripts/EEG/` | Code written + simulator path works; real Muse untested on Eric |
 | EEG Integration (hardware) | planned | ⚪ gray | — | Requires Muse + Mind Monitor + extOSC install |
-| Audiovisual Training Module | smoke-tested | 🟡 yellow | `Unity/NeglectFix/Assets/Scripts/Tasks/AudioVisualTraining.cs` | Guided Quest pilot completed 2026-05-30: 45 recorded left-field trials, 33 hits, 73.3% hit rate; next polish is sparse right-control trials |
+| Audiovisual Training Module | control-ramp-headset-validated | 🟡 yellow | `Unity/NeglectFix/Assets/Scripts/Tasks/AudioVisualTraining.cs` | Guided Quest pilot completed 2026-05-30; sparse right controls + 5-minute, 8-minute, and 12-minute ramps implemented, PlayMode-tested, rebuilt, and Quest-run passed 2026-05-31 |
+| Field Mapping Calibration | planned-next | ⚪ gray | planned separate scene | Next build: fixed cross + controlled left/right/up/down points + richer per-trial spatial/head-pose logging |
 | Quest VR Deployment | operational | 🟢 green | `Builds/AVTrainingSession1Pilot.apk` / `Builds/AVTrainingQuickReadyCheck.apk` | Quest 2 USB ADB authorized; MQDH restored USB handshake; Wi-Fi ADB helper available in `scripts/quest-adb.sh` |
 | Reward Controller + Gaze Detector | implemented | 🟡 yellow | `Unity/NeglectFix/Assets/Scripts/Utils/` | Code written, will be exercised by AV training task |
-| Data Logger | implemented | 🟡 yellow | `Unity/NeglectFix/Assets/Scripts/Utils/DataLogger.cs` | CSV export wired, 10 Hz logging |
+| Data Logger | implemented | 🟡 yellow | `Unity/NeglectFix/Assets/Scripts/Utils/DataLogger.cs` | CSV export wired, 10 Hz logging, AV trial rows split by rehab/control flags |
 
 Legend: 🟢 operational, 🟡 code ready but untested end-to-end on Eric, ⚪ not yet started or hardware-gated.
 

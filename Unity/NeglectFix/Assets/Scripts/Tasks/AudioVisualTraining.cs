@@ -130,6 +130,18 @@ namespace NeglectFix.Tasks
         [Range(0.5f, 3.0f)]
         public float responseWindowSec = 1.5f;
 
+        [Header("AV Training — Sparse Control Trials")]
+        [Tooltip("Insert sparse intact-hemifield controls during recorded blocks. For Eric's baseline this means occasional right-side controls.")]
+        public bool enableIntactHemifieldControlTrials = true;
+
+        [Tooltip("Chance that an eligible recorded trial becomes an intact-hemifield control.")]
+        [Range(0f, 0.3f)]
+        public float intactControlTrialProbability = 0.15f;
+
+        [Tooltip("Minimum rehab-dose trials required between intact-hemifield controls.")]
+        [Range(0, 20)]
+        public int minimumRehabTrialsBetweenControlTrials = 3;
+
         [Header("AV Training — Block Structure (Alharshan dose)")]
         [Tooltip("Number of blocks per session.")]
         public int blocksPerSession = 3;
@@ -232,6 +244,11 @@ namespace NeglectFix.Tasks
         private bool trialHitFlag;
         private int totalTrialsThisSession;
         private int totalHitsThisSession;
+        private int totalRehabTrialsThisSession;
+        private int totalRehabHitsThisSession;
+        private int totalControlTrialsThisSession;
+        private int totalControlHitsThisSession;
+        private int rehabTrialsSinceLastControl;
         private bool trainingLoopActive;
         private GameObject readyPromptRoot;
         private TextMeshProUGUI readyPromptText;
@@ -255,6 +272,9 @@ namespace NeglectFix.Tasks
             public float rtMs;
             public bool hit;
             public float avDeltaMs;     // audio onset relative to visual onset (sub-50ms target)
+            public string trialType;    // rehab, right_control, left_control
+            public bool isControlTrial;
+            public bool countsForRehabDose;
         }
 
         private void OnEnable()
@@ -430,6 +450,11 @@ namespace NeglectFix.Tasks
 
             totalTrialsThisSession = 0;
             totalHitsThisSession = 0;
+            totalRehabTrialsThisSession = 0;
+            totalRehabHitsThisSession = 0;
+            totalControlTrialsThisSession = 0;
+            totalControlHitsThisSession = 0;
+            rehabTrialsSinceLastControl = 0;
             trainingLoopActive = true;
 
             // Begin optional practice, then the recorded block-by-block trial loop.
@@ -444,9 +469,18 @@ namespace NeglectFix.Tasks
             trialLogger?.CloseTrainingTrialLog();
             programScheduler?.RecordSessionComplete();
 
-            float hitRate = totalTrialsThisSession > 0 ? (float)totalHitsThisSession / totalTrialsThisSession : 0f;
-            Debug.Log($"[AVTraining] Session complete. {totalTrialsThisSession} trials, {totalHitsThisSession} hits " +
-                      $"({hitRate:P0}). Final staircase: {currentLogCS:F2} LogCS.");
+            float rehabHitRate = totalRehabTrialsThisSession > 0
+                ? (float)totalRehabHitsThisSession / totalRehabTrialsThisSession
+                : 0f;
+            float controlHitRate = totalControlTrialsThisSession > 0
+                ? (float)totalControlHitsThisSession / totalControlTrialsThisSession
+                : 0f;
+
+            Debug.Log($"[AVTraining] Session complete. {totalTrialsThisSession} recorded trials " +
+                      $"({totalRehabTrialsThisSession} rehab, {totalControlTrialsThisSession} controls). " +
+                      $"Rehab: {totalRehabHitsThisSession}/{totalRehabTrialsThisSession} ({rehabHitRate:P0}). " +
+                      $"Controls: {totalControlHitsThisSession}/{totalControlTrialsThisSession} ({controlHitRate:P0}). " +
+                      $"Final staircase: {currentLogCS:F2} LogCS.");
         }
 
         private IEnumerator RunPracticeThenBlocks()
@@ -531,17 +565,13 @@ namespace NeglectFix.Tasks
             if (!IsTrainingLoopActive())
                 yield break;
 
-            // Eccentricity from progression
-            float eccentricityDeg = 8f;  // fallback
-            string hemifield = "left";
-            if (progression != null)
-            {
-                float[] eccentricities = progression.GetEccentricitiesForSession(currentSessionIndex);
-                eccentricityDeg = eccentricities[UnityEngine.Random.Range(0, eccentricities.Length)];
-                hemifield = progression.affectedHemifield.ToString().ToLowerInvariant();
-                // Apply directionality (negative for left hemifield, positive for right)
-                eccentricityDeg = progression.ApplyHemifieldDirection(eccentricityDeg);
-            }
+            bool isControlTrial = recordTrial && ShouldRunIntactHemifieldControlTrial();
+            bool countsForRehabDose = recordTrial && !isControlTrial;
+            string hemifield = isControlTrial ? GetIntactHemifieldName() : GetAffectedHemifieldName();
+            string trialType = isControlTrial ? $"{hemifield}_control" : "rehab";
+
+            float unsignedEccentricityDeg = PickEccentricityForCurrentSession();
+            float eccentricityDeg = ApplyHemifieldDirection(unsignedEccentricityDeg, hemifield);
 
             // Compute world-space position
             Vector3 stimulusPosition = ComputeStimulusPosition(eccentricityDeg, stimulusDistanceMeters);
@@ -593,6 +623,19 @@ namespace NeglectFix.Tasks
             {
                 totalTrialsThisSession++;
                 if (trialHitFlag) totalHitsThisSession++;
+
+                if (isControlTrial)
+                {
+                    totalControlTrialsThisSession++;
+                    if (trialHitFlag) totalControlHitsThisSession++;
+                    rehabTrialsSinceLastControl = 0;
+                }
+                else
+                {
+                    totalRehabTrialsThisSession++;
+                    if (trialHitFlag) totalRehabHitsThisSession++;
+                    rehabTrialsSinceLastControl++;
+                }
             }
 
             float stimulusOnsetMs = (trialStimulusOnsetTime - sessionStartTime) * 1000f;
@@ -617,6 +660,9 @@ namespace NeglectFix.Tasks
                     rtMs = rtMs,
                     hit = trialHitFlag,
                     avDeltaMs = avDeltaMs,
+                    trialType = trialType,
+                    isControlTrial = isControlTrial,
+                    countsForRehabDose = countsForRehabDose,
                 };
                 trialLogger?.LogTrainingTrial(trial);
             }
@@ -632,12 +678,67 @@ namespace NeglectFix.Tasks
                 rewardController.TriggerReward();
             }
 
-            // Adapt staircase only from recorded trials.
-            if (recordTrial)
+            // Adapt staircase only from affected-hemifield rehab-dose trials.
+            if (countsForRehabDose)
                 UpdateStaircase(trialHitFlag);
 
             // Cleanup
             if (stimObj != null) Destroy(stimObj);
+        }
+
+        private bool ShouldRunIntactHemifieldControlTrial()
+        {
+            if (!enableIntactHemifieldControlTrials)
+                return false;
+
+            if (intactControlTrialProbability <= 0f)
+                return false;
+
+            // The first recorded trial should always be a rehab-dose trial, so the run starts
+            // anchored to the affected hemifield before any control checks appear.
+            if (totalRehabTrialsThisSession == 0)
+                return false;
+
+            if (rehabTrialsSinceLastControl < Mathf.Max(0, minimumRehabTrialsBetweenControlTrials))
+                return false;
+
+            return UnityEngine.Random.value < Mathf.Clamp01(intactControlTrialProbability);
+        }
+
+        private float PickEccentricityForCurrentSession()
+        {
+            if (progression == null)
+                return 8f;
+
+            float[] eccentricities = progression.GetEccentricitiesForSession(currentSessionIndex);
+            return eccentricities[UnityEngine.Random.Range(0, eccentricities.Length)];
+        }
+
+        private string GetAffectedHemifieldName()
+        {
+            return progression != null
+                ? progression.affectedHemifield.ToString().ToLowerInvariant()
+                : "left";
+        }
+
+        private string GetIntactHemifieldName()
+        {
+            return GetOppositeHemifieldName(GetAffectedHemifieldName());
+        }
+
+        private static string GetOppositeHemifieldName(string hemifield)
+        {
+            return string.Equals(hemifield, "right", StringComparison.OrdinalIgnoreCase)
+                ? "left"
+                : "right";
+        }
+
+        private static float ApplyHemifieldDirection(float eccentricityDeg, string hemifield)
+        {
+            float unsignedEccentricity = Mathf.Abs(eccentricityDeg);
+            return string.Equals(hemifield, "left", StringComparison.OrdinalIgnoreCase)
+                ? -unsignedEccentricity
+                : unsignedEccentricity;
         }
 
         private bool IsTrainingLoopActive()
@@ -1396,8 +1497,10 @@ namespace NeglectFix.Tasks
             GUILayout.BeginArea(new Rect(10, Screen.height - 230, 350, 110));
             GUILayout.Label("<b>AV Training (Paradigm B)</b>");
             GUILayout.Label($"Session: {currentSessionIndex} | LogCS: {currentLogCS:F2}");
-            GUILayout.Label($"Trials: {totalTrialsThisSession} | Hits: {totalHitsThisSession}" +
-                            (totalTrialsThisSession > 0 ? $" ({(float)totalHitsThisSession / totalTrialsThisSession:P0})" : ""));
+            GUILayout.Label($"Rehab: {totalRehabHitsThisSession}/{totalRehabTrialsThisSession}" +
+                            (totalRehabTrialsThisSession > 0 ? $" ({(float)totalRehabHitsThisSession / totalRehabTrialsThisSession:P0})" : ""));
+            GUILayout.Label($"Controls: {totalControlHitsThisSession}/{totalControlTrialsThisSession}" +
+                            (totalControlTrialsThisSession > 0 ? $" ({(float)totalControlHitsThisSession / totalControlTrialsThisSession:P0})" : ""));
             if (progression != null)
                 GUILayout.Label($"Severity: {progression.severity} | Affected: {progression.affectedHemifield}");
             GUILayout.Label("<i>Press Quest trigger or SPACE on detection.</i>");

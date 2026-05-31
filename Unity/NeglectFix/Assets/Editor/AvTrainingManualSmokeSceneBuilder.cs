@@ -198,6 +198,9 @@ namespace NeglectFix.EditorTools
             training.generatedStimulusPattern = AudioVisualTraining.StimulusPattern.SolidDisk;
             training.stimulusAngularSizeDeg = 5f;
             training.minimumGeneratedStimulusContrast = 0.9f;
+            training.enableIntactHemifieldControlTrials = true;
+            training.intactControlTrialProbability = 0.15f;
+            training.minimumRehabTrialsBetweenControlTrials = 3;
             training.generatedStimulusTextureSize = 128;
             training.ensureOpaqueTrainingBackdrop = true;
             training.opaqueBackdropDistanceMeters = 2.4f;
@@ -220,10 +223,10 @@ namespace NeglectFix.EditorTools
             training.enablePracticeBlock = false;
             training.practiceIntroDurationSec = 4f;
             training.practiceDurationSec = 15f;
-            training.readyPromptInstructions = "This is rehab training, not a contrast test.\nStart on the center cross. When a marker appears, move your eyes to it and press.\nKeep your head still.";
+            training.readyPromptInstructions = "This is rehab training, not a contrast test.\nStart on the center cross. Most markers are on your left; a few right-side checks may appear.\nMove only your eyes to the marker and press. Keep your head still.";
             training.readyCountdownInstructions = "Find the center cross.\nKeep your head still. Move only your eyes after each marker appears.";
             training.baselinePromptInstructions = "Calibrating before training starts.\nKeep the headset still and look at the center cross.";
-            training.practicePromptInstructions = "Practice first.\nStart on the center cross. When a marker appears, move only your eyes to it and press.\nKeep your head still. These practice trials are not counted.";
+            training.practicePromptInstructions = "Practice first.\nStart on the center cross. Move only your eyes to the marker and press.\nKeep your head still. These practice trials are not counted.";
 
             if (preset == ScenePreset.Session1Pilot)
             {
@@ -231,7 +234,7 @@ namespace NeglectFix.EditorTools
                 scheduler.stateFileName = "program_state_session1_pilot.json";
                 training.readyCountdownDuration = 2f;
                 training.baselineDuration = 5f;
-                training.blockDurationSec = 120f;
+                training.blockDurationSec = 720f;
                 training.cooldownDurationSec = 5f;
                 training.minInterStimulusIntervalSec = 1.2f;
                 training.maxInterStimulusIntervalSec = 2.5f;
@@ -253,6 +256,7 @@ namespace NeglectFix.EditorTools
                 training.maxInterStimulusIntervalSec = 0.75f;
                 training.stimulusAngularSizeDeg = 8f;
                 training.minimumGeneratedStimulusContrast = 1f;
+                training.enableIntactHemifieldControlTrials = false;
             }
             else
             {

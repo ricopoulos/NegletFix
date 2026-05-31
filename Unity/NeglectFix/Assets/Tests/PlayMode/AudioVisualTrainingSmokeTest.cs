@@ -106,6 +106,9 @@ namespace NeglectFix.Tests.PlayMode
             training.maxInterStimulusIntervalSec = 0.06f;
             training.responseWindowSec = 1.0f;
             training.stimulusDurationSec = 0.1f;
+            training.enableIntactHemifieldControlTrials = true;
+            training.intactControlTrialProbability = 1.0f;
+            training.minimumRehabTrialsBetweenControlTrials = 1;
 
             root.SetActive(true);
             yield return null;
@@ -150,6 +153,8 @@ namespace NeglectFix.Tests.PlayMode
             Assert.That(training.currentPhase, Is.EqualTo(TaskManager.SessionPhase.Completed));
             Assert.That(rewardController.GetTotalRewards(), Is.GreaterThan(0));
             Assert.That(dataLogger.GetTrainingTrialsLogged(), Is.GreaterThan(0));
+            Assert.That(dataLogger.GetTrainingRehabTrialsLogged(), Is.GreaterThan(0));
+            Assert.That(dataLogger.GetTrainingControlTrialsLogged(), Is.GreaterThan(0));
             Assert.That(dataLogger.GetCurrentTrialFile(), Is.Not.Empty);
 
             TextMeshProUGUI completionPrompt = UnityEngine.Object
@@ -170,7 +175,7 @@ namespace NeglectFix.Tests.PlayMode
             Assert.That(File.Exists(generatedTrialFile), Is.True);
 
             string[] lines = File.ReadAllLines(generatedTrialFile);
-            Assert.That(lines, Does.Contain("timestamp_ms,session_index,block_index,trial_index,eccentricity_deg,hemifield,contrast_logcs,stimulus_onset_ms,audio_onset_ms,response_onset_ms,rt_ms,hit,av_delta_ms"));
+            Assert.That(lines, Does.Contain("timestamp_ms,session_index,block_index,trial_index,eccentricity_deg,hemifield,contrast_logcs,stimulus_onset_ms,audio_onset_ms,response_onset_ms,rt_ms,hit,av_delta_ms,trial_type,is_control_trial,counts_for_rehab_dose"));
             Assert.That(lines.Length, Is.GreaterThan(5));
 
             string[] rows = lines
@@ -184,6 +189,18 @@ namespace NeglectFix.Tests.PlayMode
             string[] columns = rows[0].Split(',');
             Assert.That(columns[11], Is.EqualTo("1"));
             Assert.That(float.Parse(columns[10], CultureInfo.InvariantCulture), Is.GreaterThanOrEqualTo(0f));
+
+            Assert.That(rows.Any(row =>
+            {
+                string[] rowColumns = row.Split(',');
+                return rowColumns[13] == "rehab" && rowColumns[14] == "0" && rowColumns[15] == "1";
+            }), Is.True);
+
+            Assert.That(rows.Any(row =>
+            {
+                string[] rowColumns = row.Split(',');
+                return rowColumns[13] == "right_control" && rowColumns[14] == "1" && rowColumns[15] == "0";
+            }), Is.True);
 
             DeleteFileIfExists(generatedSessionFile);
             DeleteFileIfExists(generatedTrialFile);

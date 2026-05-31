@@ -1,6 +1,6 @@
 ---
 title: Rehabilitation Roadmap
-last_updated: 2026-05-30
+last_updated: 2026-05-31
 confidence: MIXED
 sources:
   - .brain/index.json
@@ -106,18 +106,46 @@ Interpretation:
 - This was emotionally heavy but productive; Eric explicitly framed the brutality as part of the rehab journey.
 - Next iteration should add sparse right-control trials to confirm attention/input/visibility while preserving left-field therapeutic dose.
 
+### 2026-05-31 — Sparse right controls + first dose ramps validated
+
+The next concrete polish pass is implemented in code, scene presets, and Quest logs:
+- `AudioVisualTraining` now inserts sparse intact-field controls during recorded blocks. For Eric's baseline this resolves to occasional right-side controls.
+- Control rows are labeled in the trial CSV with `trial_type=right_control`, `is_control_trial=1`, and `counts_for_rehab_dose=0`.
+- Control trials do not update the adaptive staircase; only affected-left rehab trials drive LogCS adaptation.
+- `AVTrainingSession1Pilot.unity` was regenerated first as a 5-minute recorded Session 1 ramp, then as 8-minute and 12-minute recorded ramps with ~15% controls and 15s practice.
+- `AVTrainingQuickReadyCheck.unity` remains left-only so it still tests prompt/controller/left-marker visibility without controls.
+- Quest 2 5-minute control-ramp run passed: 110 recorded trials, 96 left rehab-dose trials, 14 right-control trials, left rehab hit rate 53/96 (55.2%), right-control hit rate 14/14 (100%), final staircase 0.15 LogCS.
+- Logs pulled to `Unity/NeglectFix/SmokeResults/ControlRamp/`.
+- Quest 2 8-minute ramp run passed over Wi-Fi ADB: 173 recorded trials, 157 left rehab-dose trials, 16 right-control trials, left rehab hit rate 75/157 (47.8%), right-control hit rate 16/16 (100%), final staircase 0.30 LogCS, 4570 session samples.
+- Logs pulled to `Unity/NeglectFix/SmokeResults/Ramp8/`.
+- Quest 2 12-minute ramp run passed over Wi-Fi ADB: 255 recorded trials, 233 left rehab-dose trials, 22 right-control trials, left rehab hit rate 114/233 (48.9%), right-control hit rate 22/22 (100%), final staircase 0.15 LogCS, 6725 session samples.
+- Logs pulled to `Unity/NeglectFix/SmokeResults/Ramp12/`.
+
 ---
 
 ## 2. NEXT — Planned, Ready to Build [MEDIUM]
 
 ### WIP-001: Audiovisual training module — active polish before rehab start
 
-The AV module is no longer paused or merely scaffolded. It is on-headset validated and needs polish before starting the first real rehab block:
-1. Add sparse right-control trials (~10-20%) and log them separately from left rehab trials.
-2. Keep left hemifield as the primary dose.
-3. Decide first real dose length: repeat 2-minute guided block, move to 5 minutes, or ramp gradually.
-4. Decide when to reduce/remove high validation contrast floor and let the staircase become clinically meaningful.
-5. Keep fixed-gaze contrast/field assessment separate from AV training.
+The AV module is no longer paused or merely scaffolded. It is on-headset validated and the immediate control/dose questions are resolved:
+1. Sparse right-control trials are implemented at ~15%, with at least 3 rehab-dose trials between controls.
+2. Left hemifield remains the primary therapeutic dose; controls are excluded from the staircase and from rehab-dose counts.
+3. First real dose length is a 5-minute recorded ramp, then 8-10, 12-15, 20, 25, and 30 minutes if tolerance allows.
+4. First 5-minute, 8-minute, and 12-minute control-ramp runs are complete on Quest; next decision is whether Eric tolerated the same-day stack well enough to move to 15 minutes next session or should repeat 12.
+5. Contrast decision: when to reduce/remove the high validation contrast floor and let the staircase become clinically meaningful.
+6. Keep fixed-gaze contrast/field assessment separate from AV training.
+
+### WIP-002: Quick field-mapping calibration scene — next build
+
+The first GSAP-enhanced HTML report made the field map valuable enough to turn into a real calibration layer. Current map accuracy is limited by the current CSV: it logs horizontal eccentricity and hemifield, not true vertical retinal coordinates.
+
+Next session should build a separate assessment scene:
+1. Fixed center cross.
+2. Controlled points left/right/up/down, not just horizontal meridian targets.
+3. Expanded trial log fields: horizontal angle, vertical angle, world position, camera-relative direction, head yaw/pitch at stimulus onset, and head yaw/pitch at response.
+4. Output a calibration map that recommends first rehab training locations.
+5. Keep this assessment scene separate from the rehab dose-ramp scene.
+6. After the calibration map is captured, run the next rehab dose ramp from selected locations.
 
 See [[audiovisual-training-protocol]]#what-to-build-in-unity for build spec.
 
@@ -193,21 +221,23 @@ Display brightness, viewing distance, ambient light all affect contrast measurem
 | Effect on central dimness ("gray overlay") | Not attempted | Theoretical only | UNKNOWN |
 | Transfer to daily function | Not attempted | Mixed literature | UNKNOWN |
 
-The project has the hardware, the research base, the instrument, the baseline, and a Quest-validated AV training pilot. What's missing is the polished control-trial logic, the dose decision, and 6 weeks of disciplined Eric-time.
+The project has the hardware, the research base, the instrument, the baseline, a Quest-validated AV training pilot, sparse right-side controls, headset-validated 5-minute, 8-minute, and 12-minute dose ramps, and the first HTML evidence report. What's missing before the official rehab phase is a quick field-mapping calibration scene, richer per-trial spatial logging, Eric's subjective tolerance report, the next ramp decision, the clinical contrast-floor decision, and 6 weeks of disciplined Eric-time.
 
 ---
 
 ## 5. Critical Path
 
-1. **Add sparse right-control trials** — log as controls, not rehab dose.
-2. **Choose first rehab dose length** — 2-minute repeat, 5-minute ramp, or progressive schedule.
-3. **Run first real open-loop rehab session** on Quest with left-field primary dose.
-4. **Mid-pilot re-test** — run full contrast sensitivity test, append to [[erics-baseline]]#progress-log, check signal in left-hemifield score.
-5. **Wire Muse for real** — install extOSC, confirm signal quality on Eric.
-6. **Enable closed-loop only after signal validation** — add engagement gating to the training task.
-7. **Complete the 30-session Alharshan-style program** with mid-course quick-checks every 5 sessions if tolerated.
-8. **Post-program full re-assessment** — compare to 2025-12-15 baseline.
-9. **Document outcome honestly** — whatever the result is, log it.
+1. **Build quick field-mapping calibration** — fixed cross, controlled left/right/up/down points, expanded spatial/head-pose trial schema.
+2. **Generate a calibration map** — use it to choose defensible first rehab training locations.
+3. **Collect subjective report** — fatigue, emotional load, left-marker visibility, and whether right-control markers felt clearly visible after the 25-minute same-day stack.
+4. **Decide next dose** — repeat 12 minutes if heavy, or move to 15 minutes next session if tolerable.
+5. **Keep reviewing CSV split** — rehab/control counts, control hit rate, left hit rate, final staircase, and new spatial map fields after every ramp.
+6. **Mid-pilot re-test** — run full contrast sensitivity test, append to [[erics-baseline]]#progress-log, check signal in left-hemifield score.
+7. **Wire Muse for real** — install extOSC, confirm signal quality on Eric.
+8. **Enable closed-loop only after signal validation** — add engagement gating to the training task.
+9. **Complete the 30-session Alharshan-style program** with mid-course quick-checks every 5 sessions if tolerated.
+10. **Post-program full re-assessment** — compare to 2025-12-15 baseline.
+11. **Document outcome honestly** — whatever the result is, log it.
 
 ---
 

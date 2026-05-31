@@ -1,6 +1,6 @@
 ---
 title: Unity Architecture
-last_updated: 2026-05-30
+last_updated: 2026-05-31
 confidence: HIGH
 sources:
   - Unity/NeglectFix/Assets/Scripts/**/*.cs
@@ -12,7 +12,7 @@ sources:
 
 # Unity Architecture
 
-Developer reference for the NegletFix Unity codebase. **13 C# scripts** (10 original + 3 added in Phase 1, 2026-05-16), organized in 4 subsystems: Assessment, EEG, Tasks, Utils. Target platform: Meta Quest 2/3 (Android ARM64) via OpenXR; OpenXR + Meta Quest Support enabled as of 2026-05-16. The AV training path has now been validated on Quest 2 in a guided pilot (2026-05-30).
+Developer reference for the NegletFix Unity codebase. **13 C# scripts** (10 original + 3 added in Phase 1, 2026-05-16), organized in 4 subsystems: Assessment, EEG, Tasks, Utils. Target platform: Meta Quest 2/3 (Android ARM64) via OpenXR; OpenXR + Meta Quest Support enabled as of 2026-05-16. The AV training path has now been validated on Quest 2 in a guided pilot (2026-05-30), with sparse right-side controls and 5-minute, 8-minute, and 12-minute dose ramps implemented and headset-tested on 2026-05-31.
 
 **Unity version**: 6.2 (6000.2.8f1) with VR template (`.brain/cross-cutting.md:43`).
 **Project path**: `Unity/NeglectFix/` (note the casing: directory is `NeglectFix`, git repo is `NegletFix`).
@@ -47,14 +47,14 @@ All paths relative to `Unity/NeglectFix/Assets/Scripts/`.
 |--------|-----|---------------|
 | `Utils/GazeDetector.cs` | 164 | Quest head-yaw tracking. Fires `OnStartLookingLeft` / `OnStopLookingLeft` when yaw crosses ±15° threshold (configurable). Optional rotation smoothing. |
 | `Utils/RewardController.cs` ✱ | ~350 | Visual/audio/haptic rewards. **Two modes** (2026-05-16 refactor): `OpenLoop` (v1 default — task triggers reward directly on detection, no EEG gating) and `EegGated` (v2 — gates on engagement + gaze, preserved for future use after Muse signal-quality validation per Treves 2025 caveat). Handles cooldown (default 1s), reward duration (default 2s), glow effects. |
-| `Utils/DataLogger.cs` ✱ | ~470 | CSV export at 10 Hz for the neurofeedback CSV. **2026-05-16 extension**: added `LogTrainingTrial()` method + per-session AV training trial CSV writer (`Application.persistentDataPath/training_trials/av_training_{timestamp}.csv`). Trial schema: `timestamp_ms, session_index, block_index, trial_index, eccentricity_deg, hemifield, contrast_logcs, stimulus_onset_ms, audio_onset_ms, response_onset_ms, rt_ms, hit, av_delta_ms`. Device metadata in CSV header. |
+| `Utils/DataLogger.cs` ✱ | ~490 | CSV export at 10 Hz for the neurofeedback CSV. **2026-05-16 extension**: added `LogTrainingTrial()` method + per-session AV training trial CSV writer (`Application.persistentDataPath/training_trials/av_training_{timestamp}.csv`). **2026-05-31 extension**: trial schema now includes `trial_type`, `is_control_trial`, and `counts_for_rehab_dose` so right/intact controls stay analyzable separately. Device metadata and trial-count summary are written in CSV comments. **Next planned extension**: calibration trial rows should add horizontal/vertical angle, stimulus world position, camera-relative direction, and head yaw/pitch at onset/response. |
 
 ### Tasks/ — Rehabilitation task framework
 
 | Script | LOC | Responsibility |
 |--------|-----|---------------|
 | `Tasks/TaskManager.cs` | ~430 | Abstract base class. Session phases (`NotStarted` → optional `Ready` → `Baseline` → `Training` → `Cooldown` → `Completed`), default durations overridable by concrete tasks. Hooks for ready UI, `dataLogger`, `engagementCalculator`, `rewardController`. |
-| `Tasks/AudioVisualTraining.cs` ★ | expanded | **Paradigm B** main task, congruent-pair detection. Extends `TaskManager`. Trial loop with random ISI, block structure, 2-up/1-down weighted staircase, sub-50ms AV sync, baseline-driven personalization, Quest XR trigger polling fallback, controlled gray backdrop, center fixation cross, ready/baseline/practice/completion headset prompts. Reward triggered directly on hit (open-loop, not EEG-gated). |
+| `Tasks/AudioVisualTraining.cs` ★ | expanded | **Paradigm B** main task, congruent-pair detection. Extends `TaskManager`. Trial loop with random ISI, sparse intact-field controls, block structure, 2-up/1-down weighted staircase for rehab trials only, sub-50ms AV sync, baseline-driven personalization, Quest XR trigger polling fallback, controlled gray backdrop, center fixation cross, ready/baseline/practice/completion headset prompts. Reward triggered directly on hit (open-loop, not EEG-gated). |
 | `Tasks/ProgramScheduler.cs` ★ | ~230 | Program state machine — session count, last-session timestamp, paradigm choice, re-measurement triggers. Persisted as JSON to `Application.persistentDataPath/program_state.json`. Supports paradigm switching for Phase 3 and `resetStateOnAwake` for repeatable smoke/pilot builds. |
 | `Tasks/EccentricityProgression.cs` ★ | ~110 | Classifies CS asymmetry severity (Severe/Moderate/Mild), selects appropriate eccentricity ladder, progresses across sessions. Eric's case (asymmetry 2.25) → Severe → ladder `[5,8,12,16,20]°` starting at scotoma border per Yang/Cavanaugh/Saionz 2023. |
 
@@ -171,37 +171,43 @@ Cross-namespace references use fully qualified names (e.g., `NeglectFix.EEG.Enga
 
 See [[hardware-setup]] for Muse/Mind Monitor/OSC wiring.
 
-### Current Quest validation state (2026-05-30)
+### Current Quest validation state (2026-05-31)
 
-Source map: `.brain/sessions/2026-05-30-quest-guided-pilot-wrap.md`.
+Source map: `.brain/sessions/2026-05-30-quest-guided-pilot-wrap.md`, `.brain/sessions/2026-05-31-right-controls-dose-ramp.md`.
 
 - Package ID: `com.UnityTechnologies.com.unity.template.urpblank`
 - Quest 2 serial: `1WMHH831TR1047`
 - USB ADB is authorized but physically intermittent; Meta Quest Developer Hub helped restore the handshake during the session.
 - Wi-Fi ADB helper added: `scripts/quest-adb.sh`
 - Fast smoke APK: `Builds/AVTrainingQuickReadyCheck.apk`
-- Guided pilot APK: `Builds/AVTrainingSession1Pilot.apk`
+- Guided pilot APK: `Builds/AVTrainingSession1Pilot.apk` (rebuilt 2026-05-31 for the current 12-minute control-ramp scene)
 - Guided pilot completed on Quest 2 at 23:27 local time with 45 recorded left-field trials and clean CSV close.
+- Control-ramp run completed on Quest 2 at 09:00 local time on 2026-05-31: 110 recorded trials, 96 left rehab-dose rows, 14 right-control rows, rehab 53/96 hits, controls 14/14 hits, final staircase 0.15 LogCS.
+- Control-ramp logs: `SmokeResults/ControlRamp/control-ramp-live.log`, `SmokeResults/ControlRamp/av_training_2026-05-31_08-55-37.csv`, `SmokeResults/ControlRamp/session_2026-05-31_08-55-10.csv`.
+- 8-minute ramp completed on Quest 2 over Wi-Fi ADB at 09:21 local time on 2026-05-31: 173 recorded trials, 157 left rehab-dose rows, 16 right-control rows, rehab 75/157 hits, controls 16/16 hits, final staircase 0.30 LogCS, 4570 session samples.
+- 8-minute ramp logs: `SmokeResults/Ramp8/ramp8-live.log`, `SmokeResults/Ramp8/av_training_2026-05-31_09-13-38.csv`, `SmokeResults/Ramp8/session_2026-05-31_09-12-41.csv`.
+- 12-minute ramp completed on Quest 2 over Wi-Fi ADB at 09:45 local time on 2026-05-31: 255 recorded trials, 233 left rehab-dose rows, 22 right-control rows, rehab 114/233 hits, controls 22/22 hits, final staircase 0.15 LogCS, 6725 session samples.
+- 12-minute ramp logs: `SmokeResults/Ramp12/ramp12-live.log`, `SmokeResults/Ramp12/av_training_2026-05-31_09-33-25.csv`, `SmokeResults/Ramp12/session_2026-05-31_09-32-56.csv`.
 
 ---
 
-## 6. AV Training Module (built 2026-05-16, Quest-guided pilot 2026-05-30)
+## 6. AV Training Module (built 2026-05-16, Quest-guided pilot 2026-05-30, control-ramp validated 2026-05-31)
 
-The audiovisual training module is **built, committed, and Quest-pilot validated**. Initial scaffold landed 2026-05-16 (commits `ecf327f` + `7ea389c` + `24a3075` on `main`). Guided Quest pilot landed 2026-05-30 (commit `73cfce8`). It implements Paradigm B (congruent-pair detection, Wake Forest / Rowland 2023 lineage) with a path toward the Alharshan/Alwashmi 2026 dose for chronic adult stroke.
+The audiovisual training module is **built, committed, Quest-pilot validated, and now control-ramp validated**. Initial scaffold landed 2026-05-16 (commits `ecf327f` + `7ea389c` + `24a3075` on `main`). Guided Quest pilot landed 2026-05-30 (commit `73cfce8`). It implements Paradigm B (congruent-pair detection, Wake Forest / Rowland 2023 lineage) with a path toward the Alharshan/Alwashmi 2026 dose for chronic adult stroke.
 
 Files (see Section 1 for details):
-- `Tasks/AudioVisualTraining.cs` — main task with trial loop, staircase, AV pair presentation, controlled backdrop, fixation cross, practice block, Quest trigger polling
+- `Tasks/AudioVisualTraining.cs` — main task with trial loop, sparse intact/right controls, staircase, AV pair presentation, controlled backdrop, fixation cross, practice block, Quest trigger polling
 - `Tasks/ProgramScheduler.cs` — program state JSON persistence and repeatable-pilot reset
 - `Tasks/EccentricityProgression.cs` — baseline-driven eccentricity ladder
 
 Scenes/tools:
 - `Assets/Editor/AvTrainingManualSmokeSceneBuilder.cs` — generates manual smoke, quick-ready, and Session1 pilot scenes/APKs.
-- `Assets/Scenes/AVTrainingQuickReadyCheck.unity` — ~15s prompt/controller/visibility check.
-- `Assets/Scenes/AVTrainingSession1Pilot.unity` — guided pilot scene with Eric baseline, practice, recorded block, completion prompt.
+- `Assets/Scenes/AVTrainingQuickReadyCheck.unity` — ~15s prompt/controller/visibility check, left-only.
+- `Assets/Scenes/AVTrainingSession1Pilot.unity` — guided 12-minute ramp scene with Eric baseline, practice, sparse right controls, recorded block, completion prompt.
 
 What's still on the to-do list:
-- **Sparse right-control trials** — add ~10-20% right-hemifield control trials and log them separately from left rehab trials.
-- **Therapeutic dose ramp** — decide first real rehab block length (2 min / 5 min / gradual ramp to 30 min).
+- **Quick field-mapping calibration scene** — next build. Keep it separate from AV rehab. It should use a fixed cross, controlled left/right/up/down points, and expanded spatial/head-pose trial logging so report field maps become more than horizontal evidence maps.
+- **Next dose ramp** — collect Eric's subjective report, then repeat 12 minutes or move to 15 minutes next session.
 - **Clinical contrast policy** — remove or reduce high validation contrast floor once visibility/prompt flow is stable.
 - **Phase 3 — Paradigm A (3D-MOT-IVR)** — significantly larger build; deferred until Phase 2 (30 sessions of Paradigm B) is run and shows responder data.
 

@@ -1,6 +1,6 @@
 ---
 title: Audiovisual Training Protocol (Daibert-Nido family)
-last_updated: 2026-05-30
+last_updated: 2026-05-31
 confidence: MIXED
 sources:
   - NEUROFEEDBACK_PROTOCOL.md
@@ -29,7 +29,7 @@ See [[research-papers-index]] for full citations.
 
 > **⚠ Reframing (2026-05-14)**: This page previously presented Daibert-Nido 2021 as the "anchor" producing reliable +0.31 to +0.54 LogCS gains, with HIGH confidence. That was overstated. The effect-size range is plausible but **not independently replicated at scale in chronic adult stroke**. Realistic targets for Eric's chronic case: detection-RT improvements, ADL transfer, and modest CS gains at the scotoma border — not a left-field LogCS jump from 0.00 to anywhere near the intact field's 2.25.
 
-**Status**: Unity implementation is now a Quest-validated guided pilot. On 2026-05-30, Eric completed a headset run with 45 recorded left-field trials, 33 hits (73.3%), all at `-5°/-8°`, after a short practice block. This validates the task flow and logging; it is not yet the full 30-session therapeutic dose.
+**Status**: Unity implementation is now a Quest-validated guided pilot with sparse right-side controls implemented and headset-tested. On 2026-05-30, Eric completed a headset run with 45 recorded left-field trials, 33 hits (73.3%), all at `-5°/-8°`, after a short practice block. On 2026-05-31, the Session 1 scene was changed to a recorded ramp with ~15% right/intact-field controls logged separately from rehab-dose trials, PlayMode-tested, rebuilt as `Builds/AVTrainingSession1Pilot.apk`, and completed on Quest 2 at 5-minute, 8-minute, and 12-minute dose lengths.
 
 See [[scientific-foundation]] for the "why," [[erics-baseline]] for the starting point, [[unity-architecture]] for where to build it.
 
@@ -144,14 +144,14 @@ The current on-headset pilot is shorter than the therapeutic dose and exists to 
 | Baseline/calibration | 5s | short pre-training state, visible prompt |
 | Practice intro | 4s | explicitly says this is rehab training, not a contrast test |
 | Practice block | 15s | unlogged trials; rewards allowed; no CSV rows and no staircase updates |
-| Recorded block | 120s | left-field AV trials, trial CSV + staircase active |
+| Recorded block | 720s current ramp | left-field AV trials remain primary; sparse right-side controls are logged separately and do not drive the staircase |
 | Cooldown | 5s | closes logs and shows completion prompt |
 
 Instruction model:
 - Start on the small center cross.
 - When a marker appears, move only the eyes toward it and press.
 - Keep the head still.
-- This is **training-flow validation**, not the fixed-gaze contrast/field assessment.
+- This is **training-flow validation / first dose ramp**, not the fixed-gaze contrast/field assessment.
 
 > **Decision 2026-05-30:** Keep fixed-gaze contrast/field measurement as a separate assessment mode. The AV training task may use a fixation cross as an anchor, but it should not pretend to be Humphrey/perimetry-style testing.
 
@@ -163,13 +163,13 @@ Implementation is now scaffolded, smoke-tested, and Quest-pilot validated. v1 sh
 
 | File | Role | Status |
 |------|------|--------|
-| `Assets/Scripts/Tasks/AudioVisualTraining.cs` | Main task. Extends `TaskManager`. Trial loop, 2-up/1-down weighted staircase, sub-50ms AV sync, baseline-driven personalization, Quest trigger/XR polling fallback, controlled gray backdrop, center fixation cross, ready/baseline/practice/completion headset prompts. | ✓ Quest-pilot validated |
+| `Assets/Scripts/Tasks/AudioVisualTraining.cs` | Main task. Extends `TaskManager`. Trial loop, sparse intact-field controls, 2-up/1-down weighted staircase for rehab trials only, sub-50ms AV sync, baseline-driven personalization, Quest trigger/XR polling fallback, controlled gray backdrop, center fixation cross, ready/baseline/practice/completion headset prompts. | ✓ Quest-pilot validated |
 | `Assets/Scripts/Tasks/ProgramScheduler.cs` | Session count + timestamp + re-measurement triggers, persisted as JSON in `Application.persistentDataPath/program_state.json`; `resetStateOnAwake` supports repeatable smoke/pilot scenes. | ✓ Quest-pilot validated |
 | `Assets/Scripts/Tasks/EccentricityProgression.cs` | Computes per-session eccentricity ladder from baseline CS asymmetry. Severe/Moderate/Mild classification → ladder selection → in-session progression. | ✓ Scaffolded |
-| `Assets/Scripts/Utils/DataLogger.cs` | Extended with `LogTrainingTrial()` + per-session trial CSV in `Application.persistentDataPath/training_trials/`. | ✓ Extended |
+| `Assets/Scripts/Utils/DataLogger.cs` | Extended with `LogTrainingTrial()` + per-session trial CSV in `Application.persistentDataPath/training_trials/`; logs `trial_type`, `is_control_trial`, and `counts_for_rehab_dose`. | ✓ Extended |
 | `Assets/Scripts/Utils/RewardController.cs` | Added `RewardMode` enum. v1 default = `OpenLoop` (task triggers rewards directly, EEG NOT a gate). `EegGated` mode preserved for v2. | ✓ Decoupled |
-| `Assets/Scenes/AVTrainingQuickReadyCheck.unity` | Short headset smoke scene for prompt/controller/visibility validation. | ✓ Quest-passed |
-| `Assets/Scenes/AVTrainingSession1Pilot.unity` | Guided pilot scene with Eric baseline, controlled backdrop, practice, recorded left-field block, completion prompt. | ✓ Quest-passed |
+| `Assets/Scenes/AVTrainingQuickReadyCheck.unity` | Short headset smoke scene for prompt/controller/visibility validation. Intentionally left-only; no control trials. | ✓ Quest-passed |
+| `Assets/Scenes/AVTrainingSession1Pilot.unity` | Guided Session 1 ramp scene with Eric baseline, controlled backdrop, practice, 5-minute recorded block, sparse right controls, completion prompt. | ✓ Quest-passed 5-min control-ramp |
 | `Packages/manifest.json` | Added `com.unity.xr.management 4.5.0`, `com.unity.xr.openxr 1.14.0`, `com.unity.xr.interaction.toolkit 3.0.7`. | ✓ Updated |
 
 ### Trial loop (real, from AudioVisualTraining.cs)
@@ -189,14 +189,15 @@ for each block (1..3):
   for blockDurationSec (default 600s = 10 min):
     wait random ISI (2-5s)
     eccentricity = progression.GetEccentricitiesForSession(N)[random]
-    eccentricity = progression.ApplyHemifieldDirection(eccentricity)  // -left, +right
+    trial_type = rehab except sparse intact-field controls (~15%, min 3 rehab trials between controls)
+    hemifield = affected for rehab, intact for controls  // Eric: left rehab, right control
     position = ComputeStimulusPosition(eccentricity, distance)
     spawn visual stimulus at position
     play co-localized 400Hz tone (procedural fallback) or assigned clip
     wait responseWindowSec (default 1.5s) for SPACE/Submit/trigger button
-    log TrainingTrial { ..., RT, hit, av_delta_ms }
+    log TrainingTrial { ..., RT, hit, av_delta_ms, trial_type, is_control_trial, counts_for_rehab_dose }
     if hit && rewardController: TriggerReward()  // open-loop, not EEG-gated
-    update staircase (2-up/1-down, 0.15 LogCS step)
+    update staircase only for rehab-dose trials (2-up/1-down, 0.15 LogCS step)
     destroy stimulus
   rest interBlockRestSec (default 30s)
 ```
@@ -215,16 +216,82 @@ for each block (1..3):
 
 ```
 timestamp_ms, session_index, block_index, trial_index, eccentricity_deg, hemifield,
-contrast_logcs, stimulus_onset_ms, audio_onset_ms, response_onset_ms, rt_ms, hit, av_delta_ms
+contrast_logcs, stimulus_onset_ms, audio_onset_ms, response_onset_ms, rt_ms, hit, av_delta_ms,
+trial_type, is_control_trial, counts_for_rehab_dose
 ```
 
 `av_delta_ms` is audio onset relative to visual onset — target sub-50ms per Bean/Stein/Rowland 2023; the old "single-frame" strictness has been relaxed.
 
-### Open work in Phase 1 (not yet done)
+Control policy:
+- Default controls are sparse intact-field trials: `enableIntactHemifieldControlTrials=true`, `intactControlTrialProbability=0.15`, `minimumRehabTrialsBetweenControlTrials=3`.
+- Eric's baseline resolves intact-field controls to right-side controls.
+- Controls can trigger reward feedback and are logged in the same CSV, but `counts_for_rehab_dose=0` and they do not update the adaptive staircase.
+- The session summary reports rehab and control counts separately.
 
-- **Sparse right-side control trials**: next iteration should add ~10-20% right-hemifield controls, logged separately from left-field rehab trials, to verify attention/input/visibility without diluting the therapeutic dose.
-- **Therapeutic dose ramp**: choose whether the first real rehab day uses the 2-minute guided block, a 5-minute block, or a gradual ramp toward the Alharshan 30-minute dose.
+### Field-map accuracy + calibration decision (2026-05-31)
+
+The first HTML rehab report (`reports/rehab-dose-ramp-2026-05-31.html`) includes a trial field map and correctly separates three ideas:
+- **Evidence mode**: spreads repeated trials vertically so the session effort is visible and persuasive.
+- **Retinal truth mode**: shows what the current CSV actually proves: horizontal eccentricity at `-5°/-8°` in the left field and `+5°/+8°` in the right control field.
+- **Heat bloom mode**: expressive density storytelling, not a diagnostic visual-field map.
+
+Current limitation: `AudioVisualTraining` only logs signed horizontal eccentricity (`eccentricity_deg`) and `hemifield`. Stimuli are currently placed on the horizontal meridian, so vertical angle is effectively `0°` and is not yet logged as a separate field. The current field map is therefore accurate as a **trial-distribution and evidence map**, not yet as a clinical/perimetric retinal map.
+
+Next calibration layer before declaring the 6-week rehab phase officially started:
+1. Build a separate quick field-mapping scene with a fixed center cross and controlled points left/right/up/down.
+2. Log per trial: horizontal angle, vertical angle, world position, camera-relative direction, and head yaw/pitch at stimulus onset and response.
+3. Use that map to choose the first rehab training locations.
+4. Keep field mapping / assessment separate from the AV rehab task.
+5. Then resume the rehab dose ramp from selected, defensible locations.
+
+### Dose ramp decision (2026-05-31)
+
+First real rehab ramp should **move to 5 minutes recorded**, not repeat the 2-minute validation block and not jump directly to 30 minutes.
+
+Planned ramp, subject to symptoms/fatigue:
+- Session 1: 5-minute recorded block + 15s practice + sparse right controls. Completed 2026-05-31.
+- Session 2: 8-minute recorded block + 15s practice + sparse right controls. Completed 2026-05-31.
+- Session 3: 12-minute recorded block + 15s practice + sparse right controls. Completed 2026-05-31.
+- Next session: repeat 12 minutes if the same-day stack felt heavy, or move to 15 minutes if tolerable.
+- Then step toward 20, 25, and 30 minutes over the first week or two rather than forcing the full Alharshan dose immediately.
+
+Keep the high validation contrast floor for Session 1 ramp. Start reducing it only after control hit rate is near ceiling and left-side engagement remains tolerable.
+
+### 2026-05-31 control-ramp validation
+
+- PlayMode smoke passed: `Unity/NeglectFix/SmokeResults/playmode-right-control-ramp-results.xml`.
+- Rebuilt APK: `Unity/NeglectFix/Builds/AVTrainingSession1Pilot.apk`.
+- Quest 2 5-minute headset run passed:
+  - Live log: `Unity/NeglectFix/SmokeResults/ControlRamp/control-ramp-live.log`
+  - Trial CSV: `Unity/NeglectFix/SmokeResults/ControlRamp/av_training_2026-05-31_08-55-37.csv`
+  - Session CSV: `Unity/NeglectFix/SmokeResults/ControlRamp/session_2026-05-31_08-55-10.csv`
+  - 110 recorded trials: 96 `rehab` left-dose trials, 14 `right_control` trials.
+  - Rehab hit rate: 53/96 (55.2%), final staircase 0.15 LogCS.
+  - Right-control hit rate: 14/14 (100%); all controls were excluded from rehab dose/staircase via `counts_for_rehab_dose=0`.
+- Quest 2 8-minute headset run passed over Wi-Fi ADB:
+  - Live log: `Unity/NeglectFix/SmokeResults/Ramp8/ramp8-live.log`
+  - Trial CSV: `Unity/NeglectFix/SmokeResults/Ramp8/av_training_2026-05-31_09-13-38.csv`
+  - Session CSV: `Unity/NeglectFix/SmokeResults/Ramp8/session_2026-05-31_09-12-41.csv`
+  - 173 recorded trials: 157 `rehab` left-dose trials, 16 `right_control` trials.
+  - Rehab hit rate: 75/157 (47.8%), final staircase 0.30 LogCS.
+  - Right-control hit rate: 16/16 (100%); all controls were excluded from rehab dose/staircase via `counts_for_rehab_dose=0`.
+  - Session CSV logged 4570 samples.
+  - Short Quest system/passthrough focus hiccup occurred during startup, then the app resumed and completed cleanly.
+- Quest 2 12-minute headset run passed over Wi-Fi ADB:
+  - Live log: `Unity/NeglectFix/SmokeResults/Ramp12/ramp12-live.log`
+  - Trial CSV: `Unity/NeglectFix/SmokeResults/Ramp12/av_training_2026-05-31_09-33-25.csv`
+  - Session CSV: `Unity/NeglectFix/SmokeResults/Ramp12/session_2026-05-31_09-32-56.csv`
+  - 255 recorded trials: 233 `rehab` left-dose trials, 22 `right_control` trials.
+  - Rehab hit rate: 114/233 (48.9%), final staircase 0.15 LogCS.
+  - Right-control hit rate: 22/22 (100%); all controls were excluded from rehab dose/staircase via `counts_for_rehab_dose=0`.
+  - Session CSV logged 6725 samples.
+  - No focus loss, Android runtime errors, or Unity exceptions were found in the live log.
+
+### Open work in Phase 1
+
+- **Field-mapping calibration**: build the separate quick map scene and expanded trial schema before declaring the official 6-week rehab phase started.
 - **Contrast policy**: decide when to remove the high validation contrast floor and let the adaptive staircase become clinically meaningful.
+- **Next dose ramp**: decide between repeating 12 minutes or moving to 15 minutes after Eric's subjective fatigue/visibility report.
 - **Audio asset**: procedural 400 Hz tone with Hann window is built in as a fallback; an assigned AudioClip is preferable for final fit.
 - **EEG layer**: still deferred. Open-loop AV training is the validated v1 path; Muse/EEG remains exploratory.
 

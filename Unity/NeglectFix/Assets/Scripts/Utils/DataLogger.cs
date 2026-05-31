@@ -366,10 +366,13 @@ namespace NeglectFix.Utils
         private StreamWriter trialWriter;
         private string currentTrialFile = "";
         private int trainingTrialsLogged = 0;
+        private int trainingRehabTrialsLogged = 0;
+        private int trainingControlTrialsLogged = 0;
 
         private const string TRIAL_CSV_HEADER =
             "timestamp_ms,session_index,block_index,trial_index,eccentricity_deg,hemifield," +
-            "contrast_logcs,stimulus_onset_ms,audio_onset_ms,response_onset_ms,rt_ms,hit,av_delta_ms";
+            "contrast_logcs,stimulus_onset_ms,audio_onset_ms,response_onset_ms,rt_ms,hit,av_delta_ms," +
+            "trial_type,is_control_trial,counts_for_rehab_dose";
 
         /// <summary>
         /// Log a single AV training trial. Lazily opens a per-program-session trial file the first time
@@ -398,10 +401,17 @@ namespace NeglectFix.Utils
                     $"{trial.stimulusOnsetMs:F0},{trial.audioOnsetMs:F0}," +
                     $"{trial.responseOnsetMs:F0},{trial.rtMs:F0}," +
                     $"{(trial.hit ? 1 : 0)}," +
-                    $"{trial.avDeltaMs:F2}";
+                    $"{trial.avDeltaMs:F2}," +
+                    $"{trial.trialType}," +
+                    $"{(trial.isControlTrial ? 1 : 0)}," +
+                    $"{(trial.countsForRehabDose ? 1 : 0)}";
 
                 trialWriter.WriteLine(line);
                 trainingTrialsLogged++;
+                if (trial.isControlTrial)
+                    trainingControlTrialsLogged++;
+                else if (trial.countsForRehabDose)
+                    trainingRehabTrialsLogged++;
 
                 if (trainingTrialsLogged % 20 == 0)
                     trialWriter.Flush();
@@ -421,6 +431,8 @@ namespace NeglectFix.Utils
             string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
             currentTrialFile = Path.Combine(trialsPath, $"av_training_{timestamp}.csv");
             trainingTrialsLogged = 0;
+            trainingRehabTrialsLogged = 0;
+            trainingControlTrialsLogged = 0;
 
             try
             {
@@ -447,6 +459,11 @@ namespace NeglectFix.Utils
             {
                 try
                 {
+                    trialWriter.WriteLine();
+                    trialWriter.WriteLine("# TRIAL SUMMARY");
+                    trialWriter.WriteLine($"# Total recorded trials: {trainingTrialsLogged}");
+                    trialWriter.WriteLine($"# Rehab-dose trials: {trainingRehabTrialsLogged}");
+                    trialWriter.WriteLine($"# Control trials: {trainingControlTrialsLogged}");
                     trialWriter.Flush();
                     trialWriter.Close();
                 }
@@ -458,6 +475,8 @@ namespace NeglectFix.Utils
 
         public string GetCurrentTrialFile() => currentTrialFile;
         public int GetTrainingTrialsLogged() => trainingTrialsLogged;
+        public int GetTrainingRehabTrialsLogged() => trainingRehabTrialsLogged;
+        public int GetTrainingControlTrialsLogged() => trainingControlTrialsLogged;
 
         #endregion
 
