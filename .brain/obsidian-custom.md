@@ -1,8 +1,15 @@
 ## Mobile HTML Reports
 
+- [[Projects/NegletFix/brain/artifacts/rehab-dose-ramp-2026-05-31.html|Rehab Dose Ramp Evidence Report - 2026-05-31]]
 - [[Projects/NegletFix/brain/artifacts/research-session-wrapup-2026-05-26.html|Research Sprint Wrap-Up - 2026-05-26]]
 - [[Projects/NegletFix/brain/artifacts/doctor-brief-negletfix-2026-05-26.html|Doctor Brief - NegletFix - 2026-05-26]]
 - [[Projects/NegletFix/brain/artifacts/doctor-brief-negletfix-2026-05-26.pdf|Doctor Brief PDF - NegletFix - 2026-05-26]]
+
+## Rehab Reports
+
+| Report | Repo path |
+|--------|-----------|
+| 2026-05-31 dose ramp evidence report | `reports/rehab-dose-ramp-2026-05-31.html` |
 
 ## Research Outputs
 

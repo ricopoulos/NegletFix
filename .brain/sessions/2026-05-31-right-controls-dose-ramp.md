@@ -122,6 +122,14 @@ Known build warnings remained non-blocking:
 - OpenXR/URP project validation warning.
 - TextMeshPro/IL2CPP size warnings.
 
+## Obsidian Sync
+
+- Corrective end-session bridge run completed after Eric caught the missed Step 8:
+  - Copied the HTML report into `.brain/artifacts/rehab-dose-ramp-2026-05-31.html` for Obsidian/mobile access.
+  - Added the report to `.brain/obsidian-custom.md`.
+  - `populate .brain NegletFix` refreshed the Obsidian project note and raw brain mirror.
+  - `done NegletFix "Right-control dose ramp validated; HTML evidence report and next field-mapping calibration plan recorded"` logged the work to the daily note.
+
 ## Next Actions
 
 1. Build the quick field-mapping calibration scene next: fixed cross, controlled points left/right/up/down, separate from rehab.
