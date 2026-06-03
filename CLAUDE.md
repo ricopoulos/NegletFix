@@ -1,119 +1,78 @@
 # NegletFix - Claude Code Context
 
-## **CRITICAL: Read Memory Before Starting**
+`AGENTS.md` is the canonical project contract for this repository. Read and
+follow it first. If this file conflicts with `AGENTS.md`, `AGENTS.md` wins.
 
-**STOP. Before doing ANY work, you MUST read these files first:**
+## Required Start Context
 
-```
-.brain/index.json          # Module health, baseline results, active issues
-.brain/sessions/           # What happened in previous sessions
-.brain/crumbs/             # Any mid-session checkpoints
-.brain/backlog.md          # Blocked/waiting work items
-```
+Before doing work, reconstruct the project state:
 
-This project uses **Agent Brain v1.4** - a persistent memory system. Reading `.brain/` gives you:
-- Current module/component status
-- What was done in previous sessions
-- Known patterns and learnings
-- Unfinished work or blockers
+1. Run `git status --short --branch` and classify dirty paths.
+2. Fetch/pull only when safe for the current dirty tree.
+3. Read `.brain/index.json`, latest `.brain/sessions/`, latest `.brain/crumbs/`,
+   and `.brain/backlog.md`.
+4. Run the branch audit for `feature/`, `claude/`, `Codex/`, and `codex/`
+   branches.
+5. Load `.brain/wiki/index.md` and pull wiki pages on demand.
+6. Scan Obsidian with:
+   `/Users/ericlespagnon/Dropbox/DEV-LOCAL/My2ndBrain/scripts/obsidian-bridge.sh scan`
+7. Summarize the state before coding.
 
-**Only after reading `.brain/` should you proceed with the user's request.**
+## Required End Context
 
-### Session Rituals
+When the user asks to wrap up, run the full end-session ritual from `AGENTS.md`:
 
-Use `/start-session` at the beginning and `/end-session` (or "let's wrap up") at the end of each session.
+- Session summary in `.brain/sessions/`.
+- Wiki impact check.
+- Relationship check if `.brain/relationships.md` exists.
+- Dirty-tree closeout gate.
+- Selective commit and push unless the user explicitly skips recording.
+- Obsidian `populate` and `done`.
 
-**Start**: git pull → read brain → branch audit → summarize context
-**During**: `/crumb` for progress checkpoints
-**End**: branch hygiene → session summary → approval → commit & push (mandatory)
-
-### Available Commands
-- `/start-session` - Session start ritual (sync, read brain, branch audit)
-- `/end-session` - Session wrap-up ritual (summary, commit, push)
-- `/crumb` - Save progress checkpoint before context compaction
-- `/branch-audit` - Check for unmerged/unpushed branches
-
----
+Do not describe the session as wrapped while session-owned work is uncommitted,
+or while dirty paths are unclassified.
 
 ## Project Overview
-VR-based rehabilitation system for left homonymous hemianopia with contrast/brightness deficits following right PCA stroke. Combines audiovisual stimulation training with EEG neurofeedback using consumer hardware (Meta Quest 2/3 + Muse headband).
+
+VR-based rehabilitation system for left homonymous hemianopia with
+contrast/brightness deficits following right PCA stroke. Combines Quest-based
+audiovisual stimulation training with an EEG/neurofeedback track that remains
+decoupled from the v1 critical path.
+
+Unity project:
+
+```text
+/Users/ericlespagnon/Dropbox/DEV-LOCAL/NegletFix/Unity/NeglectFix/
+```
 
 ## Eric's Medical Condition
-- **Diagnosis**: Left Homonymous Hemianopia from right PCA stroke (July 2021)
-- **MRI Finding**: Large area of encephalomalacia in right occipital lobe
-- **Symptoms**:
-  - Complete left visual field blindness
-  - Bilateral dimness/"gray overlay" - "even with a bright day he always sees dark"
-  - This is NOT a comfort issue - it's a real daily struggle and rehabilitation target
 
-## Baseline Contrast Sensitivity Results (December 15, 2025)
+- Diagnosis: left homonymous hemianopia from right PCA stroke in July 2021.
+- MRI finding: large area of encephalomalacia in right occipital lobe.
+- Symptoms:
+  - Complete left visual field blindness.
+  - Bilateral dimness / gray overlay.
+  - "Even with a bright day he always sees dark."
 
-First validated measurement after fixing hemifield positioning bug:
+This is a rehabilitation project, not accommodation.
+
+## Baseline Contrast Sensitivity Results
+
+First validated measurement after fixing the hemifield positioning bug:
 
 | Hemifield | LogCS Score | Contrast Threshold | Interpretation |
-|-----------|-------------|-------------------|----------------|
-| **Central** | ~1.05+ | ~9% | Good central vision |
-| **Right (Intact)** | **2.25 LogCS** | 0.6% | Excellent - maxed out test |
-| **Left (Affected)** | **0.00 LogCS** | 100% | Severe deficit - can't see ANY letters |
+| --- | --- | --- | --- |
+| Central | about 1.05+ | about 9% | Good central vision |
+| Right/intact | 2.25 LogCS | 0.6% | Excellent, maxed out test |
+| Left/affected | 0.00 LogCS | 100% | Severe deficit |
 
-**Asymmetry: 2.25 LogCS** (clinically significant threshold is 0.30 LogCS)
+Asymmetry: 2.25 LogCS. Clinically significant threshold: 0.30 LogCS.
 
-### What This Means
-- Right visual field has near-perfect contrast sensitivity
-- Left visual field couldn't detect letters even at 100% contrast (pure black on gray)
-- This objectively confirms the left homonymous hemianopia
-- This is the baseline for tracking rehabilitation progress
+## Evidence Rules
 
-### Rehabilitation Target
-Based on Daibert-Nido 2021 study, audiovisual training can achieve +0.31 to +0.54 LogCS improvement. Goal is to improve the left hemifield score from 0.00.
-
-## Contrast Sensitivity Test - Key Information
-
-### Test Controls
-- **Letter keys** (C, D, H, K, N, O, R, S, V, Z): Respond with the letter you see
-- **Delete** (Mac) / **Backspace** (Windows): "Can't see" response
-- **Space**: Start test / advance to next phase
-
-### Test Sequence
-1. Central (letters at center) - baseline
-2. Right Hemifield (letters 300px right) - intact vision test
-3. Left Hemifield (letters 300px left) - affected vision test
-
-### Important: Hemifield Testing
-- Red fixation cross (+) appears in center during hemifield tests
-- User MUST keep eyes on fixation cross
-- Letters appear in peripheral vision - don't chase them with eyes
-
-## Code Fixes Applied (December 15, 2025)
-
-### Critical Bug Fixed: Hemifield Positioning
-**Problem**: Letters were always displayed at center regardless of hemifield mode.
-- Line 275 set `letterTransform.localPosition` for 3D
-- Line 292 ALWAYS set UI `anchoredPosition = Vector2.zero`
-
-**Solution**: Added `GetHemifieldUIOffset()` function and proper UI positioning:
-- Central: 0px offset (center)
-- Right Hemifield: +300px (right side)
-- Left Hemifield: -300px (left side)
-
-### Files Modified
-- `Assets/Scripts/Assessment/ContrastSensitivityTest.cs`:
-  - Added `hemifieldUIOffset` parameter (300px default)
-  - Added `GetHemifieldUIOffset()` function
-  - Fixed `ShowNextLetter()` to apply hemifield offset to RectTransform
-  - Added fixation cross creation and display logic
-  - Added hemifield indicator to console logs: `[LeftHemifield]`, `[RightHemifield]`
-
-## Unity Project Location
-`/Users/ericlespagnon/Dropbox/DEV-LOCAL/NegletFix/Unity/NeglectFix/`
-
-## Key Research Reference
-- **Daibert-Nido et al. (2021)**: "Home-Based Visual Rehabilitation in Patients With Hemianopia"
-- DOI: 10.3389/fneur.2021.680211
-- Total training time: Under 5 hours
-- Results: +0.31 to +0.54 LogCS improvement in contrast sensitivity
-
-## Next Steps
-1. Implement audiovisual rehabilitation training module
-2. Track progress with periodic contrast sensitivity assessments
-3. Compare results to baseline (Left: 0.00, Right: 2.25)
+- Quest rehab changes need real headset validation when headset behavior is the
+  proof gate.
+- Preserve validation artifacts: build, install/run method, live log, pulled
+  CSVs, and subjective report when available.
+- Keep research claims source-graded and separate from protocol changes.
+- Do not provide medical prescriptions.

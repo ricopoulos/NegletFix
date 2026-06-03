@@ -2,14 +2,14 @@
   "schema_version": "1.0",
   "project_name": "NegletFix",
   "description": "VR rehabilitation for left homonymous hemianopia with EEG neurofeedback",
-  "last_updated": "2026-05-31T16:20:00Z",
+  "last_updated": "2026-06-03T19:34:14Z",
   "wiki": {
     "path": ".brain/wiki/",
     "pages": 11,
     "lines": 2400,
     "built": "2026-04-14",
     "last_substantive_update": "2026-05-31",
-    "notes": "Karpathy ingest pattern — compiled from sessions, research docs, scripts. Load index.md first, pull pages on-demand. 2026-05-14 research audit added 20+ verified citations + 3 citation corrections. 2026-05-16 Phase 1 scaffold session updated unity-architecture, rehabilitation-roadmap, audiovisual-training-protocol, hardware-setup. 2026-05-26 research-ops sprint added source queue, YouTube/X validation ladder, sprint reports, QEEG/tPBM watchlist, medication doctor brief, Obsidian HTML wrap-up, and Dr. Jacquemin NegletFix doctor brief with mobile HTML/PDF copies. 2026-05-30 guided Quest pilot session updated audiovisual-training-protocol, unity-architecture, hardware-setup, rehabilitation-roadmap, and index module readiness after on-headset AV validation. 2026-05-31 added sparse right-control trial documentation, first dose ramp decision, PlayMode validation, rebuilt Session1Pilot APK, passed Quest 2 5-minute, 8-minute, and 12-minute control-ramp validations, then generated the first GSAP-enhanced HTML evidence report at `reports/rehab-dose-ramp-2026-05-31.html` and set the next build target to a separate quick field-mapping calibration scene."
+    "notes": "Karpathy ingest pattern — compiled from sessions, research docs, scripts. Load index.md first, pull pages on-demand. 2026-05-14 research audit added 20+ verified citations + 3 citation corrections. 2026-05-16 Phase 1 scaffold session updated unity-architecture, rehabilitation-roadmap, audiovisual-training-protocol, hardware-setup. 2026-05-26 research-ops sprint added source queue, YouTube/X validation ladder, sprint reports, QEEG/tPBM watchlist, medication doctor brief, Obsidian HTML wrap-up, and Dr. Jacquemin NegletFix doctor brief with mobile HTML/PDF copies. 2026-05-30 guided Quest pilot session updated audiovisual-training-protocol, unity-architecture, hardware-setup, rehabilitation-roadmap, and index module readiness after on-headset AV validation. 2026-05-31 added sparse right-control trial documentation, first dose ramp decision, PlayMode validation, rebuilt Session1Pilot APK, passed Quest 2 5-minute, 8-minute, and 12-minute control-ramp validations, then generated the first GSAP-enhanced HTML evidence report at `reports/rehab-dose-ramp-2026-05-31.html` and set the next build target to a separate quick field-mapping calibration scene. 2026-06-03 adopted the portable Codex session ritual locally: `AGENTS.md` is now the canonical project contract, `CLAUDE.md` defers to it, `.claude/commands` are trackable command shorthands, and the dirty-tree start/end gate is explicit for NegletFix."
   },
   "modules": {
     "contrast-sensitivity-test": {
