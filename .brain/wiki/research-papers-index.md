@@ -1,6 +1,6 @@
 ---
 title: Research Papers Index
-last_updated: 2026-06-11
+last_updated: 2026-06-12
 confidence: MIXED
 sources:
   - RESEARCH_SUMMARY.md
@@ -14,6 +14,7 @@ sources:
   - 2026-05-14 PubMed-verified research audit (see Recent Additions section)
   - 2026-06-11 PubMed + ClinicalTrials.gov refresh for AV+tDCS, AV multisensory, VRT, and VR cross-modal trials
   - 2026-06-11 LuMamba / BioFoundation EEG foundation-model watch lead
+  - 2026-06-12 NeurIPS 2025 EEG-AI methods lane: BrainBodyFM, EEG Foundation Challenge, REVE, LUNA, BrainOmni, NeurIPT, CSBrain, EEG-Bench, critical review
 ---
 
 # Research Papers Index
@@ -41,6 +42,16 @@ Confidence applies to the paper's evidentiary weight for this specific project, 
 **Key finding**: Self-supervised EEG foundation model combining topology-invariant channel unification, bidirectional Mamba temporal modeling, and LeJEPA + reconstruction objectives. Pretrained on 21,000+ hours of TUEG EEG and evaluated across 16-26 channel EEG configurations. The authors report a 4.6M parameter model with improved efficiency and cross-montage robustness.
 **Informs**: [[eeg-neurofeedback]] — future EEG signal-analysis infrastructure watch lead only.
 **Confidence for NegletFix**: LOW-MEDIUM for direct project impact. This is not hemianopia, audiovisual training, or neurofeedback efficacy evidence; it is a methods lead for possible future artifact/signal-quality/montage-adaptation tooling.
+
+---
+
+## NeurIPS 2025 EEG-AI methods lane
+
+**Citation / source cluster**: NeurIPS 2025 BrainBodyFM workshop; EEG Foundation Challenge 2025; OpenReview NeurIPS 2025 conference/workshop papers for REVE, LUNA, BrainOmni, NeurIPT, CSBrain, EEG-Bench, and EEG Foundation Models: A Critical Review.
+**DOI / URLs**: source queue rows `NP-001` through `NP-009` in `docs/research/source-queue-2026-05-25.csv`; key traceable URLs include the [BrainBodyFM workshop](https://brainbodyfm-workshop.github.io/), [EEG Foundation Challenge](https://eeg2025.github.io), and OpenReview pages for each model/benchmark.
+**Key finding**: NeurIPS 2025 showed a clear EEG/biosignal foundation-model wave: larger pretraining corpora, topology/electrode-layout handling, sensor encoders, cross-subject/cross-task transfer, and more explicit benchmark discipline. The most relevant methods leads are REVE, LUNA/BioFoundation, BrainOmni, NeurIPT, and CSBrain; the important guardrails are EEG-Bench and the critical review.
+**Informs**: [[eeg-neurofeedback]], `docs/research/research-monitor-2026-06-11.html` — future EEG-AI analytics lane only.
+**Confidence for NegletFix**: LOW-MEDIUM for direct project impact. The lane is useful for offline artifact detection, signal-quality scoring, montage adaptation, and higher-density EEG analytics. It is not clinical evidence for homonymous hemianopia recovery, audiovisual training efficacy, or Muse TP10 neurofeedback.
 
 ---
 
@@ -499,7 +510,7 @@ Source map: [[clinical-trials-watchlist]] and `docs/research/clinical-trials-wat
 
 ## Summary Table
 
-Refreshed 2026-05-26 — medication-adjunct caution entries added after the doctor-brief sprint; 2026-05-14 audit resolved all prior "[CITATION NEEDED]" rows.
+Refreshed 2026-06-12 — NeurIPS 2025 EEG-AI methods lane added; 2026-05-26 medication-adjunct caution entries added after the doctor-brief sprint; 2026-05-14 audit resolved all prior "[CITATION NEEDED]" rows.
 
 ### Foundational / pre-audit
 | Paper | Year | DOI | Confidence | Primary Use |
@@ -511,6 +522,7 @@ Refreshed 2026-05-26 — medication-adjunct caution entries added after the doct
 | Elliott, Bullimore & Bailey ✱ | 1991 | 10.1111/j.1475-1313.1991.tb00368.x | HIGH | CS test reliability |
 | Bolognini et al. | 2005 | 10.1093/brain/awh662 | HIGH | Hemianopia AV facilitation |
 | Broustail/Ingolfsson et al. | 2026 | 10.48550/arXiv.2603.19100 | LOW-MEDIUM | EEG foundation-model methods watch lead |
+| NeurIPS 2025 EEG-AI lane | 2025 | NP-001..NP-009 | LOW-MEDIUM | EEG foundation-model methods lane and guardrails |
 | Magosso, Cuppini & Bertini ✱ | 2017 | 10.3389/fncom.2017.00113 | MEDIUM | Computational mechanism |
 | REINVENT (Spicer) | 2019 | 10.3389/fnhum.2019.00210 | MEDIUM | Closed-loop VR-BCI precedent (motor) |
 | Robineau et al. ✱ | 2014 | 10.1016/j.neuropsychologia.2014.07.020 | MEDIUM | fMRI NF in left HH (direct precedent) |

@@ -1,6 +1,6 @@
 ---
 title: EEG Neurofeedback (Muse TP10)
-last_updated: 2026-06-11
+last_updated: 2026-06-12
 confidence: MIXED — see §2 and §10 caveats added 2026-05-14
 sources:
   - NEUROFEEDBACK_PROTOCOL.md
@@ -11,6 +11,7 @@ sources:
   - CLAUDE.md
   - 2026-05-14 audit — Treves 2025 JMIR consumer-NF meta, Yang/Kastner 2024 PNAS alpha gating, Robineau 2014 (corrected citation), Muse signal-quality 2024 comparisons
   - 2026-06-11 LuMamba/BioFoundation EEG foundation-model watch lead — LinkedIn, arXiv:2603.19100, BioFoundation GitHub
+  - 2026-06-12 NeurIPS 2025 EEG-AI methods lane — BrainBodyFM workshop, EEG Foundation Challenge, OpenReview EEG foundation-model papers and guardrail benchmarks
 ---
 
 # EEG Neurofeedback
@@ -88,6 +89,28 @@ NegletFix relevance:
 - **Watchlist row**: `LI-001` in `docs/research/source-queue-2026-05-25.csv`.
 
 Practical gate: revisit only after a real EEG signal-quality session exists, or if the project adds a higher-density EEG device / offline EEG analytics track.
+
+### NeurIPS 2025 EEG-AI methods lane [added 2026-06-12]
+
+**Classification**: EEG-AI methods lane, not clinical or protocol evidence.
+
+Why it was added: the 2025 NeurIPS cycle contained a concentrated wave of EEG/biosignal foundation-model work:
+
+- **NP-001 / BrainBodyFM workshop**: dedicated NeurIPS workshop for brain/body foundation models across EEG, MEG, EMG, ECG, intracortical signals, and wearables.
+- **NP-002 / EEG Foundation Challenge 2025**: cross-task and cross-subject EEG decoding benchmark using high-density HBN EEG; useful for evaluation discipline.
+- **NP-003 / REVE**: large-scale EEG foundation model reporting 60,000+ hours across 92 datasets and 25,000 subjects, with support for arbitrary electrode arrangements.
+- **NP-004 + LI-001 / BioFoundation family**: LUNA and LuMamba/BioFoundation are the main topology-agnostic EEG tooling family to revisit for montage heterogeneity.
+- **NP-005 through NP-007 / BrainOmni, NeurIPT, CSBrain**: architecture references for sensor encoding, electrode-coordinate handling, lobe/region pooling, and cross-scale spatiotemporal modeling.
+- **NP-008 and NP-009 / EEG-Bench and critical review**: guardrails showing that foundation models are promising but must be benchmarked against simple baselines and clinical distribution shifts.
+
+NegletFix relevance:
+
+- **Potential future analytics**: offline EEG embeddings, artifact detection, signal-quality scoring, cross-session normalization, montage adaptation, and possibly higher-density EEG notebooks.
+- **No current treatment implication**: these papers do not validate homonymous hemianopia recovery, audiovisual training efficacy, or Muse TP10 neurofeedback.
+- **No low-channel shortcut**: most strong claims come from high-density, clinical, or research EEG settings. Do not assume transfer to four-channel Muse data.
+- **Protocol boundary**: the active v1 route stays open-loop field-map-guided audiovisual Quest training. EEG-AI work becomes useful only after Eric has real signal-quality data or the project adds richer EEG hardware.
+
+Watchlist rows: `LI-001` and `NP-001` through `NP-009` in `docs/research/source-queue-2026-05-25.csv`.
 
 ---
 

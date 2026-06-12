@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NegletFix Research Monitor - 2026-06-11</title>
+<title>NegletFix Research Monitor - 2026-06-12</title>
 <style>
   :root {
     --bg: #10100e;
@@ -391,7 +391,7 @@
 
   .lane-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 12px;
   }
 
@@ -406,6 +406,7 @@
   .lane.core { border-top: 4px solid var(--green); }
   .lane.adjunct { border-top: 4px solid var(--amber); }
   .lane.watch { border-top: 4px solid var(--blue); }
+  .lane.methods { border-top: 4px solid var(--violet); }
   .lane.parked { border-top: 4px solid var(--quiet); }
 
   .lane h3 {
@@ -632,7 +633,7 @@
       </div>
     </div>
     <div class="meta">
-      <span class="chip"><strong>Updated</strong>&nbsp;2026-06-11</span>
+      <span class="chip"><strong>Updated</strong>&nbsp;2026-06-12</span>
       <span class="chip"><strong>Sources</strong>&nbsp;CSV + wiki</span>
       <span class="chip"><strong>Decision</strong>&nbsp;no protocol change</span>
     </div>
@@ -657,16 +658,16 @@
           </div>
           <div class="decision-cell">
             <strong>Evidence posture</strong>
-            <span>YouTube/X/LinkedIn generate leads; PMID/NCT/arXiv/DOI/guidelines are required before protocol claims.</span>
+            <span>YouTube/X/LinkedIn/NeurIPS generate leads; PMID/NCT/arXiv/DOI/OpenReview/guidelines are required before protocol claims.</span>
           </div>
         </div>
       </div>
 
       <aside class="scoreboard" aria-label="Research monitor metrics">
         <div class="metric">
-          <span class="num">28</span>
+          <span class="num">37</span>
           <span class="label">tracked source rows</span>
-          <span class="note">YouTube, X discovery, LinkedIn/arXiv, and ClinicalTrials.gov intake now sit in one queue.</span>
+          <span class="note">YouTube, X discovery, LinkedIn/arXiv, NeurIPS/OpenReview, and ClinicalTrials.gov intake now sit in one queue.</span>
         </div>
         <div class="metric">
           <span class="num">9</span>
@@ -679,9 +680,9 @@
           <span class="note">Useful for explanation and lived-function framing, not primary evidence.</span>
         </div>
         <div class="metric">
-          <span class="num">3</span>
-          <span class="label">monthly X queries</span>
-          <span class="note">Used only to discover traceable papers, trials, and author/lab updates.</span>
+          <span class="num">9</span>
+          <span class="label">NeurIPS/OpenReview rows</span>
+          <span class="note">EEG foundation models, benchmark discipline, and guardrails for future analytics.</span>
         </div>
       </aside>
     </section>
@@ -723,6 +724,15 @@
             <li>NCT04798924 timing/plasticity</li>
           </ul>
         </article>
+        <article class="lane methods">
+          <h3>EEG-AI methods</h3>
+          <p>NeurIPS 2025 EEG foundation-model work is a future analytics lane, not treatment evidence.</p>
+          <ul>
+            <li>BrainBodyFM + EEG Challenge</li>
+            <li>REVE, LUNA/BioFoundation, BrainOmni</li>
+            <li>EEG-Bench and critical-review guardrails</li>
+          </ul>
+        </article>
         <article class="lane parked">
           <h3>Parked claims</h3>
           <p>Interesting public content stays parked unless it resolves to a primary medical source.</p>
@@ -753,11 +763,133 @@
       <div id="trial-grid" class="trial-grid" aria-live="polite"></div>
     </section>
 
+    <section class="section" aria-labelledby="methods-title">
+      <div class="section-head">
+        <div>
+          <div class="kicker">EEG-AI methods lane</div>
+          <h2 id="methods-title">NeurIPS 2025 is a signal-analysis watchlist, not a rehab protocol update.</h2>
+          <p>These rows matter because they show fast model progress in EEG decoding, cross-subject transfer, topology-aware electrode handling, and clinical benchmarking. They do not validate Muse TP10 neurofeedback or alter field-guided audiovisual training.</p>
+        </div>
+      </div>
+
+      <div class="trial-grid">
+        <article class="trial-card" data-lane="watch">
+          <div class="trial-main">
+            <div class="trial-top">
+              <span class="trial-id">NP-001 / NP-002</span>
+              <span class="priority high">High</span>
+            </div>
+            <h3>BrainBodyFM + EEG Foundation Challenge</h3>
+            <div class="tag-row">
+              <span class="tag violet">methods lane</span>
+              <span class="tag blue">benchmark</span>
+              <span class="tag red">no protocol change</span>
+            </div>
+            <p><strong>Role:</strong> Umbrella discovery hub plus a large cross-task/cross-subject EEG benchmark.</p>
+            <p><strong>NegletFix use:</strong> Reference for future offline EEG analytics and evaluation discipline.</p>
+            <p><strong>Gate:</strong> Do not infer anything about Muse TP10 until Eric has real signal-quality data.</p>
+          </div>
+          <div class="trial-footer">
+            <a href="https://brainbodyfm-workshop.github.io/" target="_blank" rel="noopener noreferrer">BrainBodyFM</a>
+            <a href="https://eeg2025.github.io" target="_blank" rel="noopener noreferrer">EEG Challenge</a>
+          </div>
+        </article>
+
+        <article class="trial-card" data-lane="watch">
+          <div class="trial-main">
+            <div class="trial-top">
+              <span class="trial-id">NP-003</span>
+              <span class="priority high">High</span>
+            </div>
+            <h3>REVE</h3>
+            <div class="tag-row">
+              <span class="tag violet">EEG FM</span>
+              <span class="tag blue">large scale</span>
+              <span class="tag">embeddings</span>
+            </div>
+            <p><strong>Role:</strong> Large EEG foundation model designed for diverse electrode setups and ready-to-use embeddings.</p>
+            <p><strong>NegletFix use:</strong> Candidate future backbone for offline artifact, signal-quality, or representation experiments.</p>
+            <p><strong>Gate:</strong> Benchmark against simple baselines before adopting.</p>
+          </div>
+          <div class="trial-footer">
+            <a href="https://openreview.net/forum?id=ZeFMtRBy4Z" target="_blank" rel="noopener noreferrer">OpenReview</a>
+          </div>
+        </article>
+
+        <article class="trial-card" data-lane="watch">
+          <div class="trial-main">
+            <div class="trial-top">
+              <span class="trial-id">LI-001 / NP-004</span>
+              <span class="priority high">High</span>
+            </div>
+            <h3>BioFoundation family</h3>
+            <div class="tag-row">
+              <span class="tag violet">LuMamba</span>
+              <span class="tag violet">LUNA</span>
+              <span class="tag">topology agnostic</span>
+            </div>
+            <p><strong>Role:</strong> Main EEG tooling family to revisit for montage heterogeneity and efficient modeling.</p>
+            <p><strong>NegletFix use:</strong> Future offline signal-quality, montage adaptation, or higher-density EEG analytics.</p>
+            <p><strong>Gate:</strong> No current validation for low-channel Muse TP10 rehab decisions.</p>
+          </div>
+          <div class="trial-footer">
+            <a href="https://openreview.net/forum?id=uazfjnFL0G" target="_blank" rel="noopener noreferrer">LUNA</a>
+            <a href="https://github.com/pulp-bio/BioFoundation" target="_blank" rel="noopener noreferrer">BioFoundation</a>
+          </div>
+        </article>
+
+        <article class="trial-card" data-lane="watch">
+          <div class="trial-main">
+            <div class="trial-top">
+              <span class="trial-id">NP-005 / NP-006 / NP-007</span>
+              <span class="priority medium">Medium</span>
+            </div>
+            <h3>Architecture clues</h3>
+            <div class="tag-row">
+              <span class="tag blue">BrainOmni</span>
+              <span class="tag blue">NeurIPT</span>
+              <span class="tag blue">CSBrain</span>
+            </div>
+            <p><strong>Role:</strong> Sensor encoding, electrode coordinates, lobe/region pooling, and cross-scale spatiotemporal structure.</p>
+            <p><strong>NegletFix use:</strong> Design references if we build an offline EEG-analysis notebook later.</p>
+            <p><strong>Gate:</strong> Architecture ideas only; no direct clinical or rehabilitation implication.</p>
+          </div>
+          <div class="trial-footer">
+            <a href="https://openreview.net/forum?id=cjHQj0tCy6" target="_blank" rel="noopener noreferrer">BrainOmni</a>
+            <a href="https://openreview.net/forum?id=D4hcJPkJ3y" target="_blank" rel="noopener noreferrer">NeurIPT</a>
+            <a href="https://openreview.net/forum?id=agcXjEHmyW" target="_blank" rel="noopener noreferrer">CSBrain</a>
+          </div>
+        </article>
+
+        <article class="trial-card" data-lane="parked">
+          <div class="trial-main">
+            <div class="trial-top">
+              <span class="trial-id">NP-008 / NP-009</span>
+              <span class="priority high">High</span>
+            </div>
+            <h3>Guardrails</h3>
+            <div class="tag-row">
+              <span class="tag amber">benchmark first</span>
+              <span class="tag red">clinical shift</span>
+              <span class="tag">simple baselines</span>
+            </div>
+            <p><strong>Role:</strong> EEG-Bench and the critical review keep the lane honest: foundation models are promising but not automatically superior.</p>
+            <p><strong>NegletFix use:</strong> Require realistic evaluation before any EEG foundation model becomes project tooling.</p>
+            <p><strong>Gate:</strong> No model-only claims about recovery, detection, or neurofeedback benefit.</p>
+          </div>
+          <div class="trial-footer">
+            <a href="https://openreview.net/forum?id=MAudehqShe" target="_blank" rel="noopener noreferrer">EEG-Bench</a>
+            <a href="https://openreview.net/forum?id=Iu6qVgtgUD" target="_blank" rel="noopener noreferrer">Critical review</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <section class="section" aria-labelledby="flow-title">
       <div class="section-head">
         <div>
           <div class="kicker">Research flow</div>
-          <h2 id="flow-title">YouTube, X, and LinkedIn are part of intake, not proof.</h2>
+          <h2 id="flow-title">YouTube, X, LinkedIn, and NeurIPS are part of intake, not proof.</h2>
           <p>They are useful because they surface patient language, clinician names, trial mentions, AI-method leads, and paper links. They become evidence only after verification.</p>
         </div>
       </div>
@@ -766,12 +898,12 @@
         <div class="step">
           <b>01</b>
           <strong>Discover</strong>
-          <span>YouTube, X search queries, LinkedIn posts, podcasts, lab pages, and clinician talks generate leads.</span>
+          <span>YouTube, X search queries, LinkedIn posts, NeurIPS/OpenReview pages, podcasts, lab pages, and clinician talks generate leads.</span>
         </div>
         <div class="step">
           <b>02</b>
           <strong>Verify</strong>
-          <span>Claims must resolve to PubMed, ClinicalTrials.gov, guidelines, or institutional protocol sources.</span>
+          <span>Claims must resolve to PubMed, ClinicalTrials.gov, arXiv/DOI/OpenReview, guidelines, or institutional protocol sources.</span>
         </div>
         <div class="step">
           <b>03</b>
@@ -812,12 +944,12 @@
           </div>
         </article>
         <article class="intake-card">
-          <span class="count">1</span>
-          <h3>LinkedIn / arXiv leads</h3>
+          <span class="count">10</span>
+          <h3>EEG-AI method leads</h3>
           <p>Used for traceable technical-method leads, such as EEG foundation models, after resolving to paper/code/model-card sources.</p>
           <div class="tag-row">
             <span class="tag violet">LI-001 LuMamba</span>
-            <span class="tag blue">arXiv 2603.19100</span>
+            <span class="tag blue">NP-001..NP-009</span>
             <span class="tag red">no protocol change</span>
           </div>
         </article>
@@ -849,7 +981,7 @@
           <ul class="checklist">
             <li><span class="check">1</span><span>Refresh NCT statuses for CTG-001 through CTG-009 and flag newly posted results.</span></li>
             <li><span class="check">2</span><span>Search PubMed for AV+tDCS, audiovisual hemianopia, VR visual restoration, and chronic stroke visual field defects.</span></li>
-            <li><span class="check">3</span><span>Run saved X and LinkedIn/arXiv discovery checks and promote only traceable PMID/NCT/arXiv/DOI leads.</span></li>
+            <li><span class="check">3</span><span>Run saved X, LinkedIn/arXiv, and NeurIPS/OpenReview discovery checks and promote only traceable PMID/NCT/arXiv/DOI/OpenReview leads.</span></li>
             <li><span class="check">4</span><span>Update the CSV, wiki watchlist, and this HTML monitor from the same source data.</span></li>
             <li><span class="check">5</span><span>Escalate protocol changes only as clinician questions with baseline and plateau evidence attached.</span></li>
           </ul>
@@ -880,7 +1012,7 @@
   </main>
 
   <footer class="footer">
-    This monitor is a research and operations artifact, not medical advice. Sources were checked on 2026-06-11; registry statuses can change and should be refreshed before clinical decisions.
+    This monitor is a research and operations artifact, not medical advice. Clinical-trial sources were checked on 2026-06-11; NeurIPS/OpenReview method leads were added on 2026-06-12. Registry statuses can change and should be refreshed before clinical decisions.
   </footer>
 </div>
 
