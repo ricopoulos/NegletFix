@@ -175,6 +175,16 @@ adb shell am broadcast -a com.oculus.vrpowermanager.prox_close
 ```
 Use it deliberately: it can keep the display awake and drain battery until reboot.
 
+2026-06-11 live-run note:
+- Wi-Fi ADB at `10.0.0.136:5555` was reachable by ping but refused ADB until a short USB handshake re-enabled `adb tcpip 5555`.
+- `scripts/quest-adb.sh enable-wifi` restored Wi-Fi ADB immediately once USB was authorized.
+- Horizon intercepted the first Unity launch with a controllers-required dialog; both controllers must be awake and the dialog dismissed before Unity enters foreground.
+- Before monitoring logs, confirm foreground with:
+  ```bash
+  adb -s 10.0.0.136:5555 shell pidof com.UnityTechnologies.com.unity.template.urpblank
+  adb -s 10.0.0.136:5555 shell dumpsys activity activities | rg "mResumedActivity|UnityPlayerGameActivity"
+  ```
+
 ---
 
 ## 7. Physical Wearing Setup

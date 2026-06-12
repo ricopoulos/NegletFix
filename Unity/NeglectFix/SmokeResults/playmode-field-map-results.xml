@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="2" result="Passed" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-06-02 13:01:42Z" end-time="2026-06-02 13:01:44Z" duration="2.1792502">
+  <test-suite type="TestSuite" id="1012" name="NegletFix" fullname="NegletFix" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-06-02 13:01:42Z" end-time="2026-06-02 13:01:44Z" duration="2.179250" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1005" name="NeglectFix.PlayModeTests.dll" fullname="/Users/ericlespagnon/Dropbox/DEV-LOCAL/NegletFix/Unity/NeglectFix/Library/ScriptAssemblies/NeglectFix.PlayModeTests.dll" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-06-02 13:01:42Z" end-time="2026-06-02 13:01:44Z" duration="2.170216" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="52624" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1006" name="NeglectFix" fullname="NeglectFix" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-06-02 13:01:42Z" end-time="2026-06-02 13:01:44Z" duration="2.169344" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1007" name="Tests" fullname="NeglectFix.Tests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-06-02 13:01:42Z" end-time="2026-06-02 13:01:44Z" duration="2.168646" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1008" name="PlayMode" fullname="NeglectFix.Tests.PlayMode" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-06-02 13:01:42Z" end-time="2026-06-02 13:01:44Z" duration="2.167947" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="AudioVisualTrainingSmokeTest" fullname="NeglectFix.Tests.PlayMode.AudioVisualTrainingSmokeTest" classname="NeglectFix.Tests.PlayMode.AudioVisualTrainingSmokeTest" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-06-02 13:01:42Z" end-time="2026-06-02 13:01:44Z" duration="2.106234" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1002" name="ShortSession_CompletesAndWritesTrialLog" fullname="NeglectFix.Tests.PlayMode.AudioVisualTrainingSmokeTest.ShortSession_CompletesAndWritesTrialLog" methodname="ShortSession_CompletesAndWritesTrialLog" classname="NeglectFix.Tests.PlayMode.AudioVisualTrainingSmokeTest" runstate="Runnable" seed="420502802" result="Passed" start-time="2026-06-02 13:01:42Z" end-time="2026-06-02 13:01:44Z" duration="2.091258" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[ProgramScheduler] Reset for new phase: CongruentPair_WakeForest, 30 sessions.
+[ProgramScheduler] Loaded state: 0/30 (CongruentPair_WakeForest), last session 0001-01-01 00:00.
+[RewardController] Initialized in OpenLoop mode. Tasks must call TriggerReward() directly on detection.
+[AVTraining] No baselineResults assigned. Eccentricity progression will use defaults; contrast will start at a generic level. Run contrast sensitivity test first for personalization.
+[AudioVisualTraining_ParadigmB] === READY PHASE ===
+Adjust headset/controllers, then press the response button to begin countdown.
+[AudioVisualTraining_ParadigmB] Ready complete. Starting baseline.
+[AudioVisualTraining_ParadigmB] === BASELINE PHASE ===
+Sit comfortably, relax, and look around naturally.
+Duration: 0.05 seconds (0.0 minutes)
+[DataLogger] ✓ Logging started: /Users/ericlespagnon/Dropbox/DEV-LOCAL/NegletFix/Unity/NeglectFix/Logs/session_2026-06-02_09-01-44.csv
+[DataLogger] Event logged: session_start
+[DataLogger] Event logged: baseline_start_AudioVisualTraining_ParadigmB
+[DataLogger] Event logged: baseline_end
+[AudioVisualTraining_ParadigmB] Baseline complete!
+[AudioVisualTraining_ParadigmB] === TRAINING PHASE ===
+Neurofeedback is now active. Focus on looking left!
+Duration: 2 seconds (0.0 minutes)
+[DataLogger] Event logged: training_start_AudioVisualTraining_ParadigmB
+[ProgramScheduler] Session 1 of 30 started (CongruentPair_WakeForest).
+[DataLogger] Event logged: block_1_start
+[AVTraining] === BLOCK 1/1 ===
+[DataLogger] Trial logging opened: /Users/ericlespagnon/Library/Application Support/DefaultCompany/NegletFix/training_trials/av_training_2026-06-02_09-01-44.csv
+[DataLogger] Event logged: reward_triggered
+[RewardController] ✨ REWARD #1 triggered!
+[DataLogger] Event logged: training_end
+[DataLogger] Trial log closed: /Users/ericlespagnon/Library/Application Support/DefaultCompany/NegletFix/training_trials/av_training_2026-06-02_09-01-44.csv (2 trials).
+[ProgramScheduler] Session 1 of 30 complete. Next session due: 2026-06-03 13:01.
+[AVTraining] Session complete. 2 recorded trials (1 rehab, 1 controls). Rehab: 1/1 (100 %). Controls: 0/1 (0 %). Final staircase: 0.00 LogCS.
+[AudioVisualTraining_ParadigmB] Training complete!
+[AudioVisualTraining_ParadigmB] === COOL-DOWN PHASE ===
+Relax and let your brain consolidate what you learned.
+Duration: 0.05 seconds (0.0 minutes)
+[DataLogger] Event logged: cooldown_start_AudioVisualTraining_ParadigmB
+[DataLogger] Event logged: cooldown_end
+[AudioVisualTraining_ParadigmB] Cool-down complete!
+[DataLogger] Event logged: session_end
+[DataLogger] Logging stopped. 20 samples logged to: /Users/ericlespagnon/Dropbox/DEV-LOCAL/NegletFix/Unity/NeglectFix/Logs/session_2026-06-02_09-01-44.csv
+=== SESSION SUMMARY ===
+Task: AudioVisualTraining_ParadigmB (Level 1)
+Total duration: 0.0 minutes
+Total rewards: 1
+Data logged to: /Users/ericlespagnon/Dropbox/DEV-LOCAL/NegletFix/Unity/NeglectFix/Logs/session_2026-06-02_09-01-44.csv
+=======================
+[AudioVisualTraining_ParadigmB] Session completed! Total time: 0.0 minutes
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1003" name="FieldMappingCalibrationSmokeTest" fullname="NeglectFix.Tests.PlayMode.FieldMappingCalibrationSmokeTest" classname="NeglectFix.Tests.PlayMode.FieldMappingCalibrationSmokeTest" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-06-02 13:01:44Z" end-time="2026-06-02 13:01:44Z" duration="0.059914" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1004" name="ShortCalibration_CompletesAndWritesSpatialTrialLog" fullname="NeglectFix.Tests.PlayMode.FieldMappingCalibrationSmokeTest.ShortCalibration_CompletesAndWritesSpatialTrialLog" methodname="ShortCalibration_CompletesAndWritesSpatialTrialLog" classname="NeglectFix.Tests.PlayMode.FieldMappingCalibrationSmokeTest" runstate="Runnable" seed="567842013" result="Passed" start-time="2026-06-02 13:01:44Z" end-time="2026-06-02 13:01:44Z" duration="0.058413" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[DataLogger] Event logged: field_mapping_start
+[FieldMap] Trial 1: left h=-5.0 v=0.0 hit rt=44ms.
+[DataLogger] Field mapping logging opened: /Users/ericlespagnon/Library/Application Support/DefaultCompany/NegletFix/field_mapping/field_mapping_2026-06-02_09-01-44.csv
+[FieldMap] Trial 2: right h=5.0 v=0.0 hit rt=4ms.
+[FieldMap] Trial 3: up h=0.0 v=8.0 hit rt=3ms.
+[FieldMap] Trial 4: down h=0.0 v=-8.0 hit rt=3ms.
+[DataLogger] Event logged: field_mapping_complete
+[DataLogger] Field mapping log closed: /Users/ericlespagnon/Library/Application Support/DefaultCompany/NegletFix/field_mapping/field_mapping_2026-06-02_09-01-44.csv (4 trials).
+[FieldMap] Calibration complete. 4/4 hits. File: /Users/ericlespagnon/Library/Application Support/DefaultCompany/NegletFix/field_mapping/field_mapping_2026-06-02_09-01-44.csv
+Saving results to: /Users/ericlespagnon/Library/Application Support/DefaultCompany/NegletFix/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

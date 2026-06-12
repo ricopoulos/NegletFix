@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &98767968
+--- !u!1 &84879140
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,189 +127,110 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 98767973}
-  - component: {fileID: 98767972}
-  - component: {fileID: 98767971}
-  - component: {fileID: 98767970}
-  - component: {fileID: 98767969}
+  - component: {fileID: 84879143}
+  - component: {fileID: 84879142}
+  - component: {fileID: 84879141}
   m_Layer: 0
-  m_Name: AVTrainingSystem_Session1Pilot
+  m_Name: FieldMappingCalibrationSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &98767969
+--- !u!114 &84879141
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 98767968}
+  m_GameObject: {fileID: 84879140}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c65850654e191497e8d42ebfbcb09f77, type: 3}
+  m_Script: {fileID: 11500000, guid: 6581076e9a60c435fa7729b7f4e55437, type: 3}
   m_Name:
-  m_EditorClassIdentifier: NeglectFix.Runtime::NeglectFix.Tasks.AudioVisualTraining
-  taskName: Task
-  taskLevel: 1
-  baselineDuration: 5
-  trainingDuration: 900
-  cooldownDuration: 180
-  readyPromptEnabled: 1
+  m_EditorClassIdentifier: NeglectFix.Runtime::NeglectFix.Assessment.FieldMappingCalibration
+  affectedHemifield: 0
+  testAnglesDeg:
+  - {x: -5, y: 0}
+  - {x: -8, y: 0}
+  - {x: -12, y: 0}
+  - {x: -16, y: 0}
+  - {x: 5, y: 0}
+  - {x: 10, y: 0}
+  - {x: 15, y: 0}
+  - {x: 0, y: 5}
+  - {x: 0, y: 10}
+  - {x: 0, y: 15}
+  - {x: 0, y: -5}
+  - {x: 0, y: -10}
+  - {x: 0, y: -15}
+  repetitionsPerPoint: 2
+  shuffleTrialOrder: 1
+  initialDelaySec: 0.75
+  readyCountdownDurationSec: 1
   requireReadyConfirmation: 1
-  readyCountdownDuration: 2
-  dataLogger: {fileID: 98767972}
-  engagementCalculator: {fileID: 0}
-  rewardController: {fileID: 98767971}
-  currentPhase: 0
-  phaseStartTime: 0
-  sessionStartTime: 0
-  visualStimulusPrefab: {fileID: 0}
-  stimulusTone: {fileID: 0}
-  stimulusDurationSec: 0.45
+  minInterTrialIntervalSec: 0.6
+  maxInterTrialIntervalSec: 1
+  stimulusDurationSec: 0.35
+  responseWindowSec: 1.5
   stimulusDistanceMeters: 1.5
-  generatedStimulusPattern: 0
   stimulusAngularSizeDeg: 6
   stimulusBackgroundLuminance: 0.5
-  generatedStimulusTextureSize: 128
-  gaborCycles: 4
+  stimulusContrast: 1
+  stimulusTextureSize: 128
   stimulusSoftEdgeFraction: 0.12
-  minimumGeneratedStimulusContrast: 0.9
-  ensureOpaqueTrainingBackdrop: 1
-  opaqueBackdropDistanceMeters: 2.4
-  opaqueBackdropWidthMeters: 5.2
-  opaqueBackdropHeightMeters: 3.4
-  opaqueBackdropLuminance: 0.5
+  ensureOpaqueBackdrop: 1
+  backdropDistanceMeters: 2.4
+  backdropWidthMeters: 5.2
+  backdropHeightMeters: 3.4
+  backdropLuminance: 0.5
   showCenterFixationCross: 1
   fixationCrossDistanceMeters: 1.15
   fixationCrossSizeMeters: 0.04
   fixationCrossThicknessMeters: 0.004
   fixationCrossLuminance: 0.92
-  minInterStimulusIntervalSec: 1.2
-  maxInterStimulusIntervalSec: 2.5
-  responseWindowSec: 1.5
-  enableIntactHemifieldControlTrials: 1
-  intactControlTrialProbability: 0.15
-  minimumRehabTrialsBetweenControlTrials: 3
-  useFieldMapGuidedRehabTargets: 1
-  fieldMapGuidedRehabAnglesDeg:
-  - {x: -5, y: 0}
-  blocksPerSession: 1
-  blockDurationSec: 720
-  interBlockRestSec: 0
-  cooldownDurationSec: 5
-  enablePracticeBlock: 1
-  practiceIntroDurationSec: 4
-  practiceDurationSec: 15
-  rewardPracticeHits: 1
-  practicePromptInstructions: 'Practice first.
+  showPromptInHeadset: 1
+  promptDistanceMeters: 1.25
+  readyInstructions: 'This is a field-mapping calibration, not rehab.
 
-    Start on the center cross. Move
-    only your eyes to the marker and press.
+    Keep your
+    gaze on the center cross. Points will appear left, right, up, and down.
 
-    Keep your head still. These practice
-    trials are not counted.'
-  correctsToStepDownContrast: 2
-  staircaseStepLogCS: 0.15
-  baselineResults:
-    centralLogCS: 1.05
-    leftHemifieldLogCS: 0
-    rightHemifieldLogCS: 2.25
-    asymmetry: 2.25
-    trialHistory: []
+    Press
+    when you detect a point. Keep your head still.'
+  completionInstructions: 'Field map complete.
+
+    You can remove the headset now.'
   responseAction:
     m_UseReference: 0
     m_Action:
-      m_Name: 
+      m_Name:
       m_Type: 0
-      m_ExpectedControlType: 
-      m_Id: 3b2115f0-59c1-4977-b0fa-121c64126e91
-      m_Processors: 
-      m_Interactions: 
+      m_ExpectedControlType:
+      m_Id: 889dcdd1-c4e6-4800-bdeb-bba491eeaa88
+      m_Processors:
+      m_Interactions:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 0}
   enableLegacyKeyboardFallback: 1
-  enableAvReadyPrompt: 1
-  showReadyPromptInHeadset: 1
-  readyPromptDistanceMeters: 1.25
-  readyPromptInstructions: 'This is rehab training, not a contrast test.
-
-    Field
-    map target: left -5 degrees. A few right-side checks may appear.
-
-    Move only
-    your eyes to the marker and press. Keep your head still.'
-  readyCountdownInstructions: 'Find the center cross.
-
-    Keep your head still.
-    Move only your eyes after each marker appears.'
-  baselinePromptInstructions: 'Calibrating before practice.
-
-    Keep the headset
-    still and look at the center cross.'
-  showCompletionPromptInHeadset: 1
-  completionPromptInstructions: 'You can remove the headset now.
-
-    Thank you.'
-  programScheduler: {fileID: 98767970}
-  trialLogger: {fileID: 98767972}
---- !u!114 &98767970
+  dataLogger: {fileID: 84879142}
+  currentPhase: 0
+  totalTrialsCompleted: 0
+  totalHits: 0
+  autoStartOnSceneLoad: 1
+  autoStartSessionLog: 1
+--- !u!114 &84879142
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 98767968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bd591757c382474aabcd9e5368f2885, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: NeglectFix.Runtime::NeglectFix.Tasks.ProgramScheduler
-  currentParadigm: 0
-  totalSessionsPlanned: 1
-  sessionsPerWeek: 7
-  reMeasurementSessions: 
-  stateFileName: program_state_session1_pilot.json
-  resetStateOnAwake: 1
-  sessionsCompleted: 0
-  reMeasurementDue: 0
---- !u!114 &98767971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 98767968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eaf38c738d8854caa89d9e3de3e33a77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: NeglectFix.Runtime::NeglectFix.Utils.RewardController
-  mode: 0
-  engagementCalculator: {fileID: 0}
-  gazeDetector: {fileID: 0}
-  cooldownDuration: 0.1
-  rewardDuration: 0.75
-  glowIntensity: 1.5
-  rewardColor: {r: 1, g: 1, b: 0.8, a: 1}
-  rewardSound: {fileID: 0}
-  audioVolume: 0.7
-  useSpatialAudio: 0
-  rewardActive: 0
-  totalRewardsTriggered: 0
---- !u!114 &98767972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 98767968}
+  m_GameObject: {fileID: 84879140}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8942ce19e13334577bb8dce54719277a, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: NeglectFix.Runtime::NeglectFix.Utils.DataLogger
   museReceiver: {fileID: 0}
   engagementCalculator: {fileID: 0}
@@ -319,15 +240,15 @@ MonoBehaviour:
   loggingFrequency: 10
   autoStartLogging: 0
   isLogging: 0
-  currentSessionFile: 
+  currentSessionFile:
   samplesLogged: 0
---- !u!4 &98767973
+--- !u!4 &84879143
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 98767968}
+  m_GameObject: {fileID: 84879140}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -336,7 +257,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1439888647
+--- !u!1 &1068132369
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -344,10 +265,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1439888651}
-  - component: {fileID: 1439888650}
-  - component: {fileID: 1439888649}
-  - component: {fileID: 1439888648}
+  - component: {fileID: 1068132373}
+  - component: {fileID: 1068132372}
+  - component: {fileID: 1068132371}
+  - component: {fileID: 1068132370}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -355,13 +276,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1439888648
+--- !u!114 &1068132370
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1439888647}
+  m_GameObject: {fileID: 1068132369}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
@@ -399,21 +320,21 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1439888649
+--- !u!81 &1068132371
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1439888647}
+  m_GameObject: {fileID: 1068132369}
   m_Enabled: 1
---- !u!20 &1439888650
+--- !u!20 &1068132372
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1439888647}
+  m_GameObject: {fileID: 1068132369}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
@@ -458,13 +379,13 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!4 &1439888651
+--- !u!4 &1068132373
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1439888647}
+  m_GameObject: {fileID: 1068132369}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.6, z: 0}
@@ -473,7 +394,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1672846380
+--- !u!1 &1479562816
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -481,8 +402,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1672846382}
-  - component: {fileID: 1672846381}
+  - component: {fileID: 1479562818}
+  - component: {fileID: 1479562817}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -490,13 +411,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!108 &1672846381
+--- !u!108 &1479562817
 Light:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1672846380}
+  m_GameObject: {fileID: 1479562816}
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
@@ -555,13 +476,13 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
---- !u!4 &1672846382
+--- !u!4 &1479562818
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1672846380}
+  m_GameObject: {fileID: 1479562816}
   serializedVersion: 2
   m_LocalRotation: {x: 0.36964384, y: -0.23911761, z: 0.09904577, w: 0.8923991}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -574,6 +495,6 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1439888651}
-  - {fileID: 1672846382}
-  - {fileID: 98767973}
+  - {fileID: 1068132373}
+  - {fileID: 1479562818}
+  - {fileID: 84879143}

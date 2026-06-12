@@ -142,6 +142,16 @@ namespace NeglectFix.Tasks
         [Range(0, 20)]
         public int minimumRehabTrialsBetweenControlTrials = 3;
 
+        [Header("AV Training — Field Map Guided Locations")]
+        [Tooltip("Use fixed target angles chosen from the field-mapping calibration instead of the session eccentricity ladder for rehab-dose trials.")]
+        public bool useFieldMapGuidedRehabTargets = false;
+
+        [Tooltip("Field-map-guided rehab target angles in degrees. X = horizontal angle, Y = vertical angle.")]
+        public Vector2[] fieldMapGuidedRehabAnglesDeg =
+        {
+            new Vector2(-5f, 0f)
+        };
+
         [Header("AV Training — Block Structure (Alharshan dose)")]
         [Tooltip("Number of blocks per session.")]
         public int blocksPerSession = 3;
@@ -264,6 +274,8 @@ namespace NeglectFix.Tasks
             public int blockIndex;
             public int trialIndex;
             public float eccentricityDeg;
+            public float horizontalAngleDeg;
+            public float verticalAngleDeg;
             public string hemifield;
             public float contrastLogCS;
             public float stimulusOnsetMs;
@@ -570,11 +582,11 @@ namespace NeglectFix.Tasks
             string hemifield = isControlTrial ? GetIntactHemifieldName() : GetAffectedHemifieldName();
             string trialType = isControlTrial ? $"{hemifield}_control" : "rehab";
 
-            float unsignedEccentricityDeg = PickEccentricityForCurrentSession();
-            float eccentricityDeg = ApplyHemifieldDirection(unsignedEccentricityDeg, hemifield);
+            Vector2 targetAnglesDeg = PickTargetAnglesForTrial(isControlTrial, hemifield);
+            float eccentricityDeg = targetAnglesDeg.x;
 
             // Compute world-space position
-            Vector3 stimulusPosition = ComputeStimulusPosition(eccentricityDeg, stimulusDistanceMeters);
+            Vector3 stimulusPosition = ComputeStimulusPosition(targetAnglesDeg, stimulusDistanceMeters);
 
             // Fire AV pair (visual + audio onset within sub-50ms — Bean/Stein/Rowland 2023 says
             // strict perceptual binding is not required; SC integration window is 100-500ms anyway)
@@ -652,6 +664,8 @@ namespace NeglectFix.Tasks
                     blockIndex = blockIdx,
                     trialIndex = trialIdx,
                     eccentricityDeg = eccentricityDeg,
+                    horizontalAngleDeg = targetAnglesDeg.x,
+                    verticalAngleDeg = targetAnglesDeg.y,
                     hemifield = hemifield,
                     contrastLogCS = currentLogCS,
                     stimulusOnsetMs = stimulusOnsetMs,
@@ -669,7 +683,7 @@ namespace NeglectFix.Tasks
             else
             {
                 Debug.Log($"[AVTraining] Practice trial {trialIdx}: {(trialHitFlag ? "hit" : "miss")} " +
-                          $"at {eccentricityDeg:F1} deg {hemifield}, RT={rtMs:F0}ms.");
+                          $"at h={targetAnglesDeg.x:F1} v={targetAnglesDeg.y:F1} deg {hemifield}, RT={rtMs:F0}ms.");
             }
 
             // Reward on hit (open-loop — not gated on EEG)
@@ -712,6 +726,16 @@ namespace NeglectFix.Tasks
 
             float[] eccentricities = progression.GetEccentricitiesForSession(currentSessionIndex);
             return eccentricities[UnityEngine.Random.Range(0, eccentricities.Length)];
+        }
+
+        private Vector2 PickTargetAnglesForTrial(bool isControlTrial, string hemifield)
+        {
+            if (!isControlTrial && useFieldMapGuidedRehabTargets && fieldMapGuidedRehabAnglesDeg != null && fieldMapGuidedRehabAnglesDeg.Length > 0)
+                return fieldMapGuidedRehabAnglesDeg[UnityEngine.Random.Range(0, fieldMapGuidedRehabAnglesDeg.Length)];
+
+            float unsignedEccentricityDeg = PickEccentricityForCurrentSession();
+            float horizontalAngleDeg = ApplyHemifieldDirection(unsignedEccentricityDeg, hemifield);
+            return new Vector2(horizontalAngleDeg, 0f);
         }
 
         private string GetAffectedHemifieldName()
@@ -773,17 +797,19 @@ namespace NeglectFix.Tasks
             }
         }
 
-        private Vector3 ComputeStimulusPosition(float eccentricityDeg, float distance)
+        private Vector3 ComputeStimulusPosition(Vector2 anglesDeg, float distance)
         {
-            // Convert eccentricity (deg) + distance (m) to a world-space horizontal offset.
-            // Camera assumed at origin looking down +Z. Stimulus placed at angle in front of camera.
+            // Convert horizontal/vertical angles (deg) + distance (m) to a camera-relative world position.
             Camera cam = Camera.main;
             Vector3 origin = cam != null ? cam.transform.position : Vector3.zero;
             Quaternion forward = cam != null ? cam.transform.rotation : Quaternion.identity;
 
-            float radians = eccentricityDeg * Mathf.Deg2Rad;
-            // Offset in camera-local space: horizontal X
-            Vector3 localOffset = new Vector3(Mathf.Sin(radians) * distance, 0f, Mathf.Cos(radians) * distance);
+            float yawRadians = anglesDeg.x * Mathf.Deg2Rad;
+            float pitchRadians = anglesDeg.y * Mathf.Deg2Rad;
+            Vector3 localOffset = new Vector3(
+                Mathf.Sin(yawRadians) * Mathf.Cos(pitchRadians),
+                Mathf.Sin(pitchRadians),
+                Mathf.Cos(yawRadians) * Mathf.Cos(pitchRadians)).normalized * distance;
             return origin + forward * localOffset;
         }
 

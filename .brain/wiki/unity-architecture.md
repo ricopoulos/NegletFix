@@ -1,6 +1,6 @@
 ---
 title: Unity Architecture
-last_updated: 2026-05-31
+last_updated: 2026-06-11
 confidence: HIGH
 sources:
   - Unity/NeglectFix/Assets/Scripts/**/*.cs
@@ -12,7 +12,7 @@ sources:
 
 # Unity Architecture
 
-Developer reference for the NegletFix Unity codebase. **13 C# scripts** (10 original + 3 added in Phase 1, 2026-05-16), organized in 4 subsystems: Assessment, EEG, Tasks, Utils. Target platform: Meta Quest 2/3 (Android ARM64) via OpenXR; OpenXR + Meta Quest Support enabled as of 2026-05-16. The AV training path has now been validated on Quest 2 in a guided pilot (2026-05-30), with sparse right-side controls and 5-minute, 8-minute, and 12-minute dose ramps implemented and headset-tested on 2026-05-31.
+Developer reference for the NegletFix Unity codebase. **14 C# scripts** (10 original + 3 added in Phase 1, plus field-mapping calibration), organized in 4 subsystems: Assessment, EEG, Tasks, Utils. Target platform: Meta Quest 2/3 (Android ARM64) via OpenXR; OpenXR + Meta Quest Support enabled as of 2026-05-16. The AV training path has now been validated on Quest 2 in a guided pilot (2026-05-30), with sparse right-side controls and 5-minute, 8-minute, and 12-minute dose ramps implemented and headset-tested on 2026-05-31. A separate field-map calibration scene was built/validated and used for a first field-guided rehab run on 2026-06-11.
 
 **Unity version**: 6.2 (6000.2.8f1) with VR template (`.brain/cross-cutting.md:43`).
 **Project path**: `Unity/NeglectFix/` (note the casing: directory is `NeglectFix`, git repo is `NegletFix`).
@@ -32,6 +32,7 @@ All paths relative to `Unity/NeglectFix/Assets/Scripts/`.
 | `Assessment/ContrastSensitivityTest.cs` | 868 | Core Pelli-Robson test engine: Sloan letter display, triplet scoring, LogCS→luminance conversion with gamma correction, hemifield positioning (the ±300px UI offset + fixation cross), calibration mode. Namespace `NeglectFix.Assessment`. |
 | `Assessment/ContrastTestInput.cs` | 280 | Quest controller + keyboard input handling for test responses. Maps letter keys C-D-H-K-N-O-R-S-V-Z, Backspace = can't-see, Space = advance. Optional visual letter picker (`LetterPickerUI`). |
 | `Assessment/ContrastResultsUI.cs` | 349 | Displays per-hemifield scores, visual bars, historical trend comparison. Integrates with `DataLogger` for CSV export. |
+| `Assessment/FieldMappingCalibration.cs` | ~430 | Separate fixed-cross quick field map. Tests controlled left/right/up/down points, logs horizontal/vertical angle, world position, camera-relative direction, and head pose at onset/response, then writes a per-point recommendation for rehab target selection. |
 
 ### EEG/ — Brain signal pipeline
 
@@ -47,20 +48,20 @@ All paths relative to `Unity/NeglectFix/Assets/Scripts/`.
 |--------|-----|---------------|
 | `Utils/GazeDetector.cs` | 164 | Quest head-yaw tracking. Fires `OnStartLookingLeft` / `OnStopLookingLeft` when yaw crosses ±15° threshold (configurable). Optional rotation smoothing. |
 | `Utils/RewardController.cs` ✱ | ~350 | Visual/audio/haptic rewards. **Two modes** (2026-05-16 refactor): `OpenLoop` (v1 default — task triggers reward directly on detection, no EEG gating) and `EegGated` (v2 — gates on engagement + gaze, preserved for future use after Muse signal-quality validation per Treves 2025 caveat). Handles cooldown (default 1s), reward duration (default 2s), glow effects. |
-| `Utils/DataLogger.cs` ✱ | ~490 | CSV export at 10 Hz for the neurofeedback CSV. **2026-05-16 extension**: added `LogTrainingTrial()` method + per-session AV training trial CSV writer (`Application.persistentDataPath/training_trials/av_training_{timestamp}.csv`). **2026-05-31 extension**: trial schema now includes `trial_type`, `is_control_trial`, and `counts_for_rehab_dose` so right/intact controls stay analyzable separately. Device metadata and trial-count summary are written in CSV comments. **Next planned extension**: calibration trial rows should add horizontal/vertical angle, stimulus world position, camera-relative direction, and head yaw/pitch at onset/response. |
+| `Utils/DataLogger.cs` ✱ | expanded | CSV export at 10 Hz for the neurofeedback CSV. **2026-05-16 extension**: added `LogTrainingTrial()` method + per-session AV training trial CSV writer (`Application.persistentDataPath/training_trials/av_training_{timestamp}.csv`). **2026-05-31 extension**: trial schema now includes `trial_type`, `is_control_trial`, and `counts_for_rehab_dose` so right/intact controls stay analyzable separately. **2026-06-11 extension**: AV rows now include `horizontal_angle_deg` and `vertical_angle_deg`; field-map rows include spatial/head-pose logging and a recommendation summary. |
 
 ### Tasks/ — Rehabilitation task framework
 
 | Script | LOC | Responsibility |
 |--------|-----|---------------|
 | `Tasks/TaskManager.cs` | ~430 | Abstract base class. Session phases (`NotStarted` → optional `Ready` → `Baseline` → `Training` → `Cooldown` → `Completed`), default durations overridable by concrete tasks. Hooks for ready UI, `dataLogger`, `engagementCalculator`, `rewardController`. |
-| `Tasks/AudioVisualTraining.cs` ★ | expanded | **Paradigm B** main task, congruent-pair detection. Extends `TaskManager`. Trial loop with random ISI, sparse intact-field controls, block structure, 2-up/1-down weighted staircase for rehab trials only, sub-50ms AV sync, baseline-driven personalization, Quest XR trigger polling fallback, controlled gray backdrop, center fixation cross, ready/baseline/practice/completion headset prompts. Reward triggered directly on hit (open-loop, not EEG-gated). |
+| `Tasks/AudioVisualTraining.cs` ★ | expanded | **Paradigm B** main task, congruent-pair detection. Extends `TaskManager`. Trial loop with random ISI, sparse intact-field controls, block structure, 2-up/1-down weighted staircase for rehab trials only, sub-50ms AV sync, baseline-driven personalization, Quest XR trigger polling fallback, controlled gray backdrop, center fixation cross, ready/baseline/practice/completion headset prompts, and optional field-map-guided rehab target angles. Reward triggered directly on hit (open-loop, not EEG-gated). |
 | `Tasks/ProgramScheduler.cs` ★ | ~230 | Program state machine — session count, last-session timestamp, paradigm choice, re-measurement triggers. Persisted as JSON to `Application.persistentDataPath/program_state.json`. Supports paradigm switching for Phase 3 and `resetStateOnAwake` for repeatable smoke/pilot builds. |
 | `Tasks/EccentricityProgression.cs` ★ | ~110 | Classifies CS asymmetry severity (Severe/Moderate/Mild), selects appropriate eccentricity ladder, progresses across sessions. Eric's case (asymmetry 2.25) → Severe → ladder `[5,8,12,16,20]°` starting at scotoma border per Yang/Cavanaugh/Saionz 2023. |
 
 ★ = added 2026-05-16 (Phase 1 scaffold).
 
-**Total**: 13 scripts, ~4,300 lines.
+**Total**: 14 scripts, ~4,700 lines.
 
 ---
 
@@ -171,7 +172,7 @@ Cross-namespace references use fully qualified names (e.g., `NeglectFix.EEG.Enga
 
 See [[hardware-setup]] for Muse/Mind Monitor/OSC wiring.
 
-### Current Quest validation state (2026-05-31)
+### Current Quest validation state (2026-06-11)
 
 Source map: `.brain/sessions/2026-05-30-quest-guided-pilot-wrap.md`, `.brain/sessions/2026-05-31-right-controls-dose-ramp.md`.
 
@@ -188,12 +189,15 @@ Source map: `.brain/sessions/2026-05-30-quest-guided-pilot-wrap.md`, `.brain/ses
 - 8-minute ramp logs: `SmokeResults/Ramp8/ramp8-live.log`, `SmokeResults/Ramp8/av_training_2026-05-31_09-13-38.csv`, `SmokeResults/Ramp8/session_2026-05-31_09-12-41.csv`.
 - 12-minute ramp completed on Quest 2 over Wi-Fi ADB at 09:45 local time on 2026-05-31: 255 recorded trials, 233 left rehab-dose rows, 22 right-control rows, rehab 114/233 hits, controls 22/22 hits, final staircase 0.15 LogCS, 6725 session samples.
 - 12-minute ramp logs: `SmokeResults/Ramp12/ramp12-live.log`, `SmokeResults/Ramp12/av_training_2026-05-31_09-33-25.csv`, `SmokeResults/Ramp12/session_2026-05-31_09-32-56.csv`.
+- Field-map calibration completed on Quest 2: valid map at `SmokeResults/FieldMapping/valid_2026-06-02_15-35/`, recommendation left `-5°`, vertical `0°`.
+- Field-guided 12.5-minute rehab run completed on Quest 2 on 2026-06-11: 283 recorded trials, 259 rehab-dose rows at left `-5°`, 24 right-control rows, rehab 230/259 hits, controls 24/24 hits, 6744 session samples.
+- Field-guided run logs: `SmokeResults/FieldGuidedRehab/2026-06-11_21-46/av_training_2026-06-11_21-47-08.csv`, `SmokeResults/FieldGuidedRehab/2026-06-11_21-46/session_2026-06-11_21-46-40.csv`, `SmokeResults/FieldGuidedRehab/2026-06-11_21-46/field-guided-rehab-live.log`.
 
 ---
 
-## 6. AV Training Module (built 2026-05-16, Quest-guided pilot 2026-05-30, control-ramp validated 2026-05-31)
+## 6. AV Training Module (built 2026-05-16, Quest-guided pilot 2026-05-30, control-ramp validated 2026-05-31, field-guided run 2026-06-11)
 
-The audiovisual training module is **built, committed, Quest-pilot validated, and now control-ramp validated**. Initial scaffold landed 2026-05-16 (commits `ecf327f` + `7ea389c` + `24a3075` on `main`). Guided Quest pilot landed 2026-05-30 (commit `73cfce8`). It implements Paradigm B (congruent-pair detection, Wake Forest / Rowland 2023 lineage) with a path toward the Alharshan/Alwashmi 2026 dose for chronic adult stroke.
+The audiovisual training module is **built, Quest-pilot validated, control-ramp validated, and field-map-guided on headset**. Initial scaffold landed 2026-05-16 (commits `ecf327f` + `7ea389c` + `24a3075` on `main`). Guided Quest pilot landed 2026-05-30 (commit `73cfce8`). It implements Paradigm B (congruent-pair detection, Wake Forest / Rowland 2023 lineage) with a path toward the Alharshan/Alwashmi 2026 dose for chronic adult stroke.
 
 Files (see Section 1 for details):
 - `Tasks/AudioVisualTraining.cs` — main task with trial loop, sparse intact/right controls, staircase, AV pair presentation, controlled backdrop, fixation cross, practice block, Quest trigger polling
@@ -203,12 +207,13 @@ Files (see Section 1 for details):
 Scenes/tools:
 - `Assets/Editor/AvTrainingManualSmokeSceneBuilder.cs` — generates manual smoke, quick-ready, and Session1 pilot scenes/APKs.
 - `Assets/Scenes/AVTrainingQuickReadyCheck.unity` — ~15s prompt/controller/visibility check, left-only.
-- `Assets/Scenes/AVTrainingSession1Pilot.unity` — guided 12-minute ramp scene with Eric baseline, practice, sparse right controls, recorded block, completion prompt.
+- `Assets/Scenes/AVTrainingSession1Pilot.unity` — guided 12-minute ramp scene with Eric baseline, practice, sparse right controls, recorded block, completion prompt, and field-map-guided rehab target support.
+- `Assets/Scenes/FieldMappingCalibration.unity` — quick fixed-cross left/right/up/down calibration scene separate from rehab.
 
 What's still on the to-do list:
-- **Quick field-mapping calibration scene** — next build. Keep it separate from AV rehab. It should use a fixed cross, controlled left/right/up/down points, and expanded spatial/head-pose trial logging so report field maps become more than horizontal evidence maps.
-- **Next dose ramp** — collect Eric's subjective report, then repeat 12 minutes or move to 15 minutes next session.
-- **Clinical contrast policy** — remove or reduce high validation contrast floor once visibility/prompt flow is stable.
+- **Field-guided retuning** — next build. Do not continue with left `-5°` alone; mix `-5°` with a harder boundary target such as `-8°`, add catch/probe trials, and cap/redesign the contrast staircase.
+- **Next dose ramp** — do not increase dose until the target/probe policy is corrected and tolerable.
+- **Clinical contrast policy** — the 2026-06-11 high `-5°` hit rate is cueable/orienting evidence, not clinical recovery; avoid meaningless LogCS runaway.
 - **Phase 3 — Paradigm A (3D-MOT-IVR)** — significantly larger build; deferred until Phase 2 (30 sessions of Paradigm B) is run and shows responder data.
 
 Integration: `TaskManager` already wires `dataLogger`, `engagementCalculator`, `rewardController`. The new `AudioVisualTraining` inherits this plumbing and adds `programScheduler` + `trialLogger` (defaults to `dataLogger`). See [[audiovisual-training-protocol]] §5 for the build spec and runtime trial-loop pseudocode.

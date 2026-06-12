@@ -12,6 +12,7 @@ sources:
   - 2026-05-14 PubMed-verified audit — see [[research-papers-index]] Recent Additions
   - .brain/sessions/2026-05-30-quest-guided-pilot-wrap.md
   - 2026-06-11 clinical-trials watchlist refresh — see [[clinical-trials-watchlist]]
+  - .brain/sessions/2026-06-11-field-map-guided-rehab-wrap.md
 ---
 
 # Rehabilitation Roadmap
@@ -122,31 +123,46 @@ The next concrete polish pass is implemented in code, scene presets, and Quest l
 - Quest 2 12-minute ramp run passed over Wi-Fi ADB: 255 recorded trials, 233 left rehab-dose trials, 22 right-control trials, left rehab hit rate 114/233 (48.9%), right-control hit rate 22/22 (100%), final staircase 0.15 LogCS, 6725 session samples.
 - Logs pulled to `Unity/NeglectFix/SmokeResults/Ramp12/`.
 
+### 2026-06-11 — Field map + first field-guided rehab run completed
+
+Built the separate quick field-mapping calibration scene and used its result to drive the next rehab run:
+- `FieldMappingCalibration.unity` keeps assessment separate from rehab and uses a fixed center cross with controlled left/right/up/down points.
+- Field-map trial CSV logs horizontal/vertical angle, stimulus world position, camera-relative direction, and head yaw/pitch/roll at onset/response.
+- Valid Quest field map: 19/26 hits; right/up/down controls all 6/6; left `-5°` was 1/2; left `-8°`, `-12°`, `-16°` were 0/2.
+- Recommendation: left `-5°`, vertical `0°` as the first boundary target.
+- `AVTrainingSession1Pilot` now supports field-map-guided rehab target angles.
+- First field-guided Quest run completed: 12.5 minutes, 283 recorded trials, 259 rehab-dose trials at left `-5°`, 24 right controls, 6744 session samples.
+- Rehab hit rate was high at `230/259` (88.8%); right controls were 24/24 (100%).
+
+Interpretation:
+- Do not treat the high `-5°` hit rate as clinical recovery.
+- Eric reported that some responses felt like audio-guided prediction/reflex rather than true visual confirmation, and that the target felt too close to center.
+- This is useful training/orienting evidence, but the next build must make the task harder and more interpretable.
+
 ---
 
 ## 2. NEXT — Planned, Ready to Build [MEDIUM]
 
 ### WIP-001: Audiovisual training module — active polish before rehab start
 
-The AV module is no longer paused or merely scaffolded. It is on-headset validated and the immediate control/dose questions are resolved:
+The AV module is no longer paused or merely scaffolded. It is on-headset validated through field-guided rehab, but the next step is retuning before dose escalation:
 1. Sparse right-control trials are implemented at ~15%, with at least 3 rehab-dose trials between controls.
 2. Left hemifield remains the primary therapeutic dose; controls are excluded from the staircase and from rehab-dose counts.
-3. First real dose length is a 5-minute recorded ramp, then 8-10, 12-15, 20, 25, and 30 minutes if tolerance allows.
-4. First 5-minute, 8-minute, and 12-minute control-ramp runs are complete on Quest; next decision is whether Eric tolerated the same-day stack well enough to move to 15 minutes next session or should repeat 12.
-5. Contrast decision: when to reduce/remove the high validation contrast floor and let the staircase become clinically meaningful.
-6. Keep fixed-gaze contrast/field assessment separate from AV training.
+3. First 5-minute, 8-minute, 12-minute, and field-guided 12.5-minute Quest runs are complete.
+4. Next build: do not continue with left `-5°` alone; mix `-5°` with a harder boundary target such as `-8°`.
+5. Add catch/probe trials, for example sound-only and/or marker-only trials, to separate audio-cued prediction from true visual confirmation.
+6. Cap or redesign the contrast staircase so high hit rate at an easy/cued location cannot climb to meaningless LogCS values.
+7. Keep fixed-gaze contrast/field assessment separate from AV training.
 
-### WIP-002: Quick field-mapping calibration scene — next build
+### WIP-002: Quick field-mapping calibration scene — completed, keep as assessment layer
 
-The first GSAP-enhanced HTML report made the field map valuable enough to turn into a real calibration layer. Current map accuracy is limited by the current CSV: it logs horizontal eccentricity and hemifield, not true vertical retinal coordinates.
+The first GSAP-enhanced HTML report made the field map valuable enough to turn into a real calibration layer. That layer now exists as `FieldMappingCalibration.unity` and should remain separate from rehab.
 
-Next session should build a separate assessment scene:
-1. Fixed center cross.
-2. Controlled points left/right/up/down, not just horizontal meridian targets.
-3. Expanded trial log fields: horizontal angle, vertical angle, world position, camera-relative direction, head yaw/pitch at stimulus onset, and head yaw/pitch at response.
-4. Output a calibration map that recommends first rehab training locations.
-5. Keep this assessment scene separate from the rehab dose-ramp scene.
-6. After the calibration map is captured, run the next rehab dose ramp from selected locations.
+Future calibration improvements:
+1. Increase repeats if the result will choose several training points.
+2. Keep logging horizontal angle, vertical angle, world position, camera-relative direction, and head pose at onset/response.
+3. Use calibration output to select a small defensible training set, not a single easy target.
+4. Do not present it as Humphrey/perimetry.
 
 See [[audiovisual-training-protocol]]#what-to-build-in-unity for build spec.
 

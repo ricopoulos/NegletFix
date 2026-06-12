@@ -17,6 +17,7 @@ namespace NeglectFix.EditorTools
         private const string SmokeScenePath = "Assets/Scenes/AVTrainingManualSmoke.unity";
         private const string Session1PilotScenePath = "Assets/Scenes/AVTrainingSession1Pilot.unity";
         private const string QuickReadyCheckScenePath = "Assets/Scenes/AVTrainingQuickReadyCheck.unity";
+        private const string FieldMappingScenePath = "Assets/Scenes/FieldMappingCalibration.unity";
 
         [MenuItem("NeglectFix/Testing/Create AV Training Manual Smoke Scene")]
         public static void CreateSceneFromMenu()
@@ -36,6 +37,12 @@ namespace NeglectFix.EditorTools
             CreateScene(QuickReadyCheckScenePath, addToBuildSettings: false, ScenePreset.QuickReadyCheck);
         }
 
+        [MenuItem("NeglectFix/Testing/Create Field Mapping Calibration Scene")]
+        public static void CreateFieldMappingSceneFromMenu()
+        {
+            CreateScene(FieldMappingScenePath, addToBuildSettings: false, ScenePreset.FieldMappingCalibration);
+        }
+
         public static void CreateSceneFromBatch()
         {
             CreateScene(SmokeScenePath, addToBuildSettings: true, ScenePreset.ManualSmoke);
@@ -49,6 +56,11 @@ namespace NeglectFix.EditorTools
         public static void CreateQuickReadyCheckSceneFromBatch()
         {
             CreateScene(QuickReadyCheckScenePath, addToBuildSettings: false, ScenePreset.QuickReadyCheck);
+        }
+
+        public static void CreateFieldMappingSceneFromBatch()
+        {
+            CreateScene(FieldMappingScenePath, addToBuildSettings: false, ScenePreset.FieldMappingCalibration);
         }
 
         public static void BuildAndroidApkFromBatch()
@@ -84,11 +96,23 @@ namespace NeglectFix.EditorTools
             BuildAndroidApk(QuickReadyCheckScenePath, apkPath);
         }
 
+        public static void BuildFieldMappingAndroidApkFromBatch()
+        {
+            CreateScene(FieldMappingScenePath, addToBuildSettings: false, ScenePreset.FieldMappingCalibration);
+
+            var apkPath = GetCommandLineArgument("-apkPath");
+            if (string.IsNullOrWhiteSpace(apkPath))
+                apkPath = "Builds/FieldMappingCalibration.apk";
+
+            BuildAndroidApk(FieldMappingScenePath, apkPath);
+        }
+
         private enum ScenePreset
         {
             ManualSmoke,
             Session1Pilot,
-            QuickReadyCheck
+            QuickReadyCheck,
+            FieldMappingCalibration
         }
 
         private static void BuildAndroidApk(string scenePath, string apkPath)
@@ -125,7 +149,11 @@ namespace NeglectFix.EditorTools
 
             CreateCamera();
             CreateLight();
-            CreateAvTrainingSystem(preset);
+
+            if (preset == ScenePreset.FieldMappingCalibration)
+                CreateFieldMappingSystem();
+            else
+                CreateAvTrainingSystem(preset);
 
             EditorSceneManager.SaveScene(scene, scenePath);
 
@@ -239,9 +267,15 @@ namespace NeglectFix.EditorTools
                 training.minInterStimulusIntervalSec = 1.2f;
                 training.maxInterStimulusIntervalSec = 2.5f;
                 training.stimulusAngularSizeDeg = 6f;
+                training.useFieldMapGuidedRehabTargets = true;
+                training.fieldMapGuidedRehabAnglesDeg = new[]
+                {
+                    new Vector2(-5f, 0f)
+                };
                 training.enablePracticeBlock = true;
                 training.practiceIntroDurationSec = 4f;
                 training.practiceDurationSec = 15f;
+                training.readyPromptInstructions = "This is rehab training, not a contrast test.\nField map target: left -5 degrees. A few right-side checks may appear.\nMove only your eyes to the marker and press. Keep your head still.";
                 training.baselinePromptInstructions = "Calibrating before practice.\nKeep the headset still and look at the center cross.";
             }
             else if (preset == ScenePreset.QuickReadyCheck)
@@ -268,6 +302,68 @@ namespace NeglectFix.EditorTools
                 training.minInterStimulusIntervalSec = 0.75f;
                 training.maxInterStimulusIntervalSec = 1.25f;
             }
+        }
+
+        private static void CreateFieldMappingSystem()
+        {
+            var root = new GameObject("FieldMappingCalibrationSystem");
+
+            var dataLogger = root.AddComponent<DataLogger>();
+            dataLogger.autoStartLogging = false;
+            dataLogger.logFolderName = "Logs";
+
+            var fieldMap = root.AddComponent<FieldMappingCalibration>();
+            fieldMap.dataLogger = dataLogger;
+            fieldMap.affectedHemifield = FieldMappingCalibration.Hemifield.Left;
+            fieldMap.autoStartOnSceneLoad = true;
+            fieldMap.autoStartSessionLog = true;
+            fieldMap.requireReadyConfirmation = true;
+            fieldMap.initialDelaySec = 0.75f;
+            fieldMap.readyCountdownDurationSec = 1f;
+            fieldMap.repetitionsPerPoint = 2;
+            fieldMap.shuffleTrialOrder = true;
+            fieldMap.minInterTrialIntervalSec = 0.6f;
+            fieldMap.maxInterTrialIntervalSec = 1.0f;
+            fieldMap.stimulusDurationSec = 0.35f;
+            fieldMap.responseWindowSec = 1.5f;
+            fieldMap.stimulusDistanceMeters = 1.5f;
+            fieldMap.stimulusAngularSizeDeg = 6f;
+            fieldMap.stimulusBackgroundLuminance = 0.5f;
+            fieldMap.stimulusContrast = 1f;
+            fieldMap.ensureOpaqueBackdrop = true;
+            fieldMap.backdropDistanceMeters = 2.4f;
+            fieldMap.backdropWidthMeters = 5.2f;
+            fieldMap.backdropHeightMeters = 3.4f;
+            fieldMap.backdropLuminance = 0.5f;
+            fieldMap.showCenterFixationCross = true;
+            fieldMap.fixationCrossDistanceMeters = 1.15f;
+            fieldMap.fixationCrossSizeMeters = 0.04f;
+            fieldMap.fixationCrossThicknessMeters = 0.004f;
+            fieldMap.fixationCrossLuminance = 0.92f;
+            fieldMap.showPromptInHeadset = true;
+            fieldMap.promptDistanceMeters = 1.25f;
+            fieldMap.readyInstructions =
+                "This is a field-mapping calibration, not rehab.\n" +
+                "Keep your gaze on the center cross. Points will appear left, right, up, and down.\n" +
+                "Press when you detect a point. Keep your head still.";
+            fieldMap.completionInstructions =
+                "Field map complete.\nYou can remove the headset now.";
+            fieldMap.testAnglesDeg = new[]
+            {
+                new Vector2(-5f, 0f),
+                new Vector2(-8f, 0f),
+                new Vector2(-12f, 0f),
+                new Vector2(-16f, 0f),
+                new Vector2(5f, 0f),
+                new Vector2(10f, 0f),
+                new Vector2(15f, 0f),
+                new Vector2(0f, 5f),
+                new Vector2(0f, 10f),
+                new Vector2(0f, 15f),
+                new Vector2(0f, -5f),
+                new Vector2(0f, -10f),
+                new Vector2(0f, -15f)
+            };
         }
 
         private static ContrastSensitivityResults CreateEricBaselineResults()

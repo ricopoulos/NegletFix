@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace NeglectFix.Utils
 {
@@ -263,12 +264,14 @@ namespace NeglectFix.Utils
             // Ensure logging stops cleanly
             StopLogging();
             CloseTrialFile();
+            CloseFieldMappingFile();
         }
 
         void OnDestroy()
         {
             StopLogging();
             CloseTrialFile();
+            CloseFieldMappingFile();
         }
 
         // Public API
@@ -372,7 +375,7 @@ namespace NeglectFix.Utils
         private const string TRIAL_CSV_HEADER =
             "timestamp_ms,session_index,block_index,trial_index,eccentricity_deg,hemifield," +
             "contrast_logcs,stimulus_onset_ms,audio_onset_ms,response_onset_ms,rt_ms,hit,av_delta_ms," +
-            "trial_type,is_control_trial,counts_for_rehab_dose";
+            "trial_type,is_control_trial,counts_for_rehab_dose,horizontal_angle_deg,vertical_angle_deg";
 
         /// <summary>
         /// Log a single AV training trial. Lazily opens a per-program-session trial file the first time
@@ -404,7 +407,8 @@ namespace NeglectFix.Utils
                     $"{trial.avDeltaMs:F2}," +
                     $"{trial.trialType}," +
                     $"{(trial.isControlTrial ? 1 : 0)}," +
-                    $"{(trial.countsForRehabDose ? 1 : 0)}";
+                    $"{(trial.countsForRehabDose ? 1 : 0)}," +
+                    $"{trial.horizontalAngleDeg:F2},{trial.verticalAngleDeg:F2}";
 
                 trialWriter.WriteLine(line);
                 trainingTrialsLogged++;
@@ -477,6 +481,269 @@ namespace NeglectFix.Utils
         public int GetTrainingTrialsLogged() => trainingTrialsLogged;
         public int GetTrainingRehabTrialsLogged() => trainingRehabTrialsLogged;
         public int GetTrainingControlTrialsLogged() => trainingControlTrialsLogged;
+
+        #endregion
+
+        #region Field Mapping Calibration Logging
+
+        private sealed class FieldMapPointStats
+        {
+            public string axis;
+            public float horizontalAngleDeg;
+            public float verticalAngleDeg;
+            public int total;
+            public int hits;
+            public float hitRtSumMs;
+
+            public float HitRate => total > 0 ? (float)hits / total : 0f;
+            public float MeanHitRtMs => hits > 0 ? hitRtSumMs / hits : -1f;
+        }
+
+        private StreamWriter fieldMapWriter;
+        private string currentFieldMappingFile = "";
+        private int fieldMappingTrialsLogged = 0;
+        private string fieldMappingAffectedAxis = "left";
+        private readonly Dictionary<string, FieldMapPointStats> fieldMapPointStats = new Dictionary<string, FieldMapPointStats>();
+        private readonly List<string> fieldMapRecommendationLabels = new List<string>();
+
+        private const string FIELD_MAPPING_CSV_HEADER =
+            "timestamp_ms,trial_index,repeat_index,axis,horizontal_angle_deg,vertical_angle_deg,stimulus_distance_m," +
+            "stimulus_world_x,stimulus_world_y,stimulus_world_z,camera_world_x,camera_world_y,camera_world_z," +
+            "camera_relative_dir_x,camera_relative_dir_y,camera_relative_dir_z,head_yaw_onset_deg,head_pitch_onset_deg,head_roll_onset_deg," +
+            "stimulus_onset_ms,response_onset_ms,rt_ms,hit,head_yaw_response_deg,head_pitch_response_deg,head_roll_response_deg," +
+            "camera_relative_dir_response_x,camera_relative_dir_response_y,camera_relative_dir_response_z";
+
+        public void SetFieldMappingAffectedAxis(string axis)
+        {
+            if (string.IsNullOrWhiteSpace(axis))
+                return;
+
+            fieldMappingAffectedAxis = axis.Trim().ToLowerInvariant();
+        }
+
+        public void LogFieldMappingTrial(NeglectFix.Assessment.FieldMappingCalibration.CalibrationTrial trial)
+        {
+            if (fieldMapWriter == null)
+                OpenFieldMappingFile();
+
+            if (fieldMapWriter == null) return;
+
+            try
+            {
+                float timestampMs = isLogging
+                    ? (Time.time - sessionStartTime) * 1000f
+                    : Time.time * 1000f;
+
+                string line = string.Join(",",
+                    FloatCsv(timestampMs, 0),
+                    trial.trialIndex.ToString(CultureInfo.InvariantCulture),
+                    trial.repeatIndex.ToString(CultureInfo.InvariantCulture),
+                    trial.axis,
+                    FloatCsv(trial.horizontalAngleDeg, 2),
+                    FloatCsv(trial.verticalAngleDeg, 2),
+                    FloatCsv(trial.stimulusDistanceMeters, 3),
+                    FloatCsv(trial.stimulusWorldPosition.x, 4),
+                    FloatCsv(trial.stimulusWorldPosition.y, 4),
+                    FloatCsv(trial.stimulusWorldPosition.z, 4),
+                    FloatCsv(trial.cameraWorldPosition.x, 4),
+                    FloatCsv(trial.cameraWorldPosition.y, 4),
+                    FloatCsv(trial.cameraWorldPosition.z, 4),
+                    FloatCsv(trial.cameraRelativeDirectionAtOnset.x, 5),
+                    FloatCsv(trial.cameraRelativeDirectionAtOnset.y, 5),
+                    FloatCsv(trial.cameraRelativeDirectionAtOnset.z, 5),
+                    FloatCsv(trial.headYawOnsetDeg, 2),
+                    FloatCsv(trial.headPitchOnsetDeg, 2),
+                    FloatCsv(trial.headRollOnsetDeg, 2),
+                    FloatCsv(trial.stimulusOnsetMs, 0),
+                    FloatCsv(trial.responseOnsetMs, 0),
+                    FloatCsv(trial.rtMs, 0),
+                    trial.hit ? "1" : "0",
+                    FloatCsv(trial.headYawResponseDeg, 2),
+                    FloatCsv(trial.headPitchResponseDeg, 2),
+                    FloatCsv(trial.headRollResponseDeg, 2),
+                    FloatCsv(trial.cameraRelativeDirectionAtResponse.x, 5),
+                    FloatCsv(trial.cameraRelativeDirectionAtResponse.y, 5),
+                    FloatCsv(trial.cameraRelativeDirectionAtResponse.z, 5));
+
+                fieldMapWriter.WriteLine(line);
+                fieldMappingTrialsLogged++;
+                UpdateFieldMapStats(trial);
+
+                if (fieldMappingTrialsLogged % 20 == 0)
+                    fieldMapWriter.Flush();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[DataLogger] LogFieldMappingTrial failed: {e.Message}");
+            }
+        }
+
+        public void CloseFieldMappingLog() => CloseFieldMappingFile();
+
+        private void OpenFieldMappingFile()
+        {
+            string fieldMapPath = Path.Combine(Application.persistentDataPath, "field_mapping");
+            if (!Directory.Exists(fieldMapPath))
+                Directory.CreateDirectory(fieldMapPath);
+
+            string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+            currentFieldMappingFile = Path.Combine(fieldMapPath, $"field_mapping_{timestamp}.csv");
+            fieldMappingTrialsLogged = 0;
+            fieldMapPointStats.Clear();
+            fieldMapRecommendationLabels.Clear();
+
+            try
+            {
+                fieldMapWriter = new StreamWriter(currentFieldMappingFile, false);
+                fieldMapWriter.WriteLine("# Field Mapping Calibration Trials");
+                fieldMapWriter.WriteLine($"# Session started: {DateTime.Now:O}");
+                fieldMapWriter.WriteLine($"# Unity: {Application.unityVersion}");
+                fieldMapWriter.WriteLine($"# Device: {SystemInfo.deviceModel} / {SystemInfo.operatingSystem}");
+                fieldMapWriter.WriteLine($"# Scene: {UnityEngine.SceneManagement.SceneManager.GetActiveScene().name}");
+                fieldMapWriter.WriteLine($"# Affected axis for rehab recommendation: {fieldMappingAffectedAxis}");
+                fieldMapWriter.WriteLine(FIELD_MAPPING_CSV_HEADER);
+                Debug.Log($"[DataLogger] Field mapping logging opened: {currentFieldMappingFile}");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[DataLogger] Failed to open field mapping file: {e.Message}");
+                fieldMapWriter = null;
+            }
+        }
+
+        private void CloseFieldMappingFile()
+        {
+            if (fieldMapWriter == null)
+                return;
+
+            try
+            {
+                WriteFieldMappingSummary();
+                fieldMapWriter.Flush();
+                fieldMapWriter.Close();
+            }
+            catch { }
+
+            fieldMapWriter = null;
+            Debug.Log($"[DataLogger] Field mapping log closed: {currentFieldMappingFile} ({fieldMappingTrialsLogged} trials).");
+        }
+
+        private void UpdateFieldMapStats(NeglectFix.Assessment.FieldMappingCalibration.CalibrationTrial trial)
+        {
+            string key = $"{trial.axis}|{FloatCsv(trial.horizontalAngleDeg, 2)}|{FloatCsv(trial.verticalAngleDeg, 2)}";
+
+            if (!fieldMapPointStats.TryGetValue(key, out FieldMapPointStats stats))
+            {
+                stats = new FieldMapPointStats
+                {
+                    axis = trial.axis,
+                    horizontalAngleDeg = trial.horizontalAngleDeg,
+                    verticalAngleDeg = trial.verticalAngleDeg
+                };
+                fieldMapPointStats[key] = stats;
+            }
+
+            stats.total++;
+
+            if (trial.hit)
+            {
+                stats.hits++;
+                if (trial.rtMs >= 0f)
+                    stats.hitRtSumMs += trial.rtMs;
+            }
+        }
+
+        private void WriteFieldMappingSummary()
+        {
+            fieldMapWriter.WriteLine();
+            fieldMapWriter.WriteLine("# FIELD MAP SUMMARY");
+            fieldMapWriter.WriteLine($"# Total calibration trials: {fieldMappingTrialsLogged}");
+
+            foreach (FieldMapPointStats stats in GetSortedFieldMapStats())
+            {
+                fieldMapWriter.WriteLine(
+                    $"# Point {stats.axis} h={stats.horizontalAngleDeg:F2} v={stats.verticalAngleDeg:F2}: " +
+                    $"{stats.hits}/{stats.total} hits ({stats.HitRate:P0}), mean_hit_rt_ms={stats.MeanHitRtMs:F0}");
+            }
+
+            fieldMapRecommendationLabels.Clear();
+            fieldMapRecommendationLabels.AddRange(BuildFieldMapRecommendations());
+
+            string recommendation = fieldMapRecommendationLabels.Count > 0
+                ? string.Join(" | ", fieldMapRecommendationLabels)
+                : "none";
+
+            fieldMapWriter.WriteLine($"# Recommended rehab locations: {recommendation}");
+        }
+
+        private List<FieldMapPointStats> GetSortedFieldMapStats()
+        {
+            var stats = new List<FieldMapPointStats>(fieldMapPointStats.Values);
+            stats.Sort((a, b) =>
+            {
+                int axisCompare = string.Compare(a.axis, b.axis, StringComparison.Ordinal);
+                if (axisCompare != 0)
+                    return axisCompare;
+
+                int horizontalCompare = Mathf.Abs(a.horizontalAngleDeg).CompareTo(Mathf.Abs(b.horizontalAngleDeg));
+                if (horizontalCompare != 0)
+                    return horizontalCompare;
+
+                return Mathf.Abs(a.verticalAngleDeg).CompareTo(Mathf.Abs(b.verticalAngleDeg));
+            });
+            return stats;
+        }
+
+        private List<string> BuildFieldMapRecommendations()
+        {
+            var affected = new List<FieldMapPointStats>();
+            foreach (FieldMapPointStats stats in fieldMapPointStats.Values)
+            {
+                if (string.Equals(stats.axis, fieldMappingAffectedAxis, StringComparison.OrdinalIgnoreCase))
+                    affected.Add(stats);
+            }
+
+            affected.Sort((a, b) => Mathf.Abs(a.horizontalAngleDeg + a.verticalAngleDeg)
+                .CompareTo(Mathf.Abs(b.horizontalAngleDeg + b.verticalAngleDeg)));
+
+            var partial = affected.FindAll(stats => stats.HitRate >= 0.25f && stats.HitRate <= 0.85f);
+            if (partial.Count > 0)
+                return FormatFieldMapRecommendations(partial, "boundary");
+
+            var visible = affected.FindAll(stats => stats.hits > 0);
+            visible.Sort((a, b) => Mathf.Abs(b.horizontalAngleDeg + b.verticalAngleDeg)
+                .CompareTo(Mathf.Abs(a.horizontalAngleDeg + a.verticalAngleDeg)));
+
+            if (visible.Count > 0)
+                return FormatFieldMapRecommendations(visible, "hardest_visible");
+
+            return FormatFieldMapRecommendations(affected, "no_hit_use_high_contrast_validation");
+        }
+
+        private static List<string> FormatFieldMapRecommendations(List<FieldMapPointStats> stats, string reason)
+        {
+            var labels = new List<string>();
+            int count = Mathf.Min(3, stats.Count);
+
+            for (int i = 0; i < count; i++)
+            {
+                FieldMapPointStats point = stats[i];
+                labels.Add(
+                    $"{point.axis}(h={point.horizontalAngleDeg:F1},v={point.verticalAngleDeg:F1}," +
+                    $"hit_rate={point.HitRate:P0},n={point.total},reason={reason})");
+            }
+
+            return labels;
+        }
+
+        private static string FloatCsv(float value, int decimals)
+        {
+            return value.ToString($"F{decimals}", CultureInfo.InvariantCulture);
+        }
+
+        public string GetCurrentFieldMappingFile() => currentFieldMappingFile;
+        public int GetFieldMappingTrialsLogged() => fieldMappingTrialsLogged;
+        public IReadOnlyList<string> GetFieldMappingRecommendationLabels() => fieldMapRecommendationLabels;
 
         #endregion
 

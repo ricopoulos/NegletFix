@@ -109,6 +109,11 @@ namespace NeglectFix.Tests.PlayMode
             training.enableIntactHemifieldControlTrials = true;
             training.intactControlTrialProbability = 1.0f;
             training.minimumRehabTrialsBetweenControlTrials = 1;
+            training.useFieldMapGuidedRehabTargets = true;
+            training.fieldMapGuidedRehabAnglesDeg = new[]
+            {
+                new Vector2(-5f, 0f)
+            };
 
             root.SetActive(true);
             yield return null;
@@ -175,7 +180,7 @@ namespace NeglectFix.Tests.PlayMode
             Assert.That(File.Exists(generatedTrialFile), Is.True);
 
             string[] lines = File.ReadAllLines(generatedTrialFile);
-            Assert.That(lines, Does.Contain("timestamp_ms,session_index,block_index,trial_index,eccentricity_deg,hemifield,contrast_logcs,stimulus_onset_ms,audio_onset_ms,response_onset_ms,rt_ms,hit,av_delta_ms,trial_type,is_control_trial,counts_for_rehab_dose"));
+            Assert.That(lines, Does.Contain("timestamp_ms,session_index,block_index,trial_index,eccentricity_deg,hemifield,contrast_logcs,stimulus_onset_ms,audio_onset_ms,response_onset_ms,rt_ms,hit,av_delta_ms,trial_type,is_control_trial,counts_for_rehab_dose,horizontal_angle_deg,vertical_angle_deg"));
             Assert.That(lines.Length, Is.GreaterThan(5));
 
             string[] rows = lines
@@ -194,6 +199,14 @@ namespace NeglectFix.Tests.PlayMode
             {
                 string[] rowColumns = row.Split(',');
                 return rowColumns[13] == "rehab" && rowColumns[14] == "0" && rowColumns[15] == "1";
+            }), Is.True);
+
+            Assert.That(rows.Any(row =>
+            {
+                string[] rowColumns = row.Split(',');
+                return rowColumns[13] == "rehab" &&
+                       float.Parse(rowColumns[16], CultureInfo.InvariantCulture) == -5f &&
+                       float.Parse(rowColumns[17], CultureInfo.InvariantCulture) == 0f;
             }), Is.True);
 
             Assert.That(rows.Any(row =>

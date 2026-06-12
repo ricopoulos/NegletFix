@@ -112,11 +112,16 @@ function coerceTrialRow(row) {
     "av_delta_ms",
     "is_control_trial",
     "counts_for_rehab_dose",
+    "horizontal_angle_deg",
+    "vertical_angle_deg",
   ];
 
   for (const key of numeric) {
-    row[key] = Number(row[key]);
+    row[key] = row[key] === undefined || row[key] === "" ? null : Number(row[key]);
   }
+
+  if (row.horizontal_angle_deg === null) row.horizontal_angle_deg = row.eccentricity_deg;
+  if (row.vertical_angle_deg === null) row.vertical_angle_deg = 0;
 
   row.hit = row.hit === 1;
   row.is_control_trial = row.is_control_trial === 1;
@@ -260,6 +265,8 @@ function buildRunSummary(config) {
       control: row.is_control_trial,
       dose: row.counts_for_rehab_dose,
       eccentricity: row.eccentricity_deg,
+      horizontalAngle: row.horizontal_angle_deg,
+      verticalAngle: row.vertical_angle_deg,
       contrast: row.contrast_logcs,
       rt: row.rt_ms,
     })),

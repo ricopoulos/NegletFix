@@ -259,12 +259,10 @@ Dose decision:
 - Keep the high validation contrast floor for the first 5-minute ramp; reduce it later only if right-control hit rate is near ceiling and left-field engagement remains tolerable.
 
 #### Remaining Work
-1. **Field-mapping calibration scene** — build the separate fixed-cross map scene in WIP-002 before declaring the official rehab phase started.
-2. **Subjective interpretation** — ask Eric about fatigue, emotional load, left marker visibility, and whether right-control markers felt obvious after the stacked 5+8+12-minute day.
-3. **Next ramp decision** — repeat 12 minutes if the stack felt heavy, or move to 15 minutes if tolerable.
-4. **Contrast policy** — keep the high validation contrast floor until visibility/tolerance are stable, then decide when to reduce it so the adaptive staircase becomes clinically meaningful.
-5. **Use Wi-Fi ADB for Quest runs** — prefer `scripts/quest-adb.sh install-run` / `scripts/quest-adb.sh logs`; cached Quest IP is `10.0.0.136`.
-6. **Phase 2 launch**: 30 sessions × 5 days/week × 6 weeks at the Alharshan dose; mid-program CS checks at sessions 5/10/15/20/25; full reassessment at session 30.
+1. **Retune field-guided rehab** — do not continue with `-5°` alone. Mix `-5°` with a harder boundary target such as `-8°`, add catch/probe trials, and cap/redesign the contrast staircase before increasing dose.
+2. **Interpretation guard** — keep the 2026-06-11 `-5°` high hit rate as evidence of leftward orienting/training effort, not clinical recovery or confirmed visual detection.
+3. **Use Wi-Fi ADB for Quest runs** — prefer `scripts/quest-adb.sh install-run` / `scripts/quest-adb.sh logs`; cached Quest IP is `10.0.0.136`, but wireless ADB may need a short USB `enable-wifi` reset after headset sleep/reboot.
+4. **Phase 2 launch**: 30 sessions × 5 days/week × 6 weeks at the Alharshan dose; mid-program CS checks at sessions 5/10/15/20/25; full reassessment at session 30.
 
 #### HTML Evidence Report + Field Map Prototype (2026-05-31)
 - Added `scripts/generate-rehab-report.js`.
@@ -280,7 +278,7 @@ Dose decision:
 
 ## WIP-002: Quick Field-Mapping Calibration Scene
 
-**Status**: READY TO BUILD NEXT SESSION
+**Status**: BUILT + QUEST VALIDATED; USED FOR FIRST FIELD-GUIDED REHAB TARGET
 **Created**: 2026-05-31
 **Priority**: High
 
@@ -306,9 +304,46 @@ Build a separate assessment/calibration scene before declaring the official 6-we
 - Do not make the expressive report field map a clinical map without richer spatial logging.
 - Do not add Quest eye tracking unless hardware/API support exists later; Quest 2 cannot provide eye position.
 
+#### Completed 2026-06-11
+- Added `FieldMappingCalibration.cs`, `FieldMappingCalibration.unity`, editor build helpers, and PlayMode smoke coverage.
+- Valid Quest field map produced `Unity/NeglectFix/SmokeResults/FieldMapping/valid_2026-06-02_15-35/field_mapping_2026-06-02_15-35-30.csv`.
+- Field map result: right/up/down controls all 6/6; left `-5°` was 1/2; left `-8°`, `-12°`, and `-16°` were 0/2.
+- Recommendation: left `-5°`, vertical `0°` as the first boundary target.
+- Wired that target into `AVTrainingSession1Pilot.unity` with field-guided rehab enabled.
+
+#### Field-Guided Run 2026-06-11
+- Quest run files: `Unity/NeglectFix/SmokeResults/FieldGuidedRehab/2026-06-11_21-46/`.
+- Runtime: 12.5 minutes, 283 recorded trials, 6744 session samples.
+- Rehab-dose rows: 259 at left `-5.00°`, vertical `0.00°`; 230/259 hits (88.8%); mean hit RT ~559ms.
+- Right controls: 24/24 hits (100%), excluded from rehab dose.
+- Eric's subjective report: he had to focus hard on the center cross, some responses felt like audio-guided prediction/reflex rather than true visual confirmation, the marker felt too close to center, and the session was exhausting.
+- Decision: do not treat the high `-5°` hit rate as clinical recovery. Retune before next dose.
+
 ---
 
-## WIP-003 (future): Paradigm A — 3D-MOT-IVR
+## WIP-003: Field-Guided Rehab Retuning
+
+**Status**: READY TO BUILD NEXT SESSION
+**Created**: 2026-06-11
+**Priority**: High
+
+#### Goal
+Make the field-guided rehab task harder and more interpretable before increasing dose.
+
+#### Planned Scope
+- Mix selected boundary locations instead of training only at left `-5°`.
+- Prioritize a harder target such as left `-8°`, likely with some `-5°` support.
+- Add catch/probe trials, for example sound-only and/or marker-only probes, to distinguish cue-guided prediction from visual confirmation.
+- Cap or redesign the adaptive contrast/staircase so a high hit rate at an easy/cued location cannot climb to meaningless LogCS values.
+- Keep right controls sparse and excluded from rehab dose.
+- Keep assessment/calibration separate from rehab.
+
+#### Non-Goal
+- Do not increase to 15/20/30 minutes until the target/probe policy is corrected and tolerable.
+
+---
+
+## WIP-004 (future): Paradigm A — 3D-MOT-IVR
 
 **Status**: NOT-STARTED
 **Created**: 2026-05-16 (Phase 3 in build plan)
@@ -323,7 +358,7 @@ After Phase 2 (Paradigm B) runs 30 sessions and produces responder data, optiona
 
 ---
 
-## WIP-004 (future): Official Unity MCP Migration Check
+## WIP-005 (future): Official Unity MCP Migration Check
 
 **Status**: PAUSED
 **Created**: 2026-05-30
@@ -343,4 +378,4 @@ Unity docs reviewed were for `com.unity.ai.assistant@2.9.0-pre.2`. Treat as pre-
 
 ---
 
-*Last updated: 2026-05-31*
+*Last updated: 2026-06-11*

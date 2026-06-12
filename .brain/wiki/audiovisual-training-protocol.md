@@ -220,7 +220,7 @@ for each block (1..3):
 ```
 timestamp_ms, session_index, block_index, trial_index, eccentricity_deg, hemifield,
 contrast_logcs, stimulus_onset_ms, audio_onset_ms, response_onset_ms, rt_ms, hit, av_delta_ms,
-trial_type, is_control_trial, counts_for_rehab_dose
+trial_type, is_control_trial, counts_for_rehab_dose, horizontal_angle_deg, vertical_angle_deg
 ```
 
 `av_delta_ms` is audio onset relative to visual onset — target sub-50ms per Bean/Stein/Rowland 2023; the old "single-frame" strictness has been relaxed.
@@ -231,23 +231,34 @@ Control policy:
 - Controls can trigger reward feedback and are logged in the same CSV, but `counts_for_rehab_dose=0` and they do not update the adaptive staircase.
 - The session summary reports rehab and control counts separately.
 
-### Field-map accuracy + calibration decision (2026-05-31)
+### Field-map accuracy + calibration decision (2026-06-11)
 
 The first HTML rehab report (`reports/rehab-dose-ramp-2026-05-31.html`) includes a trial field map and correctly separates three ideas:
 - **Evidence mode**: spreads repeated trials vertically so the session effort is visible and persuasive.
 - **Retinal truth mode**: shows what the current CSV actually proves: horizontal eccentricity at `-5°/-8°` in the left field and `+5°/+8°` in the right control field.
 - **Heat bloom mode**: expressive density storytelling, not a diagnostic visual-field map.
 
-Current limitation: `AudioVisualTraining` only logs signed horizontal eccentricity (`eccentricity_deg`) and `hemifield`. Stimuli are currently placed on the horizontal meridian, so vertical angle is effectively `0°` and is not yet logged as a separate field. The current field map is therefore accurate as a **trial-distribution and evidence map**, not yet as a clinical/perimetric retinal map.
+`FieldMappingCalibration.unity` now provides the separate quick calibration layer before the 6-week rehab phase. It keeps assessment separate from rehab, uses a fixed center cross, tests controlled left/right/up/down points, and logs per-trial horizontal angle, vertical angle, world position, camera-relative direction, and head yaw/pitch/roll at onset and response.
 
-Next calibration layer before declaring the 6-week rehab phase officially started:
-1. Build a separate quick field-mapping scene with a fixed center cross and controlled points left/right/up/down.
-2. Log per trial: horizontal angle, vertical angle, world position, camera-relative direction, and head yaw/pitch at stimulus onset and response.
-3. Use that map to choose the first rehab training locations.
-4. Keep field mapping / assessment separate from the AV rehab task.
-5. Then resume the rehab dose ramp from selected, defensible locations.
+Valid Quest 2 field-map result:
+- Trial CSV: `Unity/NeglectFix/SmokeResults/FieldMapping/valid_2026-06-02_15-35/field_mapping_2026-06-02_15-35-30.csv`
+- Result: 19/26 hits.
+- Right/up/down controls: all 6/6.
+- Left `-5°`: 1/2 hits, mean hit RT 625ms.
+- Left `-8°`, `-12°`, `-16°`: 0/2 each.
+- Recommendation: left `-5°`, vertical `0°`, as the first boundary rehab target.
 
-### Dose ramp decision (2026-05-31)
+First field-guided rehab run:
+- Trial CSV: `Unity/NeglectFix/SmokeResults/FieldGuidedRehab/2026-06-11_21-46/av_training_2026-06-11_21-47-08.csv`
+- Session CSV: `Unity/NeglectFix/SmokeResults/FieldGuidedRehab/2026-06-11_21-46/session_2026-06-11_21-46-40.csv`
+- Device log: `Unity/NeglectFix/SmokeResults/FieldGuidedRehab/2026-06-11_21-46/field-guided-rehab-live.log`
+- Runtime: 12.5 minutes, 283 recorded trials, 6744 session samples.
+- Rehab-dose rows: 259 at left `-5.00°`, vertical `0.00°`; 230/259 hits (88.8%); mean hit RT ~559ms.
+- Right controls: 24/24 hits (100%), excluded from rehab dose.
+
+Interpretation guard: Eric reported that some left responses felt like audio-guided prediction/reflex rather than true visual confirmation, and that `-5°` felt too close to center. Do not interpret this high hit rate as clinical recovery. It shows useful leftward orienting/training effort, but the next build must distinguish visual confirmation from cued guessing.
+
+### Dose ramp decision (updated 2026-06-11)
 
 First real rehab ramp should **move to 5 minutes recorded**, not repeat the 2-minute validation block and not jump directly to 30 minutes.
 
@@ -255,10 +266,15 @@ Planned ramp, subject to symptoms/fatigue:
 - Session 1: 5-minute recorded block + 15s practice + sparse right controls. Completed 2026-05-31.
 - Session 2: 8-minute recorded block + 15s practice + sparse right controls. Completed 2026-05-31.
 - Session 3: 12-minute recorded block + 15s practice + sparse right controls. Completed 2026-05-31.
-- Next session: repeat 12 minutes if the same-day stack felt heavy, or move to 15 minutes if tolerable.
-- Then step toward 20, 25, and 30 minutes over the first week or two rather than forcing the full Alharshan dose immediately.
+- Field-guided 12.5-minute run at left `-5°`: completed 2026-06-11.
+- Next session: do **not** increase dose yet. Retune the field-guided target/probe policy first.
+- Then step toward 15, 20, 25, and 30 minutes only after the target/probe policy is interpretable and tolerable.
 
-Keep the high validation contrast floor for Session 1 ramp. Start reducing it only after control hit rate is near ceiling and left-side engagement remains tolerable.
+Next build priorities:
+- Do not continue with `-5°` alone.
+- Mix `-5°` with a harder boundary target such as `-8°`.
+- Add sound-only and/or marker-only catch/probe trials to separate audio-cued prediction from visual confirmation.
+- Cap/redesign the contrast staircase so high hit rate at an easy/cued location cannot run away to meaningless LogCS values.
 
 ### 2026-05-31 control-ramp validation
 

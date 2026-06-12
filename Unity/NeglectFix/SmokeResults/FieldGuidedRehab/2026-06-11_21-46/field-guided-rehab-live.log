@@ -1,0 +1,1126 @@
+--------- beginning of system
+06-11 21:42:08.837 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[android.intent.category.INFO] flg=0x10010000 pkg=com.oculus.systemux cmp=com.oculus.systemux/com.oculus.panelapp.activetaskbar.ActiveTaskBarActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:08.903 I/ActivityTaskManager( 1518): START u0 {flg=0x10010000 cmp=com.oculus.panelapp.library/com.oculus.navigator.systembar.app.SystemBarActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:08.911 I/ActivityTaskManager( 1518): START u0 {flg=0x10000000 cmp=com.oculus.vrshell/.FocusPlaceholderActivity} with LAUNCH_SINGLE_INSTANCE from uid 10045 (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:08.920 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.bloom.BloomActivity (has extras)} with LAUNCH_MULTIPLE from uid 10045 (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:08.940 I/ActivityTaskManager( 1518): START u0 {flg=0x10010000 cmp=com.oculus.panelapp.library/com.oculus.navigator.library.app.NavigatorLibraryActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 10045 (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:09.059 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.toasts.ToastsActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:09.115 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.displaybar.DisplayBarActivity (has extras)} with LAUNCH_MULTIPLE from uid 10045 (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:09.369 I/ActivityTaskManager( 1518): START u0 {flg=0x10810100 cmp=com.oculus.vrshell/.FocusPlaceholderActivity} with LAUNCH_SINGLE_INSTANCE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:09.377 I/ActivityTaskManager( 1518): START u0 {flg=0x10010000 cmp=com.oculus.panelapp.library/com.oculus.navigator.systembar.app.SystemBarActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:09.590 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[android.intent.category.INFO] flg=0x10010100 pkg=com.oculus.systemux cmp=com.oculus.systemux/com.oculus.panelapp.activetaskbar.ActiveTaskBarActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:09.618 I/ActivityTaskManager( 1518): START u0 {flg=0x10010000 cmp=com.oculus.panelapp.library/com.oculus.navigator.library.app.NavigatorLibraryActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:09.623 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.toasts.ToastsActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:09.630 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.displaybar.DisplayBarActivity (has extras)} with LAUNCH_MULTIPLE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:09.648 I/ActivityTaskManager( 1518): START u0 {flg=0x10010000 cmp=com.oculus.panelapp.library/com.oculus.navigator.systembar.app.SystemBarActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:09.803 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010100 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.bloom.BloomActivity (has extras)} with LAUNCH_MULTIPLE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:09.817 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.toasts.ToastsActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:09.821 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.displaybar.DisplayBarActivity (has extras)} with LAUNCH_MULTIPLE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:09.825 I/ActivityTaskManager( 1518): START u0 {flg=0x10010000 cmp=com.oculus.panelapp.library/com.oculus.navigator.systembar.app.SystemBarActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:09.900 I/ActivityTaskManager( 1518): START u0 {flg=0x10010100 cmp=com.oculus.panelapp.library/com.oculus.navigator.library.app.NavigatorLibraryActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:10.602 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010100 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.toasts.ToastsActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:10.640 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.displaybar.DisplayBarActivity (has extras)} with LAUNCH_MULTIPLE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:10.656 I/ActivityTaskManager( 1518): START u0 {flg=0x10010000 cmp=com.oculus.panelapp.library/com.oculus.navigator.systembar.app.SystemBarActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:10.809 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.store cmp=com.oculus.store/.StoreActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 10045 (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:11.589 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[android.intent.category.INFO] flg=0x10010000 pkg=com.oculus.systemux cmp=com.oculus.systemux/com.oculus.panelapp.activetaskbar.ActiveTaskBarActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:11.733 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.toasts.ToastsActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:11.865 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.displaybar.DisplayBarActivity (has extras)} with LAUNCH_MULTIPLE from uid 10045 (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:42:12.116 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[android.intent.category.INFO] flg=0x10010000 pkg=com.oculus.systemux cmp=com.oculus.systemux/com.oculus.panelapp.activetaskbar.ActiveTaskBarActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=3
+06-11 21:41:29.264 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010100 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.displaybar.DisplayBarActivity (has extras)} with LAUNCH_MULTIPLE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:41:29.331 I/ActivityTaskManager( 1518): START u0 {flg=0x10010000 cmp=com.oculus.panelapp.library/com.oculus.navigator.systembar.app.SystemBarActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:41:29.416 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.store cmp=com.oculus.store/.StoreActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:41:29.477 W/ActivityTaskManager( 1518): Activity top resumed state loss timeout for ActivityRecord{4affb54 u0 com.oculus.vrshell/com.oculus.panelapp.toasts.ToastsActivity t312}
+06-11 21:41:29.559 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.toasts.ToastsActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=3
+06-11 21:41:30.490 I/ActivityTaskManager( 1518): Add Task{98f0ced #314 type=standard A=10045:com.oculus.panelapp.displaybar.DisplayBarActivity} to hidden list because adding Task{a9a7bb9 #316 type=standard A=10045:com.oculus.panelapp.displaybar.DisplayBarActivity}
+06-11 21:41:30.495 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010100 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.displaybar.DisplayBarActivity (has extras)} with LAUNCH_MULTIPLE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:41:30.534 I/ActivityTaskManager( 1518): START u0 {flg=0x10010000 cmp=com.oculus.panelapp.library/com.oculus.navigator.systembar.app.SystemBarActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:41:30.592 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.store cmp=com.oculus.store/.StoreActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:41:31.051 W/ActivityTaskManager( 1518): Duplicate finish request for r=ActivityRecord{a9be796 u0 com.oculus.vrshell/com.oculus.panelapp.displaybar.DisplayBarActivity t314 f}}
+06-11 21:41:31.413 I/ActivityTaskManager( 1518): START u0 {flg=0x10010100 cmp=com.oculus.panelapp.library/com.oculus.navigator.systembar.app.SystemBarActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:41:31.420 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.displaybar.DisplayBarActivity (has extras)} with LAUNCH_MULTIPLE from uid 10045 (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:41:31.556 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.store cmp=com.oculus.store/.StoreActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:41:31.733 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.displaybar.DisplayBarActivity (has extras)} with LAUNCH_MULTIPLE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=3
+06-11 21:41:32.240 W/ActivityTaskManager( 1518): Activity top resumed state loss timeout for ActivityRecord{4eb4cae u0 com.oculus.panelapp.library/com.oculus.navigator.systembar.app.SystemBarActivity t318}
+06-11 21:41:32.350 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010100 pkg=com.oculus.store cmp=com.oculus.store/.StoreActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:41:33.000 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010000 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.controlbar.ControlBarActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 10045 (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:41:33.347 W/ActivityTaskManager( 1518): Activity pause timeout for ActivityRecord{4eb4cae u0 com.oculus.panelapp.library/com.oculus.navigator.systembar.app.SystemBarActivity t318}
+06-11 21:41:33.863 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[com.oculus.intent.category.VR_HOME_LAUNCHER] flg=0x10010100 pkg=com.oculus.vrshell cmp=com.oculus.vrshell/com.oculus.panelapp.controlbar.ControlBarActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:43:56.118 W/ActivityTaskManager( 1518): No component for base intent of task: Task{c50f5e8 #303 type=standard}
+06-11 21:44:02.113 I/ActivityTaskManager( 1518): START u0 {flg=0x10000000 cmp=com.oculus.vrshell/.FocusPlaceholderActivity} with LAUNCH_SINGLE_INSTANCE from uid 10045 (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:44:02.208 I/ActivityTaskManager( 1518): START u0 {flg=0x10810100 cmp=com.oculus.vrshell/.FocusPlaceholderActivity} with LAUNCH_SINGLE_INSTANCE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:44:02.563 W/ActivityTaskManager( 1518): Duplicate finish request for r=ActivityRecord{a5ba0ab u0 com.oculus.vrshell/.FocusPlaceholderActivity t324 f}}
+06-11 21:44:51.211 W/ActivityTaskManager( 1518): callingPackage for (uid=2000, pid=7706) has no WPC
+06-11 21:44:51.226 W/ActivityTaskManager( 1518): startActivity called from non-Activity context; forcing Intent.FLAG_ACTIVITY_NEW_TASK for: Intent { act=horizonos.content.action.REQUIRES_CONTROLLERS_LAUNCH_CHECK id=hzos.content.INTENT_ID=Intent { act=horizonos.content.action.REQUIRES_CONTROLLERS_LAUNCH_CHECK cmp=com.oculus.vrshell/.systemdialog.launchcheck.LaunchCheckControllerRequiredDialogActivity } flg=0x8800000 cmp=com.oculus.vrshell/.systemdialog.launchcheck.LaunchCheckControllerRequiredDialogActivity (has extras) }
+06-11 21:44:51.227 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.UnityTechnologies.com.unity.template.urpblank/com.unity3d.player.UnityPlayerGameActivity} with LAUNCH_SINGLE_TASK from uid 2000 (BAL_ALLOW_PERMISSION) result code=0
+06-11 21:44:51.295 I/ActivityTaskManager( 1518): START u0 {act=horizonos.content.action.REQUIRES_CONTROLLERS_LAUNCH_CHECK id=hzos.content.INTENT_ID=Intent { act=horizonos.content.action.REQUIRES_CONTROLLERS_LAUNCH_CHECK cmp=com.oculus.vrshell/.systemdialog.launchcheck.LaunchCheckControllerRequiredDialogActivity } flg=0x18810100 cmp=com.oculus.vrshell/.systemdialog.launchcheck.LaunchCheckControllerRequiredDialogActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 1000 (BAL_ALLOW_ALLOWLISTED_UID) result code=0
+06-11 21:45:59.597 W/ActivityTaskManager( 1518): callingPackage for (uid=2000, pid=7862) has no WPC
+06-11 21:45:59.604 W/ActivityTaskManager( 1518): startActivity called from non-Activity context; forcing Intent.FLAG_ACTIVITY_NEW_TASK for: Intent { act=horizonos.content.action.REQUIRES_CONTROLLERS_LAUNCH_CHECK id=hzos.content.INTENT_ID=Intent { act=horizonos.content.action.REQUIRES_CONTROLLERS_LAUNCH_CHECK cmp=com.oculus.vrshell/.systemdialog.launchcheck.LaunchCheckControllerRequiredDialogActivity } flg=0x8800000 cmp=com.oculus.vrshell/.systemdialog.launchcheck.LaunchCheckControllerRequiredDialogActivity (has extras) }
+06-11 21:45:59.605 I/ActivityTaskManager( 1518): START u0 {flg=0x10000000 cmp=com.UnityTechnologies.com.unity.template.urpblank/com.unity3d.player.UnityPlayerGameActivity} with LAUNCH_SINGLE_TASK from uid 2000 (BAL_ALLOW_PERMISSION) result code=0
+06-11 21:45:59.608 W/ActivityTaskManager( 1518): startActivity called from non-Activity context; forcing Intent.FLAG_ACTIVITY_NEW_TASK for: Intent { act=horizonos.content.action.REQUIRES_CONTROLLERS_LAUNCH_CHECK id=hzos.content.INTENT_ID=Intent { act=horizonos.content.action.REQUIRES_CONTROLLERS_LAUNCH_CHECK cmp=com.oculus.vrshell/.systemdialog.launchcheck.LaunchCheckControllerRequiredDialogActivity } flg=0x8800000 cmp=com.oculus.vrshell/.systemdialog.launchcheck.LaunchCheckControllerRequiredDialogActivity (has extras) }
+06-11 21:45:59.609 I/ActivityTaskManager( 1518): START u0 {act=horizonos.content.action.REQUIRES_CONTROLLERS_LAUNCH_CHECK id=hzos.content.INTENT_ID=Intent { act=horizonos.content.action.REQUIRES_CONTROLLERS_LAUNCH_CHECK cmp=com.oculus.vrshell/.systemdialog.launchcheck.LaunchCheckControllerRequiredDialogActivity } flg=0x8800000 cmp=com.oculus.vrshell/.systemdialog.launchcheck.LaunchCheckControllerRequiredDialogActivity (has extras)} with LAUNCH_SINGLE_INSTANCE from uid 1000 (BAL_ALLOW_ALLOWLISTED_UID) result code=3
+06-11 21:46:12.825 I/ActivityTaskManager( 1518): START u0 {flg=0x10000000 cmp=com.oculus.vrshell/.FocusPlaceholderActivity} with LAUNCH_SINGLE_INSTANCE from uid 10045 (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:46:12.874 I/ActivityTaskManager( 1518): START u0 {flg=0x10810100 cmp=com.oculus.vrshell/.FocusPlaceholderActivity} with LAUNCH_SINGLE_INSTANCE from uid 10045 (realCallingUid=1000) (BAL_ALLOW_ALLOWLISTED_COMPONENT) result code=0
+06-11 21:46:27.418 W/ActivityTaskManager( 1518): Activity is launching as a new task, so cancelling activity result.
+06-11 21:46:27.419 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.UnityTechnologies.com.unity.template.urpblank/com.unity3d.player.UnityPlayerGameActivity} with LAUNCH_SINGLE_TASK from uid 2000 (realCallingUid=10045) (BAL_ALLOW_PENDING_INTENT) result code=0
+06-11 21:46:27.437 W/ActivityTaskManager( 1518): Duplicate finish request for r=ActivityRecord{be1ea35 u0 com.oculus.vrshell/.systemdialog.launchcheck.LaunchCheckControllerRequiredDialogActivity t326 f}}
+06-11 21:46:27.577 W/ActivityTaskManager( 1518): callingPackage for (uid=1000, pid=1518) is ambiguous: [android, com.android.providers.settings, com.android.server.telecom, com.android.location.fused]
+06-11 21:46:27.586 I/ActivityTaskManager( 1518): START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10210100 cmp=com.UnityTechnologies.com.unity.template.urpblank/com.unity3d.player.UnityPlayerGameActivity} with LAUNCH_SINGLE_TASK from uid 2000 (realCallingUid=1000) (BAL_ALLOW_PENDING_INTENT) result code=0
+--------- beginning of main
+06-11 21:56:18.965 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:56:18.965 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:18.965 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:56:18.965 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:56:18.965 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:56:18.965 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:18.965 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:18.965 I/Unity   ( 8031):
+06-11 21:56:18.965 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:56:18.965 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:18.965 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:18.965 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:18.965 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:18.965 I/Unity   ( 8031):
+06-11 21:56:18.966 I/Unity   ( 8031): [RewardController] ✨ REWARD #216 triggered!
+06-11 21:56:18.966 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:18.966 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:18.966 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:18.966 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:18.966 I/Unity   ( 8031):
+06-11 21:56:20.950 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:56:20.950 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:20.950 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:56:20.950 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:56:20.950 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:56:20.950 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:20.950 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:20.950 I/Unity   ( 8031):
+06-11 21:56:20.951 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:56:20.951 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:20.951 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:20.951 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:20.951 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:20.951 I/Unity   ( 8031):
+06-11 21:56:20.951 I/Unity   ( 8031): [RewardController] ✨ REWARD #217 triggered!
+06-11 21:56:20.951 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:20.951 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:20.951 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:20.951 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:20.951 I/Unity   ( 8031):
+06-11 21:56:23.797 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:56:23.797 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:23.797 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:56:23.797 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:56:23.797 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:56:23.797 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:23.797 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:23.797 I/Unity   ( 8031):
+06-11 21:56:23.797 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:56:23.797 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:23.797 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:23.797 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:23.797 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:23.797 I/Unity   ( 8031):
+06-11 21:56:23.797 I/Unity   ( 8031): [RewardController] ✨ REWARD #218 triggered!
+06-11 21:56:23.797 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:23.797 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:23.797 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:23.797 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:23.797 I/Unity   ( 8031):
+06-11 21:56:26.671 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:56:26.671 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:26.671 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:56:26.671 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:56:26.671 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:56:26.671 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:26.671 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:26.671 I/Unity   ( 8031):
+06-11 21:56:26.671 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:56:26.671 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:26.671 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:26.671 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:26.671 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:26.671 I/Unity   ( 8031):
+06-11 21:56:26.672 I/Unity   ( 8031): [RewardController] ✨ REWARD #219 triggered!
+06-11 21:56:26.672 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:26.672 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:26.672 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:26.672 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:26.672 I/Unity   ( 8031):
+06-11 21:56:28.892 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:56:28.892 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:28.892 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:56:28.892 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:56:28.892 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:56:28.892 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:28.892 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:28.892 I/Unity   ( 8031):
+06-11 21:56:28.893 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:56:28.893 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:28.893 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:28.893 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:28.893 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:28.893 I/Unity   ( 8031):
+06-11 21:56:28.893 I/Unity   ( 8031): [RewardController] ✨ REWARD #220 triggered!
+06-11 21:56:28.893 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:28.893 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:28.893 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:28.893 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:28.893 I/Unity   ( 8031):
+06-11 21:56:31.628 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:56:31.628 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:31.628 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:56:31.628 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:56:31.628 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:56:31.628 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:31.628 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:31.628 I/Unity   ( 8031):
+06-11 21:56:31.628 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:56:31.628 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:31.628 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:31.628 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:31.628 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:31.628 I/Unity   ( 8031):
+06-11 21:56:31.628 I/Unity   ( 8031): [RewardController] ✨ REWARD #221 triggered!
+06-11 21:56:31.628 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:31.628 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:31.628 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:31.628 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:31.628 I/Unity   ( 8031):
+06-11 21:56:33.599 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:56:33.599 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:33.599 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:56:33.599 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:56:33.599 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:56:33.599 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:33.599 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:33.599 I/Unity   ( 8031):
+06-11 21:56:33.600 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:56:33.600 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:33.600 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:33.600 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:33.600 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:33.600 I/Unity   ( 8031):
+06-11 21:56:33.600 I/Unity   ( 8031): [RewardController] ✨ REWARD #222 triggered!
+06-11 21:56:33.600 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:33.600 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:33.600 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:33.600 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:33.600 I/Unity   ( 8031):
+06-11 21:56:36.307 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:56:36.307 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:36.307 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:56:36.307 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:56:36.307 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:56:36.307 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:36.307 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:36.307 I/Unity   ( 8031):
+06-11 21:56:36.307 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:56:36.307 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:36.307 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:36.307 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:36.307 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:36.307 I/Unity   ( 8031):
+06-11 21:56:36.308 I/Unity   ( 8031): [RewardController] ✨ REWARD #223 triggered!
+06-11 21:56:36.308 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:36.308 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:36.308 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:36.308 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:36.308 I/Unity   ( 8031):
+06-11 21:56:39.111 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:56:39.111 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:39.111 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:56:39.111 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:56:39.111 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:56:39.111 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:39.111 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:39.111 I/Unity   ( 8031):
+06-11 21:56:39.112 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:56:39.112 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:39.112 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:39.112 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:39.112 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:39.112 I/Unity   ( 8031):
+06-11 21:56:39.112 I/Unity   ( 8031): [RewardController] ✨ REWARD #224 triggered!
+06-11 21:56:39.112 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:39.112 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:39.112 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:39.112 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:39.112 I/Unity   ( 8031):
+06-11 21:56:45.387 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:56:45.387 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:45.387 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:56:45.387 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:56:45.387 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:56:45.387 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:45.387 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:45.387 I/Unity   ( 8031):
+06-11 21:56:45.388 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:56:45.388 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:45.388 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:45.388 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:45.388 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:45.388 I/Unity   ( 8031):
+06-11 21:56:45.388 I/Unity   ( 8031): [RewardController] ✨ REWARD #225 triggered!
+06-11 21:56:45.388 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:45.388 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:45.388 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:45.388 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:45.388 I/Unity   ( 8031):
+06-11 21:56:47.323 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:56:47.323 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:47.323 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:56:47.323 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:56:47.323 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:56:47.323 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:47.323 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:47.323 I/Unity   ( 8031):
+06-11 21:56:47.324 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:56:47.324 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:47.324 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:47.324 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:47.324 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:47.324 I/Unity   ( 8031):
+06-11 21:56:47.324 I/Unity   ( 8031): [RewardController] ✨ REWARD #226 triggered!
+06-11 21:56:47.324 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:47.324 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:47.324 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:47.324 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:47.324 I/Unity   ( 8031):
+06-11 21:56:49.677 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:56:49.677 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:49.677 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:56:49.677 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:56:49.677 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:56:49.677 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:49.677 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:49.677 I/Unity   ( 8031):
+06-11 21:56:49.678 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:56:49.678 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:49.678 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:49.678 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:49.678 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:49.678 I/Unity   ( 8031):
+06-11 21:56:49.678 I/Unity   ( 8031): [RewardController] ✨ REWARD #227 triggered!
+06-11 21:56:49.678 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:49.678 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:49.678 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:49.678 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:49.678 I/Unity   ( 8031):
+06-11 21:56:51.774 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:56:51.774 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:51.774 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:56:51.774 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:56:51.774 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:56:51.774 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:51.774 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:51.774 I/Unity   ( 8031):
+06-11 21:56:51.774 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:56:51.774 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:51.774 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:51.774 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:51.774 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:51.774 I/Unity   ( 8031):
+06-11 21:56:51.775 I/Unity   ( 8031): [RewardController] ✨ REWARD #228 triggered!
+06-11 21:56:51.775 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:51.775 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:51.775 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:51.775 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:51.775 I/Unity   ( 8031):
+06-11 21:56:53.927 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:56:53.927 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:53.927 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:56:53.927 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:56:53.927 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:56:53.927 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:53.927 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:53.927 I/Unity   ( 8031):
+06-11 21:56:53.927 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:56:53.927 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:53.927 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:53.927 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:53.927 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:53.927 I/Unity   ( 8031):
+06-11 21:56:53.927 I/Unity   ( 8031): [RewardController] ✨ REWARD #229 triggered!
+06-11 21:56:53.927 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:53.927 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:53.927 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:53.927 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:53.927 I/Unity   ( 8031):
+06-11 21:56:56.578 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:56:56.578 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:56.578 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:56:56.578 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:56:56.578 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:56:56.578 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:56.578 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:56.578 I/Unity   ( 8031):
+06-11 21:56:56.579 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:56:56.579 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:56.579 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:56.579 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:56.579 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:56.579 I/Unity   ( 8031):
+06-11 21:56:56.579 I/Unity   ( 8031): [RewardController] ✨ REWARD #230 triggered!
+06-11 21:56:56.579 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:56:56.579 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:56:56.579 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:56:56.579 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:56:56.579 I/Unity   ( 8031):
+06-11 21:57:06.922 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:57:06.922 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:06.922 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:57:06.922 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:57:06.922 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:57:06.922 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:06.922 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:06.922 I/Unity   ( 8031):
+06-11 21:57:06.923 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:57:06.923 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:06.923 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:06.923 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:06.923 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:06.923 I/Unity   ( 8031):
+06-11 21:57:06.923 I/Unity   ( 8031): [RewardController] ✨ REWARD #231 triggered!
+06-11 21:57:06.923 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:06.923 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:06.923 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:06.923 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:06.923 I/Unity   ( 8031):
+06-11 21:57:09.005 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:57:09.005 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:09.005 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:57:09.005 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:57:09.005 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:57:09.005 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:09.005 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:09.005 I/Unity   ( 8031):
+06-11 21:57:09.005 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:57:09.005 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:09.005 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:09.005 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:09.005 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:09.005 I/Unity   ( 8031):
+06-11 21:57:09.005 I/Unity   ( 8031): [RewardController] ✨ REWARD #232 triggered!
+06-11 21:57:09.005 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:09.005 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:09.005 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:09.005 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:09.005 I/Unity   ( 8031):
+06-11 21:57:11.809 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:57:11.809 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:11.809 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:57:11.809 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:57:11.809 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:57:11.809 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:11.809 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:11.809 I/Unity   ( 8031):
+06-11 21:57:11.810 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:57:11.810 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:11.810 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:11.810 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:11.810 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:11.810 I/Unity   ( 8031):
+06-11 21:57:11.810 I/Unity   ( 8031): [RewardController] ✨ REWARD #233 triggered!
+06-11 21:57:11.810 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:11.810 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:11.810 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:11.810 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:11.810 I/Unity   ( 8031):
+06-11 21:57:14.406 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:57:14.406 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:14.406 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:57:14.406 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:57:14.406 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:57:14.406 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:14.406 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:14.406 I/Unity   ( 8031):
+06-11 21:57:14.406 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:57:14.406 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:14.406 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:14.406 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:14.406 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:14.406 I/Unity   ( 8031):
+06-11 21:57:14.407 I/Unity   ( 8031): [RewardController] ✨ REWARD #234 triggered!
+06-11 21:57:14.407 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:14.407 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:14.407 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:14.407 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:14.407 I/Unity   ( 8031):
+06-11 21:57:16.642 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:57:16.642 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:16.642 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:57:16.642 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:57:16.642 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:57:16.642 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:16.642 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:16.642 I/Unity   ( 8031):
+06-11 21:57:16.642 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:57:16.642 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:16.642 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:16.642 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:16.642 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:16.642 I/Unity   ( 8031):
+06-11 21:57:16.643 I/Unity   ( 8031): [RewardController] ✨ REWARD #235 triggered!
+06-11 21:57:16.643 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:16.643 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:16.643 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:16.643 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:16.643 I/Unity   ( 8031):
+06-11 21:57:18.849 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:57:18.849 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:18.849 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:57:18.849 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:57:18.849 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:57:18.849 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:18.849 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:18.849 I/Unity   ( 8031):
+06-11 21:57:18.849 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:57:18.849 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:18.849 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:18.849 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:18.849 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:18.849 I/Unity   ( 8031):
+06-11 21:57:18.850 I/Unity   ( 8031): [RewardController] ✨ REWARD #236 triggered!
+06-11 21:57:18.850 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:18.850 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:18.850 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:18.850 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:18.850 I/Unity   ( 8031):
+06-11 21:57:21.654 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:57:21.654 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:21.654 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:57:21.654 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:57:21.654 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:57:21.654 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:21.654 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:21.654 I/Unity   ( 8031):
+06-11 21:57:21.654 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:57:21.654 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:21.654 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:21.654 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:21.654 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:21.654 I/Unity   ( 8031):
+06-11 21:57:21.654 I/Unity   ( 8031): [RewardController] ✨ REWARD #237 triggered!
+06-11 21:57:21.654 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:21.654 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:21.654 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:21.654 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:21.654 I/Unity   ( 8031):
+06-11 21:57:24.278 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:57:24.278 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:24.278 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:57:24.278 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:57:24.278 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:57:24.278 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:24.278 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:24.278 I/Unity   ( 8031):
+06-11 21:57:24.278 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:57:24.278 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:24.278 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:24.278 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:24.278 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:24.278 I/Unity   ( 8031):
+06-11 21:57:24.279 I/Unity   ( 8031): [RewardController] ✨ REWARD #238 triggered!
+06-11 21:57:24.279 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:24.279 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:24.279 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:24.279 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:24.279 I/Unity   ( 8031):
+06-11 21:57:34.913 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:57:34.913 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:34.913 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:57:34.913 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:57:34.913 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:57:34.913 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:34.913 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:34.913 I/Unity   ( 8031):
+06-11 21:57:34.914 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:57:34.914 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:34.914 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:34.914 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:34.914 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:34.914 I/Unity   ( 8031):
+06-11 21:57:34.914 I/Unity   ( 8031): [RewardController] ✨ REWARD #239 triggered!
+06-11 21:57:34.914 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:34.914 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:34.914 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:34.914 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:34.914 I/Unity   ( 8031):
+06-11 21:57:36.927 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:57:36.927 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:36.927 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:57:36.927 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:57:36.927 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:57:36.927 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:36.927 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:36.927 I/Unity   ( 8031):
+06-11 21:57:36.927 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:57:36.927 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:36.927 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:36.927 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:36.927 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:36.927 I/Unity   ( 8031):
+06-11 21:57:36.928 I/Unity   ( 8031): [RewardController] ✨ REWARD #240 triggered!
+06-11 21:57:36.928 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:36.928 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:36.928 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:36.928 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:36.928 I/Unity   ( 8031):
+06-11 21:57:40.231 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:57:40.231 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:40.231 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:57:40.231 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:57:40.231 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:57:40.231 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:40.231 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:40.231 I/Unity   ( 8031):
+06-11 21:57:40.232 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:57:40.232 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:40.232 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:40.232 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:40.232 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:40.232 I/Unity   ( 8031):
+06-11 21:57:40.232 I/Unity   ( 8031): [RewardController] ✨ REWARD #241 triggered!
+06-11 21:57:40.232 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:40.232 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:40.232 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:40.232 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:40.232 I/Unity   ( 8031):
+06-11 21:57:43.078 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:57:43.078 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:43.078 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:57:43.078 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:57:43.078 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:57:43.078 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:43.078 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:43.078 I/Unity   ( 8031):
+06-11 21:57:43.079 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:57:43.079 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:43.079 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:43.079 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:43.079 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:43.079 I/Unity   ( 8031):
+06-11 21:57:43.079 I/Unity   ( 8031): [RewardController] ✨ REWARD #242 triggered!
+06-11 21:57:43.079 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:43.079 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:43.079 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:43.079 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:43.079 I/Unity   ( 8031):
+06-11 21:57:48.451 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:57:48.451 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:48.451 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:57:48.451 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:57:48.451 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:57:48.451 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:48.451 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:48.451 I/Unity   ( 8031):
+06-11 21:57:48.451 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:57:48.451 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:48.451 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:48.451 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:48.451 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:48.451 I/Unity   ( 8031):
+06-11 21:57:48.452 I/Unity   ( 8031): [RewardController] ✨ REWARD #243 triggered!
+06-11 21:57:48.452 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:48.452 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:48.452 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:48.452 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:48.452 I/Unity   ( 8031):
+06-11 21:57:51.075 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:57:51.075 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:51.075 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:57:51.075 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:57:51.075 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:57:51.075 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:51.075 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:51.075 I/Unity   ( 8031):
+06-11 21:57:51.076 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:57:51.076 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:51.076 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:51.076 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:51.076 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:51.076 I/Unity   ( 8031):
+06-11 21:57:51.076 I/Unity   ( 8031): [RewardController] ✨ REWARD #244 triggered!
+06-11 21:57:51.076 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:51.076 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:51.076 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:51.076 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:51.076 I/Unity   ( 8031):
+06-11 21:57:53.673 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:57:53.673 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:53.673 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:57:53.673 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:57:53.673 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:57:53.673 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:53.673 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:53.673 I/Unity   ( 8031):
+06-11 21:57:53.674 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:57:53.674 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:53.674 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:53.674 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:53.674 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:53.674 I/Unity   ( 8031):
+06-11 21:57:53.674 I/Unity   ( 8031): [RewardController] ✨ REWARD #245 triggered!
+06-11 21:57:53.674 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:53.674 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:53.674 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:53.674 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:53.674 I/Unity   ( 8031):
+06-11 21:57:56.088 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:57:56.088 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:56.088 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:57:56.088 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:57:56.088 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:57:56.088 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:56.088 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:56.088 I/Unity   ( 8031):
+06-11 21:57:56.088 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:57:56.088 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:56.088 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:56.088 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:56.088 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:56.088 I/Unity   ( 8031):
+06-11 21:57:56.088 I/Unity   ( 8031): [RewardController] ✨ REWARD #246 triggered!
+06-11 21:57:56.088 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:57:56.088 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:57:56.088 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:57:56.088 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:57:56.088 I/Unity   ( 8031):
+06-11 21:58:05.432 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:58:05.432 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:05.432 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:58:05.432 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:58:05.432 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:58:05.432 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:05.432 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:05.432 I/Unity   ( 8031):
+06-11 21:58:05.432 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:58:05.432 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:05.432 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:05.432 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:05.432 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:05.432 I/Unity   ( 8031):
+06-11 21:58:05.433 I/Unity   ( 8031): [RewardController] ✨ REWARD #247 triggered!
+06-11 21:58:05.433 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:05.433 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:05.433 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:05.433 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:05.433 I/Unity   ( 8031):
+06-11 21:58:07.709 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:58:07.709 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:07.709 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:58:07.709 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:58:07.709 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:58:07.709 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:07.709 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:07.709 I/Unity   ( 8031):
+06-11 21:58:07.709 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:58:07.709 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:07.709 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:07.709 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:07.709 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:07.709 I/Unity   ( 8031):
+06-11 21:58:07.710 I/Unity   ( 8031): [RewardController] ✨ REWARD #248 triggered!
+06-11 21:58:07.710 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:07.710 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:07.710 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:07.710 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:07.710 I/Unity   ( 8031):
+06-11 21:58:10.305 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:58:10.305 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:10.305 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:58:10.305 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:58:10.305 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:58:10.305 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:10.305 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:10.305 I/Unity   ( 8031):
+06-11 21:58:10.306 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:58:10.306 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:10.306 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:10.306 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:10.306 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:10.306 I/Unity   ( 8031):
+06-11 21:58:10.306 I/Unity   ( 8031): [RewardController] ✨ REWARD #249 triggered!
+06-11 21:58:10.306 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:10.306 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:10.306 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:10.306 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:10.306 I/Unity   ( 8031):
+06-11 21:58:13.138 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:58:13.138 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:13.138 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:58:13.138 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:58:13.138 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:58:13.138 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:13.138 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:13.138 I/Unity   ( 8031):
+06-11 21:58:13.138 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:58:13.138 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:13.138 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:13.138 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:13.138 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:13.138 I/Unity   ( 8031):
+06-11 21:58:13.138 I/Unity   ( 8031): [RewardController] ✨ REWARD #250 triggered!
+06-11 21:58:13.138 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:13.138 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:13.138 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:13.138 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:13.138 I/Unity   ( 8031):
+06-11 21:58:15.832 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:58:15.832 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:15.832 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:58:15.832 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:58:15.832 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:58:15.832 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:15.832 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:15.832 I/Unity   ( 8031):
+06-11 21:58:15.832 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:58:15.832 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:15.832 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:15.832 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:15.832 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:15.832 I/Unity   ( 8031):
+06-11 21:58:15.832 I/Unity   ( 8031): [RewardController] ✨ REWARD #251 triggered!
+06-11 21:58:15.832 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:15.832 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:15.832 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:15.832 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:15.832 I/Unity   ( 8031):
+06-11 21:58:24.995 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:58:24.995 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:24.995 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:58:24.995 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:58:24.995 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:58:24.995 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:24.995 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:24.995 I/Unity   ( 8031):
+06-11 21:58:24.995 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:58:24.995 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:24.995 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:24.995 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:24.995 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:24.995 I/Unity   ( 8031):
+06-11 21:58:24.996 I/Unity   ( 8031): [RewardController] ✨ REWARD #252 triggered!
+06-11 21:58:24.996 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:24.996 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:24.996 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:24.996 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:24.996 I/Unity   ( 8031):
+06-11 21:58:27.189 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:58:27.189 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:27.189 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:58:27.189 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:58:27.189 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:58:27.189 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:27.189 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:27.189 I/Unity   ( 8031):
+06-11 21:58:27.189 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:58:27.189 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:27.189 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:27.189 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:27.189 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:27.189 I/Unity   ( 8031):
+06-11 21:58:27.189 I/Unity   ( 8031): [RewardController] ✨ REWARD #253 triggered!
+06-11 21:58:27.189 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:27.189 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:27.189 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:27.189 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:27.189 I/Unity   ( 8031):
+06-11 21:58:29.952 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:58:29.952 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:29.952 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:58:29.952 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:58:29.952 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:58:29.952 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:29.952 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:29.952 I/Unity   ( 8031):
+06-11 21:58:29.953 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:58:29.953 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:29.953 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:29.953 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:29.953 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:29.953 I/Unity   ( 8031):
+06-11 21:58:29.953 I/Unity   ( 8031): [RewardController] ✨ REWARD #254 triggered!
+06-11 21:58:29.953 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:29.953 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:29.953 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:29.953 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:29.953 I/Unity   ( 8031):
+06-11 21:58:42.823 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:58:42.823 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:42.823 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:58:42.823 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:58:42.823 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:58:42.823 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:42.823 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:42.823 I/Unity   ( 8031):
+06-11 21:58:42.824 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:58:42.824 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:42.824 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:42.824 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:42.824 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:42.824 I/Unity   ( 8031):
+06-11 21:58:42.824 I/Unity   ( 8031): [RewardController] ✨ REWARD #255 triggered!
+06-11 21:58:42.824 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:42.824 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:42.824 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:42.824 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:42.824 I/Unity   ( 8031):
+06-11 21:58:45.114 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:58:45.114 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:45.114 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:58:45.114 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:58:45.114 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:58:45.114 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:45.114 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:45.114 I/Unity   ( 8031):
+06-11 21:58:45.115 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:58:45.115 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:45.115 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:45.115 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:45.115 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:45.115 I/Unity   ( 8031):
+06-11 21:58:45.115 I/Unity   ( 8031): [RewardController] ✨ REWARD #256 triggered!
+06-11 21:58:45.115 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:45.115 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:45.115 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:45.115 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:45.115 I/Unity   ( 8031):
+06-11 21:58:48.460 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:58:48.460 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:48.460 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:58:48.460 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:58:48.460 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:58:48.460 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:48.460 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:48.460 I/Unity   ( 8031):
+06-11 21:58:48.461 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:58:48.461 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:48.461 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:48.461 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:48.461 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:48.461 I/Unity   ( 8031):
+06-11 21:58:48.461 I/Unity   ( 8031): [RewardController] ✨ REWARD #257 triggered!
+06-11 21:58:48.461 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:48.461 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:48.461 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:48.461 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:48.461 I/Unity   ( 8031):
+06-11 21:58:50.750 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:58:50.750 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:50.750 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:58:50.750 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:58:50.750 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:58:50.750 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:50.750 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:50.750 I/Unity   ( 8031):
+06-11 21:58:50.751 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:58:50.751 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:50.751 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:50.751 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:50.751 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:50.751 I/Unity   ( 8031):
+06-11 21:58:50.751 I/Unity   ( 8031): [RewardController] ✨ REWARD #258 triggered!
+06-11 21:58:50.751 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:50.751 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:50.751 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:50.751 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:50.751 I/Unity   ( 8031):
+06-11 21:58:53.375 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:58:53.375 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:53.375 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:58:53.375 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:58:53.375 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:58:53.375 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:53.375 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:53.375 I/Unity   ( 8031):
+06-11 21:58:53.376 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:58:53.376 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:53.376 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:53.376 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:53.376 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:53.376 I/Unity   ( 8031):
+06-11 21:58:53.376 I/Unity   ( 8031): [RewardController] ✨ REWARD #259 triggered!
+06-11 21:58:53.376 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:53.376 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:53.376 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:53.376 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:53.376 I/Unity   ( 8031):
+06-11 21:58:55.472 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:58:55.472 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:55.472 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:58:55.472 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:58:55.472 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:58:55.472 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:55.472 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:55.472 I/Unity   ( 8031):
+06-11 21:58:55.472 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:58:55.472 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:55.472 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:55.472 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:55.472 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:55.472 I/Unity   ( 8031):
+06-11 21:58:55.472 I/Unity   ( 8031): [RewardController] ✨ REWARD #260 triggered!
+06-11 21:58:55.472 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:58:55.472 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:58:55.472 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:58:55.472 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:58:55.472 I/Unity   ( 8031):
+06-11 21:59:01.775 I/Unity   ( 8031): [AVTraining] XR right response detected via Oculus Touch Controller OpenXR/triggerButton.
+06-11 21:59:01.775 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:01.775 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse(InputDeviceCharacteristics, Boolean&, String)
+06-11 21:59:01.775 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectXRControllerResponse()
+06-11 21:59:01.775 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:DetectResponse()
+06-11 21:59:01.775 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:59:01.775 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:01.775 I/Unity   ( 8031):
+06-11 21:59:01.776 I/Unity   ( 8031): [DataLogger] Event logged: reward_triggered
+06-11 21:59:01.776 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:01.776 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:59:01.776 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:59:01.776 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:01.776 I/Unity   ( 8031):
+06-11 21:59:01.776 I/Unity   ( 8031): [RewardController] ✨ REWARD #261 triggered!
+06-11 21:59:01.776 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:01.776 I/Unity   ( 8031): NeglectFix.Utils.RewardController:TriggerReward()
+06-11 21:59:01.776 I/Unity   ( 8031): NeglectFix.Tasks.<RunSingleTrial>d__103:MoveNext()
+06-11 21:59:01.776 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:01.776 I/Unity   ( 8031):
+06-11 21:59:04.164 I/Unity   ( 8031): [DataLogger] Event logged: training_end
+06-11 21:59:04.164 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:04.164 I/Unity   ( 8031): NeglectFix.Tasks.<TrainingPhase>d__37:MoveNext()
+06-11 21:59:04.164 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:04.164 I/Unity   ( 8031):
+06-11 21:59:04.165 I/Unity   ( 8031): [DataLogger] Trial log closed: /storage/emulated/0/Android/data/com.UnityTechnologies.com.unity.template.urpblank/files/training_trials/av_training_2026-06-11_21-47-08.csv (283 trials).
+06-11 21:59:04.165 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:04.165 I/Unity   ( 8031): NeglectFix.Utils.DataLogger:CloseTrialFile()
+06-11 21:59:04.165 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:OnTrainingPhaseEnd()
+06-11 21:59:04.165 I/Unity   ( 8031): NeglectFix.Tasks.<TrainingPhase>d__37:MoveNext()
+06-11 21:59:04.165 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:04.165 I/Unity   ( 8031):
+06-11 21:59:04.165 I/Unity   ( 8031): [ProgramScheduler] ✓ Program phase complete (1/1).
+06-11 21:59:04.165 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:04.165 I/Unity   ( 8031): NeglectFix.Tasks.ProgramScheduler:RecordSessionComplete()
+06-11 21:59:04.165 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:OnTrainingPhaseEnd()
+06-11 21:59:04.165 I/Unity   ( 8031): NeglectFix.Tasks.<TrainingPhase>d__37:MoveNext()
+06-11 21:59:04.165 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:04.165 I/Unity   ( 8031):
+06-11 21:59:04.166 I/Unity   ( 8031): [ProgramScheduler] Session 1 of 1 complete. Next session due: 2026-06-13 01:59.
+06-11 21:59:04.166 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:04.166 I/Unity   ( 8031): NeglectFix.Tasks.ProgramScheduler:RecordSessionComplete()
+06-11 21:59:04.166 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:OnTrainingPhaseEnd()
+06-11 21:59:04.166 I/Unity   ( 8031): NeglectFix.Tasks.<TrainingPhase>d__37:MoveNext()
+06-11 21:59:04.166 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:04.166 I/Unity   ( 8031):
+06-11 21:59:04.167 I/Unity   ( 8031): [AVTraining] Session complete. 283 recorded trials (259 rehab, 24 controls). Rehab: 230/259 (89 %). Controls: 24/24 (100 %). Final staircase: 11.85 LogCS.
+06-11 21:59:04.167 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:04.167 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:OnTrainingPhaseEnd()
+06-11 21:59:04.167 I/Unity   ( 8031): NeglectFix.Tasks.<TrainingPhase>d__37:MoveNext()
+06-11 21:59:04.167 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:04.167 I/Unity   ( 8031):
+06-11 21:59:04.167 I/Unity   ( 8031): [AudioVisualTraining_ParadigmB] Training complete!
+06-11 21:59:04.167 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:04.167 I/Unity   ( 8031): NeglectFix.Tasks.<TrainingPhase>d__37:MoveNext()
+06-11 21:59:04.167 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:04.167 I/Unity   ( 8031):
+06-11 21:59:04.167 I/Unity   ( 8031): [AudioVisualTraining_ParadigmB] === COOL-DOWN PHASE ===
+06-11 21:59:04.167 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:04.167 I/Unity   ( 8031): NeglectFix.Tasks.<CooldownPhase>d__38:MoveNext()
+06-11 21:59:04.167 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:04.167 I/Unity   ( 8031): NeglectFix.Tasks.<RunSessionSequence>d__34:MoveNext()
+06-11 21:59:04.167 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:04.167 I/Unity   ( 8031):
+06-11 21:59:04.168 I/Unity   ( 8031): Relax and let your brain consolidate what you learned.
+06-11 21:59:04.168 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:04.168 I/Unity   ( 8031): NeglectFix.Tasks.<CooldownPhase>d__38:MoveNext()
+06-11 21:59:04.168 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:04.168 I/Unity   ( 8031): NeglectFix.Tasks.<RunSessionSequence>d__34:MoveNext()
+06-11 21:59:04.168 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:04.168 I/Unity   ( 8031):
+06-11 21:59:04.168 I/Unity   ( 8031): Duration: 5 seconds (0.1 minutes)
+06-11 21:59:04.168 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:04.168 I/Unity   ( 8031): NeglectFix.Tasks.<CooldownPhase>d__38:MoveNext()
+06-11 21:59:04.168 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:04.168 I/Unity   ( 8031): NeglectFix.Tasks.<RunSessionSequence>d__34:MoveNext()
+06-11 21:59:04.168 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:04.168 I/Unity   ( 8031):
+06-11 21:59:04.168 I/Unity   ( 8031): [DataLogger] Event logged: cooldown_start_AudioVisualTraining_ParadigmB
+06-11 21:59:04.168 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:04.168 I/Unity   ( 8031): NeglectFix.Tasks.<CooldownPhase>d__38:MoveNext()
+06-11 21:59:04.168 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:04.168 I/Unity   ( 8031): NeglectFix.Tasks.<RunSessionSequence>d__34:MoveNext()
+06-11 21:59:04.168 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:04.168 I/Unity   ( 8031):
+06-11 21:59:09.176 I/Unity   ( 8031): [DataLogger] Event logged: cooldown_end
+06-11 21:59:09.176 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:09.176 I/Unity   ( 8031): NeglectFix.Tasks.<CooldownPhase>d__38:MoveNext()
+06-11 21:59:09.176 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:09.176 I/Unity   ( 8031):
+06-11 21:59:09.176 I/Unity   ( 8031): [AudioVisualTraining_ParadigmB] Cool-down complete!
+06-11 21:59:09.176 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:09.176 I/Unity   ( 8031): NeglectFix.Tasks.<CooldownPhase>d__38:MoveNext()
+06-11 21:59:09.176 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:09.176 I/Unity   ( 8031):
+06-11 21:59:09.177 I/Unity   ( 8031): [DataLogger] Event logged: session_end
+06-11 21:59:09.177 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:09.177 I/Unity   ( 8031): NeglectFix.Utils.DataLogger:StopLogging()
+06-11 21:59:09.177 I/Unity   ( 8031): NeglectFix.Tasks.TaskManager:OnTaskCompleted()
+06-11 21:59:09.177 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:OnTaskCompleted()
+06-11 21:59:09.177 I/Unity   ( 8031): NeglectFix.Tasks.<RunSessionSequence>d__34:MoveNext()
+06-11 21:59:09.177 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:09.177 I/Unity   ( 8031):
+06-11 21:59:09.177 I/Unity   ( 8031): [DataLogger] Logging stopped. 6744 samples logged to: /storage/emulated/0/Android/data/com.UnityTechnologies.com.unity.template.urpblank/files/Logs/session_2026-06-11_21-46-40.csv
+06-11 21:59:09.177 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:09.177 I/Unity   ( 8031): NeglectFix.Utils.DataLogger:StopLogging()
+06-11 21:59:09.177 I/Unity   ( 8031): NeglectFix.Tasks.TaskManager:OnTaskCompleted()
+06-11 21:59:09.177 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:OnTaskCompleted()
+06-11 21:59:09.177 I/Unity   ( 8031): NeglectFix.Tasks.<RunSessionSequence>d__34:MoveNext()
+06-11 21:59:09.177 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:09.177 I/Unity   ( 8031):
+06-11 21:59:09.177 I/Unity   ( 8031): === SESSION SUMMARY ===
+06-11 21:59:09.177 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:09.177 I/Unity   ( 8031): NeglectFix.Tasks.TaskManager:ShowSessionSummary()
+06-11 21:59:09.177 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:OnTaskCompleted()
+06-11 21:59:09.177 I/Unity   ( 8031): NeglectFix.Tasks.<RunSessionSequence>d__34:MoveNext()
+06-11 21:59:09.177 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:09.177 I/Unity   ( 8031):
+06-11 21:59:09.178 I/Unity   ( 8031): Task: AudioVisualTraining_ParadigmB (Level 1)
+06-11 21:59:09.178 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:09.178 I/Unity   ( 8031): NeglectFix.Tasks.TaskManager:ShowSessionSummary()
+06-11 21:59:09.178 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:OnTaskCompleted()
+06-11 21:59:09.178 I/Unity   ( 8031): NeglectFix.Tasks.<RunSessionSequence>d__34:MoveNext()
+06-11 21:59:09.178 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:09.178 I/Unity   ( 8031):
+06-11 21:59:09.178 I/Unity   ( 8031): Total duration: 12.5 minutes
+06-11 21:59:09.178 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:09.178 I/Unity   ( 8031): NeglectFix.Tasks.TaskManager:ShowSessionSummary()
+06-11 21:59:09.178 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:OnTaskCompleted()
+06-11 21:59:09.178 I/Unity   ( 8031): NeglectFix.Tasks.<RunSessionSequence>d__34:MoveNext()
+06-11 21:59:09.178 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:09.178 I/Unity   ( 8031):
+06-11 21:59:09.178 I/Unity   ( 8031): Total rewards: 261
+06-11 21:59:09.178 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:09.178 I/Unity   ( 8031): NeglectFix.Tasks.TaskManager:ShowSessionSummary()
+06-11 21:59:09.178 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:OnTaskCompleted()
+06-11 21:59:09.178 I/Unity   ( 8031): NeglectFix.Tasks.<RunSessionSequence>d__34:MoveNext()
+06-11 21:59:09.178 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:09.178 I/Unity   ( 8031):
+06-11 21:59:09.179 I/Unity   ( 8031): Data logged to: /storage/emulated/0/Android/data/com.UnityTechnologies.com.unity.template.urpblank/files/Logs/session_2026-06-11_21-46-40.csv
+06-11 21:59:09.179 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:09.179 I/Unity   ( 8031): NeglectFix.Tasks.TaskManager:ShowSessionSummary()
+06-11 21:59:09.179 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:OnTaskCompleted()
+06-11 21:59:09.179 I/Unity   ( 8031): NeglectFix.Tasks.<RunSessionSequence>d__34:MoveNext()
+06-11 21:59:09.179 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:09.179 I/Unity   ( 8031):
+06-11 21:59:09.179 I/Unity   ( 8031): =======================
+06-11 21:59:09.179 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:09.179 I/Unity   ( 8031): NeglectFix.Tasks.TaskManager:ShowSessionSummary()
+06-11 21:59:09.179 I/Unity   ( 8031): NeglectFix.Tasks.AudioVisualTraining:OnTaskCompleted()
+06-11 21:59:09.179 I/Unity   ( 8031): NeglectFix.Tasks.<RunSessionSequence>d__34:MoveNext()
+06-11 21:59:09.179 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:09.179 I/Unity   ( 8031):
+06-11 21:59:09.180 I/Unity   ( 8031): [AudioVisualTraining_ParadigmB] Session completed! Total time: 12.5 minutes
+06-11 21:59:09.180 I/Unity   ( 8031): UnityEngine.DebugLogHandler:Internal_Log(LogType, LogOption, String, Object)
+06-11 21:59:09.180 I/Unity   ( 8031): NeglectFix.Tasks.<RunSessionSequence>d__34:MoveNext()
+06-11 21:59:09.180 I/Unity   ( 8031): UnityEngine.SetupCoroutine:InvokeMoveNext(IEnumerator, IntPtr)
+06-11 21:59:09.180 I/Unity   ( 8031):
