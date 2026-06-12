@@ -3,7 +3,7 @@
 Compiled knowledge base for the NegletFix project (VR audiovisual + EEG neurofeedback rehabilitation for left homonymous hemianopia). Both a development reference and Eric's personal medical record.
 
 **Last compiled**: 2026-04-14
-**Last research audit**: 2026-05-26 — research-operations sprint added YouTube/X validation ladder, source queue, daily-function tracker, QEEG/tPBM watchlist, and medication doctor brief.
+**Last research audit**: 2026-06-11 — clinical-trials watchlist added for AV+tDCS, audiovisual/multisensory training, visual restoration, and neuromodulation leads. Key status correction: NCT04963075 is now completed with posted results; NCT05894434 is not yet recruiting; NCT06116760 is the completed exact AV+tDCS chronic HVFD trial linked to Diana 2025.
 **Last implementation update**: 2026-05-31 — Quest AV training now has sparse right controls, headset-validated 5-minute, 8-minute, and 12-minute dose ramps, PlayMode validation, Wi-Fi ADB validation, pulled control-ramp CSVs, and a GSAP-enhanced HTML evidence report with field-map modes. Next build is the separate quick field-mapping calibration scene; see [[audiovisual-training-protocol]], [[unity-architecture]], [[hardware-setup]], and [[rehabilitation-roadmap]].
 **Karpathy principle**: *Query, don't load.* Read pages by name as you need them. Do not preload the whole wiki — the whole point is that it lives in files, not in a working-memory dump.
 
@@ -35,7 +35,8 @@ Cross-links between wiki pages use `[[wikilinks]]`. Code references use `path:li
 | [[unity-architecture]] | Unity architecture and runtime state; **2026-05-31**: sparse control-trial logging, 5-minute Session1 control-ramp scene, QuickReadyCheck remains left-only | **2026-05-31** | HIGH |
 | [[rehabilitation-roadmap]] | Honest DONE / NEXT / UNKNOWN progress map; **2026-05-31**: AV training has sparse controls and headset-validated 5-minute, 8-minute, and 12-minute ramps; next is quick field-mapping calibration + subjective tolerance report + repeat-12 vs 15-minute ramp decision | **2026-05-31** | MIXED |
 | [[hardware-setup]] | Quest + Muse + Mind Monitor + Mac, OSC port 5000, Quest ADB/MQDH/Wi-Fi workflow, troubleshooting table | **2026-05-30** | HIGH |
-| [[research-papers-index]] | Every cited paper — full citation, DOI, key finding, NegletFix relevance; **2026-05-14**: 3 citation corrections (Cuppini→Magosso, Elliott 1990→1991, Robineau 2017→2014) + 20+ new PubMed-verified entries | **2026-05-14** | HIGH (citations now verified) |
+| [[research-papers-index]] | Every cited paper — full citation, DOI, key finding, NegletFix relevance; **2026-06-11**: AV+tDCS and visual-restoration clinical-trial status refresh added | **2026-06-11** | HIGH (citations now verified) |
+| [[clinical-trials-watchlist]] | Live-tracked NCT registry watchlist for AV+tDCS, AV/multisensory, VRT, VR cross-modal, and neuromodulation trials; source CSV in `docs/research/clinical-trials-watchlist-2026-06-11.csv` | **2026-06-11** | HIGH for registry status / MIXED for protocol impact |
 | [[pharmacological-adjuncts]] | Medication adjuncts and doctor-conversation boundary; **2026-05-26**: refreshed against DARS/ESTREL levodopa evidence and 2024 fluoxetine IPD meta-analysis; no medication promoted for chronic HH recovery | **2026-05-26** | MIXED |
 
 ---
@@ -87,6 +88,9 @@ Updated 2026-05-26 with medication-adjunct caution entries from the doctor-brief
 | Topics in Stroke Rehab (2020) | ✓ 10.1080/10749357.2020.1716531 | Ecological VR training |
 | Treves et al. (2025) ★ | PMID 40246295 | Consumer-NF meta-analysis (null) |
 | Wake Forest / Rowland & Stein | N/A (trials) | Alternative AV parameters |
+| NCT06116760 | ClinicalTrials.gov | Completed AV+tDCS chronic HVFD trial; exact adjunct lead |
+| NCT04963075 | ClinicalTrials.gov | Completed Wake Forest multisensory rehab with posted results |
+| NCT07358832 | ClinicalTrials.gov | Recruiting subacute AV+tDCS trial to watch |
 | Yang/Cavanaugh/Saionz et al. (2023) ★ | PMC10491352 (preprint) | Chronic CS reality check (n=12) |
 | Yang/Fiebelkorn/Kastner et al. (2024) ★ | PNAS 121(45):e2313304121 | Alpha-gating mechanism (ECoG) |
 | Zeri et al. (2018) ★ | PMID 28639086 | LCD-vs-printed Pelli-Robson divergence |
@@ -106,6 +110,7 @@ Source: `.brain/index.json`, updated after the 2026-05-31 sparse-control/dose-ra
 | EEG Integration (hardware) | planned | ⚪ gray | — | Requires Muse + Mind Monitor + extOSC install |
 | Audiovisual Training Module | control-ramp-headset-validated | 🟡 yellow | `Unity/NeglectFix/Assets/Scripts/Tasks/AudioVisualTraining.cs` | Guided Quest pilot completed 2026-05-30; sparse right controls + 5-minute, 8-minute, and 12-minute ramps implemented, PlayMode-tested, rebuilt, and Quest-run passed 2026-05-31 |
 | Field Mapping Calibration | planned-next | ⚪ gray | planned separate scene | Next build: fixed cross + controlled left/right/up/down points + richer per-trial spatial/head-pose logging |
+| Research Watchlist | operational | 🟢 green | `docs/research/clinical-trials-watchlist-2026-06-11.csv` / `[[clinical-trials-watchlist]]` | Clinical-trial tracking now data-backed; no automation created yet |
 | Quest VR Deployment | operational | 🟢 green | `Builds/AVTrainingSession1Pilot.apk` / `Builds/AVTrainingQuickReadyCheck.apk` | Quest 2 USB ADB authorized; MQDH restored USB handshake; Wi-Fi ADB helper available in `scripts/quest-adb.sh` |
 | Reward Controller + Gaze Detector | implemented | 🟡 yellow | `Unity/NeglectFix/Assets/Scripts/Utils/` | Code written, will be exercised by AV training task |
 | Data Logger | implemented | 🟡 yellow | `Unity/NeglectFix/Assets/Scripts/Utils/DataLogger.cs` | CSV export wired, 10 Hz logging, AV trial rows split by rehab/control flags |

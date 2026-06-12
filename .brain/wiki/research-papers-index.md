@@ -1,6 +1,6 @@
 ---
 title: Research Papers Index
-last_updated: 2026-05-14
+last_updated: 2026-06-11
 confidence: MIXED
 sources:
   - RESEARCH_SUMMARY.md
@@ -12,6 +12,7 @@ sources:
   - CLAUDE.md
   - .brain/cross-cutting.md
   - 2026-05-14 PubMed-verified research audit (see Recent Additions section)
+  - 2026-06-11 PubMed + ClinicalTrials.gov refresh for AV+tDCS, AV multisensory, VRT, and VR cross-modal trials
 ---
 
 # Research Papers Index
@@ -194,7 +195,8 @@ Confidence applies to the paper's evidentiary weight for this specific project, 
 **DOI**: N/A (clinical trials, not papers)
 **Key finding**: 500ms stimuli at 45° eccentricity, 600 trials/session; recovery began within 3-5 sessions in the blind hemifield.
 **Informs**: [[audiovisual-training-protocol]] — alternative/complementary parameter set to Daibert-Nido.
-**Confidence for NegletFix**: MEDIUM (trial status as "ongoing" inherited from earlier sources; verify on ClinicalTrials.gov before re-citing as active). The mechanism work is now confirmed in **Rowland, Bushnell, Duncan & Stein (2023)** — see new entry below — and **Bean, Stein & Rowland (2023)** Cerebral Cortex animal-model paper.
+**ClinicalTrials.gov status refresh (2026-06-11)**: [NCT04963075](https://clinicaltrials.gov/study/NCT04963075) is **completed with posted results**; [NCT05894434](https://clinicaltrials.gov/study/NCT05894434) is **not yet recruiting**. The older "ongoing" status should no longer be reused without a fresh registry check. The NCT04963075 posted primary outcome reports affected-field detected points increasing from 14.0 mean at start to 63.6 mean at end of study, with high variance and n=5. See [[clinical-trials-watchlist]].
+**Confidence for NegletFix**: MEDIUM (direct condition/protocol fit, but small/high-variance human evidence). The mechanism work is now confirmed in **Rowland, Bushnell, Duncan & Stein (2023)** — see new entry below — and **Bean, Stein & Rowland (2023)** Cerebral Cortex animal-model paper.
 
 ---
 
@@ -257,10 +259,51 @@ The following entries were added after the deep research audit on 2026-05-14. Ea
 ## Diana et al. (2025) — AV training + tDCS RCT in chronic HVFD
 
 **Citation**: Diana L, et al. Enhancing multisensory rehabilitation of visual field defects with transcranial direct current stimulation: A randomized clinical trial. *European Journal of Neurology*. 2025.
-**DOI**: 10.1111/ene.16559 — PMC11625917 (verified 2026-05-14)
+**DOI**: 10.1111/ene.16559 — PMID: 39607286 — PMC11625917 — [NCT06116760](https://clinicaltrials.gov/study/NCT06116760) (registry status refreshed 2026-06-11)
 **Key finding**: n=18 chronic HVFDs. 2-week AV compensatory training with ipsilesional occipital OR parietal anodal tDCS (or sham), 2 h/day × 10 days. **Occipital tDCS produced longer-lasting effects on blind-hemifield visual processing.**
 **Informs**: [[audiovisual-training-protocol]] (potential adjunct), [[rehabilitation-roadmap]] (chronic-actionable evidence tier).
-**Confidence for NegletFix**: MEDIUM-HIGH (RCT, chronic, condition-matched). tDCS hardware is separate from Quest/Muse — would require additional kit.
+**Confidence for NegletFix**: MEDIUM-HIGH as an adjunct signal (RCT, chronic, condition-matched, but n=18). tDCS hardware/montage/safety is separate from Quest/Muse and requires clinician supervision; it should not be added to NegletFix before a clean open-loop behavioral baseline and plateau.
+
+---
+
+## Clinical Trial Refresh (2026-06-11) — tDCS, AV, VRT, VR cross-modal
+
+Source map: [[clinical-trials-watchlist]] and `docs/research/clinical-trials-watchlist-2026-06-11.csv`.
+
+### NCT06116760 — exact AV+tDCS chronic HVFD lead
+
+**Trial**: [Anodal tDCS With Compensatory Audio-visual Training for Acquired Visual Field Defects After Brain Injury](https://clinicaltrials.gov/study/NCT06116760)
+**Status on 2026-06-11**: Completed; registry results not posted.
+**Linked paper**: Diana et al. 2025, PMID 39607286.
+**Key finding**: small randomized chronic-HVFD trial supports occipital/parietal anodal tDCS as an adjunct to AV training, with the strongest lasting blind-field detection signal for occipital tDCS.
+**NegletFix implication**: clinician-supervised adjunct question only; no home tDCS protocol change.
+
+### NCT04963075 — Wake Forest AV multisensory line
+
+**Trial**: [Multisensory Rehabilitation of Hemianopia](https://clinicaltrials.gov/study/NCT04963075)
+**Status on 2026-06-11**: Completed with posted results.
+**Linked paper**: Rowland et al. 2023, PMID 36604169.
+**Posted primary outcome**: affected-field detected points increased from 14.0 mean at start to 63.6 mean at end of study; intact field stayed near ceiling.
+**NegletFix implication**: supports the audiovisual core, but remains small and high-variance.
+
+### NCT07358832 — active subacute AV+tDCS trial
+
+**Trial**: [Neuromodulation Through Multisensory Stimulation for Visual Field Deficits in the Subacute Stage of Disease](https://clinicaltrials.gov/study/NCT07358832)
+**Status on 2026-06-11**: Recruiting.
+**Key feature**: subacute stroke HVFD patients receive AV training plus real or sham occipital tDCS.
+**NegletFix implication**: important watchlist item, but Eric's case is chronic, not subacute.
+
+### NCT02935413 — subacute tDCS+VRT pilot
+
+**Trial**: [Combined tDCS and Vision Restoration Training in Subacute Stroke Rehabilitation](https://clinicaltrials.gov/study/NCT02935413)
+**Linked paper**: [PMID 28082176](https://pubmed.ncbi.nlm.nih.gov/28082176/).
+**Key finding**: open-label subacute PCA-stroke pilot, 7 tDCS/VRT patients versus 7 matched controls; safe/accepted and larger perimetry recovery reported.
+**NegletFix implication**: early-window adjunct evidence, not directly transferable to a chronic home protocol.
+
+### NCT03350919 and NCT04230486 — comparator trials
+
+**NCT03350919**: completed blind-field visual training trial with posted Humphrey PMD results; useful as a visual-restoration comparator and measurement-design reference.
+**NCT04230486**: completed VR cross-modal rehabilitation trial with posted outcomes; useful Quest/cross-modal comparator, but extract effect sizes before citing strongly.
 
 ---
 
@@ -464,7 +507,7 @@ Refreshed 2026-05-26 — medication-adjunct caution entries added after the doct
 | Arch PM&R meta | 2024 | (article ID S0003-9993(24)01311-X) | MEDIUM | VR stroke breadth |
 | Topics Stroke Rehab | 2020 | 10.1080/10749357.2020.1716531 | MEDIUM | Ecological VR |
 | Network Neuroscience | 2022 | (MIT direct/netn/6/1/69) | MEDIUM | EEG spectral signature in neglect |
-| Wake Forest trials | ongoing | N/A | MEDIUM (status unverified — see entry) | Alternative AV parameters |
+| Wake Forest trials | refreshed 2026-06-11 | NCT04963075 / NCT05894434 | MEDIUM | Alternative AV parameters; NCT04963075 completed with results, NCT05894434 not yet recruiting |
 
 ### Added in 2026-05-14 audit
 | Paper | Year | DOI / PMID | Confidence | Primary Use |
@@ -496,6 +539,8 @@ Refreshed 2026-05-26 — medication-adjunct caution entries added after the doct
 ✱ = citation corrected in 2026-05-14 audit. Previous entries had wrong first author or year.
 
 **Follow-up open items**:
-- Verify status of Wake Forest trials (NCT04963075, NCT05894434) on ClinicalTrials.gov — last referenced as "ongoing" but unverified since 2022.
+- Maintain [[clinical-trials-watchlist]] monthly or quarterly; NCT04963075 and NCT05894434 status was refreshed 2026-06-11.
+- Watch for posted registry results or replication of NCT06116760 / Diana AV+tDCS.
+- Watch NCT07358832 as the active AV+tDCS subacute trial.
 - Watch for larger FLUORESCE follow-up trial registration (Schneider/Mahon/Sahin group, Rochester).
 - Watch for adult-stroke replication of the Daibert-Nido 3D-MOT-IVR paradigm at adequate power.

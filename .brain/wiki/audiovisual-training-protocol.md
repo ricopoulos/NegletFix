@@ -1,6 +1,6 @@
 ---
 title: Audiovisual Training Protocol (Daibert-Nido family)
-last_updated: 2026-05-31
+last_updated: 2026-06-11
 confidence: MIXED
 sources:
   - NEUROFEEDBACK_PROTOCOL.md
@@ -11,6 +11,7 @@ sources:
   - .brain/backlog.md
   - 2026-05-14 research audit — see [[research-papers-index]] Recent Additions
   - .brain/sessions/2026-05-30-quest-guided-pilot-wrap.md
+  - 2026-06-11 ClinicalTrials.gov/PubMed refresh — see [[clinical-trials-watchlist]]
 ---
 
 # Audiovisual Training Protocol
@@ -21,11 +22,13 @@ The primary intervention in NegletFix. Originally based on Daibert-Nido et al. (
 - **Daibert-Nido 2021** — N=2 pediatric, 3D-MOT in IVR (~5 hr total). Original anchor.
 - **Misawa/Daibert-Nido 2024 EClinicalMedicine** — N=10 pediatric on **Meta Quest 2/Pro at home**, 6 weeks, 9/10 with clinically meaningful gains, durable at 6 months. Validates Eric's hardware choice for home delivery.
 - **Alharshan/Alwashmi 2026 NeuroImage** — N=15 adult stroke HH, **30 min/day × 5 days/wk × 6 weeks (15 hr total, ~3× Daibert-Nido)**, with DTI evidence of microstructural change. First mechanism paper in stroke.
-- **Diana 2025 Eur J Neurol** — N=18 chronic HVFDs, AV training + tDCS RCT. Adjunct evidence.
+- **Diana 2025 Eur J Neurol / NCT06116760** — N=18 chronic HVFDs, AV training + tDCS RCT. Adjunct evidence only; does not justify DIY/home tDCS.
 - **Rowland/Bushnell/Duncan/Stein 2023 J Neurosci** — N=2 chronic stroke (≥8 mo), 2-h sessions, "dramatic" recovery throughout blind field. Alternative paradigm.
 - **Yang/Cavanaugh/Saionz/Huxlin 2023 medRxiv** — N=12 chronic V1 stroke, **only 58% responded at any trained location, blind-field CS stayed ~4× lower than intact-field**. Critical reality check.
 
 See [[research-papers-index]] for full citations.
+
+> **Clinical-trial refresh (2026-06-11)**: [[clinical-trials-watchlist]] now tracks the AV+tDCS, AV multisensory, VRT, and VR cross-modal trial lane. Key correction: Wake Forest [NCT04963075](https://clinicaltrials.gov/study/NCT04963075) is completed with posted results; [NCT05894434](https://clinicaltrials.gov/study/NCT05894434) is not yet recruiting; [NCT06116760](https://clinicaltrials.gov/study/NCT06116760) is the completed exact chronic HVFD AV+tDCS trial linked to Diana 2025.
 
 > **⚠ Reframing (2026-05-14)**: This page previously presented Daibert-Nido 2021 as the "anchor" producing reliable +0.31 to +0.54 LogCS gains, with HIGH confidence. That was overstated. The effect-size range is plausible but **not independently replicated at scale in chronic adult stroke**. Realistic targets for Eric's chronic case: detection-RT improvements, ADL transfer, and modest CS gains at the scotoma border — not a left-field LogCS jump from 0.00 to anywhere near the intact field's 2.25.
 
@@ -361,7 +364,7 @@ See `NEUROFEEDBACK_PROTOCOL.md:190-208` and `RewardController.cs` in [[unity-arc
 | Eric will hit the cohort-mean Daibert-Nido number | LOW | Pediatric → chronic adult transfer is the weak link |
 | Gain will generalize to central vision / "gray overlay" | THEORETICAL — unvalidated hypothesis, see [[scientific-foundation]] |
 | Adding EEG closed-loop improves outcomes vs. open-loop | MEDIUM — REINVENT 2019 + Chen 2026 meta-analysis suggest yes for motor; untested for hemianopia AV; Treves 2025 tempers consumer-NF claims |
-| Adding tDCS adjunct improves outcomes (Diana 2025) | MEDIUM-HIGH for chronic HVFD; hardware not part of NegletFix |
+| Adding tDCS adjunct improves outcomes (Diana 2025 / NCT06116760) | MEDIUM-HIGH as clinician-supervised adjunct signal; **not** part of NegletFix until behavior-only baseline/plateau and medical review |
 
 ---
 

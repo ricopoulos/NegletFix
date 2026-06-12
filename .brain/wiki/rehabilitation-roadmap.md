@@ -1,6 +1,6 @@
 ---
 title: Rehabilitation Roadmap
-last_updated: 2026-05-31
+last_updated: 2026-06-11
 confidence: MIXED
 sources:
   - .brain/index.json
@@ -11,6 +11,7 @@ sources:
   - NEUROFEEDBACK_PROTOCOL.md
   - 2026-05-14 PubMed-verified audit — see [[research-papers-index]] Recent Additions
   - .brain/sessions/2026-05-30-quest-guided-pilot-wrap.md
+  - 2026-06-11 clinical-trials watchlist refresh — see [[clinical-trials-watchlist]]
 ---
 
 # Rehabilitation Roadmap
@@ -184,10 +185,20 @@ Currently `status: planned`, `health: gray` in `.brain/index.json:16-20`:
 ## 3. UNKNOWN / AT RISK [LOW — be honest]
 
 ### Potential adjuncts (not currently in the build, worth tracking)
-Added 2026-05-14:
+Added 2026-05-14; registry refreshed 2026-06-11:
 - **cf-tACS V1↔MT** (Raffin 2025 Brain, n=16 chronic): forward cf-tACS + motion training expanded kinetic field borders faster than typical VPL. **Not actionable for home setup** — tACS hardware separate, expert placement required, no consumer-grade equivalent. But a strong "if we ever get clinic time" option.
-- **Anodal tDCS over ipsilesional occipital cortex** (Diana 2025 Eur J Neurol, n=18 chronic): added value over AV training alone, 2 h/day × 10 days. tDCS hardware ~€500–2000 for consumer/research-grade kits (HeadCap, Soterix). Discuss with Eric's neurologist before any DIY adoption — current is small but non-zero risk.
+- **Anodal tDCS over ipsilesional occipital cortex** (Diana 2025 Eur J Neurol / [NCT06116760](https://clinicaltrials.gov/study/NCT06116760), n=18 chronic): added value over AV training alone, 2 h/day × 10 days. tDCS hardware/montage/safety is separate from Quest/Muse. Discuss with Eric's neurologist before any adoption. Current status: **clinician-supervised adjunct candidate only**, not a home protocol change.
+- **Active AV+tDCS trial to watch**: [NCT07358832](https://clinicaltrials.gov/study/NCT07358832), recruiting subacute stroke HVFD patients for AV training plus real/sham occipital tDCS. Important future evidence, but not Eric's chronic window.
 - **Pharmacological adjuncts**: see [[pharmacological-adjuncts]] (already separate). Levodopa, fluoxetine, citicoline — all have weak/conflicting evidence for chronic visual rehab; neurologist conversation territory only.
+
+### Research tracking system [operational-lite, 2026-06-11]
+
+The research watchlist is now data-backed rather than only narrative:
+- Wiki source of truth: [[clinical-trials-watchlist]]
+- Structured CSV: `docs/research/clinical-trials-watchlist-2026-06-11.csv`
+- Source queue integration: `docs/research/source-queue-2026-05-25.csv` now includes CTG trial rows.
+
+Recommended next system step: generate a static HTML dashboard from the CSV before creating automation. A monthly Codex automation is appropriate once the fields are stable; it should report registry/PubMed changes and proposed diffs, not auto-change the medical protocol.
 
 ### Muse signal quality on Eric specifically [DOWNGRADED to HIGH risk, 2026-05-14]
 Ros et al. 2017 used medical-grade EEG. Muse is consumer-grade dry-electrode. **Sokolova 2024 + Pavlov 2024 device comparisons rank Muse S last among consumer EEG devices on signal quality** — log-SNR significantly lower than research-grade, weak alpha-spindle detection even eyes-closed. Treves 2025 JMIR meta (16 RCTs, 11 used Muse) showed null cognitive effects under sham control. The combination — weak signal + weak meta-analytic effects — argues for treating EEG-NF as exploratory only. **First session priority**: validate signal quality on Eric's head (visible eyes-open vs eyes-closed alpha modulation) before counting Muse data.
@@ -238,6 +249,7 @@ The project has the hardware, the research base, the instrument, the baseline, a
 9. **Complete the 30-session Alharshan-style program** with mid-course quick-checks every 5 sessions if tolerated.
 10. **Post-program full re-assessment** — compare to 2025-12-15 baseline.
 11. **Document outcome honestly** — whatever the result is, log it.
+12. **Refresh clinical-trial watchlist monthly or after major PubMed hits** — update [[clinical-trials-watchlist]] only when status, posted results, or protocol-impact claims change.
 
 ---
 
@@ -246,6 +258,7 @@ The project has the hardware, the research base, the instrument, the baseline, a
 - Where we start: [[erics-baseline]]
 - The instrument that tracks us: [[contrast-sensitivity-test]]
 - The main intervention: [[audiovisual-training-protocol]]
+- External evidence monitor: [[clinical-trials-watchlist]]
 - The optional closed-loop layer: [[eeg-neurofeedback]]
 - Theoretical backbone: [[scientific-foundation]]
 - Build details: [[unity-architecture]]
