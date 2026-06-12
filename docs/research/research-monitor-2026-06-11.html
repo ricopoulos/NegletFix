@@ -462,7 +462,7 @@
 
   .intake-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 12px;
   }
 
@@ -657,16 +657,16 @@
           </div>
           <div class="decision-cell">
             <strong>Evidence posture</strong>
-            <span>YouTube/X generate leads; PMID/NCT/guidelines are required before protocol claims.</span>
+            <span>YouTube/X/LinkedIn generate leads; PMID/NCT/arXiv/DOI/guidelines are required before protocol claims.</span>
           </div>
         </div>
       </div>
 
       <aside class="scoreboard" aria-label="Research monitor metrics">
         <div class="metric">
-          <span class="num">27</span>
+          <span class="num">28</span>
           <span class="label">tracked source rows</span>
-          <span class="note">YouTube, X discovery, and ClinicalTrials.gov intake now sit in one queue.</span>
+          <span class="note">YouTube, X discovery, LinkedIn/arXiv, and ClinicalTrials.gov intake now sit in one queue.</span>
         </div>
         <div class="metric">
           <span class="num">9</span>
@@ -757,8 +757,8 @@
       <div class="section-head">
         <div>
           <div class="kicker">Research flow</div>
-          <h2 id="flow-title">YouTube and X are part of intake, not proof.</h2>
-          <p>They are useful because they surface patient language, clinician names, trial mentions, and paper links. They become evidence only after verification.</p>
+          <h2 id="flow-title">YouTube, X, and LinkedIn are part of intake, not proof.</h2>
+          <p>They are useful because they surface patient language, clinician names, trial mentions, AI-method leads, and paper links. They become evidence only after verification.</p>
         </div>
       </div>
 
@@ -766,7 +766,7 @@
         <div class="step">
           <b>01</b>
           <strong>Discover</strong>
-          <span>YouTube, X search queries, podcasts, lab pages, and clinician talks generate leads.</span>
+          <span>YouTube, X search queries, LinkedIn posts, podcasts, lab pages, and clinician talks generate leads.</span>
         </div>
         <div class="step">
           <b>02</b>
@@ -812,6 +812,16 @@
           </div>
         </article>
         <article class="intake-card">
+          <span class="count">1</span>
+          <h3>LinkedIn / arXiv leads</h3>
+          <p>Used for traceable technical-method leads, such as EEG foundation models, after resolving to paper/code/model-card sources.</p>
+          <div class="tag-row">
+            <span class="tag violet">LI-001 LuMamba</span>
+            <span class="tag blue">arXiv 2603.19100</span>
+            <span class="tag red">no protocol change</span>
+          </div>
+        </article>
+        <article class="intake-card">
           <span class="count">9</span>
           <h3>ClinicalTrials.gov rows</h3>
           <p>The registry-backed layer for AV, tDCS, visual restoration, VR cross-modal, and NIBS trial tracking.</p>
@@ -839,7 +849,7 @@
           <ul class="checklist">
             <li><span class="check">1</span><span>Refresh NCT statuses for CTG-001 through CTG-009 and flag newly posted results.</span></li>
             <li><span class="check">2</span><span>Search PubMed for AV+tDCS, audiovisual hemianopia, VR visual restoration, and chronic stroke visual field defects.</span></li>
-            <li><span class="check">3</span><span>Run the saved X discovery queries and promote only traceable PMID/NCT/DOI leads.</span></li>
+            <li><span class="check">3</span><span>Run saved X and LinkedIn/arXiv discovery checks and promote only traceable PMID/NCT/arXiv/DOI leads.</span></li>
             <li><span class="check">4</span><span>Update the CSV, wiki watchlist, and this HTML monitor from the same source data.</span></li>
             <li><span class="check">5</span><span>Escalate protocol changes only as clinician questions with baseline and plateau evidence attached.</span></li>
           </ul>

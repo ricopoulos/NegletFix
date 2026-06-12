@@ -1,6 +1,6 @@
 ---
 title: EEG Neurofeedback (Muse TP10)
-last_updated: 2026-05-14
+last_updated: 2026-06-11
 confidence: MIXED — see §2 and §10 caveats added 2026-05-14
 sources:
   - NEUROFEEDBACK_PROTOCOL.md
@@ -10,6 +10,7 @@ sources:
   - Unity/NeglectFix/Assets/Scripts/EEG/EEGSimulator.cs
   - CLAUDE.md
   - 2026-05-14 audit — Treves 2025 JMIR consumer-NF meta, Yang/Kastner 2024 PNAS alpha gating, Robineau 2014 (corrected citation), Muse signal-quality 2024 comparisons
+  - 2026-06-11 LuMamba/BioFoundation EEG foundation-model watch lead — LinkedIn, arXiv:2603.19100, BioFoundation GitHub
 ---
 
 # EEG Neurofeedback
@@ -70,6 +71,23 @@ Two independent 2024 device-comparison papers (Sokolova 2024 Frontiers Neuroscie
 **Treves et al. 2025 JMIR meta-analysis** (16 RCTs, n=763, 11/16 used Muse): consumer-grade neurofeedback shows **no benefit on cognition, mindfulness, or physiology** vs control. Modest distress reduction only. Authors suggest effects may rely on "neurosuggestion" (placebo of neurotechnology). Larger sham-controlled trials in adjacent fields (PTSD 2025 fMRI-NF vs sham = -0.05 ns; ADHD blinded RCTs = null) reinforce the pattern: **NF effects shrink or vanish under proper control**.
 
 This argues for treating EEG-NF as an **exploratory adjunct layer** in NegletFix, not a primary mechanism. The audiovisual training has direct evidence (Daibert-Nido family, Diana 2025, Alharshan 2026); the EEG-NF layer is theoretical-with-caveats.
+
+### EEG foundation-model watch lead — LuMamba / BioFoundation [added 2026-06-11]
+
+**Classification**: EEG-AI methods watchlist, not clinical evidence.
+
+User lead: Thorir Mar Ingolfsson LinkedIn post on **LuMamba: Latent Unified Mamba for Electrode Topology-Invariant and Efficient EEG Modeling**. Primary traceable sources: [arXiv:2603.19100](https://arxiv.org/abs/2603.19100), [BioFoundation GitHub](https://github.com/pulp-bio/BioFoundation), and the LuMamba model card/weights linked from BioFoundation.
+
+Key technical claim: LuMamba combines topology-invariant channel encoding, bidirectional Mamba temporal modeling, and LeJEPA + reconstruction self-supervision. The arXiv abstract reports pretraining on 21,000+ hours of unlabeled TUEG EEG, downstream testing across 16-26 channel configurations, 4.6M parameters, and strong compute/memory efficiency versus transformer EEG models.
+
+NegletFix relevance:
+
+- **Potentially useful later** for EEG artifact detection, signal-quality scoring, montage adaptation, or richer offline analysis if the project moves beyond Muse TP10.
+- **Not a protocol change**: it does not provide evidence for homonymous hemianopia recovery, audiovisual training efficacy, or EEG neurofeedback benefit.
+- **Consumer-EEG limitation**: the reported evaluations are multi-channel clinical/research EEG, not Muse-style low-channel dry-electrode data.
+- **Watchlist row**: `LI-001` in `docs/research/source-queue-2026-05-25.csv`.
+
+Practical gate: revisit only after a real EEG signal-quality session exists, or if the project adds a higher-density EEG device / offline EEG analytics track.
 
 ---
 

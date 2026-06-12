@@ -13,6 +13,7 @@ sources:
   - .brain/cross-cutting.md
   - 2026-05-14 PubMed-verified research audit (see Recent Additions section)
   - 2026-06-11 PubMed + ClinicalTrials.gov refresh for AV+tDCS, AV multisensory, VRT, and VR cross-modal trials
+  - 2026-06-11 LuMamba / BioFoundation EEG foundation-model watch lead
 ---
 
 # Research Papers Index
@@ -30,6 +31,16 @@ Confidence applies to the paper's evidentiary weight for this specific project, 
 **Key finding**: Spatially and temporally aligned audiovisual stimuli enhance visual detection in the blind hemifield of hemianopia patients — clinical evidence that the preserved retinotectal pathway can mediate recovery.
 **Informs**: [[scientific-foundation]], [[audiovisual-training-protocol]] — direct precedent for the audiovisual cross-modal approach targeting Eric's left hemifield.
 **Confidence for NegletFix**: HIGH (peer-reviewed, direct condition match).
+
+---
+
+## Broustail, Tegon, Ingolfsson, Li & Benini (2026) — LuMamba EEG foundation model
+
+**Citation**: Broustail D, Tegon A, Ingolfsson TM, Li Y, Benini L. LuMamba: Latent Unified Mamba for Electrode Topology-Invariant and Efficient EEG Modeling. *arXiv*. 2026.
+**DOI**: 10.48550/arXiv.2603.19100 — arXiv:2603.19100 (added 2026-06-11)
+**Key finding**: Self-supervised EEG foundation model combining topology-invariant channel unification, bidirectional Mamba temporal modeling, and LeJEPA + reconstruction objectives. Pretrained on 21,000+ hours of TUEG EEG and evaluated across 16-26 channel EEG configurations. The authors report a 4.6M parameter model with improved efficiency and cross-montage robustness.
+**Informs**: [[eeg-neurofeedback]] — future EEG signal-analysis infrastructure watch lead only.
+**Confidence for NegletFix**: LOW-MEDIUM for direct project impact. This is not hemianopia, audiovisual training, or neurofeedback efficacy evidence; it is a methods lead for possible future artifact/signal-quality/montage-adaptation tooling.
 
 ---
 
@@ -499,6 +510,7 @@ Refreshed 2026-05-26 — medication-adjunct caution entries added after the doct
 | Pelli, Robson & Wilkins | 1988 | Pre-DOI | HIGH | Contrast test method |
 | Elliott, Bullimore & Bailey ✱ | 1991 | 10.1111/j.1475-1313.1991.tb00368.x | HIGH | CS test reliability |
 | Bolognini et al. | 2005 | 10.1093/brain/awh662 | HIGH | Hemianopia AV facilitation |
+| Broustail/Ingolfsson et al. | 2026 | 10.48550/arXiv.2603.19100 | LOW-MEDIUM | EEG foundation-model methods watch lead |
 | Magosso, Cuppini & Bertini ✱ | 2017 | 10.3389/fncom.2017.00113 | MEDIUM | Computational mechanism |
 | REINVENT (Spicer) | 2019 | 10.3389/fnhum.2019.00210 | MEDIUM | Closed-loop VR-BCI precedent (motor) |
 | Robineau et al. ✱ | 2014 | 10.1016/j.neuropsychologia.2014.07.020 | MEDIUM | fMRI NF in left HH (direct precedent) |

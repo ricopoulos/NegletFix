@@ -2,14 +2,14 @@
   "schema_version": "1.0",
   "project_name": "NegletFix",
   "description": "VR rehabilitation for left homonymous hemianopia with EEG neurofeedback",
-  "last_updated": "2026-06-12T02:09:20Z",
+  "last_updated": "2026-06-12T02:21:53Z",
   "wiki": {
     "path": ".brain/wiki/",
     "pages": 12,
-    "lines": 2734,
+    "lines": 2812,
     "built": "2026-04-14",
     "last_substantive_update": "2026-06-11",
-    "notes": "Karpathy ingest pattern — compiled from sessions, research docs, scripts. Load index.md first, pull pages on-demand. 2026-05-14 research audit added 20+ verified citations + 3 citation corrections. 2026-05-16 Phase 1 scaffold session updated unity-architecture, rehabilitation-roadmap, audiovisual-training-protocol, hardware-setup. 2026-05-26 research-ops sprint added source queue, YouTube/X validation ladder, sprint reports, QEEG/tPBM watchlist, medication doctor brief, Obsidian HTML wrap-up, and Dr. Jacquemin NegletFix doctor brief with mobile HTML/PDF copies. 2026-05-30 guided Quest pilot session updated audiovisual-training-protocol, unity-architecture, hardware-setup, rehabilitation-roadmap, and index module readiness after on-headset AV validation. 2026-05-31 added sparse right-control trial documentation, first dose ramp decision, PlayMode validation, rebuilt Session1Pilot APK, passed Quest 2 5-minute, 8-minute, and 12-minute control-ramp validations, then generated the first GSAP-enhanced HTML evidence report at `reports/rehab-dose-ramp-2026-05-31.html` and set the next build target to a separate quick field-mapping calibration scene. 2026-06-03 adopted the portable Codex session ritual locally: `AGENTS.md` is now the canonical project contract, `CLAUDE.md` defers to it, `.claude/commands` are trackable command shorthands, and the dirty-tree start/end gate is explicit for NegletFix. 2026-06-11 added a ClinicalTrials.gov/PubMed-backed clinical-trials watchlist for AV+tDCS, AV multisensory, visual restoration, VR cross-modal, and neuromodulation leads; key correction: NCT04963075 is completed with posted results, NCT05894434 is not yet recruiting, and NCT06116760 is the completed exact chronic HVFD AV+tDCS adjunct lead. A static research monitor at `docs/research/research-monitor-2026-06-11.html` now shows the protocol verdict, clinical-trial lanes, YouTube/X intake role, and monthly monitor checklist."
+    "notes": "Karpathy ingest pattern — compiled from sessions, research docs, scripts. Load index.md first, pull pages on-demand. 2026-05-14 research audit added 20+ verified citations + 3 citation corrections. 2026-05-16 Phase 1 scaffold session updated unity-architecture, rehabilitation-roadmap, audiovisual-training-protocol, hardware-setup. 2026-05-26 research-ops sprint added source queue, YouTube/X validation ladder, sprint reports, QEEG/tPBM watchlist, medication doctor brief, Obsidian HTML wrap-up, and Dr. Jacquemin NegletFix doctor brief with mobile HTML/PDF copies. 2026-05-30 guided Quest pilot session updated audiovisual-training-protocol, unity-architecture, hardware-setup, rehabilitation-roadmap, and index module readiness after on-headset AV validation. 2026-05-31 added sparse right-control trial documentation, first dose ramp decision, PlayMode validation, rebuilt Session1Pilot APK, passed Quest 2 5-minute, 8-minute, and 12-minute control-ramp validations, then generated the first GSAP-enhanced HTML evidence report at `reports/rehab-dose-ramp-2026-05-31.html` and set the next build target to a separate quick field-mapping calibration scene. 2026-06-03 adopted the portable Codex session ritual locally: `AGENTS.md` is now the canonical project contract, `CLAUDE.md` defers to it, `.claude/commands` are trackable command shorthands, and the dirty-tree start/end gate is explicit for NegletFix. 2026-06-11 added a ClinicalTrials.gov/PubMed-backed clinical-trials watchlist for AV+tDCS, AV multisensory, visual restoration, VR cross-modal, and neuromodulation leads; key correction: NCT04963075 is completed with posted results, NCT05894434 is not yet recruiting, and NCT06116760 is the completed exact chronic HVFD AV+tDCS adjunct lead. A static research monitor at `docs/research/research-monitor-2026-06-11.html` now shows the protocol verdict, clinical-trial lanes, YouTube/X/LinkedIn intake role, and monthly monitor checklist. LuMamba/BioFoundation is tracked as LI-001, an EEG foundation-model methods lead for future signal-analysis infrastructure only."
   },
   "modules": {
     "contrast-sensitivity-test": {
@@ -21,7 +21,7 @@
     "eeg-integration": {
       "status": "planned",
       "health": "gray",
-      "notes": "Muse headband integration via Mind Monitor OSC - decoupled from v1 critical path. RewardController.RewardMode.OpenLoop is default; EegGated reserved for v2 after Muse signal-quality validation per Treves 2025 JMIR meta-analysis."
+      "notes": "Muse headband integration via Mind Monitor OSC - decoupled from v1 critical path. RewardController.RewardMode.OpenLoop is default; EegGated reserved for v2 after Muse signal-quality validation per Treves 2025 JMIR meta-analysis. LuMamba/BioFoundation is tracked as a future EEG-AI signal-analysis lead only; current published validation is multi-channel clinical/research EEG, not Muse TP10."
     },
     "audiovisual-training": {
       "status": "field-guided-rehab-headset-validated",
@@ -57,6 +57,7 @@
     "Use the 2026-06-11 subjective fatigue report as a dose signal; do not stack another run after an exhausting 12.5-minute session",
     "Generalize `scripts/generate-rehab-report.js` from the first 2026-05-31 dose-ramp report into a reusable report command for future session CSV pairs, including field-guided runs",
     "Quest 3 acquisition when budget allows (used via Back Market ~€350-450)",
-    "Refresh the clinical-trials watchlist and static HTML research monitor monthly or after major PubMed/ClinicalTrials.gov changes; create a recurring automation only after the CSV-to-HTML generation path is stable"
+    "Refresh the clinical-trials watchlist and static HTML research monitor monthly or after major PubMed/ClinicalTrials.gov changes; create a recurring automation only after the CSV-to-HTML generation path is stable",
+    "Track LuMamba/BioFoundation as LI-001 in the EEG-AI methods lane; revisit only after real EEG signal-quality data exists or a higher-density EEG/offline analytics track is added"
   ]
 }
