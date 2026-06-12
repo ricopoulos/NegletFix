@@ -7,6 +7,7 @@ sources:
   - ClinicalTrials.gov API live check 2026-06-11
   - docs/research/clinical-trials-watchlist-2026-06-11.csv
   - docs/research/clinical-trials-watchlist-2026-06-11.md
+  - docs/research/research-monitor-2026-06-11.html
 ---
 
 # Clinical Trials Watchlist
@@ -16,6 +17,10 @@ Registry-backed monitor for external evidence that could affect NegletFix. This 
 Structured source: `docs/research/clinical-trials-watchlist-2026-06-11.csv`.
 
 Human-readable research note: `docs/research/clinical-trials-watchlist-2026-06-11.md`.
+
+Static HTML monitor: `docs/research/research-monitor-2026-06-11.html`.
+
+Unified intake queue: `docs/research/source-queue-2026-05-25.csv` now includes the YouTube leads, X discovery queries, and CTG-001 through CTG-009.
 
 ---
 
@@ -88,8 +93,8 @@ No device purchase or DIY stimulation protocol should be inferred from this page
 
 Recommended staged system:
 
-1. **Now**: keep the CSV and wiki page as the source of truth.
-2. **Next**: generate a static HTML dashboard from the CSV, matching the existing research sprint reports.
+1. **Now**: keep the CSV, wiki page, and static HTML monitor as the source of truth.
+2. **Next**: generate future monitors from the same CSV structure instead of manually copying trial rows.
 3. **Then**: create a monthly Codex automation that checks only for meaningful changes:
    - trial status changes;
    - newly posted results;

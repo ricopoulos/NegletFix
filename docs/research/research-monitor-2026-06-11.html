@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NegletFix Research Monitor - 2026-06-11</title>
+<style>
+  :root {
+    --bg: #10100e;
+    --panel: #181713;
+    --panel-2: #211f1a;
+    --panel-3: #26231d;
+    --ink: #f2eadc;
+    --muted: #b9b0a2;
+    --quiet: #837b70;
+    --line: #383329;
+    --amber: #e5bc74;
+    --green: #9bc48d;
+    --blue: #88b4da;
+    --red: #e37b67;
+    --violet: #b9a4e8;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    --serif: Georgia, "Times New Roman", serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+      linear-gradient(180deg, rgba(229,188,116,.09), transparent 320px),
+      linear-gradient(180deg, #11100d 0%, #0f0f0d 100%);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  a {
+    color: var(--blue);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+
+  button, input, select { font: inherit; }
+
+  .shell {
+    width: min(1160px, calc(100% - 36px));
+    margin: 0 auto;
+    padding: 28px 0 56px;
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0 20px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .brand-mark {
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(229,188,116,.45);
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    color: var(--amber);
+    background: #15130f;
+    font: 700 14px/1 var(--mono);
+  }
+
+  .brand h1 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(1.45rem, 2.4vw, 2.2rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.05;
+  }
+
+  .brand p {
+    margin: 3px 0 0;
+    color: var(--quiet);
+    font: 12px/1.35 var(--mono);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 5px 10px;
+    color: var(--muted);
+    background: rgba(24,23,19,.8);
+    font: 12px/1.2 var(--mono);
+    white-space: nowrap;
+  }
+
+  .chip strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr);
+    gap: 20px;
+    padding: 28px 0 22px;
+  }
+
+  .decision {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+    padding: clamp(20px, 3.2vw, 32px);
+  }
+
+  .kicker {
+    color: var(--amber);
+    font: 700 12px/1.2 var(--mono);
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .decision h2 {
+    margin: 0 0 14px;
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2rem, 5vw, 4.1rem);
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .decision p {
+    margin: 0;
+    max-width: 760px;
+    color: var(--muted);
+    font-size: clamp(1rem, 1.7vw, 1.16rem);
+  }
+
+  .decision-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: 24px;
+    border: 1px solid var(--line);
+    background: var(--line);
+  }
+
+  .decision-cell {
+    min-height: 132px;
+    padding: 16px;
+    background: var(--panel-2);
+  }
+
+  .decision-cell strong {
+    display: block;
+    color: var(--ink);
+    margin-bottom: 8px;
+    font-size: .96rem;
+  }
+
+  .decision-cell span {
+    display: block;
+    color: var(--muted);
+    font-size: .9rem;
+  }
+
+  .scoreboard {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .metric {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+    padding: 16px;
+    min-height: 132px;
+  }
+
+  .metric .num {
+    display: block;
+    color: var(--amber);
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+    line-height: .95;
+  }
+
+  .metric .label {
+    display: block;
+    margin-top: 8px;
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .metric .note {
+    display: block;
+    margin-top: 6px;
+    color: var(--quiet);
+    font-size: .86rem;
+  }
+
+  .section {
+    margin-top: 26px;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 14px;
+  }
+
+  .section h2 {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+
+  .section-head p {
+    margin: 6px 0 0;
+    max-width: 720px;
+    color: var(--muted);
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .filter-button {
+    min-height: 34px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 7px 11px;
+    background: var(--panel);
+    color: var(--muted);
+    cursor: pointer;
+    font: 12px/1.2 var(--mono);
+  }
+
+  .filter-button:hover,
+  .filter-button:focus-visible {
+    color: var(--ink);
+    border-color: rgba(229,188,116,.55);
+    outline: none;
+  }
+
+  .filter-button.active {
+    background: rgba(229,188,116,.15);
+    color: var(--amber);
+    border-color: rgba(229,188,116,.7);
+  }
+
+  .trial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .trial-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 346px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+    overflow: hidden;
+  }
+
+  .trial-card[data-lane="core"] { border-top: 4px solid var(--green); }
+  .trial-card[data-lane="adjunct"] { border-top: 4px solid var(--amber); }
+  .trial-card[data-lane="watch"] { border-top: 4px solid var(--blue); }
+  .trial-card[data-lane="parked"] { border-top: 4px solid var(--quiet); }
+
+  .trial-main {
+    padding: 16px;
+    flex: 1;
+  }
+
+  .trial-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .trial-id {
+    color: var(--quiet);
+    font: 700 12px/1 var(--mono);
+    letter-spacing: .08em;
+  }
+
+  .priority {
+    border-radius: 999px;
+    padding: 4px 8px;
+    background: #11100d;
+    color: var(--muted);
+    font: 11px/1 var(--mono);
+  }
+
+  .priority.high { color: var(--amber); }
+  .priority.medium { color: var(--blue); }
+
+  .trial-card h3 {
+    margin: 0 0 10px;
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: 0;
+  }
+
+  .trial-card p {
+    margin: 0 0 10px;
+    color: var(--muted);
+    font-size: .92rem;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 12px 0;
+  }
+
+  .tag {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 4px 8px;
+    color: var(--muted);
+    background: #14130f;
+    font: 11px/1.15 var(--mono);
+  }
+
+  .tag.green { color: var(--green); border-color: rgba(155,196,141,.35); }
+  .tag.amber { color: var(--amber); border-color: rgba(229,188,116,.35); }
+  .tag.blue { color: var(--blue); border-color: rgba(136,180,218,.35); }
+  .tag.red { color: var(--red); border-color: rgba(227,123,103,.35); }
+  .tag.violet { color: var(--violet); border-color: rgba(185,164,232,.35); }
+
+  .trial-footer {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--line);
+    padding: 12px 16px;
+    background: var(--panel-2);
+  }
+
+  .trial-footer a {
+    font: 12px/1.2 var(--mono);
+  }
+
+  .lane-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .lane {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+    min-height: 214px;
+    background: var(--panel);
+  }
+
+  .lane.core { border-top: 4px solid var(--green); }
+  .lane.adjunct { border-top: 4px solid var(--amber); }
+  .lane.watch { border-top: 4px solid var(--blue); }
+  .lane.parked { border-top: 4px solid var(--quiet); }
+
+  .lane h3 {
+    margin: 0 0 8px;
+    font-size: 1.18rem;
+  }
+
+  .lane p, .lane li {
+    color: var(--muted);
+    font-size: .91rem;
+  }
+
+  .lane ul {
+    margin: 10px 0 0;
+    padding-left: 18px;
+  }
+
+  .pipeline {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1px;
+    border: 1px solid var(--line);
+    background: var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .step {
+    min-height: 174px;
+    padding: 16px;
+    background: var(--panel);
+  }
+
+  .step b {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--amber);
+    font: 700 12px/1.2 var(--mono);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .step strong {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+
+  .step span {
+    display: block;
+    color: var(--muted);
+    font-size: .9rem;
+  }
+
+  .intake-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .intake-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+    padding: 16px;
+    min-height: 210px;
+  }
+
+  .intake-card h3 {
+    margin: 0 0 10px;
+    font-size: 1.22rem;
+  }
+
+  .intake-card p {
+    margin: 0 0 10px;
+    color: var(--muted);
+    font-size: .92rem;
+  }
+
+  .count {
+    display: inline-block;
+    min-width: 54px;
+    margin-bottom: 12px;
+    color: var(--amber);
+    font-family: var(--serif);
+    font-size: 3rem;
+    line-height: .9;
+  }
+
+  .board {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(280px, .95fr);
+    gap: 12px;
+  }
+
+  .panel {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+    padding: 18px;
+  }
+
+  .panel h3 {
+    margin: 0 0 12px;
+  }
+
+  .checklist {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .checklist li {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 10px;
+    padding: 10px 0;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+  }
+
+  .checklist li:first-child { border-top: 0; padding-top: 0; }
+
+  .check {
+    width: 22px;
+    height: 22px;
+    border: 1px solid rgba(155,196,141,.5);
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+    color: var(--green);
+    font: 700 13px/1 var(--mono);
+    background: rgba(155,196,141,.08);
+  }
+
+  .source-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .source {
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel-2);
+  }
+
+  .source b {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+
+  .source span {
+    color: var(--muted);
+    font-size: .9rem;
+  }
+
+  .footer {
+    margin-top: 34px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    color: var(--quiet);
+    font: 12px/1.5 var(--mono);
+  }
+
+  @media (max-width: 1000px) {
+    .hero,
+    .board {
+      grid-template-columns: 1fr;
+    }
+
+    .trial-grid,
+    .intake-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .lane-grid,
+    .pipeline {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 720px) {
+    .shell {
+      width: min(100% - 24px, 1160px);
+      padding-top: 16px;
+    }
+
+    .topbar,
+    .section-head {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .meta,
+    .filters {
+      justify-content: flex-start;
+    }
+
+    .decision-grid,
+    .scoreboard,
+    .trial-grid,
+    .lane-grid,
+    .pipeline,
+    .intake-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .trial-card {
+      min-height: 0;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">NF</div>
+      <div>
+        <h1>NegletFix Research Monitor</h1>
+        <p>Evidence intake -> protocol-impact tracking</p>
+      </div>
+    </div>
+    <div class="meta">
+      <span class="chip"><strong>Updated</strong>&nbsp;2026-06-11</span>
+      <span class="chip"><strong>Sources</strong>&nbsp;CSV + wiki</span>
+      <span class="chip"><strong>Decision</strong>&nbsp;no protocol change</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="verdict-title">
+      <div class="decision">
+        <div class="kicker">Current protocol verdict</div>
+        <h2 id="verdict-title">Keep AV training as the core. Treat tDCS as a supervised research question.</h2>
+        <p>
+          The new clinical-trial scan strengthens the rationale for Quest-based audiovisual rehabilitation, but it does not justify DIY or home tDCS. The next NegletFix step remains measurement-first: field-map-guided AV training, clean baseline data, then clinician review if a stimulation adjunct is still worth testing.
+        </p>
+        <div class="decision-grid" aria-label="Protocol gates">
+          <div class="decision-cell">
+            <strong>Core protocol</strong>
+            <span>Open-loop, field-map-guided audiovisual Quest training remains the active route.</span>
+          </div>
+          <div class="decision-cell">
+            <strong>Adjunct boundary</strong>
+            <span>tDCS stays clinician-supervised only, after baseline and plateau evidence.</span>
+          </div>
+          <div class="decision-cell">
+            <strong>Evidence posture</strong>
+            <span>YouTube/X generate leads; PMID/NCT/guidelines are required before protocol claims.</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="scoreboard" aria-label="Research monitor metrics">
+        <div class="metric">
+          <span class="num">27</span>
+          <span class="label">tracked source rows</span>
+          <span class="note">YouTube, X discovery, and ClinicalTrials.gov intake now sit in one queue.</span>
+        </div>
+        <div class="metric">
+          <span class="num">9</span>
+          <span class="label">clinical trials watched</span>
+          <span class="note">AV, AV+tDCS, visual restoration, VR cross-modal, and NIBS leads.</span>
+        </div>
+        <div class="metric">
+          <span class="num">5</span>
+          <span class="label">verified/promoted YouTube leads</span>
+          <span class="note">Useful for explanation and lived-function framing, not primary evidence.</span>
+        </div>
+        <div class="metric">
+          <span class="num">3</span>
+          <span class="label">monthly X queries</span>
+          <span class="note">Used only to discover traceable papers, trials, and author/lab updates.</span>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section" aria-labelledby="lanes-title">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Protocol impact lanes</div>
+          <h2 id="lanes-title">What changes NegletFix, and what only gets watched?</h2>
+          <p>Each source must pass through a role gate before it can alter protocol design.</p>
+        </div>
+      </div>
+
+      <div class="lane-grid">
+        <article class="lane core">
+          <h3>Core evidence</h3>
+          <p>Direct support for audiovisual training and measurement-first visual rehabilitation.</p>
+          <ul>
+            <li>NCT04963075 / PMID 36604169</li>
+            <li>Adult stroke AV mechanism work</li>
+            <li>Field-map-guided Quest dose tracking</li>
+          </ul>
+        </article>
+        <article class="lane adjunct">
+          <h3>Adjunct candidates</h3>
+          <p>Neuromodulation evidence that may become a clinician question, not a self-run intervention.</p>
+          <ul>
+            <li>NCT06116760 / PMID 39607286</li>
+            <li>NCT07358832 recruiting AV+tDCS</li>
+            <li>NCT02935413 subacute VRT+tDCS</li>
+          </ul>
+        </article>
+        <article class="lane watch">
+          <h3>Watchlist</h3>
+          <p>Promising or adjacent trials that need results, effect-size extraction, or better chronic-stroke fit.</p>
+          <ul>
+            <li>NCT05894434 future AV comparison</li>
+            <li>NCT05085210 tRNS plus visual training</li>
+            <li>NCT04798924 timing/plasticity</li>
+          </ul>
+        </article>
+        <article class="lane parked">
+          <h3>Parked claims</h3>
+          <p>Interesting public content stays parked unless it resolves to a primary medical source.</p>
+          <ul>
+            <li>QEEG/tPBM anecdotes</li>
+            <li>Podcast claims without PMID/NCT</li>
+            <li>Driving/accommodation content</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="trial-title">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Clinical trial monitor</div>
+          <h2 id="trial-title">NCT rows to track</h2>
+          <p>Filter by protocol impact. Each card links to the registry and any linked PubMed record.</p>
+        </div>
+        <div class="filters" role="group" aria-label="Filter clinical trials">
+          <button class="filter-button active" type="button" data-filter="all">All</button>
+          <button class="filter-button" type="button" data-filter="core">Core</button>
+          <button class="filter-button" type="button" data-filter="adjunct">Adjunct</button>
+          <button class="filter-button" type="button" data-filter="watch">Watch</button>
+          <button class="filter-button" type="button" data-filter="parked">Parked</button>
+        </div>
+      </div>
+      <div id="trial-grid" class="trial-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="section" aria-labelledby="flow-title">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Research flow</div>
+          <h2 id="flow-title">YouTube and X are part of intake, not proof.</h2>
+          <p>They are useful because they surface patient language, clinician names, trial mentions, and paper links. They become evidence only after verification.</p>
+        </div>
+      </div>
+
+      <div class="pipeline" aria-label="Research validation pipeline">
+        <div class="step">
+          <b>01</b>
+          <strong>Discover</strong>
+          <span>YouTube, X search queries, podcasts, lab pages, and clinician talks generate leads.</span>
+        </div>
+        <div class="step">
+          <b>02</b>
+          <strong>Verify</strong>
+          <span>Claims must resolve to PubMed, ClinicalTrials.gov, guidelines, or institutional protocol sources.</span>
+        </div>
+        <div class="step">
+          <b>03</b>
+          <strong>Grade</strong>
+          <span>Separate RCTs, feasibility studies, posted registry outcomes, anecdotes, and adjacent-condition material.</span>
+        </div>
+        <div class="step">
+          <b>04</b>
+          <strong>Map</strong>
+          <span>Translate evidence into core, adjunct, watch, or parked lanes with an explicit protocol-impact note.</span>
+        </div>
+        <div class="step">
+          <b>05</b>
+          <strong>Track</strong>
+          <span>Update CSV, wiki, HTML monitor, and Obsidian notes without automatically changing the protocol.</span>
+        </div>
+      </div>
+
+      <div class="intake-grid" style="margin-top: 12px;">
+        <article class="intake-card">
+          <span class="count">15</span>
+          <h3>YouTube sources</h3>
+          <p>Used for patient-friendly explanation, lived-function themes, rehab vocabulary, and clinician-lead discovery.</p>
+          <div class="tag-row">
+            <span class="tag green">5 verified/promoted</span>
+            <span class="tag amber">6 leads</span>
+            <span class="tag blue">4 parked/watch</span>
+          </div>
+        </article>
+        <article class="intake-card">
+          <span class="count">3</span>
+          <h3>X search monitors</h3>
+          <p>Monthly live discovery queries for traceable papers, trials, lab updates, and author announcements.</p>
+          <div class="tag-row">
+            <span class="tag blue">paper discovery</span>
+            <span class="tag">links only</span>
+            <span class="tag red">no claim promotion</span>
+          </div>
+        </article>
+        <article class="intake-card">
+          <span class="count">9</span>
+          <h3>ClinicalTrials.gov rows</h3>
+          <p>The registry-backed layer for AV, tDCS, visual restoration, VR cross-modal, and NIBS trial tracking.</p>
+          <div class="tag-row">
+            <span class="tag green">5 completed</span>
+            <span class="tag amber">3 active/recruiting</span>
+            <span class="tag blue">1 not yet recruiting</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="ops-title">
+      <div class="section-head">
+        <div>
+          <div class="kicker">Monitor operations</div>
+          <h2 id="ops-title">Static dashboard first, automation second.</h2>
+          <p>The next useful automation is a monthly diff that proposes a review note. It should never auto-change treatment logic.</p>
+        </div>
+      </div>
+
+      <div class="board">
+        <div class="panel">
+          <h3>Monthly review checklist</h3>
+          <ul class="checklist">
+            <li><span class="check">1</span><span>Refresh NCT statuses for CTG-001 through CTG-009 and flag newly posted results.</span></li>
+            <li><span class="check">2</span><span>Search PubMed for AV+tDCS, audiovisual hemianopia, VR visual restoration, and chronic stroke visual field defects.</span></li>
+            <li><span class="check">3</span><span>Run the saved X discovery queries and promote only traceable PMID/NCT/DOI leads.</span></li>
+            <li><span class="check">4</span><span>Update the CSV, wiki watchlist, and this HTML monitor from the same source data.</span></li>
+            <li><span class="check">5</span><span>Escalate protocol changes only as clinician questions with baseline and plateau evidence attached.</span></li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Source files</h3>
+          <div class="source-list">
+            <div class="source">
+              <b>Clinical trials CSV</b>
+              <span><a href="clinical-trials-watchlist-2026-06-11.csv">docs/research/clinical-trials-watchlist-2026-06-11.csv</a></span>
+            </div>
+            <div class="source">
+              <b>Human-readable watchlist</b>
+              <span><a href="clinical-trials-watchlist-2026-06-11.md">docs/research/clinical-trials-watchlist-2026-06-11.md</a></span>
+            </div>
+            <div class="source">
+              <b>Research source queue</b>
+              <span><a href="source-queue-2026-05-25.csv">docs/research/source-queue-2026-05-25.csv</a></span>
+            </div>
+            <div class="source">
+              <b>Wiki watchlist</b>
+              <span>.brain/wiki/clinical-trials-watchlist.md</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    This monitor is a research and operations artifact, not medical advice. Sources were checked on 2026-06-11; registry statuses can change and should be refreshed before clinical decisions.
+  </footer>
+</div>
+
+<script>
+const trials = [
+  {
+    id: "CTG-001",
+    nct: "NCT06116760",
+    nctUrl: "https://clinicaltrials.gov/study/NCT06116760",
+    priority: "High",
+    lane: "adjunct",
+    track: "AV+tDCS",
+    status: "Completed",
+    title: "Anodal tDCS with compensatory audiovisual training",
+    role: "Best exact-match clinical-trial lead for chronic acquired homonymous visual-field defects.",
+    quality: "Small randomized clinical trial; strong condition/intervention match but still adjunct-level evidence for NegletFix.",
+    impact: "Clinician-supervised adjunct candidate only. No home tDCS before behavioral baseline and plateau.",
+    next: "Check for posted registry results or replication.",
+    pubmed: "PMID 39607286",
+    pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/39607286/"
+  },
+  {
+    id: "CTG-002",
+    nct: "NCT04963075",
+    nctUrl: "https://clinicaltrials.gov/study/NCT04963075",
+    priority: "High",
+    lane: "core",
+    track: "AV multisensory",
+    status: "Completed with results posted",
+    title: "Multisensory rehabilitation of hemianopia",
+    role: "Closest Wake Forest adult chronic audiovisual-training registry line.",
+    quality: "Direct mechanistic fit with posted outcomes, but sample/results remain small and high-variance.",
+    impact: "Supports the AV core while preserving sample-size caveats.",
+    next: "Monitor for full results publication and protocol/SAP updates.",
+    pubmed: "PMID 36604169",
+    pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/36604169/"
+  },
+  {
+    id: "CTG-003",
+    nct: "NCT05894434",
+    nctUrl: "https://clinicaltrials.gov/study/NCT05894434",
+    priority: "High",
+    lane: "watch",
+    track: "AV multisensory",
+    status: "Not yet recruiting",
+    title: "Multisensory versus unisensory training after stroke",
+    role: "Wake Forest next-stage AV study.",
+    quality: "Potentially important future comparison, but no results yet.",
+    impact: "Watch only; no immediate protocol change.",
+    next: "Check recruitment status and protocol details.",
+    pubmed: "",
+    pubmedUrl: ""
+  },
+  {
+    id: "CTG-004",
+    nct: "NCT07358832",
+    nctUrl: "https://clinicaltrials.gov/study/NCT07358832",
+    priority: "High",
+    lane: "adjunct",
+    track: "AV+tDCS",
+    status: "Recruiting",
+    title: "Neuromodulation through multisensory stimulation",
+    role: "Best active AV+tDCS trial lead, but in the subacute stroke window.",
+    quality: "Recruiting registry lead; applicability to Eric's chronic window is limited until results exist.",
+    impact: "Watch as future evidence, not as a current protocol input.",
+    next: "Monthly status/results check.",
+    pubmed: "",
+    pubmedUrl: ""
+  },
+  {
+    id: "CTG-005",
+    nct: "NCT02935413",
+    nctUrl: "https://clinicaltrials.gov/study/NCT02935413",
+    priority: "High",
+    lane: "parked",
+    track: "VRT+tDCS",
+    status: "Completed",
+    title: "Combined tDCS and vision restoration training",
+    role: "Subacute PCA-stroke tDCS plus VRT feasibility/safety pilot.",
+    quality: "Useful early-window adjunct signal, but not chronic, not AV, and not enough for NegletFix protocol change.",
+    impact: "Park as early-window adjunct evidence.",
+    next: "Check whether later randomized follow-up has published.",
+    pubmed: "PMID 28082176",
+    pubmedUrl: "https://pubmed.ncbi.nlm.nih.gov/28082176/"
+  },
+  {
+    id: "CTG-006",
+    nct: "NCT03350919",
+    nctUrl: "https://clinicaltrials.gov/study/NCT03350919",
+    priority: "Medium",
+    lane: "core",
+    track: "Blind-field visual restoration",
+    status: "Completed with results posted",
+    title: "Visual restoration for hemianopia",
+    role: "Modern blind-field training comparator with posted outcome data.",
+    quality: "Good measurement-design reference; not audiovisual and dose differs from NegletFix.",
+    impact: "Supports measurement-first visual training and comparator thinking.",
+    next: "Track related Rochester/Huxlin publications.",
+    pubmed: "",
+    pubmedUrl: ""
+  },
+  {
+    id: "CTG-007",
+    nct: "NCT04230486",
+    nctUrl: "https://clinicaltrials.gov/study/NCT04230486",
+    priority: "Medium",
+    lane: "core",
+    track: "VR cross-modal AV",
+    status: "Completed with results posted",
+    title: "VR system for cross-modal rehabilitation",
+    role: "VR audiovisual/cross-modal comparator with posted outcomes.",
+    quality: "Useful Quest/cross-modal comparator, but effect sizes need extraction before strong claims.",
+    impact: "Supports the VR cross-modal direction with caveats.",
+    next: "Extract outcome table before citing quantitatively.",
+    pubmed: "",
+    pubmedUrl: ""
+  },
+  {
+    id: "CTG-008",
+    nct: "NCT05085210",
+    nctUrl: "https://clinicaltrials.gov/study/NCT05085210",
+    priority: "Medium",
+    lane: "watch",
+    track: "NIBS+visual training",
+    status: "Recruiting",
+    title: "tRNS plus computer or VR visual training",
+    role: "Active neuromodulation plus visual/VR-training lead.",
+    quality: "Adjacent neuromodulation evidence; tRNS is not tDCS and should not be conflated.",
+    impact: "Watch only; not part of NegletFix.",
+    next: "Monthly status/results check.",
+    pubmed: "",
+    pubmedUrl: ""
+  },
+  {
+    id: "CTG-009",
+    nct: "NCT04798924",
+    nctUrl: "https://clinicaltrials.gov/study/NCT04798924",
+    priority: "Medium",
+    lane: "watch",
+    track: "Visual restoration timing",
+    status: "Active not recruiting",
+    title: "Visual restoration timing after occipital stroke",
+    role: "Timing/plasticity study relevant to chronic-versus-subacute expectations.",
+    quality: "Potentially useful for dose and timing expectations, pending results.",
+    impact: "Watch for results to refine expectations, not current treatment logic.",
+    next: "Quarterly status/results check.",
+    pubmed: "",
+    pubmedUrl: ""
+  }
+];
+
+const laneClass = {
+  core: "green",
+  adjunct: "amber",
+  watch: "blue",
+  parked: ""
+};
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function renderTrials(filter = "all") {
+  const grid = document.getElementById("trial-grid");
+  const rows = filter === "all" ? trials : trials.filter((trial) => trial.lane === filter);
+
+  grid.innerHTML = rows.map((trial) => {
+    const pubmed = trial.pubmed
+      ? `<a href="${trial.pubmedUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(trial.pubmed)}</a>`
+      : `<span class="tag">No PMID linked yet</span>`;
+    const priority = trial.priority.toLowerCase();
+    const tagColor = laneClass[trial.lane] || "";
+
+    return `
+      <article class="trial-card" data-lane="${trial.lane}">
+        <div class="trial-main">
+          <div class="trial-top">
+            <span class="trial-id">${trial.id} / ${trial.nct}</span>
+            <span class="priority ${priority}">${trial.priority}</span>
+          </div>
+          <h3>${escapeHtml(trial.title)}</h3>
+          <div class="tag-row">
+            <span class="tag ${tagColor}">${escapeHtml(trial.track)}</span>
+            <span class="tag">${escapeHtml(trial.status)}</span>
+            <span class="tag">${escapeHtml(trial.lane)}</span>
+          </div>
+          <p><strong>Role:</strong> ${escapeHtml(trial.role)}</p>
+          <p><strong>Evidence quality:</strong> ${escapeHtml(trial.quality)}</p>
+          <p><strong>Protocol impact:</strong> ${escapeHtml(trial.impact)}</p>
+          <p><strong>Next check:</strong> ${escapeHtml(trial.next)}</p>
+        </div>
+        <div class="trial-footer">
+          <a href="${trial.nctUrl}" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a>
+          ${pubmed}
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+document.querySelectorAll(".filter-button").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".filter-button").forEach((item) => item.classList.remove("active"));
+    button.classList.add("active");
+    renderTrials(button.dataset.filter);
+  });
+});
+
+renderTrials();
+</script>
+</body>
+</html>
