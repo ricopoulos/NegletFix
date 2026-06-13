@@ -12,6 +12,7 @@ sources:
   - 2026-05-14 audit — Treves 2025 JMIR consumer-NF meta, Yang/Kastner 2024 PNAS alpha gating, Robineau 2014 (corrected citation), Muse signal-quality 2024 comparisons
   - 2026-06-11 LuMamba/BioFoundation EEG foundation-model watch lead — LinkedIn, arXiv:2603.19100, BioFoundation GitHub
   - 2026-06-12 NeurIPS 2025 EEG-AI methods lane — BrainBodyFM workshop, EEG Foundation Challenge, OpenReview EEG foundation-model papers and guardrail benchmarks
+  - 2026-06-12 ruv-neural GitHub watch lead — Rust EEG topology/min-cut analysis repo from ruvnet
 ---
 
 # EEG Neurofeedback
@@ -110,7 +111,24 @@ NegletFix relevance:
 - **No low-channel shortcut**: most strong claims come from high-density, clinical, or research EEG settings. Do not assume transfer to four-channel Muse data.
 - **Protocol boundary**: the active v1 route stays open-loop field-map-guided audiovisual Quest training. EEG-AI work becomes useful only after Eric has real signal-quality data or the project adds richer EEG hardware.
 
-Watchlist rows: `LI-001` and `NP-001` through `NP-009` in `docs/research/source-queue-2026-05-25.csv`.
+Watchlist rows: `LI-001`, `NP-001` through `NP-009`, and `GH-001` in `docs/research/source-queue-2026-05-25.csv`.
+
+### GitHub watch lead — ruv-neural / ruvnet [added 2026-06-12]
+
+**Classification**: EEG-AI analysis-side inspiration repo, not clinical evidence and not a live rehab dependency.
+
+User lead: Eric has followed Ruv/ruvnet for a while and rates him as a high-signal, out-of-box builder. The specific repo is [ruvnet/ruv-neural](https://github.com/ruvnet/ruv-neural), a new Rust workspace for EEG/simulator input, DSP, connectivity graphs, dynamic min-cut topology, embeddings, decoder logic, ESP32/WASM surfaces, and CLI tooling.
+
+Practical interpretation:
+
+- **Potentially useful later** for offline analysis ideas: preprocessing patterns, PLV/coherence, graph topology, min-cut change tracking, embeddings, and visualization/export patterns.
+- **Not useful as a protocol authority**: repo novelty, no visible CI evidence at review time, no local cargo verification yet, and no hemianopia-specific validation.
+- **Clinical-scoring guardrail**: ignore or disable any "brain health" / Alzheimer / epilepsy / depression risk scoring in this repo for NegletFix. That layer is not acceptable evidence for clinical interpretation.
+- **Privacy guardrail**: do not feed PHI or real subject/session identifiers into this code without a privacy pass. Use synthetic or sanitized CSV extracts first.
+
+Gate: watch repo maturity and only prototype it as an offline sidecar after local build/tests pass. First acceptable experiment would be a sanitized analysis notebook over exported Muse/session CSVs, never live Quest rehab control.
+
+Watchlist row: `GH-001` in `docs/research/source-queue-2026-05-25.csv`.
 
 ---
 

@@ -15,6 +15,7 @@ sources:
   - 2026-06-11 PubMed + ClinicalTrials.gov refresh for AV+tDCS, AV multisensory, VRT, and VR cross-modal trials
   - 2026-06-11 LuMamba / BioFoundation EEG foundation-model watch lead
   - 2026-06-12 NeurIPS 2025 EEG-AI methods lane: BrainBodyFM, EEG Foundation Challenge, REVE, LUNA, BrainOmni, NeurIPT, CSBrain, EEG-Bench, critical review
+  - 2026-06-12 ruv-neural GitHub analysis-side watch lead
 ---
 
 # Research Papers Index
@@ -52,6 +53,16 @@ Confidence applies to the paper's evidentiary weight for this specific project, 
 **Key finding**: NeurIPS 2025 showed a clear EEG/biosignal foundation-model wave: larger pretraining corpora, topology/electrode-layout handling, sensor encoders, cross-subject/cross-task transfer, and more explicit benchmark discipline. The most relevant methods leads are REVE, LUNA/BioFoundation, BrainOmni, NeurIPT, and CSBrain; the important guardrails are EEG-Bench and the critical review.
 **Informs**: [[eeg-neurofeedback]], `docs/research/research-monitor-2026-06-11.html` — future EEG-AI analytics lane only.
 **Confidence for NegletFix**: LOW-MEDIUM for direct project impact. The lane is useful for offline artifact detection, signal-quality scoring, montage adaptation, and higher-density EEG analytics. It is not clinical evidence for homonymous hemianopia recovery, audiovisual training efficacy, or Muse TP10 neurofeedback.
+
+---
+
+## ruvnet / ruv-neural (2026) — Rust EEG topology analysis repo
+
+**Citation / source**: ruvnet. ruv-neural: Real-time brain network topology analysis in Rust. GitHub repository. 2026. [https://github.com/ruvnet/ruv-neural](https://github.com/ruvnet/ruv-neural)
+**DOI / URLs**: no DOI. Source queue row `GH-001`; key traceable source is the GitHub repo and its `SECURITY_REVIEW.md`.
+**Key finding**: Early Rust workspace with concrete modules for EEG/simulator signal processing, connectivity graphs, min-cut topology, embeddings, decoder logic, ESP32/WASM surfaces, and CLI tooling. It is interesting as analysis-side engineering inspiration, especially because Ruv/ruvnet tends to explore unconventional technical directions.
+**Informs**: [[eeg-neurofeedback]], `docs/research/research-monitor-2026-06-11.html` — offline analysis inspiration only.
+**Confidence for NegletFix**: LOW for direct project impact today. Watch the repo, harvest useful analysis ideas later, but do not use its clinical-risk scoring, do not store PHI in it, and do not let it drive live rehab or protocol decisions without local build/test evidence plus project-specific measurements.
 
 ---
 
@@ -510,7 +521,7 @@ Source map: [[clinical-trials-watchlist]] and `docs/research/clinical-trials-wat
 
 ## Summary Table
 
-Refreshed 2026-06-12 — NeurIPS 2025 EEG-AI methods lane added; 2026-05-26 medication-adjunct caution entries added after the doctor-brief sprint; 2026-05-14 audit resolved all prior "[CITATION NEEDED]" rows.
+Refreshed 2026-06-12 — ruv-neural GitHub analysis-side watch lead and NeurIPS 2025 EEG-AI methods lane added; 2026-05-26 medication-adjunct caution entries added after the doctor-brief sprint; 2026-05-14 audit resolved all prior "[CITATION NEEDED]" rows.
 
 ### Foundational / pre-audit
 | Paper | Year | DOI | Confidence | Primary Use |
@@ -523,6 +534,7 @@ Refreshed 2026-06-12 — NeurIPS 2025 EEG-AI methods lane added; 2026-05-26 medi
 | Bolognini et al. | 2005 | 10.1093/brain/awh662 | HIGH | Hemianopia AV facilitation |
 | Broustail/Ingolfsson et al. | 2026 | 10.48550/arXiv.2603.19100 | LOW-MEDIUM | EEG foundation-model methods watch lead |
 | NeurIPS 2025 EEG-AI lane | 2025 | NP-001..NP-009 | LOW-MEDIUM | EEG foundation-model methods lane and guardrails |
+| ruvnet / ruv-neural | 2026 | GH-001 | LOW | Rust EEG topology analysis repo; offline inspiration only |
 | Magosso, Cuppini & Bertini ✱ | 2017 | 10.3389/fncom.2017.00113 | MEDIUM | Computational mechanism |
 | REINVENT (Spicer) | 2019 | 10.3389/fnhum.2019.00210 | MEDIUM | Closed-loop VR-BCI precedent (motor) |
 | Robineau et al. ✱ | 2014 | 10.1016/j.neuropsychologia.2014.07.020 | MEDIUM | fMRI NF in left HH (direct precedent) |

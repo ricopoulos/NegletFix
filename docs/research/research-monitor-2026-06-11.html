@@ -767,8 +767,8 @@
       <div class="section-head">
         <div>
           <div class="kicker">EEG-AI methods lane</div>
-          <h2 id="methods-title">NeurIPS 2025 is a signal-analysis watchlist, not a rehab protocol update.</h2>
-          <p>These rows matter because they show fast model progress in EEG decoding, cross-subject transfer, topology-aware electrode handling, and clinical benchmarking. They do not validate Muse TP10 neurofeedback or alter field-guided audiovisual training.</p>
+          <h2 id="methods-title">EEG-AI method leads are signal-analysis watchlists, not rehab protocol updates.</h2>
+          <p>These rows matter because they show fast model progress in EEG decoding, cross-subject transfer, topology-aware electrode handling, graph/topology analysis, and clinical benchmarking. They do not validate Muse TP10 neurofeedback or alter field-guided audiovisual training.</p>
         </div>
       </div>
 
@@ -861,6 +861,27 @@
           </div>
         </article>
 
+        <article class="trial-card" data-lane="watch">
+          <div class="trial-main">
+            <div class="trial-top">
+              <span class="trial-id">GH-001</span>
+              <span class="priority medium">Medium</span>
+            </div>
+            <h3>ruv-neural</h3>
+            <div class="tag-row">
+              <span class="tag blue">Rust</span>
+              <span class="tag violet">graph topology</span>
+              <span class="tag red">offline only</span>
+            </div>
+            <p><strong>Role:</strong> ruvnet GitHub repo for EEG/simulator signal processing, connectivity graphs, dynamic min-cut topology, embeddings, and CLI/WASM/ESP32 surfaces.</p>
+            <p><strong>NegletFix use:</strong> Watch for clever offline analysis patterns; possible later sidecar over sanitized Muse/session CSV exports.</p>
+            <p><strong>Gate:</strong> Local cargo build/test first; ignore clinical risk scoring and never feed PHI or live rehab control into it.</p>
+          </div>
+          <div class="trial-footer">
+            <a href="https://github.com/ruvnet/ruv-neural" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </article>
+
         <article class="trial-card" data-lane="parked">
           <div class="trial-main">
             <div class="trial-top">
@@ -944,12 +965,13 @@
           </div>
         </article>
         <article class="intake-card">
-          <span class="count">10</span>
+          <span class="count">11</span>
           <h3>EEG-AI method leads</h3>
           <p>Used for traceable technical-method leads, such as EEG foundation models, after resolving to paper/code/model-card sources.</p>
           <div class="tag-row">
             <span class="tag violet">LI-001 LuMamba</span>
             <span class="tag blue">NP-001..NP-009</span>
+            <span class="tag blue">GH-001 ruv-neural</span>
             <span class="tag red">no protocol change</span>
           </div>
         </article>
