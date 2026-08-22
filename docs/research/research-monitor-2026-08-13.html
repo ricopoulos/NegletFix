@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NegletFix Research Monitor - 2026-08-13</title>
+<style>
+  :root { --bg:#f6f3ee; --ink:#17211f; --muted:#66716e; --line:#d8d0c5; --panel:#fffdf8; --green:#2d6a4f; --blue:#235789; --amber:#b7791f; --red:#a23b3b; --shadow:0 14px 34px rgba(36,29,19,.10); }
+  * { box-sizing:border-box; } body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; } a { color:inherit; }
+  .shell { max-width:1180px; margin:0 auto; padding:24px; } .topbar { display:flex; justify-content:space-between; align-items:center; gap:18px; margin-bottom:18px; }
+  .brand { display:flex; align-items:center; gap:12px; } .brand-mark { width:42px; height:42px; display:grid; place-items:center; border-radius:8px; background:var(--ink); color:#fff; font-weight:800; }
+  h1,h2,h3,p { margin-top:0; } h1 { margin-bottom:0; font-size:clamp(24px,4vw,40px); line-height:1.05; } .brand p,.meta,.muted { color:var(--muted); }
+  .meta { display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; } .chip,.tag,.badge { border:1px solid var(--line); background:#fff; border-radius:999px; padding:5px 9px; font-size:12px; white-space:nowrap; }
+  .hero { display:grid; grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr); gap:18px; align-items:stretch; } .decision,.metric,.section,.panel,.trial-card { background:var(--panel); border:1px solid var(--line); border-radius:8px; box-shadow:var(--shadow); }
+  .decision { padding:26px; } .kicker { color:var(--green); text-transform:uppercase; letter-spacing:.08em; font-size:12px; font-weight:800; } .decision h2 { font-size:clamp(28px,5vw,54px); line-height:1.02; max-width:880px; margin-bottom:14px; }
+  .decision-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:18px; } .decision-cell { border-left:3px solid var(--green); padding:10px 12px; background:#f9f7f1; } .decision-cell strong,.decision-cell span { display:block; }
+  .scoreboard { display:grid; gap:10px; } .metric { padding:16px; } .num { display:block; font-size:38px; line-height:1; font-weight:850; } .label { display:block; font-weight:750; margin-top:4px; } .note { color:var(--muted); font-size:13px; }
+  .section { margin-top:18px; padding:22px; } .section-head { display:flex; justify-content:space-between; align-items:end; gap:16px; margin-bottom:14px; } .lane-grid,.board { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .lane { border:1px solid var(--line); padding:14px; border-radius:8px; background:#fff; } .lane h3 { margin-bottom:6px; } .lane ul { margin-bottom:0; padding-left:18px; }
+  .filters { display:flex; flex-wrap:wrap; gap:8px; } button { font:inherit; border:1px solid var(--line); background:#fff; border-radius:999px; padding:7px 11px; cursor:pointer; } button.active { background:var(--ink); color:#fff; }
+  .trial-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; } .trial-card { padding:16px; display:flex; flex-direction:column; min-height:320px; } .trial-top,.trial-footer,.tag-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; } .trial-top { justify-content:space-between; margin-bottom:10px; } .trial-id { font-weight:800; color:var(--blue); } .priority { border-radius:999px; padding:4px 8px; font-size:12px; color:#fff; background:var(--blue); } .priority.high { background:var(--red); } .priority.medium { background:var(--amber); }
+  .tag.core { color:var(--green); border-color:#95c2a7; } .tag.adjunct { color:var(--red); border-color:#d9a1a1; } .tag.watch { color:var(--blue); border-color:#9ab8d6; } .tag.parked { color:var(--amber); border-color:#d7b16d; } .badge.new { color:var(--blue); background:#eaf3fb; border-color:#a5c4df; } .badge.update { color:var(--green); background:#eaf7ef; border-color:#a7d5b8; } .badge.old { color:var(--muted); background:#f7f7f7; }
+  .trial-footer { margin-top:auto; padding-top:12px; } .trial-footer a { text-decoration:none; border-bottom:1px solid currentColor; color:var(--blue); font-weight:700; } .result-list { display:grid; gap:10px; } .result { border-left:4px solid var(--green); background:#fff; padding:12px 14px; border-radius:6px; } .panel { padding:16px; } .source-list { display:grid; gap:10px; } .source { display:grid; gap:2px; padding:10px; background:#fff; border:1px solid var(--line); border-radius:8px; } .footer { color:var(--muted); font-size:13px; padding:18px 4px 6px; }
+  @media (max-width:900px) { .hero,.lane-grid,.board,.trial-grid,.decision-grid { grid-template-columns:1fr; } .topbar,.section-head { align-items:flex-start; flex-direction:column; } .meta { justify-content:flex-start; } }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand"><div class="brand-mark">NF</div><div><h1>NegletFix Research Monitor</h1><p>Evidence intake -> protocol-impact tracking</p></div></div>
+    <div class="meta"><span class="chip"><strong>Updated</strong>&nbsp;2026-08-13</span><span class="chip"><strong>Mode</strong>&nbsp;Paris / Quest shipping pause</span><span class="chip"><strong>Decision</strong>&nbsp;no protocol change</span></div>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="verdict-title">
+      <div class="decision">
+        <div class="kicker">Current protocol verdict</div>
+        <h2 id="verdict-title">Fresh updates, still no reason to rush the protocol.</h2>
+        <p>The August pass found one true new registry row, one new PubMed protocol paper, and several useful local Paris/French context leads. They improve the monitor; they do not change the active Quest audiovisual plan.</p>
+        <div class="decision-grid">
+          <div class="decision-cell"><strong>Core protocol</strong><span>Open-loop, field-map-guided audiovisual Quest training remains the active route.</span></div>
+          <div class="decision-cell"><strong>Best new signal</strong><span>NCT07752563: NeuroEyeCoach/VISIOcoach pilot RCT for stroke-related visual field loss.</span></div>
+          <div class="decision-cell"><strong>Paris relevance</strong><span>AP-HP tACS, Rothschild blindsight/fMRI, INSERM VR AV telerehab, and LMC2 IRON are now local watch leads.</span></div>
+        </div>
+      </div>
+      <aside class="scoreboard">
+        <div class="metric"><span class="num">85</span><span class="label">tracked source rows</span><span class="note">Unified source queue after August additions.</span></div>
+        <div class="metric"><span class="num">35</span><span class="label">clinical trials watched</span><span class="note">Registry-backed AV, restoration, compensation, neuromodulation, function, and local Paris lanes.</span></div>
+        <div class="metric"><span class="num">1</span><span class="label">true new August NCT</span><span class="note">NCT07752563 first posted 2026-08-07.</span></div>
+        <div class="metric"><span class="num">1</span><span class="label">new PubMed protocol row</span><span class="note">PMID42571232 maps to NCT07147660.</span></div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div><div class="kicker">August 13 highlights</div><h2>What actually changed?</h2><p>Signal separated from search noise.</p></div></div>
+      <div class="result-list">
+        <article class="result"><strong>CTG-028 / NCT07752563</strong><p>New August 7 registry row: Glasgow Caledonian pilot RCT of NeuroEyeCoach/VISIOcoach plus usual care versus usual care for stroke-related homonymous visual field loss. This is scanning/function compensation, not visual restoration.</p></article>
+        <article class="result"><strong>PM-010 / PMID42571232</strong><p>DRIVE-study protocol paper entered PubMed on August 9 and maps to NCT07147660. It strengthens the driving/function measurement lane with an eight-week home rehab RCT and VR functional-vision test.</p></article>
+        <article class="result"><strong>Paris/French lanes</strong><p>AP-HP Salpetriere tACS, Fondation Rothschild blindsight/fMRI, INSERM Unity HMD audiovisual telerehab, and LMC2 IRON are worth watching now that Eric is back in Paris.</p></article>
+        <article class="result"><strong>Watch-only tech updates</strong><p>Neuro-JEPA moved to arXiv v3; ruv-neural is active with August commits. Both remain analytics/tooling leads, not treatment evidence.</p></article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div><div class="kicker">Protocol impact lanes</div><h2>What changes NegletFix, and what only gets watched?</h2></div></div>
+      <div class="lane-grid">
+        <article class="lane"><h3>Core AV evidence</h3><p>Direct support for AV training and home-delivery feasibility.</p><ul><li>NCT04963075 / PMID36604169</li><li>NCT06341777 / PMID39994637</li><li>Field-map-guided Quest measurements</li></ul></article>
+        <article class="lane"><h3>Function/scanning</h3><p>Useful for daily-function measurement, not recovery claims.</p><ul><li>NCT07752563 NeuroEyeCoach/VISIOcoach</li><li>NCT07147660 DRIVE-study / PMID42571232</li><li>NCT06136169 reminder-cue scanning</li></ul></article>
+        <article class="lane"><h3>Clinician/research only</h3><p>Interesting neuromodulation or mechanism studies.</p><ul><li>NCT04043689 Paris tACS</li><li>NCT06875206 focused ultrasound + VR</li><li>NCT06636994 Rothschild blindsight/fMRI</li></ul></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="trial-title">
+      <div class="section-head"><div><div class="kicker">Clinical trial monitor</div><h2 id="trial-title">NCT rows to track</h2><p>Filter by protocol impact. Each row keeps a plain NegletFix interpretation.</p></div><div class="filters"><button class="filter-button active" type="button" data-filter="all">All</button><button class="filter-button" type="button" data-filter="core">Core</button><button class="filter-button" type="button" data-filter="adjunct">Adjunct</button><button class="filter-button" type="button" data-filter="watch">Watch</button><button class="filter-button" type="button" data-filter="parked">Parked</button></div></div>
+      <div id="trial-grid" class="trial-grid">
+      <article class="trial-card" data-lane="adjunct">
+        <div class="trial-top"><span class="trial-id">CTG-001 / NCT06116760</span><span class="priority high">High</span></div>
+        <h3>Best exact-match tDCS plus audiovisual clinical trial lead</h3>
+        <div class="tag-row"><span class="tag">AV+tDCS</span><span class="tag adjunct">adjunct</span></div>
+        <p><strong>Status:</strong> Completed</p>
+        <p><strong>Condition:</strong> Chronic homonymous visual field defects after acquired brain injury</p>
+        <p><strong>Protocol:</strong> Anodal or sham tDCS plus audiovisual training</p>
+        <p><strong>NegletFix:</strong> Clinician-supervised adjunct candidate only; do not add home tDCS before behavioral baseline and plateau</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT06116760" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a><a href="https://pubmed.ncbi.nlm.nih.gov/39607286/" target="_blank" rel="noopener noreferrer">PMID39607286</a></div>
+      </article>
+      <article class="trial-card" data-lane="core">
+        <div class="trial-top"><span class="trial-id">CTG-002 / NCT04963075</span><span class="priority high">High</span></div>
+        <h3>Closest Wake Forest adult chronic AV training registry line</h3>
+        <div class="tag-row"><span class="tag">AV multisensory</span><span class="tag core">core</span></div>
+        <p><strong>Status:</strong> Completed with results posted</p>
+        <p><strong>Condition:</strong> Stable homonymous hemianopia</p>
+        <p><strong>Protocol:</strong> Multisensory rehabilitation paradigm</p>
+        <p><strong>NegletFix:</strong> Supports current AV core; sample/results still small and high-variance</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT04963075" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a><a href="https://pubmed.ncbi.nlm.nih.gov/36604169/" target="_blank" rel="noopener noreferrer">PMID36604169</a></div>
+      </article>
+      <article class="trial-card" data-lane="core">
+        <div class="trial-top"><span class="trial-id">CTG-003 / NCT05894434</span><span class="priority high">High</span></div>
+        <h3>Wake Forest next-stage AV study</h3>
+        <div class="tag-row"><span class="tag">AV multisensory</span><span class="tag core">core</span></div>
+        <p><strong>Status:</strong> Not yet recruiting</p>
+        <p><strong>Condition:</strong> Homonymous hemianopia after stroke</p>
+        <p><strong>Protocol:</strong> Multisensory training versus unisensory training</p>
+        <p><strong>NegletFix:</strong> Watch only; no immediate protocol change</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT05894434" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="adjunct">
+        <div class="trial-top"><span class="trial-id">CTG-004 / NCT07358832</span><span class="priority high">High</span></div>
+        <h3>Best active AV+tDCS trial lead, but subacute not chronic</h3>
+        <div class="tag-row"><span class="tag">AV+tDCS</span><span class="tag adjunct">adjunct</span></div>
+        <p><strong>Status:</strong> Recruiting</p>
+        <p><strong>Condition:</strong> Subacute homonymous hemianopsia after stroke</p>
+        <p><strong>Protocol:</strong> tDCS plus audiovisual training</p>
+        <p><strong>NegletFix:</strong> Watch as future evidence; not directly applicable to Eric&#x27;s chronic window</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT07358832" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="adjunct">
+        <div class="trial-top"><span class="trial-id">CTG-005 / NCT02935413</span><span class="priority high">High</span></div>
+        <h3>Subacute VRT+tDCS feasibility and safety pilot</h3>
+        <div class="tag-row"><span class="tag">VRT+tDCS</span><span class="tag adjunct">adjunct</span></div>
+        <p><strong>Status:</strong> Completed</p>
+        <p><strong>Condition:</strong> Subacute homonymous visual field defects after PCA stroke</p>
+        <p><strong>Protocol:</strong> tDCS plus vision restoration training versus standard rehab</p>
+        <p><strong>NegletFix:</strong> Park as early-window adjunct evidence; not a chronic home protocol</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT02935413" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a><a href="https://pubmed.ncbi.nlm.nih.gov/28082176/" target="_blank" rel="noopener noreferrer">PMID28082176</a></div>
+      </article>
+      <article class="trial-card" data-lane="watch">
+        <div class="trial-top"><span class="trial-id">CTG-006 / NCT03350919</span><span class="priority medium">Medium</span></div>
+        <h3>Modern blind-field training comparator with posted PMD results</h3>
+        <div class="tag-row"><span class="tag">Blind-field visual restoration</span><span class="tag watch">watch</span></div>
+        <p><strong>Status:</strong> Completed with results posted</p>
+        <p><strong>Condition:</strong> Hemianopia caused by brain damage</p>
+        <p><strong>Protocol:</strong> Blind-field training versus intact-field training</p>
+        <p><strong>NegletFix:</strong> Supports measurement-first visual training; not audiovisual and long dose</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT03350919" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="watch">
+        <div class="trial-top"><span class="trial-id">CTG-007 / NCT04230486</span><span class="priority medium">Medium</span></div>
+        <h3>VR audiovisual/cross-modal comparator with posted outcomes</h3>
+        <div class="tag-row"><span class="tag">VR cross-modal AV</span><span class="tag watch">watch</span></div>
+        <p><strong>Status:</strong> Completed with results posted</p>
+        <p><strong>Condition:</strong> Homonymous hemianopia</p>
+        <p><strong>Protocol:</strong> VR cross-modal visual-auditory rehabilitation</p>
+        <p><strong>NegletFix:</strong> Supports Quest/cross-modal direction; needs careful effect-size review</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT04230486" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="adjunct">
+        <div class="trial-top"><span class="trial-id">CTG-008 / NCT05085210</span><span class="priority medium">Medium</span></div>
+        <h3>Active neuromodulation plus VR/visual-training lead</h3>
+        <div class="tag-row"><span class="tag">NIBS+visual training</span><span class="tag adjunct">adjunct</span></div>
+        <p><strong>Status:</strong> Recruiting</p>
+        <p><strong>Condition:</strong> Visual field defects after cortical damage</p>
+        <p><strong>Protocol:</strong> tRNS plus computer or VR visual training</p>
+        <p><strong>NegletFix:</strong> Watch only; tRNS is not tDCS and is not part of NegletFix</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT05085210" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="watch">
+        <div class="trial-top"><span class="trial-id">CTG-009 / NCT04798924</span><span class="priority medium">Medium</span></div>
+        <h3>Timing/plasticity study relevant to chronic-vs-subacute expectations</h3>
+        <div class="tag-row"><span class="tag">Visual restoration timing</span><span class="tag watch">watch</span></div>
+        <p><strong>Status:</strong> Active not recruiting</p>
+        <p><strong>Condition:</strong> Occipital stroke visual field loss</p>
+        <p><strong>Protocol:</strong> Subacute and chronic blind-field/intact-field training</p>
+        <p><strong>NegletFix:</strong> Watch for results to refine dose/timing expectations</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT04798924" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="watch">
+        <div class="trial-top"><span class="trial-id">CTG-010 / NCT07317739</span><span class="priority high">High</span></div>
+        <h3>New exact post-stroke visual-field rehabilitation registry lead with early multisensory audiovisual stimulation</h3>
+        <div class="tag-row"><span class="tag">AV multisensory/post-stroke</span><span class="tag watch">watch</span></div>
+        <p><strong>Status:</strong> Not yet recruiting</p>
+        <p><strong>Condition:</strong> Hemianopia; Visual Field Defect Following Cerebrovascular Accident</p>
+        <p><strong>Protocol:</strong> Early multisensory audio-visual stimulation training; Early visual field test</p>
+        <p><strong>NegletFix:</strong> Watch only; reinforces AV research lane but has no results and does not change current Quest protocol</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT07317739" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="parked">
+        <div class="trial-top"><span class="trial-id">CTG-011 / NCT07185971</span><span class="priority high">High</span></div>
+        <h3>Recruiting HMD-based visual-field enhancement lead for chronic field loss</h3>
+        <div class="tag-row"><span class="tag">VR-HMD compensation/chronic visual field loss</span><span class="tag parked">parked</span></div>
+        <p><strong>Status:</strong> Recruiting</p>
+        <p><strong>Condition:</strong> Homonymous hemianopsia; homonymous quadrantanopia after stroke/TBI/brain surgery</p>
+        <p><strong>Protocol:</strong> PAVE treatment using a virtual-reality head-mounted display</p>
+        <p><strong>NegletFix:</strong> Compensation/device comparator only; do not treat as restorative AV evidence</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT07185971" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="parked">
+        <div class="trial-top"><span class="trial-id">CTG-012 / NCT06136169</span><span class="priority medium">Medium</span></div>
+        <h3>Compensatory scanning-training comparator with posted registry outcomes and linked Archives PM&amp;R publication</h3>
+        <div class="tag-row"><span class="tag">Scanning compensation/results</span><span class="tag parked">parked</span></div>
+        <p><strong>Status:</strong> Active not recruiting with results posted; registry results updated 2026-07-09</p>
+        <p><strong>Condition:</strong> Homonymous hemianopia; homonymous quadrantanopia</p>
+        <p><strong>Protocol:</strong> Reminder-cue scanning training</p>
+        <p><strong>NegletFix:</strong> Functional compensation evidence only; useful for head-scan/hazard-detection metrics, not restorative AV dose or driving clearance</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT06136169" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a><a href="https://pubmed.ncbi.nlm.nih.gov/42140549/" target="_blank" rel="noopener noreferrer">PMID42140549</a></div>
+      </article>
+      <article class="trial-card" data-lane="watch">
+        <div class="trial-top"><span class="trial-id">CTG-013 / NCT07134777</span><span class="priority medium">Medium</span></div>
+        <h3>Mechanism/imaging watch lead for occipital-stroke visual restoration</h3>
+        <div class="tag-row"><span class="tag">Occipital-stroke mechanism</span><span class="tag watch">watch</span></div>
+        <p><strong>Status:</strong> Recruiting</p>
+        <p><strong>Condition:</strong> Cortical blindness; ischemic stroke; partial vision loss; homonymous hemianopia; occipital lobe infarct</p>
+        <p><strong>Protocol:</strong> MRI mechanism study</p>
+        <p><strong>NegletFix:</strong> Mechanism watch only; no intervention result yet</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT07134777" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="watch">
+        <div class="trial-top"><span class="trial-id">CTG-014 / NCT06047717</span><span class="priority medium">Medium</span></div>
+        <h3>Functional navigation and steering measurement lead in VR</h3>
+        <div class="tag-row"><span class="tag">VR navigation/function</span><span class="tag watch">watch</span></div>
+        <p><strong>Status:</strong> Recruiting</p>
+        <p><strong>Condition:</strong> Stroke-related homonymous hemianopia/quadrantanopia and partial vision loss</p>
+        <p><strong>Protocol:</strong> Virtual Reality Driving Task</p>
+        <p><strong>NegletFix:</strong> Useful for future function tracker, not treatment efficacy</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT06047717" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="parked">
+        <div class="trial-top"><span class="trial-id">CTG-015 / NCT07147660</span><span class="priority medium">Medium</span></div>
+        <h3>Driving-focused visual rehabilitation/scanning-training trial; August PubMed RCT protocol paper added</h3>
+        <div class="tag-row"><span class="tag">Driving/scanning compensation</span><span class="tag parked">parked</span><span class="badge update">new PMID</span></div>
+        <p><strong>Status:</strong> Recruiting</p>
+        <p><strong>Condition:</strong> Stroke; visual field loss; hemianopia</p>
+        <p><strong>Protocol:</strong> Compensatory scanning training; delayed compensatory scanning training</p>
+        <p><strong>NegletFix:</strong> Driving/function lane only; no driving clearance or restorative protocol implication</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT07147660" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a><a href="https://pubmed.ncbi.nlm.nih.gov/42571232/" target="_blank" rel="noopener noreferrer">PMID42571232</a></div>
+      </article>
+      <article class="trial-card" data-lane="parked">
+        <div class="trial-top"><span class="trial-id">CTG-016 / NCT04827147</span><span class="priority medium">Medium</span></div>
+        <h3>Prism/accommodation comparator with posted registry outcomes and randomized crossover publication</h3>
+        <div class="tag-row"><span class="tag">Prism compensation/results</span><span class="tag parked">parked</span></div>
+        <p><strong>Status:</strong> Active not recruiting with results posted</p>
+        <p><strong>Condition:</strong> Homonymous hemianopia</p>
+        <p><strong>Protocol:</strong> Multi-periscopic prism glasses; Fresnel peripheral prism glasses</p>
+        <p><strong>NegletFix:</strong> Accommodation evidence only; do not mix prism field expansion with restorative AV training claims</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT04827147" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a><a href="https://pubmed.ncbi.nlm.nih.gov/42274646/" target="_blank" rel="noopener noreferrer">PMID42274646</a></div>
+      </article>
+      <article class="trial-card" data-lane="watch">
+        <div class="trial-top"><span class="trial-id">CTG-017 / NCT05525949</span><span class="priority medium">Medium</span></div>
+        <h3>Completed digital visual perceptual learning comparator for post-stroke visual-field defect</h3>
+        <div class="tag-row"><span class="tag">Digital visual perceptual learning</span><span class="tag watch">watch</span></div>
+        <p><strong>Status:</strong> Completed</p>
+        <p><strong>Condition:</strong> Visual fields hemianopsia; homonymous hemianopsia</p>
+        <p><strong>Protocol:</strong> VIVID Brain; no-treatment control</p>
+        <p><strong>NegletFix:</strong> Comparator only; wait for results/publication before use</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT05525949" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="watch">
+        <div class="trial-top"><span class="trial-id">CTG-018 / NCT07659691</span><span class="priority high">High</span></div>
+        <h3>New Wake Forest multisensory rehabilitation registry lead first posted 2026-06-22</h3>
+        <div class="tag-row"><span class="tag">AV multisensory/cortical damage</span><span class="tag watch">watch</span><span class="badge old">July row</span></div>
+        <p><strong>Status:</strong> Not yet recruiting</p>
+        <p><strong>Condition:</strong> Cortical blindness; hemianopia from visual cortex damage</p>
+        <p><strong>Protocol:</strong> Multisensory Rehabilitation</p>
+        <p><strong>NegletFix:</strong> High-priority AV watch only; no results and no current protocol change</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT07659691" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="watch">
+        <div class="trial-top"><span class="trial-id">CTG-019 / NCT07635329</span><span class="priority high">High</span></div>
+        <h3>BRIGHT home-based visual rehabilitation guided by brain imaging</h3>
+        <div class="tag-row"><span class="tag">Home-based imaging-guided visual training</span><span class="tag watch">watch</span><span class="badge old">July row</span></div>
+        <p><strong>Status:</strong> Recruiting</p>
+        <p><strong>Condition:</strong> Visual field defect; stroke; homonymous hemianopia; quadrantanopia; cortical blindness; TBI</p>
+        <p><strong>Protocol:</strong> High-level and low-level perceptual learning-based training</p>
+        <p><strong>NegletFix:</strong> Home-training/restoration comparator only; recruitment status does not change Quest AV protocol</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT07635329" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="adjunct">
+        <div class="trial-top"><span class="trial-id">CTG-020 / NCT06875206</span><span class="priority high">High</span></div>
+        <h3>Neuromodulation plus VR visual-restoration trial lead</h3>
+        <div class="tag-row"><span class="tag">Focused ultrasound + immersive VR</span><span class="tag adjunct">adjunct</span><span class="badge old">July row</span></div>
+        <p><strong>Status:</strong> Not yet recruiting</p>
+        <p><strong>Condition:</strong> Stroke visual field defect; hemianopia; quadrantanopia; occipital lobe infarct</p>
+        <p><strong>Protocol:</strong> Low-intensity focused ultrasound; immersive virtual reality; inactive ultrasound</p>
+        <p><strong>NegletFix:</strong> Clinician/research watch only; no stimulation/hardware change for NegletFix</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT06875206" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="watch">
+        <div class="trial-top"><span class="trial-id">CTG-021 / NCT07237412</span><span class="priority medium">Medium</span></div>
+        <h3>Neurofeedback-based VRT registry comparator</h3>
+        <div class="tag-row"><span class="tag">Neurofeedback visual restoration</span><span class="tag watch">watch</span><span class="badge old">July row</span></div>
+        <p><strong>Status:</strong> Recruiting</p>
+        <p><strong>Condition:</strong> Homonymous bilateral visual field defect</p>
+        <p><strong>Protocol:</strong> Neurofeedback</p>
+        <p><strong>NegletFix:</strong> Future EEG/neurofeedback research lane only; no Muse TP10 protocol impact</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT07237412" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="adjunct">
+        <div class="trial-top"><span class="trial-id">CTG-022 / NCT06241209</span><span class="priority medium">Medium</span></div>
+        <h3>Low-tech visual stimulation comparator for hemianopsia rehabilitation</h3>
+        <div class="tag-row"><span class="tag">Low-tech visual stimulation</span><span class="tag adjunct">adjunct</span><span class="badge old">July row</span></div>
+        <p><strong>Status:</strong> Recruiting</p>
+        <p><strong>Condition:</strong> Hemianopsia after stroke or brain injury; peripheral visual field defect; visual impairment</p>
+        <p><strong>Protocol:</strong> PowerPoint program visual stimulation</p>
+        <p><strong>NegletFix:</strong> Comparator only; no evidence until results</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT06241209" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="core">
+        <div class="trial-top"><span class="trial-id">CTG-023 / NCT06341777</span><span class="priority high">High</span></div>
+        <h3>Completed home AVT telerehabilitation comparator with published feasibility results</h3>
+        <div class="tag-row"><span class="tag">AV telerehabilitation/comparator</span><span class="tag core">core</span><span class="badge old">July row</span></div>
+        <p><strong>Status:</strong> Completed</p>
+        <p><strong>Condition:</strong> Visual field defect following cerebrovascular accident; hemianopia; brain injuries</p>
+        <p><strong>Protocol:</strong> Audio-visual training telerehabilitation</p>
+        <p><strong>NegletFix:</strong> Supports home AV delivery and function improvements, but interpreted as compensatory oculomotor evidence</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT06341777" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a><a href="https://pubmed.ncbi.nlm.nih.gov/39994637/" target="_blank" rel="noopener noreferrer">PMID39994637</a></div>
+      </article>
+      <article class="trial-card" data-lane="adjunct">
+        <div class="trial-top"><span class="trial-id">CTG-024 / NCT07105358</span><span class="priority medium">Medium</span></div>
+        <h3>NIBS plus visual-training comparator</h3>
+        <div class="tag-row"><span class="tag">tRNS + perceptual learning</span><span class="tag adjunct">adjunct</span><span class="badge old">July row</span></div>
+        <p><strong>Status:</strong> Recruiting</p>
+        <p><strong>Condition:</strong> Visual field defect; stroke; hemianopia; quadrantanopia; cortical blindness; TBI; brain tumor</p>
+        <p><strong>Protocol:</strong> tRNS; sham stimulation; perceptual learning-based training</p>
+        <p><strong>NegletFix:</strong> Watch only; do not add tRNS or stimulation to NegletFix</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT07105358" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="watch">
+        <div class="trial-top"><span class="trial-id">CTG-025 / NCT06578117</span><span class="priority medium">Medium</span></div>
+        <h3>Visual learning/restoration comparator aiming to reduce training burden</h3>
+        <div class="tag-row"><span class="tag">Statistical learning visual training</span><span class="tag watch">watch</span><span class="badge old">July row</span></div>
+        <p><strong>Status:</strong> Enrolling by invitation</p>
+        <p><strong>Condition:</strong> Ischemic/hemorrhagic stroke; homonymous hemianopia; occipital lobe infarct; quadrantanopia</p>
+        <p><strong>Protocol:</strong> Vision Training and Learning Task</p>
+        <p><strong>NegletFix:</strong> Watch only until results</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT06578117" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="parked">
+        <div class="trial-top"><span class="trial-id">CTG-026 / NCT06638619</span><span class="priority medium">Medium</span></div>
+        <h3>Late-June update comparing eye-tracking biofeedback and saccadic reading training</h3>
+        <div class="tag-row"><span class="tag">Saccadic/biofeedback compensation</span><span class="tag parked">parked</span><span class="badge old">July row</span></div>
+        <p><strong>Status:</strong> Not yet recruiting</p>
+        <p><strong>Condition:</strong> Homonymous hemianopia</p>
+        <p><strong>Protocol:</strong> Biofeedback Fixation Training; Saccadic Reading Training</p>
+        <p><strong>NegletFix:</strong> Compensation/reading comparator only</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT06638619" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="parked">
+        <div class="trial-top"><span class="trial-id">CTG-027 / NCT05141604</span><span class="priority medium">Medium</span></div>
+        <h3>VR/HMD obstacle-detection and field-expansion mobility comparator updated 2026-07-02</h3>
+        <div class="tag-row"><span class="tag">VR mobility/field expansion</span><span class="tag parked">parked</span><span class="badge old">July row</span></div>
+        <p><strong>Status:</strong> Active not recruiting</p>
+        <p><strong>Condition:</strong> Hemianopsia; homonymous hemianopia; low vision field defects</p>
+        <p><strong>Protocol:</strong> Field expansion view</p>
+        <p><strong>NegletFix:</strong> Mobility/accommodation measurement lead only</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT05141604" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="parked">
+        <div class="trial-top"><span class="trial-id">CTG-028 / NCT07752563</span><span class="priority high">High</span></div>
+        <h3>New August 7 pilot RCT of computer-based scanning/eye-movement training after stroke</h3>
+        <div class="tag-row"><span class="tag">Computer-based eye-movement compensation</span><span class="tag parked">parked</span><span class="badge new">new Aug 13</span></div>
+        <p><strong>Status:</strong> Not yet recruiting</p>
+        <p><strong>Condition:</strong> Stroke-related homonymous visual field loss</p>
+        <p><strong>Protocol:</strong> NeuroEyeCoach/VISIOcoach eye-movement training plus usual care versus usual care</p>
+        <p><strong>NegletFix:</strong> Function/scanning comparator only; no visual restoration or AV protocol implication</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT07752563" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="parked">
+        <div class="trial-top"><span class="trial-id">CTG-029 / NCT04930822</span><span class="priority medium">Medium</span></div>
+        <h3>New-to-monitor posted-results digital scanning comparator using Bells Test and kinetic field metrics</h3>
+        <div class="tag-row"><span class="tag">Digital visual scanning/results</span><span class="tag parked">parked</span><span class="badge update">new to monitor</span></div>
+        <p><strong>Status:</strong> Completed with results posted</p>
+        <p><strong>Condition:</strong> Acute or subacute neurological visual field impairment after stroke, TBI, or acquired brain injury</p>
+        <p><strong>Protocol:</strong> Bioness Integrated Therapy System visual intervention versus tabletop visual intervention</p>
+        <p><strong>NegletFix:</strong> Inpatient acute/subacute field-awareness comparator only; not chronic restoration evidence</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT04930822" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="adjunct">
+        <div class="trial-top"><span class="trial-id">CTG-030 / NCT04043689</span><span class="priority medium">Medium</span></div>
+        <h3>Paris AP-HP chronic HH neuromodulation study aligned with Raffin 2025 cf-tACS paper</h3>
+        <div class="tag-row"><span class="tag">Paris tACS/chronic hemianopia</span><span class="tag adjunct">adjunct</span><span class="badge update">new to monitor</span></div>
+        <p><strong>Status:</strong> Completed</p>
+        <p><strong>Condition:</strong> Chronic post-stroke homonymous hemianopia</p>
+        <p><strong>Protocol:</strong> tACS frontal/right FEF and occipito-parietal stimulation with sham</p>
+        <p><strong>NegletFix:</strong> Clinician/research watch only; do not adopt stimulation; useful local Paris expert/context lead</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT04043689" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a><a href="https://pubmed.ncbi.nlm.nih.gov/41243213/" target="_blank" rel="noopener noreferrer">PMID41243213</a></div>
+      </article>
+      <article class="trial-card" data-lane="watch">
+        <div class="trial-top"><span class="trial-id">CTG-031 / NCT06636994</span><span class="priority medium">Medium</span></div>
+        <h3>Fondation Rothschild Paris study mapping blindsight capability to functional MRI connectivity</h3>
+        <div class="tag-row"><span class="tag">Paris imaging/blindsight</span><span class="tag watch">watch</span><span class="badge update">new to monitor</span></div>
+        <p><strong>Status:</strong> Active not recruiting</p>
+        <p><strong>Condition:</strong> Homonymous hemianopia after vascular retrochiasmatic lesion including occipital stroke</p>
+        <p><strong>Protocol:</strong> Observational MRI and computer visual tasks</p>
+        <p><strong>NegletFix:</strong> Mechanism/local-clinician watch only; no treatment protocol impact</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT06636994" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="watch">
+        <div class="trial-top"><span class="trial-id">CTG-032 / NCT07558395</span><span class="priority medium">Medium</span></div>
+        <h3>INSERM multicenter VR audiovisual telerehab trial with Strasbourg site; pediatric tumor etiology not Eric stroke lane</h3>
+        <div class="tag-row"><span class="tag">France/Europe VR audiovisual telerehab</span><span class="tag watch">watch</span><span class="badge update">new to monitor</span></div>
+        <p><strong>Status:</strong> Not yet recruiting</p>
+        <p><strong>Condition:</strong> Hemianopsia after pediatric brain tumor in children, adolescents, and young adults</p>
+        <p><strong>Protocol:</strong> Unity HMD 3D-MOT audiovisual stimulation with head/eye tracking versus standard care</p>
+        <p><strong>NegletFix:</strong> AV/VR design inspiration only; not adult stroke or current Quest protocol evidence</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT07558395" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="watch">
+        <div class="trial-top"><span class="trial-id">CTG-033 / NCT06121219</span><span class="priority high">High</span></div>
+        <h3>Rochester/Huxlin recruiting home visual retraining after stroke; strong dose and staircase comparator</h3>
+        <div class="tag-row"><span class="tag">Home blind-field visual retraining</span><span class="tag watch">watch</span><span class="badge update">new to monitor</span></div>
+        <p><strong>Status:</strong> Recruiting</p>
+        <p><strong>Condition:</strong> Occipital-stroke cortical blindness, hemianopia, or quadrantanopia</p>
+        <p><strong>Protocol:</strong> Home blind-field visual training with motion/orientation discrimination and 3:1 staircase</p>
+        <p><strong>NegletFix:</strong> Home visual-training comparator only; not audiovisual and requires months-long dose</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT06121219" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="parked">
+        <div class="trial-top"><span class="trial-id">CTG-034 / NCT05397873</span><span class="priority medium">Medium</span></div>
+        <h3>Toronto microperimetry biofeedback trial for fixation stability, retinal sensitivity, reading, and quality of life</h3>
+        <div class="tag-row"><span class="tag">Microperimetry biofeedback compensation</span><span class="tag parked">parked</span><span class="badge update">new to monitor</span></div>
+        <p><strong>Status:</strong> Recruiting</p>
+        <p><strong>Condition:</strong> Homonymous hemianopsia after brain injury, stroke, tumor, or trauma</p>
+        <p><strong>Protocol:</strong> MAIA microperimetry biofeedback training</p>
+        <p><strong>NegletFix:</strong> Compensation/oculomotor comparator only; no restoration claim until results</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT05397873" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a></div>
+      </article>
+      <article class="trial-card" data-lane="parked">
+        <div class="trial-top"><span class="trial-id">CTG-035 / NCT04424979</span><span class="priority medium">Medium</span></div>
+        <h3>Schepens prism configuration feasibility trial with primary completion expected 2026-08</h3>
+        <div class="tag-row"><span class="tag">Prism/device feasibility</span><span class="tag parked">parked</span><span class="badge update">new to monitor</span></div>
+        <p><strong>Status:</strong> Recruiting</p>
+        <p><strong>Condition:</strong> Homonymous hemianopia or peripheral visual field loss</p>
+        <p><strong>Protocol:</strong> Custom high-power prism configurations</p>
+        <p><strong>NegletFix:</strong> Accommodation/mobility comparator only; separate from restoration and AV dose</p>
+        <div class="trial-footer"><a href="https://clinicaltrials.gov/study/NCT04424979" target="_blank" rel="noopener noreferrer">ClinicalTrials.gov</a><a href="https://pubmed.ncbi.nlm.nih.gov/38990239/" target="_blank" rel="noopener noreferrer">PMID38990239</a></div>
+      </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head"><div><div class="kicker">Monitor operations</div><h2>Refresh log</h2><p>The monitor remains a review artifact. It proposes changes to evidence tracking, not treatment.</p></div></div>
+      <div class="board">
+        <div class="panel"><h3>Completed August 13</h3><ul><li>Rechecked all 27 prior NCT rows.</li><li>Added CTG-028..CTG-035.</li><li>Added PM-010 and LI-002 to the source queue.</li><li>Checked Mayo, YouTube, X/LinkedIn, arXiv, and GitHub watch lanes.</li></ul></div>
+        <div class="panel"><h3>Refresh verdict</h3><p>Keep open-loop, field-map-guided Quest audiovisual training as the active protocol. The shipping pause is useful: it gives us time to retune the next build without forcing premature dose.</p></div>
+        <div class="panel"><h3>Source files</h3><div class="source-list"><div class="source"><b>Clinical trials CSV</b><span><a href="clinical-trials-watchlist-2026-08-13.csv">clinical-trials-watchlist-2026-08-13.csv</a></span></div><div class="source"><b>Human-readable watchlist</b><span><a href="clinical-trials-watchlist-2026-08-13.md">clinical-trials-watchlist-2026-08-13.md</a></span></div><div class="source"><b>Refresh log</b><span><a href="research-refresh-2026-08-13.md">research-refresh-2026-08-13.md</a></span></div><div class="source"><b>Unified queue</b><span><a href="source-queue-2026-05-25.csv">source-queue-2026-05-25.csv</a></span></div></div></div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">This monitor is a research and operations artifact, not medical advice. Registry and PubMed statuses can change; refresh before clinical decisions.</footer>
+</div>
+<script>
+const buttons = Array.from(document.querySelectorAll('.filter-button'));
+const cards = Array.from(document.querySelectorAll('.trial-card'));
+buttons.forEach(button => button.addEventListener('click', () => {
+  buttons.forEach(b => b.classList.remove('active'));
+  button.classList.add('active');
+  const filter = button.dataset.filter;
+  cards.forEach(card => { card.style.display = filter === 'all' || card.dataset.lane === filter ? '' : 'none'; });
+}));
+</script>
+</body>
+</html>

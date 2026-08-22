@@ -18,6 +18,9 @@
 #### Context
 Main rehabilitation module — cross-modal audiovisual stimulation for left hemifield recovery. **Reframed 2026-05-14**: was previously framed around Daibert-Nido 2021, now correctly built as Paradigm B (congruent-pair detection, Wake Forest / Rowland 2023 lineage) at the Alharshan/Alwashmi 2026 dose for chronic adult stroke.
 
+#### Research Closeout / Paris Pause (2026-08-22)
+June-August research refreshes are now treated as closed-out watchlist work, not product/protocol work. The 2026-08-13 refresh is canonical: no new result justifies changing the current Quest protocol. New entries remain comparators or watchlist leads. Next product work waits for the Quest setup to arrive back in Paris, then resumes the measured retuning plan around `-5°`, harder `-8°` probes, catch/probe trials, and staircase cleanup.
+
 #### Phase 1 Complete (2026-05-16)
 Scaffolded in `Unity/NeglectFix/Assets/Scripts/Tasks/`:
 - `AudioVisualTraining.cs` — main task, 30-min sessions, 3×10-min blocks, 2-up/1-down weighted staircase, sub-50ms AV sync, baseline-driven personalization

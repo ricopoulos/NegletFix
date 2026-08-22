@@ -1,6 +1,6 @@
 ---
 title: Research Papers Index
-last_updated: 2026-06-12
+last_updated: 2026-08-13
 confidence: MIXED
 sources:
   - RESEARCH_SUMMARY.md
@@ -16,6 +16,10 @@ sources:
   - 2026-06-11 LuMamba / BioFoundation EEG foundation-model watch lead
   - 2026-06-12 NeurIPS 2025 EEG-AI methods lane: BrainBodyFM, EEG Foundation Challenge, REVE, LUNA, BrainOmni, NeurIPT, CSBrain, EEG-Bench, critical review
   - 2026-06-12 ruv-neural GitHub analysis-side watch lead
+  - 2026-06-17 PubMed refresh for post-stroke visual-field rehabilitation reviews, digital/VR comparators, and functional navigation studies
+  - 2026-06-21 Neuro-JEPA AI neuroimaging watch lead from LinkedIn/arXiv
+  - 2026-07-09 PubMed + ClinicalTrials.gov refresh for scanning compensation, prism accommodation, naturalistic driving/function papers, and new registry rows CTG-018..CTG-027
+  - 2026-08-13 PubMed + ClinicalTrials.gov refresh for DRIVE-study protocol PM-010, CTG-028..CTG-035, Paris/French local clinical context, Neuro-JEPA v3, and LMC2 IRON lead
 ---
 
 # Research Papers Index
@@ -46,6 +50,16 @@ Confidence applies to the paper's evidentiary weight for this specific project, 
 
 ---
 
+## Huang, Chen, Hyun, Loftus, Melmed, Orringer, Frontera, Dehkharghani, Masurkar & Razavian (2026) — Neuro-JEPA MRI foundation model
+
+**Citation**: Huang H, Chen L, Chen J, Hyun J, Loftus JR, Melmed K, Orringer D, Frontera J, Dehkharghani S, Masurkar A, Razavian N. Learning Sparse Latent Predictive Foundation Model for Multimodal Neuroimaging. *arXiv*. 2026.
+**DOI / URL**: arXiv:2606.14957 — [https://arxiv.org/abs/2606.14957](https://arxiv.org/abs/2606.14957) (added 2026-06-21)
+**Key finding**: Neuro-JEPA is a sparse multimodal neuroimaging foundation model for structural brain MRI across T1w, T2w, and FLAIR sequences. The paper reports health-system-scale pretraining and broad downstream evaluation, with an explicit emphasis on comparing foundation-model gains against simple baselines and heterogeneous clinical cohorts.
+**Informs**: `docs/research/source-queue-2026-05-25.csv` row `IMG-001`, `docs/research/research-monitor-2026-06-17.html` — future MRI-side analytics watch lead only.
+**Confidence for NegletFix**: LOW for direct project impact today. This is not EEG, homonymous hemianopia rehabilitation, audiovisual training, Quest protocol, or tDCS evidence. Revisit only if NegletFix develops an MRI/lesion-analysis sidecar or if independent validation appears for occipital-stroke visual-field prognosis, lesion matching, or treatment-response stratification.
+
+---
+
 ## NeurIPS 2025 EEG-AI methods lane
 
 **Citation / source cluster**: NeurIPS 2025 BrainBodyFM workshop; EEG Foundation Challenge 2025; OpenReview NeurIPS 2025 conference/workshop papers for REVE, LUNA, BrainOmni, NeurIPT, CSBrain, EEG-Bench, and EEG Foundation Models: A Critical Review.
@@ -65,6 +79,34 @@ Confidence applies to the paper's evidentiary weight for this specific project, 
 **Confidence for NegletFix**: LOW for direct project impact today. Watch the repo, harvest useful analysis ideas later, but do not use its clinical-risk scoring, do not store PHI in it, and do not let it drive live rehab or protocol decisions without local build/test evidence plus project-specific measurements.
 
 ---
+
+## June 17 2026 PubMed refresh cluster
+
+**Citation / source cluster**: 2026 PubMed refresh rows `PM-001` through `PM-005` in `docs/research/source-queue-2026-05-25.csv`.
+**DOI / URLs**: [PMID 41930466](https://pubmed.ncbi.nlm.nih.gov/41930466/), [PMID 41943962](https://pubmed.ncbi.nlm.nih.gov/41943962/), [PMID 41729858](https://pubmed.ncbi.nlm.nih.gov/41729858/), [PMID 41764203](https://pubmed.ncbi.nlm.nih.gov/41764203/), [PMID 41682685](https://pubmed.ncbi.nlm.nih.gov/41682685/).
+**Key finding**: The refresh adds one direct 2026 post-stroke visual-field rehabilitation review, one non-drug hemianopia rehabilitation review, a digital visuo-cognitive training pilot for stroke survivors with visual field loss, a VR steering/gaze-behavior study in unilateral cortical blindness, and an adjacent VR dichoptic ABI therapy paper that did not show meaningful perimetric restoration.
+**Informs**: [[clinical-trials-watchlist]], [[rehabilitation-roadmap]], and `docs/research/research-monitor-2026-06-17.html` — review taxonomy, comparator selection, functional-measurement thinking, and caution against overreading adjacent VR therapy.
+**Confidence for NegletFix**: MEDIUM for taxonomy/comparator value, LOW-MEDIUM for direct protocol impact. No paper in this cluster changes the active field-map-guided audiovisual Quest protocol.
+
+---
+
+## July 9 2026 Bowers / Mass Eye function cluster
+
+**Citation / source cluster**: July 9 refresh rows `PM-006` through `PM-009` in `docs/research/source-queue-2026-05-25.csv`.
+**DOI / URLs**: [PMID 42140549](https://pubmed.ncbi.nlm.nih.gov/42140549/) / DOI 10.1016/j.apmr.2026.04.038; [PMID 42274646](https://pubmed.ncbi.nlm.nih.gov/42274646/) / DOI 10.1002/ovs2.70072; [PMID 42102308](https://pubmed.ncbi.nlm.nih.gov/42102308/) / DOI 10.5014/ajot.2026.051510; [PMID 41747510](https://pubmed.ncbi.nlm.nih.gov/41747510/) / DOI 10.1016/j.aap.2026.108471.
+**Key finding**: The cluster strengthens the functional-compensation lane. `PM-006` maps to `CTG-012` / [NCT06136169](https://clinicaltrials.gov/study/NCT06136169), where registry results show early large blind-side head scans improving from 18% to 84%, blind-side hazard detection from 56% to 86%, and response time from 2.7s to 1.9s at 1-week post-training. `PM-007` maps to prism/accommodation row `CTG-016`; `PM-008` and `PM-009` add naturalistic-driving/head-scan behavior context.
+**Informs**: [[clinical-trials-watchlist]], `docs/research/research-monitor-2026-07-09.html` — objective function metrics, scanning behavior, pedestrian/driving hazard-detection comparators, and accommodation separation.
+**Confidence for NegletFix**: MEDIUM-HIGH for functional compensation and measurement design, LOW for direct restorative protocol impact. This cluster should not be used for driving clearance or as evidence that Quest AV restores blind-field vision.
+
+---
+
+## August 13 2026 DRIVE / Paris / monitor-gap refresh cluster
+
+**Citation / source cluster**: August 13 refresh rows `PM-010`, `CTG-028` through `CTG-035`, and `LI-002` in `docs/research/source-queue-2026-05-25.csv`; clinical source map in `docs/research/clinical-trials-watchlist-2026-08-13.csv`.
+**DOI / URLs**: [PMID 42571232](https://pubmed.ncbi.nlm.nih.gov/42571232/) / [NCT07147660](https://clinicaltrials.gov/study/NCT07147660); [NCT07752563](https://clinicaltrials.gov/study/NCT07752563); [NCT04043689](https://clinicaltrials.gov/study/NCT04043689) / [PMID 41243213](https://pubmed.ncbi.nlm.nih.gov/41243213/); [NCT06636994](https://clinicaltrials.gov/study/NCT06636994); [NCT07558395](https://clinicaltrials.gov/study/NCT07558395); [NCT06121219](https://clinicaltrials.gov/study/NCT06121219).
+**Key finding**: `PM-010` adds a protocol-paper anchor for the DRIVE-study driving/function lane. `CTG-028` is the only true new-since-July registry row, a Glasgow NeuroEyeCoach/VISIOcoach pilot RCT after stroke. The Paris/French rows are useful local context now that Eric is back in Paris, but they remain clinician/research or discovery leads only.
+**Informs**: [[clinical-trials-watchlist]], `docs/research/research-monitor-2026-08-13.html` — function/scanning measurement, local Paris research discovery, home visual-training comparators, and continued stimulation-adjunct guardrails.
+**Confidence for NegletFix**: MEDIUM for monitoring and comparator design, LOW for direct protocol impact. No item in this cluster changes the Quest AV protocol.
 
 ## Magosso, Cuppini & Bertini (2017)
 
@@ -204,9 +246,9 @@ Confidence applies to the paper's evidentiary weight for this specific project, 
 ## J. NeuroEngineering and Rehabilitation (2025) — Multisensory Telerehab
 
 **Citation**: "Telerehabilitation for visual field defects with a multisensory training: a feasibility study." *Journal of NeuroEngineering and Rehabilitation*. 2025.
-**DOI**: 10.1186/s12984-025-01573-4 (from URL in RESEARCH_SUMMARY.md:171)
-**Key finding**: Combined audio+visual cues improve outcomes in visual field defect rehabilitation; home-based/remote delivery is feasible and effective.
-**Informs**: [[audiovisual-training-protocol]], [[hardware-setup]] — validates the home-based consumer-hardware approach.
+**DOI / PMID**: 10.1186/s12984-025-01573-4; [PMID 39994637](https://pubmed.ncbi.nlm.nih.gov/39994637/) (PMID/source map added 2026-07-09)
+**Key finding**: Remote-supervised home audio-visual training improved visual search, reading, mood, and daily disability in adults with chronic acquired homonymous visual-field defects, with effects persisting up to 6 months in the feasibility study. The paper frames the gains as compensatory/oculomotor rather than structural visual-field restoration.
+**Informs**: [[audiovisual-training-protocol]], [[hardware-setup]], [[clinical-trials-watchlist]] row `CTG-023` — validates home AV delivery as a comparator and implementation reference.
 **Confidence for NegletFix**: MEDIUM (small feasibility study, directionally supportive).
 
 ---
@@ -521,7 +563,7 @@ Source map: [[clinical-trials-watchlist]] and `docs/research/clinical-trials-wat
 
 ## Summary Table
 
-Refreshed 2026-06-12 — ruv-neural GitHub analysis-side watch lead and NeurIPS 2025 EEG-AI methods lane added; 2026-05-26 medication-adjunct caution entries added after the doctor-brief sprint; 2026-05-14 audit resolved all prior "[CITATION NEEDED]" rows.
+Refreshed 2026-08-13 — August additions added `PM-010`, `CTG-028..CTG-035`, Paris/French local context, Neuro-JEPA v3 tracking, and `LI-002` IRON as a lead-needs-primary. The July 9 Bowers/Mass Eye scanning/prism/function cluster remains `PM-006..PM-009`; `CTG-012` / `NCT06136169` remains functional compensation evidence only. Earlier refreshes added Neuro-JEPA (`IMG-001`), ruv-neural, the NeurIPS 2025 EEG-AI methods lane, and medication-adjunct caution entries; the 2026-05-14 audit resolved all prior "[CITATION NEEDED]" rows.
 
 ### Foundational / pre-audit
 | Paper | Year | DOI | Confidence | Primary Use |
@@ -533,6 +575,7 @@ Refreshed 2026-06-12 — ruv-neural GitHub analysis-side watch lead and NeurIPS 
 | Elliott, Bullimore & Bailey ✱ | 1991 | 10.1111/j.1475-1313.1991.tb00368.x | HIGH | CS test reliability |
 | Bolognini et al. | 2005 | 10.1093/brain/awh662 | HIGH | Hemianopia AV facilitation |
 | Broustail/Ingolfsson et al. | 2026 | 10.48550/arXiv.2603.19100 | LOW-MEDIUM | EEG foundation-model methods watch lead |
+| Huang/Razavian et al. | 2026 | arXiv:2606.14957 | LOW | MRI foundation-model / neuroimaging analytics watch lead |
 | NeurIPS 2025 EEG-AI lane | 2025 | NP-001..NP-009 | LOW-MEDIUM | EEG foundation-model methods lane and guardrails |
 | ruvnet / ruv-neural | 2026 | GH-001 | LOW | Rust EEG topology analysis repo; offline inspiration only |
 | Magosso, Cuppini & Bertini ✱ | 2017 | 10.3389/fncom.2017.00113 | MEDIUM | Computational mechanism |
@@ -544,6 +587,8 @@ Refreshed 2026-06-12 — ruv-neural GitHub analysis-side watch lead and NeurIPS 
 | Topics Stroke Rehab | 2020 | 10.1080/10749357.2020.1716531 | MEDIUM | Ecological VR |
 | Network Neuroscience | 2022 | (MIT direct/netn/6/1/69) | MEDIUM | EEG spectral signature in neglect |
 | Wake Forest trials | refreshed 2026-06-11 | NCT04963075 / NCT05894434 | MEDIUM | Alternative AV parameters; NCT04963075 completed with results, NCT05894434 not yet recruiting |
+| Bowers / Mass Eye function cluster | refreshed 2026-07-09 | PM-006..PM-009 | MEDIUM-HIGH for function | Scanning, prism, and naturalistic-driving function comparators only |
+| DRIVE / Paris / monitor-gap refresh cluster | refreshed 2026-08-13 | PM-010, CTG-028..CTG-035, LI-002 | MEDIUM for monitoring | Scanning/function, Paris local context, and comparator rows only |
 
 ### Added in 2026-05-14 audit
 | Paper | Year | DOI / PMID | Confidence | Primary Use |
@@ -575,8 +620,10 @@ Refreshed 2026-06-12 — ruv-neural GitHub analysis-side watch lead and NeurIPS 
 ✱ = citation corrected in 2026-05-14 audit. Previous entries had wrong first author or year.
 
 **Follow-up open items**:
-- Maintain [[clinical-trials-watchlist]] monthly or quarterly; NCT04963075 and NCT05894434 status was refreshed 2026-06-11.
+- Maintain [[clinical-trials-watchlist]] monthly or quarterly; full watchlist status was refreshed 2026-08-13.
 - Watch for posted registry results or replication of NCT06116760 / Diana AV+tDCS.
 - Watch NCT07358832 as the active AV+tDCS subacute trial.
+- Track `CTG-012` / `PMID42140549` as functional compensation evidence only; do not treat head-scan or hazard-detection gains as blind-field restoration or driving clearance.
+- Watch new July 9 registry rows `CTG-018..CTG-027`, especially Wake Forest `NCT07659691`, BRIGHT `NCT07635329`, focused ultrasound + VR `NCT06875206`, and AV telerehab `NCT06341777`.
 - Watch for larger FLUORESCE follow-up trial registration (Schneider/Mahon/Sahin group, Rochester).
 - Watch for adult-stroke replication of the Daibert-Nido 3D-MOT-IVR paradigm at adequate power.
