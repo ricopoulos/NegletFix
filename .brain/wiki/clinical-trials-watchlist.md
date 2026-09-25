@@ -1,6 +1,6 @@
 ---
 title: Clinical Trials Watchlist
-last_updated: 2026-08-13
+last_updated: 2026-09-25
 confidence: HIGH registry status / MIXED protocol impact
 sources:
   - PubMed E-utilities live check 2026-06-11
@@ -11,6 +11,10 @@ sources:
   - ClinicalTrials.gov API live check 2026-07-09
   - PubMed E-utilities live check 2026-08-13
   - ClinicalTrials.gov API live check 2026-08-13
+  - ClinicalTrials.gov API and PubMed E-utilities live check 2026-09-25
+  - docs/research/research-refresh-2026-09-25.md
+  - docs/research/clinical-trials-watchlist-2026-09-25.csv
+  - docs/research/research-monitor-2026-09-25.html
   - docs/research/clinical-trials-watchlist-2026-08-13.csv
   - docs/research/clinical-trials-watchlist-2026-08-13.md
   - docs/research/research-monitor-2026-08-13.html
@@ -22,13 +26,21 @@ sources:
 
 Registry-backed monitor for external evidence that could affect NegletFix. This page tracks clinical trials and active evidence leads; it is not a treatment recommendation and should not override the measurement-first Quest audiovisual protocol.
 
-Structured source: `docs/research/clinical-trials-watchlist-2026-08-13.csv`.
+Current structured source: `docs/research/clinical-trials-watchlist-2026-09-25.csv` (36 NCT records). The August snapshot below is retained as history.
 
-Human-readable research note: `docs/research/clinical-trials-watchlist-2026-08-13.md`.
+Current human-readable research note: `docs/research/clinical-trials-watchlist-2026-09-25.md`.
 
-Static HTML monitor: `docs/research/research-monitor-2026-08-13.html`.
+Current static HTML monitor: `docs/research/research-monitor-2026-09-25.html`.
 
-Unified intake queue: `docs/research/source-queue-2026-05-25.csv` now includes 85 rows across YouTube leads, X discovery queries, PubMed refresh rows `PM-001` through `PM-010`, ClinicalTrials.gov rows `CTG-001` through `CTG-035`, LinkedIn/arXiv, NeurIPS/OpenReview, GitHub watch leads, Mayo Clinic institutional watch rows `INST-001` through `INST-004`, AI-neuroimaging watch row `IMG-001`, and Paris local social lead `LI-002`.
+Unified intake queue: `docs/research/source-queue-2026-05-25.csv` now includes 88 rows, including `PM-001..PM-012` and `CTG-001..CTG-036`. Source: `docs/research/research-refresh-2026-09-25.md`.
+
+### September 25 current state
+
+- `CTG-012` / [NCT06136169](https://clinicaltrials.gov/study/NCT06136169) and `CTG-016` / [NCT04827147](https://clinicaltrials.gov/study/NCT04827147) moved to completed, with results posted. They remain compensation/accommodation comparators.
+- `CTG-036` / [NCT07830745](https://clinicaltrials.gov/study/NCT07830745) is a newly registered, not-yet-recruiting French optokinetic reading study for hemianopic alexia at Boissise-le-Roi; it is not the Pitié study.
+- `CTG-030` / [NCT04043689](https://clinicaltrials.gov/study/NCT04043689), HEMIANOTACS at AP-HP/Pitié-Salpêtrière, remains completed with no posted registry results. **Erratum:** [Raffin et al. 2025 / PMID 41243213](https://pubmed.ncbi.nlm.nih.gov/41243213/) is not verified as a publication of this trial. The August association below was too strong and is corrected in the September CSV and source queue.
+- `PM-011` is a newly surfaced 28-study systematic review; `PM-012` validates an eye-tracking perimetry method. Neither changes the Quest protocol or provides a Quest-specific improvement threshold.
+- No protocol change. Await Quest return and measured `-5°` / `-8°` probes, catch trials, and staircase retuning. See `docs/research/research-refresh-2026-09-25.md` for the source map and limits.
 
 ---
 
@@ -88,7 +100,7 @@ Protocol impact:
 | CTG-027 | [NCT05141604](https://clinicaltrials.gov/study/NCT05141604) | Active not recruiting | VR/HMD obstacle-detection and field-expansion mobility comparator updated 2026-07-02 | Mobility/accommodation measurement lead only |
 | CTG-028 | [NCT07752563](https://clinicaltrials.gov/study/NCT07752563) | Not yet recruiting | New August 7 pilot RCT of computer-based scanning/eye-movement training after stroke | Function/scanning comparator only; no visual restoration or AV protocol implication |
 | CTG-029 | [NCT04930822](https://clinicaltrials.gov/study/NCT04930822) | Completed with results posted | New-to-monitor posted-results digital scanning comparator using Bells Test and kinetic field metrics | Inpatient acute/subacute field-awareness comparator only; not chronic restoration evidence |
-| CTG-030 | [NCT04043689](https://clinicaltrials.gov/study/NCT04043689) | Completed | Paris AP-HP chronic HH neuromodulation study aligned with Raffin 2025 cf-tACS paper; linked to [PMID 41243213](https://pubmed.ncbi.nlm.nih.gov/41243213/) | Clinician/research watch only; do not adopt stimulation; useful local Paris expert/context lead |
+| CTG-030 | [NCT04043689](https://clinicaltrials.gov/study/NCT04043689) | Completed | Paris AP-HP chronic HH neuromodulation study; no posted results. Raffin 2025 link retracted in September audit | Clinician/research watch only; do not adopt stimulation; useful local Paris expert/context lead |
 | CTG-031 | [NCT06636994](https://clinicaltrials.gov/study/NCT06636994) | Active not recruiting | Fondation Rothschild Paris study mapping blindsight capability to functional MRI connectivity | Mechanism/local-clinician watch only; no treatment protocol impact |
 | CTG-032 | [NCT07558395](https://clinicaltrials.gov/study/NCT07558395) | Not yet recruiting | INSERM multicenter VR audiovisual telerehab trial with Strasbourg site; pediatric tumor etiology not Eric stroke lane | AV/VR design inspiration only; not adult stroke or current Quest protocol evidence |
 | CTG-033 | [NCT06121219](https://clinicaltrials.gov/study/NCT06121219) | Recruiting | Rochester/Huxlin recruiting home visual retraining after stroke; strong dose and staircase comparator | Home visual-training comparator only; not audiovisual and requires months-long dose |
@@ -114,7 +126,7 @@ Protocol impact:
 
 ### Paris / France context
 
-- **NCT04043689 / PMID 41243213**: AP-HP/Pitie-Salpetriere chronic post-stroke hemianopia tACS. Clinician/research watch only.
+- **NCT04043689**: AP-HP/Pitie-Salpetriere chronic post-stroke hemianopia tACS. Clinician/research watch only; Raffin 2025 is a separate paper, not a verified trial result (September correction).
 - **NCT06636994**: Fondation Rothschild blindsight/fMRI mechanism study. Local mechanism/context only.
 - **NCT07558395**: INSERM-led Unity HMD audiovisual telerehab study for pediatric tumor hemianopsia. VR/AV design inspiration only.
 - **LI-002**: LMC2 IRON social lead. Needs primary evidence before promotion.
@@ -162,7 +174,7 @@ These rows are high-quality source-discovery channels, not treatment evidence by
 
 Recommended staged system:
 
-1. **Now**: keep the August 13 CSV, wiki page, refresh log, and static HTML monitor as the source of truth.
+1. **Now**: keep the September 25 CSV, wiki page, refresh log, and static HTML monitor as the source of truth.
 2. **Next**: generate future monitors from the same CSV structure instead of manually copying trial rows.
 3. **Then**: create a monthly Codex automation that checks only for meaningful changes:
    - trial status changes;

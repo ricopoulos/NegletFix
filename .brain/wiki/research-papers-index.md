@@ -1,6 +1,6 @@
 ---
 title: Research Papers Index
-last_updated: 2026-08-13
+last_updated: 2026-09-25
 confidence: MIXED
 sources:
   - RESEARCH_SUMMARY.md
@@ -20,6 +20,7 @@ sources:
   - 2026-06-21 Neuro-JEPA AI neuroimaging watch lead from LinkedIn/arXiv
   - 2026-07-09 PubMed + ClinicalTrials.gov refresh for scanning compensation, prism accommodation, naturalistic driving/function papers, and new registry rows CTG-018..CTG-027
   - 2026-08-13 PubMed + ClinicalTrials.gov refresh for DRIVE-study protocol PM-010, CTG-028..CTG-035, Paris/French local clinical context, Neuro-JEPA v3, and LMC2 IRON lead
+  - 2026-09-25 PubMed + ClinicalTrials.gov refresh for PM-011..PM-012, CTG-036, two completed comparator trials, and HEMIANOTACS/Raffin attribution correction; docs/research/research-refresh-2026-09-25.md
 ---
 
 # Research Papers Index
@@ -103,9 +104,17 @@ Confidence applies to the paper's evidentiary weight for this specific project, 
 ## August 13 2026 DRIVE / Paris / monitor-gap refresh cluster
 
 **Citation / source cluster**: August 13 refresh rows `PM-010`, `CTG-028` through `CTG-035`, and `LI-002` in `docs/research/source-queue-2026-05-25.csv`; clinical source map in `docs/research/clinical-trials-watchlist-2026-08-13.csv`.
-**DOI / URLs**: [PMID 42571232](https://pubmed.ncbi.nlm.nih.gov/42571232/) / [NCT07147660](https://clinicaltrials.gov/study/NCT07147660); [NCT07752563](https://clinicaltrials.gov/study/NCT07752563); [NCT04043689](https://clinicaltrials.gov/study/NCT04043689) / [PMID 41243213](https://pubmed.ncbi.nlm.nih.gov/41243213/); [NCT06636994](https://clinicaltrials.gov/study/NCT06636994); [NCT07558395](https://clinicaltrials.gov/study/NCT07558395); [NCT06121219](https://clinicaltrials.gov/study/NCT06121219).
+**DOI / URLs**: [PMID 42571232](https://pubmed.ncbi.nlm.nih.gov/42571232/) / [NCT07147660](https://clinicaltrials.gov/study/NCT07147660); [NCT07752563](https://clinicaltrials.gov/study/NCT07752563); [NCT04043689](https://clinicaltrials.gov/study/NCT04043689); [NCT06636994](https://clinicaltrials.gov/study/NCT06636994); [NCT07558395](https://clinicaltrials.gov/study/NCT07558395); [NCT06121219](https://clinicaltrials.gov/study/NCT06121219). September correction: [PMID 41243213](https://pubmed.ncbi.nlm.nih.gov/41243213/) is a separate tACS paper, not a verified result of NCT04043689.
 **Key finding**: `PM-010` adds a protocol-paper anchor for the DRIVE-study driving/function lane. `CTG-028` is the only true new-since-July registry row, a Glasgow NeuroEyeCoach/VISIOcoach pilot RCT after stroke. The Paris/French rows are useful local context now that Eric is back in Paris, but they remain clinician/research or discovery leads only.
 **Informs**: [[clinical-trials-watchlist]], `docs/research/research-monitor-2026-08-13.html` — function/scanning measurement, local Paris research discovery, home visual-training comparators, and continued stimulation-adjunct guardrails.
+
+## September 25 2026 visual-field evidence and measurement update
+
+**PM-011:** [Interventions for Visual Field Loss After Acquired Brain Injury: A Systematic Review, PMID 42652963](https://pubmed.ncbi.nlm.nih.gov/42652963/). Published July 31 and surfaced by the September PubMed entry-date check. Twenty-eight studies; compensatory methods show more consistent functional benefits than evidence for field expansion. Informs evidence-language and functional-outcome interpretation, not a protocol change.
+
+**PM-012:** [Complementary Visual Assessment: Validation of a High-Precision Eye-Tracking Kinetic Perimetry..., PMID 42684868](https://pubmed.ncbi.nlm.nih.gov/42684868/). September 2 method validation in 37 participants, including 17 with retrochiasmal lesions. Its suggested `>5°` meaningful boundary change is instrument-specific and does not define a Quest success threshold.
+
+**CTG-036:** [NCT07830745](https://clinicaltrials.gov/study/NCT07830745) is a new French optokinetic reading comparator for hemianopic alexia after stroke, not yet recruiting. [Neuro-JEPA v5](https://arxiv.org/abs/2606.14957v5) remains MRI-model methodology only. Source map and limits: `docs/research/research-refresh-2026-09-25.md`.
 **Confidence for NegletFix**: MEDIUM for monitoring and comparator design, LOW for direct protocol impact. No item in this cluster changes the Quest AV protocol.
 
 ## Magosso, Cuppini & Bertini (2017)

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>NegletFix | Comprendre le champ visuel gauche</title>
+  <style>
+    :root { --bg:#11191d; --surface:#18242a; --surface-2:#203139; --line:#3a4a50; --ink:#f5f4ef; --muted:#b8c6c7; --cyan:#82dbe0; --amber:#f2b868; --coral:#e57e65; --mint:#87c9a3; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; letter-spacing:0; }
+    button, input { font:inherit; }
+    button { cursor:pointer; }
+    a { color:var(--cyan); }
+    :focus-visible { outline:3px solid var(--cyan); outline-offset:3px; }
+    .shell { width:min(100% - 40px,1240px); margin:auto; }
+    .top { border-bottom:1px solid var(--line); background:#121d22; }
+    .top .shell { min-height:82px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .brand { display:flex; align-items:center; gap:14px; font-size:15px; font-weight:800; }
+    .mark { display:grid; place-items:center; width:40px; height:40px; border:1px solid var(--cyan); color:var(--cyan); border-radius:7px; font-size:18px; }
+    .brand span:last-child { color:var(--muted); font-size:13px; font-weight:500; }
+    .top-note { color:var(--muted); font-size:13px; text-align:right; }
+    .intro { padding:38px 0 30px; }
+    .eyebrow { margin:0 0 8px; color:var(--cyan); font-size:12px; text-transform:uppercase; font-weight:800; letter-spacing:.12em; }
+    h1 { max-width:900px; margin:0; font-size:56px; line-height:1.05; font-weight:740; }
+    .intro p:last-child { max-width:800px; color:var(--muted); margin:18px 0 0; font-size:17px; }
+    .toolbar { border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:#19262b; }
+    .toolbar .shell { display:flex; align-items:center; justify-content:space-between; gap:20px; padding-top:10px; padding-bottom:10px; }
+    .steps { display:flex; gap:4px; min-width:0; }
+    .steps button, .play { min-height:40px; border:1px solid transparent; border-radius:6px; background:transparent; color:var(--muted); padding:8px 13px; font-weight:700; white-space:nowrap; }
+    .steps button[aria-selected="true"] { background:#2b4147; color:var(--ink); border-color:#50727a; }
+    .steps button:hover, .play:hover { color:var(--ink); }
+    .steps .num { color:var(--cyan); margin-right:7px; }
+    .play { border-color:var(--line); color:var(--ink); flex:none; }
+    .stage { padding:30px 0 24px; min-height:600px; }
+    .scene { display:none; animation:appear .45s ease both; }
+    .scene.active { display:block; }
+    @keyframes appear { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .scene-grid { display:grid; grid-template-columns:minmax(0,1.55fr) minmax(310px,.85fr); gap:26px; align-items:start; }
+    .visual { position:relative; overflow:hidden; min-height:485px; background:var(--surface); border:1px solid var(--line); border-radius:7px; }
+    .visual-title { position:absolute; z-index:3; top:18px; left:20px; color:var(--muted); background:#17252bcc; padding:5px 8px; font-size:12px; border-radius:4px; }
+    .brain-visual { display:grid; place-items:center; }
+    .brain-visual img { width:100%; height:auto; display:block; filter:contrast(1.04) saturate(.88); }
+    .lesion-halo { position:absolute; width:12%; aspect-ratio:1; left:76%; top:36%; border:2px solid var(--amber); border-radius:50%; background:radial-gradient(circle,rgba(242,184,104,.52),rgba(229,126,101,.22) 50%,transparent 74%); box-shadow:0 0 32px rgba(242,184,104,.5), inset 0 0 20px rgba(242,184,104,.3); pointer-events:none; animation:pulse 3s ease-in-out infinite; }
+    @keyframes pulse { 50% { transform:scale(1.12); box-shadow:0 0 48px rgba(242,184,104,.75); } }
+    .marker-label { position:absolute; right:20px; top:17%; max-width:185px; color:#ffe0ad; background:#17252be8; border:1px solid #b78040; border-radius:5px; padding:9px 11px; font-size:13px; font-weight:700; }
+    .marker-label::after { content:""; position:absolute; width:2px; height:86px; background:var(--amber); right:45px; top:100%; transform:rotate(22deg); transform-origin:top; opacity:.8; }
+    .visual-foot { position:absolute; z-index:2; bottom:0; left:0; right:0; padding:12px 18px; color:#e8edef; font-size:12px; background:#132027df; border-top:1px solid #ffffff24; }
+    .story { padding:8px 0; }
+    .story .index { color:var(--amber); font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.08em; }
+    h2 { margin:8px 0 16px; font-size:32px; line-height:1.17; }
+    .story p { color:var(--muted); margin:0 0 14px; }
+    .fact { margin-top:18px; padding:15px 0; border-top:1px solid var(--line); }
+    .fact strong { color:var(--ink); display:block; margin-bottom:3px; }
+    .fact span { color:var(--muted); font-size:14px; }
+    .fact .source { color:var(--cyan); }
+    .field-visual { min-height:485px; }
+    .field-visual > img { width:100%; height:100%; min-height:485px; object-fit:cover; display:block; }
+    .field-loss { position:absolute; inset:0 50% 0 0; background:rgba(11,21,25,.96); opacity:0; transition:opacity .55s ease; border-right:2px dashed rgba(255,255,255,.68); }
+    .field-veil { position:absolute; inset:0; background:rgba(83,88,89,.45); opacity:0; transition:opacity .55s ease; }
+    .field-visual[data-mode="field"] .field-loss, .field-visual[data-mode="both"] .field-loss { opacity:1; }
+    .field-visual[data-mode="both"] .field-veil { opacity:1; }
+    .field-cross { position:absolute; left:50%; top:50%; width:20px; height:20px; transform:translate(-50%,-50%); border:1px solid white; border-radius:50%; box-shadow:0 0 0 3px #0c1519aa; }
+    .field-cross::before, .field-cross::after { content:""; position:absolute; background:white; }
+    .field-cross::before { width:1px; height:24px; top:-3px; left:9px; } .field-cross::after { height:1px; width:24px; left:-3px; top:9px; }
+    .field-tag { position:absolute; top:56px; z-index:2; font-size:12px; font-weight:800; padding:6px 9px; border-radius:4px; background:#17262bc9; }
+    .field-tag.left { left:16px; color:var(--cyan); }.field-tag.right { right:16px; color:var(--amber); }
+    .mode-switch { display:flex; flex-wrap:wrap; gap:6px; margin:20px 0; }
+    .mode-switch button { min-height:38px; padding:7px 11px; color:var(--ink); background:transparent; border:1px solid var(--line); border-radius:5px; }
+    .mode-switch button[aria-pressed="true"] { background:#30484b; border-color:var(--cyan); }
+    .binocular { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:16px 0 0; }
+    .eye-item { display:flex; align-items:center; gap:10px; padding:10px 0; border-top:1px solid var(--line); color:var(--muted); font-size:13px; }
+    .eye-icon { width:42px; height:42px; border:2px solid #9eb7bb; border-radius:50%; flex:none; background:linear-gradient(90deg,#142024 50%,#91bcc0 50%); }
+    .measure-visual { padding:68px 24px 25px; }
+    .bars { display:grid; gap:28px; margin:6px 0 30px; }
+    .bar-row { display:grid; grid-template-columns:98px 1fr 62px; gap:12px; align-items:center; }
+    .bar-row span:first-child { font-size:13px; font-weight:700; }
+    .track { height:22px; border-radius:2px; background:#34434a; overflow:hidden; }
+    .fill { height:100%; transform-origin:left; animation:grow .75s ease-out both; }
+    @keyframes grow { from { transform:scaleX(0); } to { transform:scaleX(1); } }
+    .fill.right { width:100%; background:var(--mint); }.fill.center { width:47%; background:var(--amber); }.fill.left { width:1%; background:var(--coral); }
+    .bar-row strong { text-align:right; }
+    .measure-note { padding:13px 0; border-top:1px solid var(--line); color:var(--muted); font-size:13px; }
+    .quest-line { display:flex; align-items:center; gap:11px; flex-wrap:wrap; margin-top:18px; }
+    .quest-line span { border:1px solid #82dbe077; color:var(--cyan); border-radius:5px; padding:6px 9px; font-weight:700; }
+    .source-band { border-top:1px solid var(--line); background:#19262b; padding:28px 0 40px; }
+    .source-band .shell { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+    .source-band h2 { font-size:18px; margin:0 0 8px; }.source-band p,.source-band li { color:var(--muted); font-size:13px; }
+    .source-band ul { padding-left:20px; margin:0; }
+    .privacy { color:var(--mint); }
+    .next { display:flex; justify-content:space-between; gap:20px; padding:14px 0 24px; }
+    .next button { min-height:40px; border:1px solid var(--line); color:var(--ink); background:var(--surface-2); border-radius:5px; padding:7px 15px; }
+    .next button:disabled { opacity:.35; cursor:default; }
+    @media(max-width:860px) { .scene-grid,.source-band .shell { grid-template-columns:1fr; } .stage { min-height:0; } .visual { min-height:0; }.top-note { display:none; } }
+    @media(max-width:620px) { .shell { width:min(100% - 24px,1240px); }.intro { padding:25px 0; }.intro p:last-child { font-size:15px; } h1 { font-size:36px; } h2 { font-size:26px; }.toolbar .shell { align-items:stretch; flex-direction:column; gap:8px; }.steps { overflow-x:auto; }.steps button { font-size:13px; padding:8px 9px; }.play { align-self:flex-end; }.brain-visual { min-height:290px; }.brain-visual img { margin-top:45px; }.lesion-halo { top:40%; }.marker-label { top:14px; right:12px; font-size:11px; max-width:155px; }.marker-label::after { height:36px; }.field-visual,.field-visual>img { min-height:320px; }.bar-row { grid-template-columns:68px 1fr 55px; gap:6px; }.binocular { grid-template-columns:1fr 1fr; }.source-band { padding-top:24px; } }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; scroll-behavior:auto!important; } }
+  </style>
+</head>
+<body>
+  <header class="top"><div class="shell"><div class="brand"><span class="mark">NF</span><div>NegletFix<br><span>Comprendre l'hémianopsie gauche</span></div></div><div class="top-note">Illustration personnelle documentée · 25 septembre 2026</div></div></header>
+  <main>
+    <div class="shell intro"><p class="eyebrow">AVC occipital droit · juillet 2021</p><h1>Pourquoi le côté gauche du monde disparaît</h1><p>Une lecture visuelle des comptes rendus IRM, du champ visuel et des mesures de départ. Les trois vues racontent la même atteinte sous des angles différents.</p></div>
+    <nav class="toolbar" aria-label="Étapes de l'explication"><div class="shell"><div class="steps" role="tablist" aria-label="Étapes"><button type="button" role="tab" id="tab-anatomy" aria-controls="anatomy" aria-selected="true" data-step="0"><span class="num">01</span> Le cerveau</button><button type="button" role="tab" id="tab-field" aria-controls="field" aria-selected="false" data-step="1"><span class="num">02</span> Le champ visuel</button><button type="button" role="tab" id="tab-measure" aria-controls="measure" aria-selected="false" data-step="2"><span class="num">03</span> Les mesures</button></div><button type="button" class="play" id="play-tour" aria-label="Lire l'animation">Lecture</button></div></nav>
+    <div class="shell stage">
+      <section class="scene active" id="anatomy" role="tabpanel" aria-labelledby="tab-anatomy">
+        <div class="scene-grid"><div class="visual brain-visual"><span class="visual-title">Hémisphère droit · vue latérale · arrière à droite</span><img src="assets/brain-right-lateral-2026-09-25.png" alt="Illustration anatomique de l'hémisphère cérébral droit, vue latérale"><span class="lesion-halo" aria-hidden="true"></span><span class="marker-label">Région occipitale droite documentée</span><span class="visual-foot">Le halo montre une région, pas le contour ni le volume mesuré de la lésion.</span></div><div class="story"><span class="index">01 / Territoire atteint</span><h2>Une lésion à l'arrière du cerveau droit</h2><p>Les comptes rendus de 2021 décrivent un AVC du territoire de l'artère cérébrale postérieure droite, avec atteinte occipitale et mention d'une atteinte thalamique médiale droite. L'IRM de mars 2022 décrit une large zone d'encéphalomalacie occipitale droite, séquelle de l'AVC.</p><div class="fact"><strong>2021 · phase aiguë</strong><span>Le compte rendu du 24 juillet mentionne du sang, de l'œdème et une déviation de la ligne médiane de 6 mm. Ce chiffre décrit l'effet de masse aigu, pas la taille de la lésion chronique.</span></div><div class="fact"><strong>2022 · séquelle chronique</strong><span>Le compte rendu du 2 mars localise la zone d'encéphalomalacie à l'occipital droit. Il ne donne pas de dimensions ni de segmentation 3D.</span></div></div></div>
+      </section>
+      <section class="scene" id="field" role="tabpanel" aria-labelledby="tab-field" hidden>
+        <div class="scene-grid"><div class="visual field-visual" data-mode="field"><span class="visual-title">Scène illustrative · regard fixé au centre</span><img src="assets/paris-sidewalk-illustrative-2026-09-25.png" alt="Rue parisienne illustrative avec des éléments des deux côtés du champ visuel"><div class="field-loss" aria-hidden="true"></div><div class="field-veil" aria-hidden="true"></div><span class="field-tag left">Champ visuel gauche</span><span class="field-tag right">Champ visuel droit</span><span class="field-cross" aria-hidden="true"></span><span class="visual-foot">Représentation pédagogique. Elle ne reproduit pas à l'identique une perception vécue ou une périmétrie.</span></div><div class="story"><span class="index">02 / Effet visuel</span><h2>Le côté gauche du champ visuel, avec les deux yeux</h2><p>Une hémianopsie homonyme gauche touche l'information venant de la gauche de l'espace visuel, quel que soit l'œil ouvert. Ce n'est pas « l'œil gauche qui ne voit plus ».</p><div class="mode-switch" role="group" aria-label="Comparaison visuelle"><button type="button" data-mode="full" aria-pressed="false">Scène entière</button><button type="button" data-mode="field" aria-pressed="true">Champ gauche</button><button type="button" data-mode="both" aria-pressed="false">+ voile gris ressenti</button></div><p>Le voile gris et la faible luminosité que tu décris touchent aussi le reste de la vision. Ce rendu est une évocation subjective séparée du déficit de champ objectivé.</p><div class="binocular"><div class="eye-item"><span class="eye-icon" aria-hidden="true"></span>Œil gauche : côté gauche atteint</div><div class="eye-item"><span class="eye-icon" aria-hidden="true"></span>Œil droit : côté gauche atteint</div></div></div></div>
+      </section>
+      <section class="scene" id="measure" role="tabpanel" aria-labelledby="tab-measure" hidden>
+        <div class="scene-grid"><div class="visual measure-visual"><span class="visual-title">Test NegletFix du 15 décembre 2025 · LogCS</span><div class="bars"><div class="bar-row"><span>Droit</span><div class="track"><div class="fill right"></div></div><strong>2,25</strong></div><div class="bar-row"><span>Centre</span><div class="track"><div class="fill center"></div></div><strong>~1,05</strong></div><div class="bar-row"><span>Gauche</span><div class="track"><div class="fill left"></div></div><strong>0,00</strong></div></div><div class="measure-note">La barre gauche reste visible pour être repérable sur le graphique. Le score 0,00 indique le plancher de ce test, pas une mesure de « zéro neurone » ou une carte complète du champ visuel.</div><div class="quest-line"><span>Quest : champ cartographié</span><span>Cible testée : -5°</span><span>Prochaine sonde : -8°</span></div></div><div class="story"><span class="index">03 / Ce que l'on sait mesurer</span><h2>Une asymétrie forte, puis un travail mesuré</h2><p>Sur le même instrument, le test de sensibilité au contraste a donné 2,25 LogCS à droite et 0,00 à gauche. Le test a été corrigé pour placer réellement les lettres dans chaque hémichamp.</p><div class="fact"><strong>Ce que les essais Quest montrent</strong><span>Un entraînement audiovisuel guidé près du bord du champ déficitaire est réalisable et journalisé. Les réponses à -5° peuvent être aidées par le son ; elles ne prouvent pas une récupération visuelle.</span></div><div class="fact"><strong>Prochaine reprise</strong><span>Quand le Quest revient : alterner -5° et -8°, ajouter des essais de contrôle et stabiliser la progression du contraste. Le protocole actuel reste inchangé d'ici là.</span></div></div></div>
+      </section>
+      <div class="next"><button type="button" id="previous" disabled>Précédent</button><button type="button" id="next">Suivant</button></div>
+    </div>
+  </main>
+  <footer class="source-band"><div class="shell"><div><h2>Sources et précision</h2><ul><li>Comptes rendus IRM personnels : 24 juillet 2021 et 2 mars 2022, consultés localement pour cette illustration.</li><li>Mesure NegletFix du 15 décembre 2025 : voir <a href="../.brain/wiki/erics-baseline.md">la fiche de base</a>.</li><li>État du protocole Quest : voir <a href="../.brain/wiki/audiovisual-training-protocol.md">la fiche audiovisuelle</a>.</li></ul></div><div><h2>Limites de la représentation</h2><p>Aucune image DICOM ni segmentation de la lésion n'a été fournie ici. La forme lumineuse signale une zone anatomique documentée ; elle n'indique ni volume, ni largeur, ni épaisseur. Les images cérébrale et urbaine sont des illustrations générées. <span class="privacy">Aucun document médical brut n'est chargé par cette page.</span></p></div></div></footer>
+  <script>
+    const scenes = [...document.querySelectorAll('.scene')];
+    const tabs = [...document.querySelectorAll('[data-step]')];
+    const playButton = document.getElementById('play-tour');
+    const previousButton = document.getElementById('previous');
+    const nextButton = document.getElementById('next');
+    let current = 0;
+    let timer = null;
+    function showStep(index) {
+      current = Math.max(0, Math.min(index, scenes.length - 1));
+      scenes.forEach((scene, i) => { scene.hidden = i !== current; scene.classList.toggle('active', i === current); });
+      tabs.forEach((tab, i) => { tab.setAttribute('aria-selected', String(i === current)); tab.tabIndex = i === current ? 0 : -1; });
+      previousButton.disabled = current === 0;
+      nextButton.disabled = current === scenes.length - 1;
+      if (timer && current === scenes.length - 1) stopTour();
+    }
+    function stopTour() { clearInterval(timer); timer = null; playButton.textContent = 'Lecture'; playButton.setAttribute('aria-label', "Lire l'animation"); }
+    tabs.forEach((tab, i) => tab.addEventListener('click', () => { stopTour(); showStep(i); }));
+    previousButton.addEventListener('click', () => { stopTour(); showStep(current - 1); });
+    nextButton.addEventListener('click', () => { stopTour(); showStep(current + 1); });
+    playButton.addEventListener('click', () => {
+      if (timer) return stopTour();
+      if (current === scenes.length - 1) showStep(0);
+      playButton.textContent = 'Pause'; playButton.setAttribute('aria-label', "Mettre l'animation en pause");
+      timer = setInterval(() => showStep(current + 1), 7000);
+    });
+    document.querySelectorAll('[data-mode]').forEach(button => {
+      if (button.tagName !== 'BUTTON') return;
+      button.addEventListener('click', () => {
+        const mode = button.dataset.mode;
+        document.querySelector('.field-visual').dataset.mode = mode;
+        document.querySelectorAll('.mode-switch button').forEach(b => b.setAttribute('aria-pressed', String(b === button)));
+      });
+    });
+    document.querySelector('.steps').addEventListener('keydown', event => {
+      if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+      event.preventDefault(); stopTour();
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? scenes.length - 1 : current + (event.key === 'ArrowRight' ? 1 : -1);
+      showStep(next); tabs[current].focus();
+    });
+    showStep(0);
+  </script>
+</body>
+</html>
