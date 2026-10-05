@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "project_name": "NegletFix",
   "description": "VR rehabilitation for left homonymous hemianopia with EEG neurofeedback",
-  "last_updated": "2026-09-25T10:44:00+02:00",
+  "last_updated": "2026-10-05T10:49:00+02:00",
   "wiki": {
     "path": ".brain/wiki/",
     "pages": 12,
@@ -58,7 +58,7 @@
     "Use the 2026-06-11 subjective fatigue report as a dose signal; do not stack another run after an exhausting 12.5-minute session",
     "Generalize `scripts/generate-rehab-report.js` from the first 2026-05-31 dose-ramp report into a reusable report command for future session CSV pairs, including field-guided runs",
     "Quest 3 acquisition when budget allows (used via Back Market ~€350-450)",
-    "Refresh the clinical-trials watchlist and static HTML research monitor monthly or after major PubMed/ClinicalTrials.gov/Mayo institutional changes; last refresh completed 2026-09-25 with 36 NCT records and a CSV-to-HTML generator, and recurring automation remains optional",
+    "Refresh the clinical-trials watchlist and static HTML research monitor monthly or after major PubMed/ClinicalTrials.gov/Mayo institutional changes; last refresh completed 2026-10-05 with 37 NCT records (one new early-window Prague pilot, two status corrections) and a CSV-to-HTML generator, and recurring automation remains optional",
     "Track EEG-AI/tooling leads through LI-001, NP-001..NP-009, and GH-001 ruv-neural; revisit only after real EEG signal-quality data exists or a higher-density/offline analytics track is added",
     "Track AI-neuroimaging/MRI foundation-model leads through IMG-001 Neuro-JEPA; revisit only if NegletFix develops an MRI/lesion-analysis sidecar or if occipital-stroke visual-field downstream validation appears"
   ]

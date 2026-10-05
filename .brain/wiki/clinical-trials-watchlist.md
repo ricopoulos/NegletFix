@@ -1,6 +1,6 @@
 ---
 title: Clinical Trials Watchlist
-last_updated: 2026-09-25
+last_updated: 2026-10-05
 confidence: HIGH registry status / MIXED protocol impact
 sources:
   - PubMed E-utilities live check 2026-06-11
@@ -12,6 +12,10 @@ sources:
   - PubMed E-utilities live check 2026-08-13
   - ClinicalTrials.gov API live check 2026-08-13
   - ClinicalTrials.gov API and PubMed E-utilities live check 2026-09-25
+  - ClinicalTrials.gov API and PubMed E-utilities live check 2026-10-05
+  - docs/research/research-refresh-2026-10-05.md
+  - docs/research/clinical-trials-watchlist-2026-10-05.csv
+  - docs/research/research-monitor-2026-10-05.html
   - docs/research/research-refresh-2026-09-25.md
   - docs/research/clinical-trials-watchlist-2026-09-25.csv
   - docs/research/research-monitor-2026-09-25.html
@@ -26,13 +30,21 @@ sources:
 
 Registry-backed monitor for external evidence that could affect NegletFix. This page tracks clinical trials and active evidence leads; it is not a treatment recommendation and should not override the measurement-first Quest audiovisual protocol.
 
-Current structured source: `docs/research/clinical-trials-watchlist-2026-09-25.csv` (36 NCT records). The August snapshot below is retained as history.
+Current structured source: `docs/research/clinical-trials-watchlist-2026-10-05.csv` (37 NCT records). The older snapshots below are retained as history.
 
-Current human-readable research note: `docs/research/clinical-trials-watchlist-2026-09-25.md`.
+Current human-readable research note: `docs/research/clinical-trials-watchlist-2026-10-05.md`.
 
-Current static HTML monitor: `docs/research/research-monitor-2026-09-25.html`.
+Current static HTML monitor: `docs/research/research-monitor-2026-10-05.html`.
 
-Unified intake queue: `docs/research/source-queue-2026-05-25.csv` now includes 88 rows, including `PM-001..PM-012` and `CTG-001..CTG-036`. Source: `docs/research/research-refresh-2026-09-25.md`.
+Unified intake queue: `docs/research/source-queue-2026-05-25.csv` now includes 90 rows, including `PM-001..PM-013` and `CTG-001..CTG-037`. Source: `docs/research/research-refresh-2026-10-05.md`.
+
+### October 5 current state
+
+- `CTG-037` / [NCT07849582](https://clinicaltrials.gov/study/NCT07849582) is a new Prague single-group neurovisual rehabilitation feasibility pilot. It is not yet recruiting; its 4-week–12-month post-injury window excludes Eric's 2021 stroke. Source: `docs/research/research-refresh-2026-10-05.md`, registry API check.
+- `CTG-026` / [NCT06638619](https://clinicaltrials.gov/study/NCT06638619) is suspended for funding, posted September 25 and missed in the previous snapshot. `CTG-031` / [NCT06636994](https://clinicaltrials.gov/study/NCT06636994) changed to not yet recruiting on October 1. Neither is an efficacy result. Source: October 5 CSV and registry API.
+- `CTG-030` / [HEMIANOTACS](https://clinicaltrials.gov/study/NCT04043689) remains completed without posted results. No protocol change. Source: October 5 CSV and `docs/research/research-refresh-2026-10-05.md`.
+
+---
 
 ### September 25 current state
 

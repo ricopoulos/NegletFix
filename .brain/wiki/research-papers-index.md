@@ -1,6 +1,6 @@
 ---
 title: Research Papers Index
-last_updated: 2026-09-25
+last_updated: 2026-10-05
 confidence: MIXED
 sources:
   - RESEARCH_SUMMARY.md
@@ -21,6 +21,7 @@ sources:
   - 2026-07-09 PubMed + ClinicalTrials.gov refresh for scanning compensation, prism accommodation, naturalistic driving/function papers, and new registry rows CTG-018..CTG-027
   - 2026-08-13 PubMed + ClinicalTrials.gov refresh for DRIVE-study protocol PM-010, CTG-028..CTG-035, Paris/French local clinical context, Neuro-JEPA v3, and LMC2 IRON lead
   - 2026-09-25 PubMed + ClinicalTrials.gov refresh for PM-011..PM-012, CTG-036, two completed comparator trials, and HEMIANOTACS/Raffin attribution correction; docs/research/research-refresh-2026-09-25.md
+  - 2026-10-05 PubMed mechanism watch PM-013 and CTG-037 registry refresh; docs/research/research-refresh-2026-10-05.md
 ---
 
 # Research Papers Index
@@ -107,6 +108,10 @@ Confidence applies to the paper's evidentiary weight for this specific project, 
 **DOI / URLs**: [PMID 42571232](https://pubmed.ncbi.nlm.nih.gov/42571232/) / [NCT07147660](https://clinicaltrials.gov/study/NCT07147660); [NCT07752563](https://clinicaltrials.gov/study/NCT07752563); [NCT04043689](https://clinicaltrials.gov/study/NCT04043689); [NCT06636994](https://clinicaltrials.gov/study/NCT06636994); [NCT07558395](https://clinicaltrials.gov/study/NCT07558395); [NCT06121219](https://clinicaltrials.gov/study/NCT06121219). September correction: [PMID 41243213](https://pubmed.ncbi.nlm.nih.gov/41243213/) is a separate tACS paper, not a verified result of NCT04043689.
 **Key finding**: `PM-010` adds a protocol-paper anchor for the DRIVE-study driving/function lane. `CTG-028` is the only true new-since-July registry row, a Glasgow NeuroEyeCoach/VISIOcoach pilot RCT after stroke. The Paris/French rows are useful local context now that Eric is back in Paris, but they remain clinician/research or discovery leads only.
 **Informs**: [[clinical-trials-watchlist]], `docs/research/research-monitor-2026-08-13.html` — function/scanning measurement, local Paris research discovery, home visual-training comparators, and continued stimulation-adjunct guardrails.
+
+## October 5 2026 visual-pathway MRI mechanism watch
+
+**PM-013:** [Roelofzen et al., "Does the stria of Gennari integrity reflect acquired visual field defects?", PMID 42799918](https://pubmed.ncbi.nlm.nih.gov/42799918/). *Brain Structure & Function*, published September 26, 2026; DOI 10.1007/s00429-026-03191-9. A 7 T MRI study found that the stria of Gennari remained intact in V1 deprived of visual input after lesions between the chiasma and V1. This is not a rehabilitation study, not a claim about regeneration of damaged occipital tissue, and not a parameter for Quest training. Source map: `docs/research/research-refresh-2026-10-05.md`; source queue `PM-013`. **Confidence for NegletFix:** LOW direct impact, mechanism only.
 
 ## September 25 2026 visual-field evidence and measurement update
 
