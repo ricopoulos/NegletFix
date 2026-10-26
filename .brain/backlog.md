@@ -382,3 +382,9 @@ Unity docs reviewed were for `com.unity.ai.assistant@2.9.0-pre.2`. Treat as pre-
 ---
 
 *Last updated: 2026-06-11*
+
+## WIP-006: Récupération dossier et images HCA
+
+**Status**: WAITING — demande reçue le 2026-10-26.
+
+Suivi administratif : [fiche HCA](hca-records-follow-up.md). Vérifications programmées les 30 octobre et 6 novembre 2026 à 10 h Europe/Paris. Frais, identité et fourniture effective du dossier complet / DICOM restent à confirmer. Aucun changement du protocole actif.
